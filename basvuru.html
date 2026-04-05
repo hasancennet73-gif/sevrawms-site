@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA Başvuru Merkezi | V16</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--line:rgba(255,255,255,.10);--text:#eef4ff;--muted:#aab7ca;--primary:#2f6fff;--secondary:#19c7b0;--shadow:0 22px 60px rgba(0,0,0,.34)}
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#06111f,#030913 70%);line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1280px;margin:0 auto;padding:0 20px}
+    .topbar{position:sticky;top:0;z-index:100;background:rgba(6,17,31,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .topbar-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff}
+    .brand-text strong{display:block;font-size:24px}.brand-text span{display:block;font-size:12px;color:var(--muted)}
+    .actions{display:flex;gap:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:14px;border:1px solid transparent;font-weight:700}
+    .btn-primary{background:var(--primary)} .btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line)}
+    .hero{padding:60px 0 30px}
+    h1{font-size:44px;line-height:1.05;margin-bottom:12px}
+    .lead{color:var(--muted);max-width:800px}
+    .notice{margin-top:18px;border:1px solid rgba(255,209,102,.22);background:rgba(255,209,102,.08);color:#ffe29a;border-radius:14px;padding:14px 16px;font-size:14px}
+    .forms-wrap{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:20px 0 70px}
+    form{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border-radius:22px;padding:26px;box-shadow:var(--shadow)}
+    form h3{font-size:28px;margin-bottom:8px} form p{font-size:15px;color:var(--muted);margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .field{display:flex;flex-direction:column;gap:7px}
+    .field label{font-size:14px;font-weight:700;color:#dce6f5}
+    .field input,.field select,.field textarea{width:100%;background:#091425;border:1px solid var(--line);color:#fff;border-radius:12px;padding:13px 14px;font-size:15px;outline:none}
+    .field textarea{min-height:118px;resize:vertical}
+    .full{grid-column:1/-1}
+    .check{display:flex;align-items:flex-start;gap:10px;margin:14px 0 18px;font-size:13px;color:var(--muted)}
+    .check input{margin-top:4px}
+    .send-note{margin-top:14px;font-size:13px;color:#94e8d8}
+    footer{border-top:1px solid var(--line);background:rgba(0,0,0,.16)}
+    .footer-inner{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px}.footer-inner strong{color:#fff}
+    @media (max-width:1100px){.forms-wrap,.form-grid{grid-template-columns:1fr} h1{font-size:34px}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html"><div class="brand-mark">S</div><div class="brand-text"><strong>SEVRA</strong><span>BAŞVURU MERKEZİ</span></div></a>
+    <div class="actions"><a class="btn btn-secondary" href="index.html">Ana Sayfa</a><a class="btn btn-primary" href="panel.html">Panel</a></div>
+  </div>
+</header>
+<section class="hero">
+  <div class="container">
+    <h1>SEVRA ile başvuru toplamaya başla</h1>
+    <p class="lead">V16 ile başvuru tarafı ayrı sayfaya alındı. Böylece kullanıcı için daha anlaşılır, daha temiz ve daha toplu bir başvuru merkezi oluştu.</p>
+    <div class="notice">Not: GitHub Pages statik yayın yapısı nedeniyle bu sürümde formlar görsel ve akış amaçlı korunur. İleriki adımda gerçek veri toplama bağlantısı ayrıca bağlanacaktır.</div>
+  </div>
+</section>
+<section>
+  <div class="container forms-wrap">
+    <form action="tesekkurler.html">
+      <h3>Fiyat Talep Formu</h3>
+      <p>Nakliye fiyatı almak isteyen müşteriler için hızlı talep alanı.</p>
+      <div class="form-grid">
+        <div class="field"><label>Ad Soyad / Firma</label><input type="text" required></div>
+        <div class="field"><label>Telefon</label><input type="tel" required></div>
+        <div class="field"><label>Çıkış Şehri</label><input type="text" required></div>
+        <div class="field"><label>Varış Şehri</label><input type="text" required></div>
+        <div class="field"><label>Taşıma Türü</label><select><option>Seçiniz</option><option>Ambar</option><option>Parsiyel</option><option>Komple</option></select></div>
+        <div class="field"><label>Palet / Tonaj</label><input type="text"></div>
+        <div class="field full"><label>Ek Not</label><textarea placeholder="Yük tipi, tarih, araç ihtiyacı ve notlar"></textarea></div>
+      </div>
+      <label class="check"><input type="checkbox" required><span>Bilgilerimin teklif süreci için kullanılmasını kabul ediyorum.</span></label>
+      <button class="btn btn-primary" style="width:100%" type="submit">Gönder</button>
+      <div class="send-note">Bu sürümde gönderim teşekkür ekranına geçiş akışı olarak korunur.</div>
+    </form>
+    <form action="tesekkurler.html">
+      <h3>Yük Veren Başvurusu</h3>
+      <p>Yük talebi oluşturmak ve sistemle bağlantıya geçmek isteyen firmalar için.</p>
+      <div class="form-grid">
+        <div class="field"><label>Firma Adı</label><input type="text" required></div>
+        <div class="field"><label>Yetkili Kişi</label><input type="text" required></div>
+        <div class="field"><label>Telefon</label><input type="tel" required></div>
+        <div class="field"><label>E-posta</label><input type="email" required></div>
+        <div class="field"><label>Yükleme Şehri</label><input type="text"></div>
+        <div class="field"><label>Teslim Şehri</label><input type="text"></div>
+        <div class="field full"><label>Talep Detayı</label><textarea placeholder="Yük tipi, tarih ve notlar"></textarea></div>
+      </div>
+      <label class="check"><input type="checkbox" required><span>Başvuru bilgilerimin değerlendirilmesini kabul ediyorum.</span></label>
+      <button class="btn btn-primary" style="width:100%" type="submit">Gönder</button>
+    </form>
+    <form action="tesekkurler.html">
+      <h3>Taşıyıcı Başvurusu</h3>
+      <p>Sisteme taşıyıcı olarak katılmak ve hat bildirmek isteyen firmalar için.</p>
+      <div class="form-grid">
+        <div class="field"><label>Firma Adı</label><input type="text" required></div>
+        <div class="field"><label>Yetkili Kişi</label><input type="text" required></div>
+        <div class="field"><label>Telefon</label><input type="tel" required></div>
+        <div class="field"><label>E-posta</label><input type="email" required></div>
+        <div class="field"><label>Araç Tipi</label><input type="text"></div>
+        <div class="field"><label>Çalıştığınız Hatlar</label><input type="text"></div>
+        <div class="field full"><label>Kısa Açıklama</label><textarea placeholder="Araç kapasitesi ve çalışma düzeni"></textarea></div>
+      </div>
+      <label class="check"><input type="checkbox" required><span>Başvuru bilgilerimin değerlendirilmesini kabul ediyorum.</span></label>
+      <button class="btn btn-primary" style="width:100%" type="submit">Gönder</button>
+    </form>
+    <form action="tesekkurler.html">
+      <h3>Kurumsal İş Birliği Formu</h3>
+      <p>Düzenli taşıma ihtiyacı olan firmalar için özel çalışma modeli başvurusu.</p>
+      <div class="form-grid">
+        <div class="field"><label>Firma Adı</label><input type="text" required></div>
+        <div class="field"><label>Yetkili Kişi</label><input type="text" required></div>
+        <div class="field"><label>Telefon</label><input type="tel" required></div>
+        <div class="field"><label>E-posta</label><input type="email" required></div>
+        <div class="field"><label>Aylık Sevkiyat Tahmini</label><input type="text"></div>
+        <div class="field"><label>Çalışılan Hatlar</label><input type="text"></div>
+        <div class="field full"><label>İş Birliği Detayı</label><textarea placeholder="İhtiyaç, hacim ve beklentiler"></textarea></div>
+      </div>
+      <label class="check"><input type="checkbox" required><span>Kurumsal başvuru değerlendirmesini kabul ediyorum.</span></label>
+      <button class="btn btn-primary" style="width:100%" type="submit">Gönder</button>
+    </form>
+  </div>
+</section>
+<footer>
+  <div class="container footer-inner">
+    <div><strong>SEVRA</strong><br>Başvuru toplama merkezi</div>
+    <div>FULL PACKAGE V16 • Ayrı başvuru ekranı</div>
+  </div>
+</footer>
+</body>
+</html>

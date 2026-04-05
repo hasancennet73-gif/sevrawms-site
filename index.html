@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | V16 Kurumsal Nakliye ve Dijital Operasyon Platformu</title>
+  <meta name="description" content="SEVRA V16; GitHub Pages tabanında çalışan, daha toparlanmış vitrin, ayrı başvuru ekranı ve daha güçlü panel yönü sunan dijital lojistik platformudur." />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#06111f;--line:rgba(255,255,255,.10);--text:#eef4ff;--muted:#aab7ca;--primary:#2f6fff;--primary-dark:#1f57d9;--secondary:#19c7b0;--success:#7df1d0;--shadow:0 22px 60px rgba(0,0,0,.34)}
+    html{scroll-behavior:smooth}
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(47,111,255,.20), transparent 24%),radial-gradient(circle at 20% 20%, rgba(25,199,176,.08), transparent 20%),linear-gradient(180deg,#06111f,#030913 70%);line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1280px;margin:0 auto;padding:0 20px}
+    .topbar{position:sticky;top:0;z-index:100;background:rgba(6,17,31,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .topbar-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff;box-shadow:0 12px 30px rgba(47,111,255,.28)}
+    .brand-text strong{display:block;font-size:24px}.brand-text span{display:block;font-size:12px;color:var(--muted)}
+    .nav{display:flex;gap:20px;color:#d3dcef;font-size:15px}.nav a:hover{color:#fff}
+    .actions{display:flex;gap:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:14px;border:1px solid transparent;font-weight:700;transition:.2s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-dark)}
+    .btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}.btn-secondary:hover{background:rgba(255,255,255,.08)}
+    .hero{padding:84px 0 64px}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+    .badge{display:inline-flex;padding:10px 16px;border-radius:999px;border:1px solid rgba(25,199,176,.26);background:rgba(25,199,176,.10);color:#93f1dd;font-size:14px;font-weight:700;margin-bottom:18px}
+    h1{font-size:50px;line-height:1.03;letter-spacing:-1.3px;margin-bottom:18px;max-width:860px}
+    .lead{font-size:19px;color:#bac7d8;max-width:760px;margin-bottom:24px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+    .hero-points{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .card,.point,.info-box,.flow-step,.mini-card,.section-card,.cta-box{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border-radius:22px;box-shadow:var(--shadow)}
+    .point{padding:18px}
+    .point strong{display:block;font-size:20px;margin-bottom:5px}.point span{display:block;font-size:13px;color:var(--muted)}
+    .info-box,.mini-card,.section-card{padding:24px}
+    .info-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.info-head strong{font-size:20px}
+    .online{font-size:13px;font-weight:700;color:var(--success)}
+    .card{padding:16px 18px;margin-bottom:12px;background:rgba(4,10,19,.45)}
+    .card strong{display:block;font-size:17px;margin-bottom:5px}.card span{font-size:14px;color:var(--muted)}
+    section{padding:72px 0}
+    .section-head{max-width:940px;margin-bottom:30px}
+    .section-head h2{font-size:40px;line-height:1.08;margin-bottom:14px}.section-head p{font-size:17px;color:var(--muted)}
+    .grid-4,.grid-3,.flow-grid,.panel-grid,.faq-grid{display:grid;gap:20px}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+    .grid-3,.flow-grid,.panel-grid{grid-template-columns:repeat(3,1fr)}
+    .faq-grid{grid-template-columns:1fr 1fr}
+    .mini-card h3,.section-card h3{font-size:22px;margin-bottom:10px}.mini-card p,.section-card p{font-size:14px;color:var(--muted)}
+    .flow-step{padding:22px}.flow-step strong{display:block;font-size:22px;margin-bottom:8px}.flow-step span{font-size:14px;color:var(--muted)}
+    .panel-link{display:block;padding:24px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.04)}
+    .panel-link strong{display:block;font-size:22px;margin-bottom:8px}.panel-link span{display:block;font-size:14px;color:var(--muted)}
+    .cta{padding:86px 0}.cta-box{padding:44px;text-align:center}
+    .cta-box h2{font-size:44px;line-height:1.06;margin-bottom:12px}.cta-box p{max-width:760px;margin:0 auto 24px;color:var(--muted)}
+    footer{border-top:1px solid var(--line);background:rgba(0,0,0,.16)}
+    .footer-inner{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px}.footer-inner strong{color:#fff}
+    @media (max-width:1100px){.hero-grid,.grid-4,.grid-3,.hero-points,.flow-grid,.panel-grid,.faq-grid{grid-template-columns:1fr}.nav{display:none}h1{font-size:40px}.section-head h2,.cta-box h2{font-size:32px}}
+    @media (max-width:680px){.actions{display:none}h1{font-size:34px}.hero{padding-top:54px}.container{padding:0 16px}.hero-actions .btn{width:100%}.brand-text strong{font-size:18px}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html"><div class="brand-mark">S</div><div class="brand-text"><strong>SEVRA</strong><span>DİJİTAL LOJİSTİK PLATFORMU</span></div></a>
+    <nav class="nav">
+      <a href="#cozumler">Çözümler</a>
+      <a href="#akis">İş Akışı</a>
+      <a href="#panel">Panel</a>
+      <a href="#sss">SSS</a>
+    </nav>
+    <div class="actions">
+      <a class="btn btn-secondary" href="panel.html">Panele Geç</a>
+      <a class="btn btn-primary" href="basvuru.html">Başvuru Yap</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge">V16 • GitHub Pages tabanlı yeni zemin</div>
+      <h1>Yük veren, taşıyıcı ve operasyon akışını daha düzenli gösteren kurumsal dijital lojistik vitrini</h1>
+      <p class="lead">SEVRA V16 ile yayın artık GitHub Pages üzerinde ilerler. Ana vitrin korunur, başvuru tarafı ayrı sayfaya alınır ve panel yönü daha net hale gelir.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="basvuru.html">Başvuru Ekranına Git</a>
+        <a class="btn btn-secondary" href="panel.html">Yönetim Paneli</a>
+      </div>
+      <div class="hero-points">
+        <div class="point"><strong>Yeni Taban</strong><span>GitHub Pages yayını</span></div>
+        <div class="point"><strong>Başvuru</strong><span>Ayrı sayfa yapısı</span></div>
+        <div class="point"><strong>Panel</strong><span>Daha net yönetim yönü</span></div>
+        <div class="point"><strong>Akış</strong><span>Daha toplu ürün hissi</span></div>
+      </div>
+    </div>
+    <div class="info-box">
+      <div class="info-head"><strong>V16 Özeti</strong><div class="online">Canlı</div></div>
+      <div class="card"><strong>Yeni yayın zemini</strong><span>Netlify kredi sınırına takılmadan GitHub Pages üzerinde yayın devam eder.</span></div>
+      <div class="card"><strong>Ayrı başvuru ekranı</strong><span>Ana sayfadaki yoğunluk azaltıldı; başvuru tarafı ayrı sayfaya alındı.</span></div>
+      <div class="card"><strong>Panel korunuyor</strong><span>Teklif, kayıt, mesaj ve rapor yönü olan ayrı panel ekranı korunur.</span></div>
+      <div class="card"><strong>Bir sonraki kapı</strong><span>V17’de başvuru ve paneli daha da ürünleştirebiliriz.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cozumler">
+  <div class="container">
+    <div class="section-head">
+      <h2>SEVRA ne sunuyor?</h2>
+      <p>Platformun amacı; yük veren ile taşıyıcı arasında güven veren, kurumsal ve daha organize bir dijital yüz oluşturmaktır.</p>
+    </div>
+    <div class="grid-4">
+      <div class="mini-card"><h3>Kurumsal vitrin</h3><p>İlk karşılaşmada güven veren, net ve sade tanıtım yapısı.</p></div>
+      <div class="mini-card"><h3>Teklif toplama</h3><p>Fiyat talebi ve yük veren başvuru akışları.</p></div>
+      <div class="mini-card"><h3>Taşıyıcı toplama</h3><p>Taşıyıcı ağını oluşturacak kayıt mantığı.</p></div>
+      <div class="mini-card"><h3>Yönetim paneli</h3><p>Arkada bu akışı yönetecek ürün yüzü.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="akis">
+  <div class="container">
+    <div class="section-head">
+      <h2>Temel iş akışı</h2>
+      <p>Ziyaretçi, sistemin ne yaptığını hızlı anlamalı. V16’da bu akış daha sade anlatılır.</p>
+    </div>
+    <div class="flow-grid">
+      <div class="flow-step"><strong>1. Talep gelir</strong><span>Yük veren fiyat ister ya da doğrudan başvuru bırakır.</span></div>
+      <div class="flow-step"><strong>2. Taşıyıcı eşleşir</strong><span>Uygun rota, araç ve operasyon yapısı değerlendirilir.</span></div>
+      <div class="flow-step"><strong>3. Süreç yönetilir</strong><span>Teklif, görüşme ve takip panel tarafında ilerler.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="panel">
+  <div class="container">
+    <div class="section-head">
+      <h2>Platform iç ekranları</h2>
+      <p>SEVRA artık sadece tek bir landing page değil; ayrı başvuru ve ayrı panel ekranlarına giden bir ürün yönü taşır.</p>
+    </div>
+    <div class="panel-grid">
+      <a class="panel-link" href="basvuru.html"><strong>Başvuru Merkezi</strong><span>Fiyat talebi, yük veren, taşıyıcı ve kurumsal iş birliği başvurularının toplandığı ayrı ekran.</span></a>
+      <a class="panel-link" href="panel.html"><strong>Yönetim Paneli</strong><span>Teklif, kayıt, mesaj ve rapor tarafının gösterildiği yönetim yüzü.</span></a>
+      <a class="panel-link" href="tesekkurler.html"><strong>Teşekkür Ekranı</strong><span>Gönderim sonrası kullanıcıyı düzenli şekilde karşılayan ayrı sayfa.</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="sss">
+  <div class="container">
+    <div class="section-head">
+      <h2>Sık sorulan sorular</h2>
+      <p>SEVRA’yı ilk kez gören bir ziyaretçinin temel sorularına hızlı cevap verilir.</p>
+    </div>
+    <div class="faq-grid">
+      <div class="section-card"><h3>SEVRA ne işe yarar?</h3><p>Yük veren ile taşıyıcı arasında teklif, iletişim ve operasyon sürecini daha kurumsal hale getirmeyi hedefler.</p></div>
+      <div class="section-card"><h3>Başvuru nasıl alınır?</h3><p>V16’da başvuru ekranı ayrı sayfaya alınmıştır. Kullanıcılar tek yerde form seçebilir.</p></div>
+      <div class="section-card"><h3>Panel neyi gösterir?</h3><p>Arka tarafta teklif, kayıt, mesaj ve rapor tarafının nasıl yönetileceğini ürün gibi gösterir.</p></div>
+      <div class="section-card"><h3>Sonraki adım ne olabilir?</h3><p>Başvuru verilerini daha gerçek toplama mantığı ve panel alt ekranlarını derinleştirme olabilir.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-box">
+      <h2>SEVRA ile daha düzenli akışa geçin</h2>
+      <p>V16 ile ana sayfa, başvuru ekranı ve panel daha net ayrılır. Böylece platform daha gerçek ürün mantığına yaklaşır.</p>
+      <div class="hero-actions" style="justify-content:center;margin-bottom:0">
+        <a class="btn btn-primary" href="basvuru.html">Başvuru Merkezine Git</a>
+        <a class="btn btn-secondary" href="panel.html">Paneli Aç</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div><strong>SEVRA</strong><br>Yük, taşıyıcı ve operasyon süreçlerini buluşturan kurumsal dijital lojistik platformu</div>
+    <div>FULL PACKAGE V16 • GitHub Pages tabanı • sevrawms.com.tr için hazır yön</div>
+  </div>
+</footer>
+</body>
+</html>
