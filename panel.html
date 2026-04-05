@@ -99,8 +99,9 @@ tbody tr:last-child td{border-bottom:none}
 .message span{color:#b7c5d8;font-size:12px}
 .message-btn{
   min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;
-  display:inline-flex;align-items:center;font-weight:700;font-size:12px
+  display:inline-flex;align-items:center;font-weight:700;font-size:12px;border:none;cursor:pointer
 }
+.message-btn:hover{filter:brightness(1.05)}
 section.panel-section{display:none}
 section.panel-section.active{display:block}
 .section-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
@@ -116,6 +117,41 @@ section.panel-section.active{display:block}
 }
 .info-item strong{display:block;font-size:18px;margin-bottom:6px}
 .info-item span{color:var(--muted);font-size:14px}
+
+.modal{
+  position:fixed;inset:0;background:rgba(2,8,18,.72);display:none;
+  align-items:center;justify-content:center;padding:20px;z-index:9999
+}
+.modal.active{display:flex}
+.modal-box{
+  width:min(760px,100%);border-radius:24px;
+  background:linear-gradient(180deg,#0f254a,#09172d);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 24px 80px rgba(0,0,0,.45);
+  overflow:hidden
+}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.08)
+}
+.modal-head h3{font-size:24px}
+.modal-close{
+  min-height:38px;padding:0 14px;border:none;border-radius:10px;
+  background:var(--yellow);color:#09152a;font-weight:800;cursor:pointer
+}
+.modal-body{padding:22px;display:grid;gap:16px}
+.detail-row{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;background:rgba(255,255,255,.03);padding:16px
+}
+.detail-label{display:block;color:#b7c5d8;font-size:12px;margin-bottom:6px}
+.detail-value{font-size:16px;color:#eef4ff}
+.modal-actions{display:flex;gap:12px;flex-wrap:wrap}
+.reply-box{
+  width:100%;min-height:120px;border-radius:14px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:#fff;padding:14px;outline:none;resize:vertical
+}
+
 @media (max-width:1100px){
   .layout,.grid,.sub-grid,.list-grid{grid-template-columns:1fr}
   .stats{grid-template-columns:1fr 1fr}
@@ -123,6 +159,7 @@ section.panel-section.active{display:block}
 }
 @media (max-width:700px){
   .stats{grid-template-columns:1fr}
+  .top-row h1,.section-top h2,.card-head h3,.modal-head h3{font-size:28px}
 }
 </style>
 </head>
@@ -187,17 +224,17 @@ section.panel-section.active{display:block}
           <div class="message">
             <div class="message-avatar"></div>
             <div><strong>Orhan Nakliyat</strong><span>İstanbul çıkışlı yük için fiyat bekleniyor.</span></div>
-            <div class="message-btn">Yanıtla</div>
+            <button class="message-btn" data-message-title="Orhan Nakliyat" data-message-text="İstanbul çıkışlı yük için fiyat bekleniyor." data-message-type="Mesaj Detayı">Yanıtla</button>
           </div>
           <div class="message">
             <div class="message-avatar"></div>
             <div><strong>Demir Lojistik</strong><span>Yeni araç ekleme ve rota teyidi gönderildi.</span></div>
-            <div class="message-btn">Aç</div>
+            <button class="message-btn" data-message-title="Demir Lojistik" data-message-text="Yeni araç ekleme ve rota teyidi gönderildi." data-message-type="Mesaj Detayı">Aç</button>
           </div>
           <div class="message">
             <div class="message-avatar"></div>
             <div><strong>Yıldır Trans</strong><span>Teklif değerlendirme süreci devam ediyor.</span></div>
-            <div class="message-btn">Gör</div>
+            <button class="message-btn" data-message-title="Yıldır Trans" data-message-text="Teklif değerlendirme süreci devam ediyor." data-message-type="Mesaj Detayı">Gör</button>
           </div>
         </div>
       </div>
@@ -310,17 +347,17 @@ section.panel-section.active{display:block}
         <div class="message">
           <div class="message-avatar"></div>
           <div><strong>Orhan Nakliyat</strong><span>Yükleme saati için dönüş bekliyoruz.</span></div>
-          <div class="message-btn">Aç</div>
+          <button class="message-btn" data-message-title="Orhan Nakliyat" data-message-text="Yükleme saati için dönüş bekliyoruz." data-message-type="Mesaj Detayı">Aç</button>
         </div>
         <div class="message">
           <div class="message-avatar"></div>
           <div><strong>Atlas Gıda</strong><span>Yeni sevkiyat talebi bırakıldı.</span></div>
-          <div class="message-btn">Aç</div>
+          <button class="message-btn" data-message-title="Atlas Gıda" data-message-text="Yeni sevkiyat talebi bırakıldı." data-message-type="Mesaj Detayı">Aç</button>
         </div>
         <div class="message">
           <div class="message-avatar"></div>
           <div><strong>Demir Lojistik</strong><span>Yeni araç eklendi, profil güncellendi.</span></div>
-          <div class="message-btn">Aç</div>
+          <button class="message-btn" data-message-title="Demir Lojistik" data-message-text="Yeni araç eklendi, profil güncellendi." data-message-type="Mesaj Detayı">Aç</button>
         </div>
       </div>
     </section>
@@ -376,12 +413,53 @@ section.panel-section.active{display:block}
   </main>
 </div>
 
+<div class="modal" id="messageModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">Mesaj Detayı</h3>
+      <button class="modal-close" id="closeModalBtn" type="button">Kapat</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-row">
+        <span class="detail-label">Konu</span>
+        <div class="detail-value" id="modalType">Mesaj Detayı</div>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Firma</span>
+        <div class="detail-value" id="modalCompany">-</div>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Mesaj</span>
+        <div class="detail-value" id="modalText">-</div>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Yanıt Hazırla</span>
+        <textarea class="reply-box" id="replyBox" placeholder="Buraya yanıt taslağını yaz..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="saveReplyBtn" type="button">Taslağı Kaydet</button>
+        <button class="btn btn-secondary" id="closeModalBtn2" type="button">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 const items = document.querySelectorAll('.menu-item[data-target]');
 const sections = document.querySelectorAll('.panel-section');
+const messageButtons = document.querySelectorAll('.message-btn');
+const modal = document.getElementById('messageModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalType = document.getElementById('modalType');
+const modalCompany = document.getElementById('modalCompany');
+const modalText = document.getElementById('modalText');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const closeModalBtn2 = document.getElementById('closeModalBtn2');
+const saveReplyBtn = document.getElementById('saveReplyBtn');
+const replyBox = document.getElementById('replyBox');
 
-items.forEach(item => {{
-  item.addEventListener('click', () => {{
+items.forEach(item => {
+  item.addEventListener('click', () => {
     const target = item.getAttribute('data-target');
 
     items.forEach(i => i.classList.remove('active'));
@@ -390,8 +468,52 @@ items.forEach(item => {{
     sections.forEach(sec => sec.classList.remove('active'));
     const activeSection = document.getElementById(target);
     if (activeSection) activeSection.classList.add('active');
-  }});
-}});
+  });
+});
+
+messageButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const title = button.getAttribute('data-message-title') || 'Mesaj';
+    const text = button.getAttribute('data-message-text') || 'Mesaj detayı bulunamadı.';
+    const type = button.getAttribute('data-message-type') || 'Mesaj Detayı';
+
+    modalTitle.textContent = title;
+    modalType.textContent = type;
+    modalCompany.textContent = title;
+    modalText.textContent = text;
+    replyBox.value = '';
+
+    modal.classList.add('active');
+  });
+});
+
+function closeModal() {
+  modal.classList.remove('active');
+}
+
+closeModalBtn.addEventListener('click', closeModal);
+closeModalBtn2.addEventListener('click', closeModal);
+
+modal.addEventListener('click', (event) => {
+  if (event.target === modal) closeModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeModal();
+});
+
+saveReplyBtn.addEventListener('click', () => {
+  const company = modalCompany.textContent || 'Mesaj';
+  const replyText = replyBox.value.trim();
+
+  if (!replyText) {
+    alert('Lütfen önce bir yanıt yaz.');
+    return;
+  }
+
+  alert(company + ' için yanıt taslağı kaydedildi.');
+  closeModal();
+});
 </script>
 </body>
 </html>
