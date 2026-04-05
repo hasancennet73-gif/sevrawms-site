@@ -1,119 +1,228 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA Panel | V16 GitHub Pages Tabanlı Panel</title>
-  <style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | B18 Panel</title>
+<style>
+
     *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.10);--text:#eef4ff;--muted:#aab7ca;--primary:#2f6fff;--secondary:#19c7b0}
-    body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#07111f,#030913);color:var(--text)}
+    :root{
+      --bg:#071427;
+      --bg2:#0c1f3f;
+      --panel:#0f254a;
+      --panel2:#132d59;
+      --line:rgba(255,255,255,.10);
+      --text:#eef4ff;
+      --muted:#aebbd1;
+      --yellow:#f3c744;
+      --yellow-dark:#d7a61c;
+      --shadow:0 22px 60px rgba(0,0,0,.35);
+      --max:1320px;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+        radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
+        linear-gradient(180deg,#071427,#08111d 70%,#050b14);
+      line-height:1.6;
+    }
     a{text-decoration:none;color:inherit}
-    .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-    .sidebar{background:rgba(255,255,255,.03);border-right:1px solid var(--line);padding:22px}
-    .brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-    .mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-weight:700}
-    .brand strong{display:block;font-size:20px}.brand span{display:block;font-size:12px;color:var(--muted)}
-    .menu{display:grid;gap:10px}
-    .menu a,.menu div{border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:14px;padding:12px 14px;font-size:14px}
-    .main{padding:22px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
-    .top h1{font-size:30px}.top p{color:var(--muted)}
-    .actions{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border-radius:12px;border:1px solid transparent;font-weight:700}
-    .btn-primary{background:var(--primary)}.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line)}
-    .stats,.screens,.kanban,.subgrid{display:grid;gap:16px}
-    .stats,.screens{grid-template-columns:repeat(4,1fr)} .subgrid{grid-template-columns:1fr 1fr;margin-top:20px}
-    .stat,.screen,.box,.mini,.col,.card{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:18px;padding:18px}
-    .stat strong{display:block;font-size:28px;margin-bottom:5px}
-    .stat span,.screen span,.mini span,.card span{font-size:13px;color:var(--muted)}
-    .screen strong,.mini strong,.card strong{display:block;margin-bottom:6px}
-    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}
-    .box h2{font-size:20px;margin-bottom:14px}
-    .kanban{grid-template-columns:repeat(4,1fr)}
-    .col h3{font-size:15px;margin-bottom:10px}
-    .card{background:#0a1526;padding:10px;margin-bottom:10px;border-radius:12px}
-    .table{border:1px solid var(--line);border-radius:16px;overflow:hidden}
-    .row{display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr .8fr;border-bottom:1px solid var(--line)}
-    .row:last-child{border-bottom:none}
-    .row div{padding:12px 14px;font-size:13px}
-    .row.head{background:rgba(255,255,255,.05);font-weight:700}
-    .footer-note{margin-top:18px;border:1px solid rgba(255,209,102,.22);background:rgba(255,209,102,.08);color:#ffe29a;border-radius:14px;padding:12px 14px;font-size:13px}
-    @media (max-width:1100px){.layout{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--line)}.stats,.screens,.grid,.kanban,.subgrid{grid-template-columns:1fr}}
-    @media (max-width:680px){.row{grid-template-columns:1fr}.row.head{display:none}}
-  </style>
+    .container{max-width:var(--max);margin:0 auto;padding:0 22px}
+    .topbar{
+      position:sticky; top:0; z-index:100;
+      background:rgba(4,12,24,.88); backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      min-height:86px; display:flex; align-items:center; justify-content:space-between; gap:18px;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:54px;height:54px;border-radius:16px;
+      background:linear-gradient(135deg,var(--yellow),#f8df91);
+      color:#0d1d38;font-size:24px;font-weight:800;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 12px 30px rgba(243,199,68,.28);
+    }
+    .brand-text strong{display:block;font-size:30px;letter-spacing:.4px}
+    .brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
+    .nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
+    .nav a:hover{color:#fff}
+    .actions{display:flex;align-items:center;gap:12px}
+    .btn{
+      min-height:48px;padding:0 22px;border-radius:14px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:700;border:1px solid transparent;transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--yellow);color:#0b1830;box-shadow:0 14px 30px rgba(243,199,68,.18)}
+    .btn-primary:hover{background:var(--yellow-dark)}
+    .btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
+    .btn-secondary:hover{background:rgba(255,255,255,.08)}
+    .section-head{max-width:920px;margin-bottom:26px}
+    .section-head h2{font-size:42px;line-height:1.06;margin-bottom:12px}
+    .section-head p{font-size:17px;color:var(--muted)}
+    .card{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
+      box-shadow:var(--shadow);
+    }
+    footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)}
+    .footer-inner{
+      min-height:90px;display:flex;align-items:center;justify-content:space-between;
+      gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px
+    }
+    .footer-inner strong{color:#fff}
+    @media (max-width:980px){
+      .nav,.actions{display:none}
+      .section-head h2{font-size:32px}
+    }
+
+.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+.sidebar{background:linear-gradient(180deg,#10274b,#0b1c37);border-right:1px solid rgba(255,255,255,.08);padding:28px 20px}
+.side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.side-logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900}
+.side-brand strong{display:block;font-size:18px}
+.side-brand span{display:block;color:#b8c5d8;font-size:12px}
+.side-menu{display:flex;flex-direction:column;gap:10px}
+.menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700}
+.menu-item.active{background:var(--yellow);color:#0c1a34}
+.main{padding:24px;background:radial-gradient(circle at top right, rgba(243,199,68,.07), transparent 18%),linear-gradient(180deg,#0d2143,#0a1a35)}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.top-row h1{font-size:40px}
+.top-row p{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.stat-card{padding:18px}
+.stat-card small{display:block;color:#c0cce0;margin-bottom:8px;font-size:12px}
+.stat-card strong{display:block;font-size:34px;line-height:1;margin-bottom:6px}
+.stat-card span{color:#aebcd3;font-size:13px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.inner-card{padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.card-head h3{font-size:26px}
+.tag{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(243,199,68,.14);color:#ffe08a;font-size:12px;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
+tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
+tbody tr:last-child td{border-bottom:none}
+.message{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.message:last-child{border-bottom:none}
+.message-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
+.message strong{display:block;font-size:15px;margin-bottom:3px}
+.message span{color:#b7c5d8;font-size:12px}
+.message-btn{min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;display:inline-flex;align-items:center;font-weight:700;font-size:12px}
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media (max-width:1100px){.layout,.grid,.sub-grid{grid-template-columns:1fr} .stats{grid-template-columns:1fr 1fr}}
+@media (max-width:700px){.stats{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="brand"><div class="mark">S</div><div><strong>SEVRA Panel</strong><span>V16 Yönetim Yüzü</span></div></div>
-      <div class="menu">
-        <div>Genel Bakış</div>
-        <div>Teklif Ekranı</div>
-        <div>Kayıt Ekranı</div>
-        <div>Mesaj Ekranı</div>
-        <div>Rapor Ekranı</div>
-        <div>Başvuru Merkezi</div>
-        <a href="index.html">Ana Siteye Dön</a>
-        <a href="basvuru.html">Başvuru Sayfası</a>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="side-brand">
+      <div class="side-logo">S</div>
+      <div><strong>SEVRA</strong><span>Kurumsal Panel</span></div>
+    </div>
+    <div class="side-menu">
+      <div class="menu-item active">Kontrol Paneli</div>
+      <div class="menu-item">Yük İlanları</div>
+      <div class="menu-item">Tekliflerim</div>
+      <div class="menu-item">Nakliyeciler</div>
+      <div class="menu-item">Yük Verenler</div>
+      <div class="menu-item">Mesajlar</div>
+      <div class="menu-item">Raporlar</div>
+      <div class="menu-item">Ayarlar</div>
+      <a class="menu-item" href="index.html">Ana Sayfaya Dön</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-row">
+      <div>
+        <h1>SEVRA Panel</h1>
+        <p>Yük ilanları, nakliyeciler, başvurular ve raporların tek ürün hissinde toplandığı yönetim yüzü.</p>
       </div>
-    </aside>
-    <main class="main">
-      <div class="top">
-        <div><h1>Yönetim Paneli</h1><p>V16 ile GitHub Pages tabanında korunmuş ve toparlanmış yönetim yüzü.</p></div>
-        <div class="actions"><a class="btn btn-secondary" href="index.html">Ana Site</a><a class="btn btn-primary" href="basvuru.html">Başvuru Merkezi</a></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-secondary" href="basvuru.html">Başvuru Merkezi</a>
+        <a class="btn btn-primary" href="index.html">Ana Vitrin</a>
       </div>
-      <div class="stats">
-        <div class="stat"><strong>18</strong><span>Toplam yeni kayıt</span></div>
-        <div class="stat"><strong>07</strong><span>Aranacak müşteri</span></div>
-        <div class="stat"><strong>04</strong><span>Teklif hazırlanıyor</span></div>
-        <div class="stat"><strong>03</strong><span>Kurumsal görüşme</span></div>
+    </div>
+
+    <div class="stats">
+      <div class="card stat-card"><small>Toplam Yük İlanı</small><strong>532</strong><span>aktif ilan görünümü</span></div>
+      <div class="card stat-card"><small>Bekleyen Teklif</small><strong>14</strong><span>cevap süreci</span></div>
+      <div class="card stat-card"><small>Aktif Nakliyeci</small><strong>1,205</strong><span>havuz görünümü</span></div>
+      <div class="card stat-card"><small>Aylık Hacim</small><strong>₺298K</strong><span>operasyon potansiyeli</span></div>
+    </div>
+
+    <div class="grid">
+      <div class="card inner-card">
+        <div class="card-head"><h3>Yük İlanları</h3><div class="tag">Canlı görünüm</div></div>
+        <table>
+          <thead><tr><th>Yükleme</th><th>Varış</th><th>Yük Tipi</th><th>Tonaj</th><th>Teklif</th><th>Durum</th></tr></thead>
+          <tbody>
+            <tr><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22 Ton</td><td>₺129.000</td><td><span class="tag">Sırada</span></td></tr>
+            <tr><td>İzmir</td><td>Bursa</td><td>Parsiyel</td><td>8 Ton</td><td>₺48.500</td><td><span class="tag">Açık</span></td></tr>
+            <tr><td>Konya</td><td>Mersin</td><td>Hammadde</td><td>16 Ton</td><td>₺71.200</td><td><span class="tag">Görüşme</span></td></tr>
+            <tr><td>Manisa</td><td>Gebze</td><td>Paletli</td><td>13 Ton</td><td>₺63.800</td><td><span class="tag">Açık</span></td></tr>
+            <tr><td>Gaziantep</td><td>Kayseri</td><td>Endüstriyel</td><td>19 Ton</td><td>₺81.400</td><td><span class="tag">Sırada</span></td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="screens">
-        <div class="screen"><strong>Teklif Ekranı</strong><span>Fiyat taleplerinin akış görünümü</span></div>
-        <div class="screen"><strong>Kayıt Ekranı</strong><span>Yük veren ve taşıyıcı kayıt görünümü</span></div>
-        <div class="screen"><strong>Mesaj Ekranı</strong><span>Canlı görüşme ve bildirim yönü</span></div>
-        <div class="screen"><strong>Rapor Ekranı</strong><span>Özet ve takip görünümü</span></div>
-      </div>
-      <div class="grid">
-        <div class="box">
-          <h2>Teklif Akışı</h2>
-          <div class="kanban">
-            <div class="col"><h3>Yeni</h3><div class="card"><strong>Fiyat Talebi #001</strong><span>Ankara → İstanbul</span></div><div class="card"><strong>Kurumsal Talep #014</strong><span>İstanbul → İzmir</span></div></div>
-            <div class="col"><h3>Görüşmede</h3><div class="card"><strong>Yük Talebi #021</strong><span>Bursa → Ankara</span></div></div>
-            <div class="col"><h3>Teklif Verildi</h3><div class="card"><strong>Fiyat Talebi #008</strong><span>İzmir → Konya</span></div></div>
-            <div class="col"><h3>Kapandı</h3><div class="card"><strong>Taşıyıcı #005</strong><span>Uygunluk Onayı</span></div></div>
-          </div>
+
+      <div class="card inner-card">
+        <div class="card-head"><h3>Son Mesajlar</h3><div class="tag">İç iletişim</div></div>
+        <div class="message">
+          <div class="message-avatar"></div>
+          <div><strong>Orhan Nakliyat</strong><span>İstanbul çıkışlı yük için fiyat bekleniyor.</span></div>
+          <div class="message-btn">Yanıtla</div>
         </div>
-        <div class="box">
-          <h2>Hızlı İşlem Kutusu</h2>
-          <div class="mini"><strong>Aranacak müşteri</strong><span>Yeni gelen kayıtların ilk dönüş sırası.</span></div>
-          <div class="mini"><strong>Taşıyıcı uygunluğu</strong><span>Hat ve araç bazlı ilk uygunluk kontrolü.</span></div>
-          <div class="mini"><strong>Kurumsal görüşme</strong><span>Düzenli iş potansiyeli olan firmalara öncelik.</span></div>
-          <div class="mini"><strong>Rapor takibi</strong><span>Hangi kayıt ne aşamada görülebilir.</span></div>
+        <div class="message">
+          <div class="message-avatar"></div>
+          <div><strong>Demir Lojistik</strong><span>Yeni araç ekleme ve rota teyidi gönderildi.</span></div>
+          <div class="message-btn">Aç</div>
+        </div>
+        <div class="message">
+          <div class="message-avatar"></div>
+          <div><strong>Yıldır Trans</strong><span>Teklif değerlendirme süreci devam ediyor.</span></div>
+          <div class="message-btn">Gör</div>
         </div>
       </div>
-      <div class="subgrid">
-        <div class="box">
-          <h2>Kayıt Tablosu</h2>
-          <div class="table">
-            <div class="row head"><div>Kayıt</div><div>Hat</div><div>Durum</div><div>Öncelik</div><div>İşlem</div></div>
-            <div class="row"><div>Fiyat Talebi #001</div><div>Ankara-İstanbul</div><div>Yeni</div><div>Yüksek</div><div>Aranacak</div></div>
-            <div class="row"><div>Kurumsal Talep #014</div><div>İstanbul-İzmir</div><div>Görüşmede</div><div>Orta</div><div>Toplantı Bekliyor</div></div>
-            <div class="row"><div>Yük Talebi #021</div><div>Bursa-Ankara</div><div>Teklif Verildi</div><div>Orta</div><div>Cevap Bekliyor</div></div>
-            <div class="row"><div>Taşıyıcı Başvuru #005</div><div>İç Anadolu</div><div>İnceleniyor</div><div>Düşük</div><div>Uygunluk Kontrol</div></div>
-          </div>
-        </div>
-        <div class="box">
-          <h2>Alt Ekran Hazırlıkları</h2>
-          <div class="mini"><strong>Teklif Detayı</strong><span>Seçilen teklif için alt detay ekranı yönü.</span></div>
-          <div class="mini"><strong>Kayıt Kartı</strong><span>Seçilen başvuru için kart/detay alanı yönü.</span></div>
-          <div class="mini"><strong>Konuşma Detayı</strong><span>Mesaj tarafı için konuşma ekranı yönü.</span></div>
-          <div class="mini"><strong>Rapor Özeti</strong><span>Haftalık ve aylık özet ekranı yönü.</span></div>
-        </div>
+    </div>
+
+    <div class="sub-grid">
+      <div class="card inner-card">
+        <div class="card-head"><h3>Nakliyeciler</h3><div class="tag">Onay akışı</div></div>
+        <table>
+          <thead><tr><th>Firma</th><th>E-posta</th><th>Telefon</th><th>Durum</th></tr></thead>
+          <tbody>
+            <tr><td>Orhan Nakliyat</td><td>info@firma.com</td><td>0555 101 2020</td><td><span class="tag">Onay Bekliyor</span></td></tr>
+            <tr><td>Demir Lojistik</td><td>operasyon@firma.com</td><td>0555 202 3030</td><td><span class="tag">Araştırılıyor</span></td></tr>
+            <tr><td>Yıldır Trans</td><td>teklif@firma.com</td><td>0555 303 4040</td><td><span class="tag">Aktif</span></td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="footer-note">V16 ile amaç: GitHub Pages üstünde yayın devam ederken ürün akışını bozmadan toparlamak.</div>
-    </main>
-  </div>
+
+      <div class="card inner-card">
+        <div class="card-head"><h3>Rapor Özeti</h3><div class="tag">Özet görünüm</div></div>
+        <table>
+          <thead><tr><th>Başlık</th><th>Değer</th></tr></thead>
+          <tbody>
+            <tr><td>Haftalık yeni ilan</td><td>38</td></tr>
+            <tr><td>Toplam aktif teklif</td><td>14</td></tr>
+            <tr><td>Aktif taşıyıcı</td><td>1,205</td></tr>
+            <tr><td>Kurumsal başvuru</td><td>26</td></tr>
+            <tr><td>Aylık tahmini hacim</td><td>₺298.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
 </body>
 </html>
