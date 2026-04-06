@@ -5,101 +5,212 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SEVRA | Başvurunuz Alındı</title>
 <style>
-
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#071427;
-      --bg2:#0c1f3f;
-      --panel:#0f254a;
-      --panel2:#132d59;
-      --line:rgba(255,255,255,.10);
-      --text:#eef4ff;
-      --muted:#aebbd1;
-      --yellow:#f3c744;
-      --yellow-dark:#d7a61c;
-      --shadow:0 22px 60px rgba(0,0,0,.35);
-      --max:1320px;
-    }
-    html{scroll-behavior:smooth}
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
-        radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
-        linear-gradient(180deg,#071427,#08111d 70%,#050b14);
-      line-height:1.6;
-    }
-    a{text-decoration:none;color:inherit}
-    .container{max-width:var(--max);margin:0 auto;padding:0 22px}
-    .topbar{
-      position:sticky; top:0; z-index:100;
-      background:rgba(4,12,24,.88); backdrop-filter:blur(14px);
-      border-bottom:1px solid var(--line);
-    }
-    .topbar-inner{
-      min-height:86px; display:flex; align-items:center; justify-content:space-between; gap:18px;
-    }
-    .brand{display:flex;align-items:center;gap:14px}
-    .brand-mark{
-      width:54px;height:54px;border-radius:16px;
-      background:linear-gradient(135deg,var(--yellow),#f8df91);
-      color:#0d1d38;font-size:24px;font-weight:800;
-      display:flex;align-items:center;justify-content:center;
-      box-shadow:0 12px 30px rgba(243,199,68,.28);
-    }
-    .brand-text strong{display:block;font-size:30px;letter-spacing:.4px}
-    .brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
-    .nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
-    .nav a:hover{color:#fff}
-    .actions{display:flex;align-items:center;gap:12px}
-    .btn{
-      min-height:48px;padding:0 22px;border-radius:14px;
-      display:inline-flex;align-items:center;justify-content:center;
-      font-weight:700;border:1px solid transparent;transition:.2s ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:var(--yellow);color:#0b1830;box-shadow:0 14px 30px rgba(243,199,68,.18)}
-    .btn-primary:hover{background:var(--yellow-dark)}
-    .btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
-    .btn-secondary:hover{background:rgba(255,255,255,.08)}
-    .section-head{max-width:920px;margin-bottom:26px}
-    .section-head h2{font-size:42px;line-height:1.06;margin-bottom:12px}
-    .section-head p{font-size:17px;color:var(--muted)}
-    .card{
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:22px;
-      background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
-      box-shadow:var(--shadow);
-    }
-    footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)}
-    .footer-inner{
-      min-height:90px;display:flex;align-items:center;justify-content:space-between;
-      gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px
-    }
-    .footer-inner strong{color:#fff}
-    @media (max-width:980px){
-      .nav,.actions{display:none}
-      .section-head h2{font-size:32px}
-    }
-
-.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.box{max-width:760px;width:100%;padding:42px;text-align:center}
-.box h1{font-size:48px;line-height:1.05;margin-bottom:12px}
-.box p{font-size:18px;color:var(--muted);margin-bottom:24px}
-.actions-center{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#071427;
+  --bg2:#0c1f3f;
+  --line:rgba(255,255,255,.10);
+  --text:#eef4ff;
+  --muted:#aebbd1;
+  --yellow:#f3c744;
+  --yellow-dark:#d7a61c;
+  --shadow:0 22px 60px rgba(0,0,0,.35);
+  --max:1100px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
+    linear-gradient(180deg,#071427,#08111d 70%,#050b14);
+  line-height:1.6;
+}
+a{text-decoration:none;color:inherit}
+.container{max-width:var(--max);margin:0 auto;padding:0 22px}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{
+  width:54px;height:54px;border-radius:16px;
+  background:linear-gradient(135deg,var(--yellow),#f8df91);
+  color:#0d1d38;font-size:24px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(243,199,68,.28);
+}
+.brand-text strong{display:block;font-size:30px;letter-spacing:.4px}
+.brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
+.actions{display:flex;align-items:center;gap:12px}
+.btn{
+  min-height:48px;padding:0 22px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--yellow);color:#0b1830;box-shadow:0 14px 30px rgba(243,199,68,.18)}
+.btn-primary:hover{background:var(--yellow-dark)}
+.btn-secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+.wrap{
+  min-height:calc(100vh - 87px);
+  display:flex;align-items:center;justify-content:center;
+  padding:36px 0;
+}
+.box{
+  width:100%;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.hero{
+  padding:42px 42px 20px 42px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;min-height:42px;padding:0 16px;
+  border-radius:999px;background:rgba(243,199,68,.12);
+  border:1px solid rgba(243,199,68,.24);color:#ffe08a;font-size:14px;font-weight:700;
+  margin-bottom:18px;
+}
+.hero h1{
+  font-size:54px;line-height:1.02;letter-spacing:-1.8px;margin-bottom:14px;
+}
+.hero p{
+  max-width:760px;font-size:18px;color:var(--muted);
+}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;padding:0 42px 24px 42px;
+}
+.stat{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;background:rgba(255,255,255,.03);padding:20px;
+}
+.stat strong{display:block;font-size:26px;margin-bottom:4px}
+.stat span{font-size:13px;color:var(--muted)}
+.actions-panel{
+  display:grid;grid-template-columns:1.1fr .9fr;
+  gap:0;border-top:1px solid rgba(255,255,255,.08);
+}
+.left,.right{padding:28px 42px}
+.left{border-right:1px solid rgba(255,255,255,.08)}
+.block-title{font-size:28px;margin-bottom:10px}
+.block-text{color:var(--muted);font-size:15px;margin-bottom:18px}
+.button-row{display:flex;gap:12px;flex-wrap:wrap}
+.info-list{display:grid;gap:12px}
+.info-item{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;background:rgba(255,255,255,.03);padding:16px;
+}
+.info-item strong{display:block;font-size:17px;margin-bottom:5px}
+.info-item span{font-size:13px;color:var(--muted)}
+footer{
+  border-top:1px solid rgba(255,255,255,.08);
+  background:rgba(0,0,0,.18);
+}
+.footer-inner{
+  min-height:84px;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px;padding:0 22px;
+}
+.footer-inner strong{color:#fff}
+@media (max-width:900px){
+  .actions{display:none}
+  .hero h1{font-size:38px}
+  .stats,.actions-panel{grid-template-columns:1fr}
+  .left{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="card box">
-    <h1>Başvurunuz alındı</h1>
-    <p>Teşekkür ederiz. Başvurunuz SEVRA sistemine iletildi. Değerlendirme ve dönüş süreci için sizinle iletişime geçilecektir.</p>
-    <div class="actions-center">
-      <a class="btn btn-primary" href="index.html">Ana Sayfaya Dön</a>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>BAŞVURU TAMAMLANDI</span>
+      </div>
+    </a>
+    <div class="actions">
       <a class="btn btn-secondary" href="basvuru.html">Yeni Başvuru</a>
+      <a class="btn btn-primary" href="index.html">Ana Vitrin</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="container">
+    <div class="box">
+      <div class="hero">
+        <div class="hero-badge">SEVRA • Başvurunuz sisteme ulaştı</div>
+        <h1>Teşekkür ederiz.<br>Başvurunuz alındı.</h1>
+        <p>
+          Başvurunuz SEVRA sistemine başarıyla ulaştı. İlgili ekip değerlendirme sürecinin ardından sizinle iletişime geçecektir.
+          Bu ekran, ana vitrin ve başvuru merkeziyle aynı kurumsal tasarım dilinde düzenlendi.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong>1</strong>
+          <span>Başvuru kaydı oluşturuldu</span>
+        </div>
+        <div class="stat">
+          <strong>24s</strong>
+          <span>İlk dönüş hedef süresi</span>
+        </div>
+        <div class="stat">
+          <strong>SEVRA</strong>
+          <span>Kurumsal değerlendirme akışı</span>
+        </div>
+      </div>
+
+      <div class="actions-panel">
+        <div class="left">
+          <div class="block-title">Şimdi ne yapabilirsiniz?</div>
+          <div class="block-text">İsterseniz ana vitrini inceleyebilir, yeni başvuru bırakabilir veya panel ekranına dönebilirsiniz.</div>
+          <div class="button-row">
+            <a class="btn btn-primary" href="index.html">Ana Sayfaya Dön</a>
+            <a class="btn btn-secondary" href="basvuru.html">Yeni Başvuru</a>
+            <a class="btn btn-secondary" href="panel.html">Panele Geç</a>
+          </div>
+        </div>
+        <div class="right">
+          <div class="info-list">
+            <div class="info-item">
+              <strong>Başvuru Durumu</strong>
+              <span>Başarılı şekilde kaydedildi ve değerlendirme kuyruğuna alındı.</span>
+            </div>
+            <div class="info-item">
+              <strong>İletişim Süreci</strong>
+              <span>Talep türüne göre operasyon ekibi sizinle dönüş sağlayacaktır.</span>
+            </div>
+            <div class="info-item">
+              <strong>Sonraki Adım</strong>
+              <span>SEVRA ön yüzündeki diğer ekranlarla aynı çizgide kurumsal deneyim sürer.</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<footer>
+  <div class="footer-inner">
+    <div><strong>SEVRA</strong><br>Kurumsal teşekkür ekranı</div>
+    <div>B18 • Teşekkür ekranı düzeltildi</div>
+  </div>
+</footer>
 </body>
 </html>
