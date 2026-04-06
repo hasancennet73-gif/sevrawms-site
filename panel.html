@@ -1,171 +1,61 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Final Panel Step 2</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEVRA | Clean Panel</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#061325;
-  --panel:#10264b;
-  --panel2:#132d59;
-  --line:rgba(255,255,255,.08);
-  --text:#eef4ff;
-  --muted:#aebcd3;
-  --yellow:#f1c84d;
-  --yellow-dark:#d5a927;
-  --shadow:0 22px 60px rgba(0,0,0,.34);
-}
-html{scroll-behavior:smooth}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-    linear-gradient(180deg,#071425,#08111b 74%,#040912);
-  line-height:1.5;
-}
+:root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;--yellow-dark:#d5a927;--shadow:0 22px 60px rgba(0,0,0,.34)}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);line-height:1.5}
 a{text-decoration:none;color:inherit}
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-.sidebar{
-  background:linear-gradient(180deg,#10274b,#0b1c37);
-  border-right:1px solid rgba(255,255,255,.08);
-  padding:24px 18px;
-  position:sticky;top:0;height:100vh;
-}
+.sidebar{background:linear-gradient(180deg,#10274b,#0b1c37);border-right:1px solid var(--line);padding:24px 18px}
 .side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
-.side-logo{
-  width:46px;height:46px;border-radius:14px;
-  background:linear-gradient(135deg,var(--yellow),#f7dc89);
-  display:flex;align-items:center;justify-content:center;
-  color:#0d1e3b;font-weight:900;font-size:18px;
-}
-.side-brand strong{display:block;font-size:20px}
-.side-brand span{display:block;color:#b8c5d8;font-size:12px}
+.side-logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900;font-size:18px}
+.side-brand strong{display:block;font-size:20px}.side-brand span{display:block;color:#b8c5d8;font-size:12px}
 .side-menu{display:grid;gap:10px}
-.menu-item{
-  min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;
-  color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;
-  border:1px solid transparent;cursor:pointer;
-}
-.menu-item:hover{background:rgba(255,255,255,.06)}
+.menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;border:1px solid transparent}
 .menu-item.active{background:var(--yellow);color:#0c1a34}
-.main{
-  padding:26px;
-  background:
-    radial-gradient(circle at top right, rgba(241,200,77,.07), transparent 18%),
-    linear-gradient(180deg,#0d2143,#0a1a35);
-}
-.hero{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:28px;
-  background:linear-gradient(135deg,rgba(13,32,67,.95),rgba(8,18,37,.96));
-  box-shadow:var(--shadow);
-  padding:28px;
-  margin-bottom:18px;
-}
-.hero-top{
-  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  margin-bottom:18px;
-}
-.hero-title h1{font-size:42px;line-height:1.02;margin-bottom:8px}
-.hero-title p{font-size:15px;color:var(--muted);max-width:860px}
-.userbox{display:flex;align-items:center;gap:12px}
-.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
+.main{padding:26px;background:radial-gradient(circle at top right, rgba(241,200,77,.07), transparent 18%),linear-gradient(180deg,#0d2143,#0a1a35)}
+.hero{border:1px solid var(--line);border-radius:28px;background:linear-gradient(135deg,rgba(13,32,67,.95),rgba(8,18,37,.96));box-shadow:var(--shadow);padding:28px;margin-bottom:18px}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.hero-title h1{font-size:42px;line-height:1.02;margin-bottom:8px}.hero-title p{font-size:15px;color:var(--muted);max-width:860px}
+.userbox{display:flex;align-items:center;gap:12px}.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn{
-  min-height:46px;padding:0 18px;border-radius:12px;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid transparent;transition:.2s ease;
-}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--yellow);color:#0b1830}
-.btn-primary:hover{background:var(--yellow-dark)}
-.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
-.hero-stats{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-}
-.stat-card{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;background:rgba(255,255,255,.03);
-  padding:18px;
-}
-.stat-card small{display:block;color:#c0cce0;margin-bottom:8px;font-size:12px}
-.stat-card strong{display:block;font-size:34px;line-height:1;margin-bottom:6px}
-.stat-card span{color:#aebcd3;font-size:13px}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-.card{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
-  background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
-  box-shadow:var(--shadow);
-}
-.inner-card{padding:20px}
-.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.card-head h2,.card-head h3{font-size:28px}
-.card-head p{font-size:13px;color:var(--muted)}
-.tag{
-  display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;
-  border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
-}
+.btn{min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid transparent}
+.btn-primary{background:var(--yellow);color:#0b1830}.btn-secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat-card,.info{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.stat-card small{display:block;color:#c0cce0;margin-bottom:8px;font-size:12px}.stat-card strong{display:block;font-size:34px;line-height:1;margin-bottom:6px}.stat-card span{color:#aebcd3;font-size:13px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.card{border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));box-shadow:var(--shadow)}
+.inner-card{padding:20px}.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.card-head h2,.card-head h3{font-size:28px}.card-head p{font-size:13px;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.filter{
-  min-height:38px;padding:0 12px;border-radius:10px;background:#102545;border:1px solid rgba(255,255,255,.08);
-  color:#d8e1ef;display:inline-flex;align-items:center;font-size:13px;
-}
+.filter{min-height:38px;padding:0 12px;border-radius:10px;background:#102545;border:1px solid var(--line);color:#d8e1ef;display:inline-flex;align-items:center;font-size:13px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
+thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid var(--line);font-size:12px}
 tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
 tbody tr:last-child td{border-bottom:none}
-.chart-box{
-  height:240px;border-radius:16px;background:
-  linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)),
-  repeating-linear-gradient(to top, rgba(255,255,255,.06), rgba(255,255,255,.06) 1px, transparent 1px, transparent 44px),
-  repeating-linear-gradient(to right, rgba(255,255,255,.04), rgba(255,255,255,.04) 1px, transparent 1px, transparent 66px);
-  position:relative;overflow:hidden;
-}
+.chart-box{height:240px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)),repeating-linear-gradient(to top, rgba(255,255,255,.06), rgba(255,255,255,.06) 1px, transparent 1px, transparent 44px),repeating-linear-gradient(to right, rgba(255,255,255,.04), rgba(255,255,255,.04) 1px, transparent 1px, transparent 66px);position:relative;overflow:hidden}
 .chart-box svg{position:absolute;left:14px;right:14px;top:14px;bottom:14px;width:calc(100% - 28px);height:calc(100% - 28px)}
-.message-item{
-  display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-.message-item:last-child{border-bottom:none}
-.msg-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
-.message-item strong{display:block;font-size:15px;margin-bottom:3px}
-.message-item span{font-size:12px;color:#b7c5d8}
-.msg-btn{
-  min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;
-  display:inline-flex;align-items:center;font-weight:700;font-size:12px;
-}
+.message-item{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.message-item:last-child{border-bottom:none}.msg-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
+.message-item strong{display:block;font-size:15px;margin-bottom:3px}.message-item span{font-size:12px;color:#b7c5d8}
+.msg-btn{min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;display:inline-flex;align-items:center;font-weight:700;font-size:12px}
 .quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-.quick-box{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
-}
-.quick-box strong{display:block;font-size:24px;margin-bottom:4px}
-.quick-box span{font-size:13px;color:var(--muted)}
-@media (max-width:1180px){
-  .grid,.sub-grid,.quick-grid{grid-template-columns:1fr}
-  .hero-stats{grid-template-columns:1fr 1fr}
-}
-@media (max-width:900px){
-  .layout{grid-template-columns:1fr}
-  .sidebar{position:relative;height:auto}
-  .hero-stats{grid-template-columns:1fr}
-  .hero-title h1{font-size:34px}
-}
+.quick-box{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.quick-box strong{display:block;font-size:24px;margin-bottom:4px}.quick-box span{font-size:13px;color:var(--muted)}
+@media (max-width:1180px){.grid,.sub-grid,.quick-grid{grid-template-columns:1fr}.hero-stats{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.hero-stats{grid-template-columns:1fr}.hero-title h1{font-size:34px}}
 </style>
 </head>
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="side-brand">
-      <div class="side-logo">S</div>
-      <div><strong>SEVRA</strong><span>Kurumsal Panel</span></div>
-    </div>
-
+    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Kurumsal Panel</span></div></div>
     <div class="side-menu">
       <a class="menu-item active" href="panel.html">Kontrol Paneli</a>
       <a class="menu-item" href="urunler.html">Ürünler</a>
@@ -177,7 +67,6 @@ tbody tr:last-child td{border-bottom:none}
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
-
   <main class="main">
     <section class="hero">
       <div class="hero-top">
@@ -185,73 +74,27 @@ tbody tr:last-child td{border-bottom:none}
           <h1>SEVRA Dashboard</h1>
           <p>Referans görsele daha yakın ağır kurumsal panel düzeni. Yük ilanları, taşıyıcılar, raporlar, mesajlar ve giriş akışı tek yönetim yüzünde toplanır.</p>
         </div>
-        <div class="userbox">
-          <div class="avatar"></div>
-          <div>
-            <strong style="display:block;font-size:14px">Operasyon Yöneticisi</strong>
-            <span style="font-size:12px;color:#b8c6da">SEVRA Yönetim Oturumu</span>
-          </div>
-        </div>
+        <div class="userbox"><div class="avatar"></div><div><strong style="display:block;font-size:14px">Operasyon Yöneticisi</strong><span style="font-size:12px;color:#b8c6da">SEVRA Yönetim Oturumu</span></div></div>
       </div>
-
       <div class="hero-actions">
         <a class="btn btn-primary" href="mesajlasma.html">Mesajlaşma</a>
         <a class="btn btn-secondary" href="urunler.html">Ürünler</a>
         <a class="btn btn-secondary" href="uyeler-analytics.html">Üyeler</a>
       </div>
-
       <div class="hero-stats">
-        <div class="stat-card">
-          <small>Toplam Yük İlanı</small>
-          <strong>532</strong>
-          <span>aktif ilan görünümü</span>
-        </div>
-        <div class="stat-card">
-          <small>Onay Bekleyen Teklifler</small>
-          <strong>14</strong>
-          <span>cevap süreci</span>
-        </div>
-        <div class="stat-card">
-          <small>Aktif Nakliyeciler</small>
-          <strong>1,205</strong>
-          <span>havuz görünümü</span>
-        </div>
-        <div class="stat-card">
-          <small>Toplam Hacim</small>
-          <strong>₺298,200</strong>
-          <span>operasyon potansiyeli</span>
-        </div>
+        <div class="stat-card"><small>Toplam Yük İlanı</small><strong>532</strong><span>aktif ilan görünümü</span></div>
+        <div class="stat-card"><small>Onay Bekleyen Teklifler</small><strong>14</strong><span>cevap süreci</span></div>
+        <div class="stat-card"><small>Aktif Nakliyeciler</small><strong>1,205</strong><span>havuz görünümü</span></div>
+        <div class="stat-card"><small>Toplam Hacim</small><strong>₺298,200</strong><span>operasyon potansiyeli</span></div>
       </div>
     </section>
 
     <section class="grid">
       <div class="card inner-card">
-        <div class="card-head">
-          <div>
-            <h2>Yük İlanlarım</h2>
-            <p>Referans görsele yakın tablo düzeni</p>
-          </div>
-          <div class="tag">Canlı görünüm</div>
-        </div>
-
-        <div class="filters">
-          <div class="filter">Kalkış Noktası</div>
-          <div class="filter">Varış Noktası</div>
-          <div class="filter">Yük Tipi</div>
-          <div class="filter" style="background:var(--yellow);color:#0d1a34;border-color:transparent;">Ara</div>
-        </div>
-
+        <div class="card-head"><div><h2>Yük İlanlarım</h2><p>Referans görsele yakın tablo düzeni</p></div><div class="tag">Canlı görünüm</div></div>
+        <div class="filters"><div class="filter">Kalkış Noktası</div><div class="filter">Varış Noktası</div><div class="filter">Yük Tipi</div><div class="filter" style="background:var(--yellow);color:#0d1a34;border-color:transparent;">Ara</div></div>
         <table>
-          <thead>
-            <tr>
-              <th>Yükleme</th>
-              <th>İndirme</th>
-              <th>Yük Tipi</th>
-              <th>Tonaj</th>
-              <th>Teklif</th>
-              <th>Durum</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Yükleme</th><th>İndirme</th><th>Yük Tipi</th><th>Tonaj</th><th>Teklif</th><th>Durum</th></tr></thead>
           <tbody>
             <tr><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22 Ton</td><td>₺129.000</td><td>Onaylandı</td></tr>
             <tr><td>İstanbul</td><td>Bilecik</td><td>Yük tip</td><td>9 Ton</td><td>₺23.900</td><td>Görüşme</td></tr>
@@ -261,79 +104,27 @@ tbody tr:last-child td{border-bottom:none}
           </tbody>
         </table>
       </div>
-
       <div class="card inner-card">
-        <div class="card-head">
-          <div>
-            <h2>Aylık Kazanç & Teklif Durumu</h2>
-            <p>Grafik görünümü</p>
-          </div>
-          <div class="tag">Canlı</div>
-        </div>
-
+        <div class="card-head"><div><h2>Aylık Kazanç & Teklif Durumu</h2><p>Grafik görünümü</p></div><div class="tag">Canlı</div></div>
         <div class="chart-box">
           <svg viewBox="0 0 100 100" preserveAspectRatio="none">
             <polyline fill="none" stroke="#f1c84d" stroke-width="2.6" points="0,76 12,68 24,66 36,62 48,57 60,49 72,42 84,33 100,24"></polyline>
-            <circle cx="0" cy="76" r="2" fill="#f1c84d"></circle>
-            <circle cx="12" cy="68" r="2" fill="#f1c84d"></circle>
-            <circle cx="24" cy="66" r="2" fill="#f1c84d"></circle>
-            <circle cx="36" cy="62" r="2" fill="#f1c84d"></circle>
-            <circle cx="48" cy="57" r="2" fill="#f1c84d"></circle>
-            <circle cx="60" cy="49" r="2" fill="#f1c84d"></circle>
-            <circle cx="72" cy="42" r="2" fill="#f1c84d"></circle>
-            <circle cx="84" cy="33" r="2" fill="#f1c84d"></circle>
-            <circle cx="100" cy="24" r="2" fill="#f1c84d"></circle>
           </svg>
         </div>
-
         <div style="margin-top:16px">
-          <div class="card-head">
-            <div>
-              <h3>Son Mesajlar</h3>
-              <p>Mesajlaşma modül özeti</p>
-            </div>
-            <div class="tag">Görüşme</div>
-          </div>
-
-          <div class="message-item">
-            <div class="msg-avatar"></div>
-            <div><strong>Orhan Nakliyat</strong><span>Yük için fiyat güncellendi</span></div>
-            <div class="msg-btn">Yanıtla</div>
-          </div>
-          <div class="message-item">
-            <div class="msg-avatar"></div>
-            <div><strong>Demir Lojistik</strong><span>Yeni araç bilgisi paylaşıldı</span></div>
-            <div class="msg-btn">Aç</div>
-          </div>
-          <div class="message-item">
-            <div class="msg-avatar"></div>
-            <div><strong>Yıldır Trans</strong><span>Son teklif bekleniyor</span></div>
-            <div class="msg-btn">Gör</div>
-          </div>
+          <div class="card-head"><div><h3>Son Mesajlar</h3><p>Mesajlaşma modül özeti</p></div><div class="tag">Görüşme</div></div>
+          <div class="message-item"><div class="msg-avatar"></div><div><strong>Orhan Nakliyat</strong><span>Yük için fiyat güncellendi</span></div><div class="msg-btn">Yanıtla</div></div>
+          <div class="message-item"><div class="msg-avatar"></div><div><strong>Demir Lojistik</strong><span>Yeni araç bilgisi paylaşıldı</span></div><div class="msg-btn">Aç</div></div>
+          <div class="message-item"><div class="msg-avatar"></div><div><strong>Yıldır Trans</strong><span>Son teklif bekleniyor</span></div><div class="msg-btn">Gör</div></div>
         </div>
       </div>
     </section>
 
     <section class="sub-grid">
       <div class="card inner-card">
-        <div class="card-head">
-          <div>
-            <h2>Nakliyeciler</h2>
-            <p>Referans görünüm mantığı</p>
-          </div>
-          <div class="tag">Aktif liste</div>
-        </div>
-
+        <div class="card-head"><div><h2>Nakliyeciler</h2><p>Referans görünüm mantığı</p></div><div class="tag">Aktif liste</div></div>
         <table>
-          <thead>
-            <tr>
-              <th>Firma</th>
-              <th>E-posta</th>
-              <th>Telefon</th>
-              <th>Plaka</th>
-              <th>İşlem</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Firma</th><th>E-posta</th><th>Telefon</th><th>Plaka</th><th>İşlem</th></tr></thead>
           <tbody>
             <tr><td>Orhan Nakliyat</td><td>orhan@firma.com</td><td>0 505 232 9346</td><td>07 AB 2035</td><td>Teklifi Onayla</td></tr>
             <tr><td>Demir Lojistik</td><td>demir@firma.com</td><td>0 505 022 0066</td><td>08 AC 2034</td><td>Randevu Aç</td></tr>
@@ -341,44 +132,17 @@ tbody tr:last-child td{border-bottom:none}
           </tbody>
         </table>
       </div>
-
       <div class="card inner-card">
-        <div class="card-head">
-          <div>
-            <h2>Rapor Özeti</h2>
-            <p>Kurumsal genel görünüm</p>
-          </div>
-          <div class="tag">Özet</div>
-        </div>
-
+        <div class="card-head"><div><h2>Rapor Özeti</h2><p>Kurumsal genel görünüm</p></div><div class="tag">Özet</div></div>
         <div class="quick-grid">
-          <div class="quick-box">
-            <strong>248</strong>
-            <span>Kayıtlı üye</span>
-          </div>
-          <div class="quick-box">
-            <strong>34</strong>
-            <span>Bu ay yeni kayıt</span>
-          </div>
-          <div class="quick-box">
-            <strong>16</strong>
-            <span>Yüksek ilgi gösteren firma</span>
-          </div>
+          <div class="quick-box"><strong>248</strong><span>Kayıtlı üye</span></div>
+          <div class="quick-box"><strong>34</strong><span>Bu ay yeni kayıt</span></div>
+          <div class="quick-box"><strong>16</strong><span>Yüksek ilgi gösteren firma</span></div>
         </div>
-
         <div class="quick-grid">
-          <div class="quick-box">
-            <strong>120</strong>
-            <span>Aktif ürün</span>
-          </div>
-          <div class="quick-box">
-            <strong>26</strong>
-            <span>Aktif görüşme</span>
-          </div>
-          <div class="quick-box">
-            <strong>SEVRA</strong>
-            <span>Kurumsal platform standardı</span>
-          </div>
+          <div class="quick-box"><strong>120</strong><span>Aktif ürün</span></div>
+          <div class="quick-box"><strong>26</strong><span>Aktif görüşme</span></div>
+          <div class="quick-box"><strong>SEVRA</strong><span>Kurumsal platform standardı</span></div>
         </div>
       </div>
     </section>
