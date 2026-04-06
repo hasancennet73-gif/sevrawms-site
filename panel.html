@@ -7,75 +7,26 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#071427;
-  --bg2:#0c1f3f;
-  --panel:#0f254a;
-  --panel2:#132d59;
-  --line:rgba(255,255,255,.10);
-  --text:#eef4ff;
-  --muted:#aebbd1;
-  --yellow:#f3c744;
-  --yellow-dark:#d7a61c;
-  --shadow:0 22px 60px rgba(0,0,0,.35);
+  --bg:#071427; --panel:#0f254a; --line:rgba(255,255,255,.10); --text:#eef4ff; --muted:#aebbd1;
+  --yellow:#f3c744; --shadow:0 22px 60px rgba(0,0,0,.35);
 }
-html{scroll-behavior:smooth}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
-    radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
-    linear-gradient(180deg,#071427,#08111d 70%,#050b14);
-  line-height:1.6;
-}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#071427,#08111d 70%,#050b14);line-height:1.6}
 a{text-decoration:none;color:inherit}
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-.sidebar{
-  background:linear-gradient(180deg,#10274b,#0b1c37);
-  border-right:1px solid rgba(255,255,255,.08);
-  padding:28px 20px;
-  position:sticky;
-  top:0;
-  height:100vh;
-}
+.sidebar{background:linear-gradient(180deg,#10274b,#0b1c37);border-right:1px solid rgba(255,255,255,.08);padding:28px 20px;position:sticky;top:0;height:100vh}
 .side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
-.side-logo{
-  width:44px;height:44px;border-radius:14px;
-  background:linear-gradient(135deg,var(--yellow),#f7dc89);
-  display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900
-}
-.side-brand strong{display:block;font-size:18px}
-.side-brand span{display:block;color:#b8c5d8;font-size:12px}
+.side-logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900}
+.side-brand strong{display:block;font-size:18px}.side-brand span{display:block;color:#b8c5d8;font-size:12px}
 .side-menu{display:flex;flex-direction:column;gap:10px}
-.menu-item{
-  min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;
-  color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;
-  border:1px solid transparent;cursor:pointer
-}
-.menu-item:hover{background:rgba(255,255,255,.06)}
-.menu-item.active{background:var(--yellow);color:#0c1a34}
-.main{
-  padding:24px;
-  background:
-    radial-gradient(circle at top right, rgba(243,199,68,.07), transparent 18%),
-    linear-gradient(180deg,#0d2143,#0a1a35);
-}
+.menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;border:1px solid transparent;cursor:pointer}
+.menu-item:hover{background:rgba(255,255,255,.06)} .menu-item.active{background:var(--yellow);color:#0c1a34}
+.main{padding:24px;background:radial-gradient(circle at top right, rgba(243,199,68,.07), transparent 18%),linear-gradient(180deg,#0d2143,#0a1a35)}
 .top-row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px;flex-wrap:wrap}
-.top-row h1{font-size:40px}
-.top-row p{color:var(--muted)}
-.btn{
-  min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer
-}
-.btn-primary{background:var(--yellow);color:#0b1830}
-.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
+.top-row h1{font-size:40px}.top-row p{color:var(--muted)}
+.btn{min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid transparent}
+.btn-primary{background:var(--yellow);color:#0b1830}.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.card{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
-  background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
-  box-shadow:var(--shadow);
-}
+.card{border:1px solid rgba(255,255,255,.08);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));box-shadow:var(--shadow)}
 .stat-card,.inner-card{padding:20px}
 .stat-card small{display:block;color:#c0cce0;margin-bottom:8px;font-size:12px}
 .stat-card strong{display:block;font-size:34px;line-height:1;margin-bottom:6px}
@@ -84,96 +35,24 @@ a{text-decoration:none;color:inherit}
 .sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
 .card-head h3{font-size:26px}
-.tag{
-  display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;
-  border-radius:999px;background:rgba(243,199,68,.14);color:#ffe08a;font-size:12px;font-weight:700
-}
+.tag{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(243,199,68,.14);color:#ffe08a;font-size:12px;font-weight:700}
 table{width:100%;border-collapse:collapse;font-size:13px}
 thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
-tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff;vertical-align:middle}
+tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
 tbody tr:last-child td{border-bottom:none}
 .message{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .message:last-child{border-bottom:none}
 .message-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
-.message strong{display:block;font-size:15px;margin-bottom:3px}
-.message span{color:#b7c5d8;font-size:12px}
-.message-btn{
-  min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;
-  display:inline-flex;align-items:center;font-weight:700;font-size:12px;border:none;cursor:pointer
-}
-.message-btn:hover{filter:brightness(1.05)}
-.action-group{display:flex;gap:8px;flex-wrap:wrap}
-.action-btn{
-  min-height:32px;padding:0 10px;border:none;border-radius:10px;
-  background:rgba(255,255,255,.06);color:#fff;font-size:12px;font-weight:700;cursor:pointer
-}
-.action-btn.primary{background:var(--yellow);color:#09152a}
-.action-btn.warn{background:rgba(243,199,68,.18);color:#ffe08a}
-.action-btn:hover{filter:brightness(1.08)}
-.clickable-row{cursor:pointer}
-.clickable-row:hover td{background:rgba(255,255,255,.025)}
-section.panel-section{display:none}
-section.panel-section.active{display:block}
+.message strong{display:block;font-size:15px;margin-bottom:3px}.message span{color:#b7c5d8;font-size:12px}
+.message-btn{min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;display:inline-flex;align-items:center;font-weight:700;font-size:12px}
+section.panel-section{display:none} section.panel-section.active{display:block}
 .section-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
-.section-top h2{font-size:34px}
-.section-top p{color:var(--muted)}
+.section-top h2{font-size:34px}.section-top p{color:var(--muted)}
 .list-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .info-list{display:grid;gap:12px}
-.info-item{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  background:rgba(255,255,255,.03);
-  padding:16px
-}
-.info-item strong{display:block;font-size:18px;margin-bottom:6px}
-.info-item span{color:var(--muted);font-size:14px}
-.modal{
-  position:fixed;inset:0;background:rgba(2,8,18,.72);display:none;
-  align-items:center;justify-content:center;padding:20px;z-index:9999
-}
-.modal.active{display:flex}
-.modal-box{
-  width:min(820px,100%);border-radius:24px;
-  background:linear-gradient(180deg,#0f254a,#09172d);
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:0 24px 80px rgba(0,0,0,.45);
-  overflow:hidden
-}
-.modal-head{
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.08)
-}
-.modal-head h3{font-size:24px}
-.modal-close{
-  min-height:38px;padding:0 14px;border:none;border-radius:10px;
-  background:var(--yellow);color:#09152a;font-weight:800;cursor:pointer
-}
-.modal-body{padding:22px;display:grid;gap:16px}
-.detail-row{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;background:rgba(255,255,255,.03);padding:16px
-}
-.detail-label{display:block;color:#b7c5d8;font-size:12px;margin-bottom:6px}
-.detail-value{font-size:16px;color:#eef4ff}
-.modal-actions{display:flex;gap:12px;flex-wrap:wrap}
-.reply-box,.form-input,.form-select{
-  width:100%;min-height:46px;border-radius:14px;border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04);color:#fff;padding:14px;outline:none
-}
-.reply-box{min-height:120px;resize:vertical}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.notice{
-  padding:12px 14px;border-radius:14px;background:rgba(243,199,68,.14);color:#ffe08a;font-size:13px
-}
-@media (max-width:1100px){
-  .layout,.grid,.sub-grid,.list-grid,.form-grid{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr 1fr}
-  .sidebar{position:relative;height:auto}
-}
-@media (max-width:700px){
-  .stats{grid-template-columns:1fr}
-  .top-row h1,.section-top h2,.card-head h3,.modal-head h3{font-size:28px}
-}
+.info-item{border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.03);padding:16px}
+.info-item strong{display:block;font-size:18px;margin-bottom:6px}.info-item span{color:var(--muted);font-size:14px}
+@media (max-width:1100px){.layout,.grid,.sub-grid,.list-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.sidebar{position:relative;height:auto}}
 </style>
 </head>
 <body>
@@ -183,7 +62,6 @@ section.panel-section.active{display:block}
       <div class="side-logo">S</div>
       <div><strong>SEVRA</strong><span>Kurumsal Panel</span></div>
     </div>
-
     <div class="side-menu">
       <a class="menu-item active" data-target="kontrol-paneli">Kontrol Paneli</a>
       <a class="menu-item" data-target="yuk-ilanlari">Yük İlanları</a>
@@ -192,6 +70,7 @@ section.panel-section.active{display:block}
       <a class="menu-item" data-target="yuk-verenler">Yük Verenler</a>
       <a class="menu-item" data-target="mesajlar">Mesajlar</a>
       <a class="menu-item" data-target="raporlar">Raporlar</a>
+      <a class="menu-item" data-target="urunler">Ürünler</a>
       <a class="menu-item" data-target="ayarlar">Ayarlar</a>
       <a class="menu-item" href="index.html">Ana Sayfaya Dön</a>
     </div>
@@ -200,395 +79,56 @@ section.panel-section.active{display:block}
   <main class="main">
     <section id="kontrol-paneli" class="panel-section active">
       <div class="top-row">
-        <div>
-          <h1>SEVRA Panel</h1>
-          <p>Yük ilanları, nakliyeciler, başvurular ve raporların tek ürün hissinde toplandığı yönetim yüzü.</p>
-        </div>
+        <div><h1>SEVRA Panel</h1><p>Yük ilanları, nakliyeciler, başvurular, ürünler ve raporların tek ürün hissinde toplandığı yönetim yüzü.</p></div>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <a class="btn btn-secondary" href="basvuru.html">Başvuru Merkezi</a>
+          <a class="btn btn-secondary" href="urunler.html">Ürünler</a>
           <a class="btn btn-primary" href="index.html">Ana Vitrin</a>
         </div>
       </div>
-
       <div class="stats">
         <div class="card stat-card"><small>Toplam Yük İlanı</small><strong>532</strong><span>aktif ilan görünümü</span></div>
         <div class="card stat-card"><small>Bekleyen Teklif</small><strong>14</strong><span>cevap süreci</span></div>
         <div class="card stat-card"><small>Aktif Nakliyeci</small><strong>1,205</strong><span>havuz görünümü</span></div>
-        <div class="card stat-card"><small>Aylık Hacim</small><strong>₺298K</strong><span>operasyon potansiyeli</span></div>
-      </div>
-
-      <div class="grid">
-        <div class="card inner-card">
-          <div class="card-head"><h3>Yük İlanları</h3><div class="tag">Canlı görünüm</div></div>
-          <table>
-            <thead><tr><th>Yükleme</th><th>Varış</th><th>Yük Tipi</th><th>Tonaj</th><th>Teklif</th><th>Durum</th><th>İşlem</th></tr></thead>
-            <tbody>
-              <tr class="clickable-row" data-load="İstanbul → Ankara" data-company="Atlas Gıda" data-type="Komple" data-tonnage="22 Ton" data-price="₺129.000" data-status="Sırada">
-                <td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22 Ton</td><td>₺129.000</td><td><span class="tag">Sırada</span></td>
-                <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-              </tr>
-              <tr class="clickable-row" data-load="İzmir → Bursa" data-company="Mera Plastik" data-type="Parsiyel" data-tonnage="8 Ton" data-price="₺48.500" data-status="Açık">
-                <td>İzmir</td><td>Bursa</td><td>Parsiyel</td><td>8 Ton</td><td>₺48.500</td><td><span class="tag">Açık</span></td>
-                <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-              </tr>
-              <tr class="clickable-row" data-load="Konya → Mersin" data-company="Nevra Kimya" data-type="Hammadde" data-tonnage="16 Ton" data-price="₺71.200" data-status="Görüşme">
-                <td>Konya</td><td>Mersin</td><td>Hammadde</td><td>16 Ton</td><td>₺71.200</td><td><span class="tag">Görüşme</span></td>
-                <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-              </tr>
-              <tr class="clickable-row" data-load="Manisa → Gebze" data-company="Orhan Nakliyat" data-type="Paletli" data-tonnage="13 Ton" data-price="₺63.800" data-status="Açık">
-                <td>Manisa</td><td>Gebze</td><td>Paletli</td><td>13 Ton</td><td>₺63.800</td><td><span class="tag">Açık</span></td>
-                <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-              </tr>
-              <tr class="clickable-row" data-load="Gaziantep → Kayseri" data-company="Demir Lojistik" data-type="Endüstriyel" data-tonnage="19 Ton" data-price="₺81.400" data-status="Sırada">
-                <td>Gaziantep</td><td>Kayseri</td><td>Endüstriyel</td><td>19 Ton</td><td>₺81.400</td><td><span class="tag">Sırada</span></td>
-                <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="card inner-card">
-          <div class="card-head"><h3>Son Mesajlar</h3><div class="tag">İç iletişim</div></div>
-          <div class="message">
-            <div class="message-avatar"></div>
-            <div><strong>Orhan Nakliyat</strong><span>İstanbul çıkışlı yük için fiyat bekleniyor.</span></div>
-            <button class="message-btn" data-message-title="Orhan Nakliyat" data-message-text="İstanbul çıkışlı yük için fiyat bekleniyor." data-message-type="Mesaj Detayı">Yanıtla</button>
-          </div>
-          <div class="message">
-            <div class="message-avatar"></div>
-            <div><strong>Demir Lojistik</strong><span>Yeni araç ekleme ve rota teyidi gönderildi.</span></div>
-            <button class="message-btn" data-message-title="Demir Lojistik" data-message-text="Yeni araç ekleme ve rota teyidi gönderildi." data-message-type="Mesaj Detayı">Aç</button>
-          </div>
-          <div class="message">
-            <div class="message-avatar"></div>
-            <div><strong>Yıldır Trans</strong><span>Teklif değerlendirme süreci devam ediyor.</span></div>
-            <button class="message-btn" data-message-title="Yıldır Trans" data-message-text="Teklif değerlendirme süreci devam ediyor." data-message-type="Mesaj Detayı">Gör</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="sub-grid">
-        <div class="card inner-card">
-          <div class="card-head"><h3>Nakliyeciler</h3><div class="tag">Onay akışı</div></div>
-          <table>
-            <thead><tr><th>Firma</th><th>E-posta</th><th>Telefon</th><th>Durum</th></tr></thead>
-            <tbody>
-              <tr><td>Orhan Nakliyat</td><td>info@firma.com</td><td>0555 101 2020</td><td><span class="tag">Onay Bekliyor</span></td></tr>
-              <tr><td>Demir Lojistik</td><td>operasyon@firma.com</td><td>0555 202 3030</td><td><span class="tag">Araştırılıyor</span></td></tr>
-              <tr><td>Yıldır Trans</td><td>teklif@firma.com</td><td>0555 303 4040</td><td><span class="tag">Aktif</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="card inner-card">
-          <div class="card-head"><h3>Rapor Özeti</h3><div class="tag">Özet görünüm</div></div>
-          <table>
-            <thead><tr><th>Başlık</th><th>Değer</th></tr></thead>
-            <tbody>
-              <tr><td>Haftalık yeni ilan</td><td>38</td></tr>
-              <tr><td>Toplam aktif teklif</td><td>14</td></tr>
-              <tr><td>Aktif taşıyıcı</td><td>1,205</td></tr>
-              <tr><td>Kurumsal başvuru</td><td>26</td></tr>
-              <tr><td>Aylık tahmini hacim</td><td>₺298.000</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="card stat-card"><small>Aktif Ürün</small><strong>120</strong><span>ürün vitrini</span></div>
       </div>
     </section>
 
-    <section id="yuk-ilanlari" class="panel-section">
-      <div class="section-top">
-        <div><h2>Yük İlanları</h2><p>Açık yükler, rota ve teklif durumu.</p></div>
-        <div class="tag">Çalışan bölüm</div>
-      </div>
-      <div class="card inner-card">
-        <div class="notice">Bu bölümde her satır için Aç / Düzenle / Pasif işlemleri aktif edildi.</div>
-        <br>
-        <table>
-          <thead><tr><th>No</th><th>Çıkış</th><th>Varış</th><th>Tip</th><th>Tonaj</th><th>Durum</th><th>İşlem</th></tr></thead>
-          <tbody>
-            <tr class="clickable-row" data-load="YL-001 | İstanbul → Ankara" data-company="Atlas Gıda" data-type="Komple" data-tonnage="22 Ton" data-price="₺129.000" data-status="Açık">
-              <td>YL-001</td><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22</td><td>Açık</td>
-              <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-            </tr>
-            <tr class="clickable-row" data-load="YL-002 | İzmir → Bursa" data-company="Mera Plastik" data-type="Parsiyel" data-tonnage="8 Ton" data-price="₺48.500" data-status="Teklif Bekliyor">
-              <td>YL-002</td><td>İzmir</td><td>Bursa</td><td>Parsiyel</td><td>8</td><td>Teklif Bekliyor</td>
-              <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-            </tr>
-            <tr class="clickable-row" data-load="YL-003 | Konya → Mersin" data-company="Nevra Kimya" data-type="Hammadde" data-tonnage="16 Ton" data-price="₺71.200" data-status="Görüşme">
-              <td>YL-003</td><td>Konya</td><td>Mersin</td><td>Hammadde</td><td>16</td><td>Görüşme</td>
-              <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-            </tr>
-            <tr class="clickable-row" data-load="YL-004 | Manisa → Gebze" data-company="Orhan Nakliyat" data-type="Paletli" data-tonnage="13 Ton" data-price="₺63.800" data-status="Açık">
-              <td>YL-004</td><td>Manisa</td><td>Gebze</td><td>Paletli</td><td>13</td><td>Açık</td>
-              <td><div class="action-group"><button class="action-btn primary load-open">Aç</button><button class="action-btn load-edit">Düzenle</button><button class="action-btn warn load-passive">Pasif</button></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <section id="yuk-ilanlari" class="panel-section"><div class="section-top"><div><h2>Yük İlanları</h2><p>Açık yükler, rota ve teklif durumu.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><table><thead><tr><th>No</th><th>Çıkış</th><th>Varış</th><th>Tip</th><th>Tonaj</th><th>Durum</th></tr></thead><tbody><tr><td>YL-001</td><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22</td><td>Açık</td></tr><tr><td>YL-002</td><td>İzmir</td><td>Bursa</td><td>Parsiyel</td><td>8</td><td>Teklif Bekliyor</td></tr><tr><td>YL-003</td><td>Konya</td><td>Mersin</td><td>Hammadde</td><td>16</td><td>Görüşme</td></tr><tr><td>YL-004</td><td>Manisa</td><td>Gebze</td><td>Paletli</td><td>13</td><td>Açık</td></tr></tbody></table></div></section>
+    <section id="tekliflerim" class="panel-section"><div class="section-top"><div><h2>Tekliflerim</h2><p>Bekleyen, onaylanan ve kapanan teklifler.</p></div><div class="tag">Çalışan bölüm</div></div><div class="list-grid"><div class="card inner-card info-list"><div class="info-item"><strong>İstanbul → Ankara</strong><span>₺129.000 • Beklemede</span></div><div class="info-item"><strong>İzmir → Bursa</strong><span>₺48.500 • Geri dönüş bekleniyor</span></div><div class="info-item"><strong>Gaziantep → Kayseri</strong><span>₺81.400 • Görüşme sürüyor</span></div></div><div class="card inner-card info-list"><div class="info-item"><strong>Teklif Özeti</strong><span>14 aktif teklif, 3 sıcak görüşme, 2 onay bekliyor.</span></div><div class="info-item"><strong>Bu Ay Hacim</strong><span>₺298.000 tahmini işlem hacmi.</span></div></div></div></section>
+    <section id="nakliyeciler" class="panel-section"><div class="section-top"><div><h2>Nakliyeciler</h2><p>Aktif taşıyıcı firmalar ve durumları.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><table><thead><tr><th>Firma</th><th>Yetkili</th><th>Telefon</th><th>Statü</th></tr></thead><tbody><tr><td>Orhan Nakliyat</td><td>Orhan Bey</td><td>0555 101 2020</td><td>Onay Bekliyor</td></tr><tr><td>Demir Lojistik</td><td>Deniz Hanım</td><td>0555 202 3030</td><td>Araştırılıyor</td></tr><tr><td>Yıldır Trans</td><td>Yasin Bey</td><td>0555 303 4040</td><td>Aktif</td></tr></tbody></table></div></section>
+    <section id="yuk-verenler" class="panel-section"><div class="section-top"><div><h2>Yük Verenler</h2><p>Kurumsal müşteri ve talep bırakan firmalar.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><table><thead><tr><th>Firma</th><th>Şehir</th><th>Yetkili</th><th>Durum</th></tr></thead><tbody><tr><td>Atlas Gıda</td><td>İstanbul</td><td>Ahmet Bey</td><td>Aktif</td></tr><tr><td>Nevra Kimya</td><td>Kocaeli</td><td>Selin Hanım</td><td>Teklif Bekliyor</td></tr><tr><td>Mera Plastik</td><td>İzmir</td><td>Fatih Bey</td><td>Görüşme</td></tr></tbody></table></div></section>
+    <section id="mesajlar" class="panel-section"><div class="section-top"><div><h2>Mesajlar</h2><p>Son görüşmeler ve operasyon mesajları.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><div class="message"><div class="message-avatar"></div><div><strong>Orhan Nakliyat</strong><span>Yükleme saati için dönüş bekliyoruz.</span></div><div class="message-btn">Aç</div></div><div class="message"><div class="message-avatar"></div><div><strong>Atlas Gıda</strong><span>Yeni sevkiyat talebi bırakıldı.</span></div><div class="message-btn">Aç</div></div><div class="message"><div class="message-avatar"></div><div><strong>Demir Lojistik</strong><span>Yeni araç eklendi, profil güncellendi.</span></div><div class="message-btn">Aç</div></div></div></section>
+    <section id="raporlar" class="panel-section"><div class="section-top"><div><h2>Raporlar</h2><p>Özet rakamlar ve dönemsel görünüm.</p></div><div class="tag">Çalışan bölüm</div></div><div class="sub-grid"><div class="card inner-card"><div class="card-head"><h3>Hacim Özeti</h3><div class="tag">Bu Ay</div></div><table><tbody><tr><td>Toplam Hacim</td><td>₺298.000</td></tr><tr><td>Yeni İlan</td><td>38</td></tr><tr><td>Aktif Teklif</td><td>14</td></tr><tr><td>Aktif Nakliyeci</td><td>1,205</td></tr></tbody></table></div><div class="card inner-card"><div class="card-head"><h3>Operasyon Özeti</h3><div class="tag">Canlı</div></div><table><tbody><tr><td>Açık Yük</td><td>19</td></tr><tr><td>Görüşme</td><td>7</td></tr><tr><td>Onay Bekleyen</td><td>5</td></tr><tr><td>Kapanan</td><td>12</td></tr></tbody></table></div></div></section>
 
-    <section id="tekliflerim" class="panel-section">
+    <section id="urunler" class="panel-section">
       <div class="section-top">
-        <div><h2>Tekliflerim</h2><p>Bekleyen, onaylanan ve kapanan teklifler.</p></div>
-        <div class="tag">Çalışan bölüm</div>
+        <div><h2>Ürünler</h2><p>Ürün satış ekranına hızlı geçiş ve özet görünüm.</p></div>
+        <div class="tag">Yeni bölüm</div>
       </div>
       <div class="list-grid">
         <div class="card inner-card info-list">
-          <div class="info-item"><strong>İstanbul → Ankara</strong><span>₺129.000 • Beklemede</span></div>
-          <div class="info-item"><strong>İzmir → Bursa</strong><span>₺48.500 • Geri dönüş bekleniyor</span></div>
-          <div class="info-item"><strong>Gaziantep → Kayseri</strong><span>₺81.400 • Görüşme sürüyor</span></div>
+          <div class="info-item"><strong>Ürün Vitrini</strong><span>Ağır vasıta parçaları ve lojistik ürünleri ayrı ekran üzerinden listelenir.</span></div>
+          <div class="info-item"><strong>Aktif Ürün</strong><span>120 ürün kartı kapasitesi planlandı.</span></div>
+          <div class="info-item"><strong>Ürün Ekleme</strong><span>Görsel yükleme, fiyat ve stok mantığı ürünler ekranında hazır.</span></div>
         </div>
         <div class="card inner-card info-list">
-          <div class="info-item"><strong>Teklif Özeti</strong><span>14 aktif teklif, 3 sıcak görüşme, 2 onay bekliyor.</span></div>
-          <div class="info-item"><strong>Bu Ay Hacim</strong><span>₺298.000 tahmini işlem hacmi.</span></div>
+          <div class="info-item"><strong>Hızlı Geçiş</strong><span><a href="urunler.html">Ürünler ekranını aç</a></span></div>
+          <div class="info-item"><strong>Satış Alanı</strong><span>Çamurluk, menteşe, kilit ve diğer ürünler vitrinlenir.</span></div>
         </div>
+      </div>
+      <div style="margin-top:18px">
+        <a class="btn btn-primary" href="urunler.html">Ürünler Sayfasını Aç</a>
       </div>
     </section>
 
-    <section id="nakliyeciler" class="panel-section">
-      <div class="section-top">
-        <div><h2>Nakliyeciler</h2><p>Aktif taşıyıcı firmalar ve durumları.</p></div>
-        <div class="tag">Çalışan bölüm</div>
-      </div>
-      <div class="card inner-card">
-        <table>
-          <thead><tr><th>Firma</th><th>Yetkili</th><th>Telefon</th><th>Statü</th></tr></thead>
-          <tbody>
-            <tr><td>Orhan Nakliyat</td><td>Orhan Bey</td><td>0555 101 2020</td><td>Onay Bekliyor</td></tr>
-            <tr><td>Demir Lojistik</td><td>Deniz Hanım</td><td>0555 202 3030</td><td>Araştırılıyor</td></tr>
-            <tr><td>Yıldır Trans</td><td>Yasin Bey</td><td>0555 303 4040</td><td>Aktif</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="yuk-verenler" class="panel-section">
-      <div class="section-top">
-        <div><h2>Yük Verenler</h2><p>Kurumsal müşteri ve talep bırakan firmalar.</p></div>
-        <div class="tag">Çalışan bölüm</div>
-      </div>
-      <div class="card inner-card">
-        <table>
-          <thead><tr><th>Firma</th><th>Şehir</th><th>Yetkili</th><th>Durum</th></tr></thead>
-          <tbody>
-            <tr><td>Atlas Gıda</td><td>İstanbul</td><td>Ahmet Bey</td><td>Aktif</td></tr>
-            <tr><td>Nevra Kimya</td><td>Kocaeli</td><td>Selin Hanım</td><td>Teklif Bekliyor</td></tr>
-            <tr><td>Mera Plastik</td><td>İzmir</td><td>Fatih Bey</td><td>Görüşme</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="mesajlar" class="panel-section">
-      <div class="section-top">
-        <div><h2>Mesajlar</h2><p>Son görüşmeler ve operasyon mesajları.</p></div>
-        <div class="tag">Çalışan bölüm</div>
-      </div>
-      <div class="card inner-card">
-        <div class="message">
-          <div class="message-avatar"></div>
-          <div><strong>Orhan Nakliyat</strong><span>Yükleme saati için dönüş bekliyoruz.</span></div>
-          <button class="message-btn" data-message-title="Orhan Nakliyat" data-message-text="Yükleme saati için dönüş bekliyoruz." data-message-type="Mesaj Detayı">Aç</button>
-        </div>
-        <div class="message">
-          <div class="message-avatar"></div>
-          <div><strong>Atlas Gıda</strong><span>Yeni sevkiyat talebi bırakıldı.</span></div>
-          <button class="message-btn" data-message-title="Atlas Gıda" data-message-text="Yeni sevkiyat talebi bırakıldı." data-message-type="Mesaj Detayı">Aç</button>
-        </div>
-        <div class="message">
-          <div class="message-avatar"></div>
-          <div><strong>Demir Lojistik</strong><span>Yeni araç eklendi, profil güncellendi.</span></div>
-          <button class="message-btn" data-message-title="Demir Lojistik" data-message-text="Yeni araç eklendi, profil güncellendi." data-message-type="Mesaj Detayı">Aç</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="raporlar" class="panel-section">
-      <div class="section-top">
-        <div><h2>Raporlar</h2><p>Özet rakamlar ve dönemsel görünüm.</p></div>
-        <div class="tag">Çalışan bölüm</div>
-      </div>
-      <div class="sub-grid">
-        <div class="card inner-card">
-          <div class="card-head"><h3>Hacim Özeti</h3><div class="tag">Bu Ay</div></div>
-          <table>
-            <tbody>
-              <tr><td>Toplam Hacim</td><td>₺298.000</td></tr>
-              <tr><td>Yeni İlan</td><td>38</td></tr>
-              <tr><td>Aktif Teklif</td><td>14</td></tr>
-              <tr><td>Aktif Nakliyeci</td><td>1,205</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card inner-card">
-          <div class="card-head"><h3>Operasyon Özeti</h3><div class="tag">Canlı</div></div>
-          <table>
-            <tbody>
-              <tr><td>Açık Yük</td><td>19</td></tr>
-              <tr><td>Görüşme</td><td>7</td></tr>
-              <tr><td>Onay Bekleyen</td><td>5</td></tr>
-              <tr><td>Kapanan</td><td>12</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section id="ayarlar" class="panel-section">
-      <div class="section-top">
-        <div><h2>Ayarlar</h2><p>Panel ayarları ve hızlı bağlantılar.</p></div>
-        <div class="tag">Çalışan bölüm</div>
-      </div>
-      <div class="list-grid">
-        <div class="card inner-card info-list">
-          <div class="info-item"><strong>Panel Teması</strong><span>Sarı + lacivert kurumsal tema aktif.</span></div>
-          <div class="info-item"><strong>Bildirimler</strong><span>Mesaj ve başvuru bildirimleri açık.</span></div>
-          <div class="info-item"><strong>Yönlendirme</strong><span>Ana vitrin ve başvuru merkezi bağlantıları hazır.</span></div>
-        </div>
-        <div class="card inner-card info-list">
-          <div class="info-item"><strong>Hızlı Geçiş</strong><span><a href="index.html">Ana Sayfaya Dön</a></span></div>
-          <div class="info-item"><strong>Başvuru Merkezi</strong><span><a href="basvuru.html">Başvuru ekranını aç</a></span></div>
-        </div>
-      </div>
-    </section>
+    <section id="ayarlar" class="panel-section"><div class="section-top"><div><h2>Ayarlar</h2><p>Panel ayarları ve hızlı bağlantılar.</p></div><div class="tag">Çalışan bölüm</div></div><div class="list-grid"><div class="card inner-card info-list"><div class="info-item"><strong>Panel Teması</strong><span>Sarı + lacivert kurumsal tema aktif.</span></div><div class="info-item"><strong>Bildirimler</strong><span>Mesaj ve başvuru bildirimleri açık.</span></div><div class="info-item"><strong>Yönlendirme</strong><span>Ana vitrin ve başvuru merkezi bağlantıları hazır.</span></div></div><div class="card inner-card info-list"><div class="info-item"><strong>Hızlı Geçiş</strong><span><a href="index.html">Ana Sayfaya Dön</a></span></div><div class="info-item"><strong>Başvuru Merkezi</strong><span><a href="basvuru.html">Başvuru ekranını aç</a></span></div></div></div></section>
   </main>
-</div>
-
-<div class="modal" id="messageModal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h3 id="modalTitle">Mesaj Detayı</h3>
-      <button class="modal-close" id="closeMessageModalBtn" type="button">Kapat</button>
-    </div>
-    <div class="modal-body">
-      <div class="detail-row">
-        <span class="detail-label">Konu</span>
-        <div class="detail-value" id="modalType">Mesaj Detayı</div>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Firma</span>
-        <div class="detail-value" id="modalCompany">-</div>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Mesaj</span>
-        <div class="detail-value" id="modalText">-</div>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Yanıt Hazırla</span>
-        <textarea class="reply-box" id="replyBox" placeholder="Buraya yanıt taslağını yaz..."></textarea>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-primary" id="saveReplyBtn" type="button">Taslağı Kaydet</button>
-        <button class="btn btn-secondary" id="closeMessageModalBtn2" type="button">Kapat</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="loadModal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h3 id="loadModalTitle">Yük İlanı Detayı</h3>
-      <button class="modal-close" id="closeLoadModalBtn" type="button">Kapat</button>
-    </div>
-    <div class="modal-body">
-      <div class="notice" id="loadNotice">İlan detay ve yönetim alanı aktif.</div>
-      <div class="form-grid">
-        <div class="detail-row">
-          <span class="detail-label">Rota</span>
-          <div class="detail-value" id="loadRoute">-</div>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Yük Veren</span>
-          <div class="detail-value" id="loadCompany">-</div>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Yük Tipi</span>
-          <div class="detail-value" id="loadType">-</div>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Tonaj</span>
-          <div class="detail-value" id="loadTonnage">-</div>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Teklif / Fiyat</span>
-          <div class="detail-value" id="loadPrice">-</div>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Durum</span>
-          <div class="detail-value" id="loadStatus">-</div>
-        </div>
-      </div>
-
-      <div class="detail-row">
-        <span class="detail-label">İlan Düzenleme</span>
-        <div class="form-grid">
-          <input class="form-input" id="editRoute" placeholder="Rota">
-          <input class="form-input" id="editCompany" placeholder="Yük veren">
-          <input class="form-input" id="editType" placeholder="Yük tipi">
-          <input class="form-input" id="editTonnage" placeholder="Tonaj">
-          <input class="form-input" id="editPrice" placeholder="Fiyat">
-          <select class="form-select" id="editStatus">
-            <option>Açık</option>
-            <option>Sırada</option>
-            <option>Görüşme</option>
-            <option>Teklif Bekliyor</option>
-            <option>Pasif</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn btn-primary" id="saveLoadBtn" type="button">Kaydet</button>
-        <button class="btn btn-secondary" id="markPassiveBtn" type="button">Pasife Al</button>
-        <button class="btn btn-secondary" id="closeLoadModalBtn2" type="button">Kapat</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script>
 const items = document.querySelectorAll('.menu-item[data-target]');
 const sections = document.querySelectorAll('.panel-section');
-const messageButtons = document.querySelectorAll('.message-btn');
-const loadRows = document.querySelectorAll('.clickable-row');
-const loadOpenButtons = document.querySelectorAll('.load-open');
-const loadEditButtons = document.querySelectorAll('.load-edit');
-const loadPassiveButtons = document.querySelectorAll('.load-passive');
-
-const messageModal = document.getElementById('messageModal');
-const modalTitle = document.getElementById('modalTitle');
-const modalType = document.getElementById('modalType');
-const modalCompany = document.getElementById('modalCompany');
-const modalText = document.getElementById('modalText');
-const closeMessageModalBtn = document.getElementById('closeMessageModalBtn');
-const closeMessageModalBtn2 = document.getElementById('closeMessageModalBtn2');
-const saveReplyBtn = document.getElementById('saveReplyBtn');
-const replyBox = document.getElementById('replyBox');
-
-const loadModal = document.getElementById('loadModal');
-const loadModalTitle = document.getElementById('loadModalTitle');
-const loadRoute = document.getElementById('loadRoute');
-const loadCompany = document.getElementById('loadCompany');
-const loadType = document.getElementById('loadType');
-const loadTonnage = document.getElementById('loadTonnage');
-const loadPrice = document.getElementById('loadPrice');
-const loadStatus = document.getElementById('loadStatus');
-const loadNotice = document.getElementById('loadNotice');
-const editRoute = document.getElementById('editRoute');
-const editCompany = document.getElementById('editCompany');
-const editType = document.getElementById('editType');
-const editTonnage = document.getElementById('editTonnage');
-const editPrice = document.getElementById('editPrice');
-const editStatus = document.getElementById('editStatus');
-const saveLoadBtn = document.getElementById('saveLoadBtn');
-const markPassiveBtn = document.getElementById('markPassiveBtn');
-const closeLoadModalBtn = document.getElementById('closeLoadModalBtn');
-const closeLoadModalBtn2 = document.getElementById('closeLoadModalBtn2');
-
-let activeLoadRow = null;
-
 items.forEach(item => {
   item.addEventListener('click', () => {
     const target = item.getAttribute('data-target');
@@ -598,175 +138,6 @@ items.forEach(item => {
     const activeSection = document.getElementById(target);
     if (activeSection) activeSection.classList.add('active');
   });
-});
-
-messageButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const title = button.getAttribute('data-message-title') || 'Mesaj';
-    const text = button.getAttribute('data-message-text') || 'Mesaj detayı bulunamadı.';
-    const type = button.getAttribute('data-message-type') || 'Mesaj Detayı';
-
-    modalTitle.textContent = title;
-    modalType.textContent = type;
-    modalCompany.textContent = title;
-    modalText.textContent = text;
-    replyBox.value = '';
-    messageModal.classList.add('active');
-  });
-});
-
-function closeMessageModal() {
-  messageModal.classList.remove('active');
-}
-closeMessageModalBtn.addEventListener('click', closeMessageModal);
-closeMessageModalBtn2.addEventListener('click', closeMessageModal);
-
-saveReplyBtn.addEventListener('click', () => {
-  const company = modalCompany.textContent || 'Mesaj';
-  const replyText = replyBox.value.trim();
-  if (!replyText) {
-    alert('Lütfen önce bir yanıt yaz.');
-    return;
-  }
-  alert(company + ' için yanıt taslağı kaydedildi.');
-  closeMessageModal();
-});
-
-function fillLoadModal(row, mode = 'view') {
-  activeLoadRow = row;
-  const route = row.dataset.load || '-';
-  const company = row.dataset.company || '-';
-  const type = row.dataset.type || '-';
-  const tonnage = row.dataset.tonnage || '-';
-  const price = row.dataset.price || '-';
-  const status = row.dataset.status || '-';
-
-  loadModalTitle.textContent = mode === 'edit' ? 'Yük İlanı Düzenle' : 'Yük İlanı Detayı';
-  loadNotice.textContent = mode === 'edit'
-    ? 'Düzenleme modundasın. Kaydet dediğinde satır ekranda güncellenir.'
-    : 'Detay görünümü açık. İstersen düzenleme alanından bilgileri değiştirebilirsin.';
-
-  loadRoute.textContent = route;
-  loadCompany.textContent = company;
-  loadType.textContent = type;
-  loadTonnage.textContent = tonnage;
-  loadPrice.textContent = price;
-  loadStatus.textContent = status;
-
-  editRoute.value = route;
-  editCompany.value = company;
-  editType.value = type;
-  editTonnage.value = tonnage;
-  editPrice.value = price;
-  editStatus.value = status;
-
-  loadModal.classList.add('active');
-}
-
-loadRows.forEach(row => {
-  row.addEventListener('click', (event) => {
-    if (event.target.closest('button')) return;
-    fillLoadModal(row, 'view');
-  });
-});
-
-loadOpenButtons.forEach(button => {
-  button.addEventListener('click', (event) => {
-    event.stopPropagation();
-    fillLoadModal(button.closest('tr'), 'view');
-  });
-});
-
-loadEditButtons.forEach(button => {
-  button.addEventListener('click', (event) => {
-    event.stopPropagation();
-    fillLoadModal(button.closest('tr'), 'edit');
-  });
-});
-
-loadPassiveButtons.forEach(button => {
-  button.addEventListener('click', (event) => {
-    event.stopPropagation();
-    const row = button.closest('tr');
-    row.dataset.status = 'Pasif';
-    const statusCell = row.children[5];
-    statusCell.innerHTML = '<span class="tag">Pasif</span>';
-    alert('İlan pasife alındı.');
-  });
-});
-
-function closeLoadModal() {
-  loadModal.classList.remove('active');
-}
-closeLoadModalBtn.addEventListener('click', closeLoadModal);
-closeLoadModalBtn2.addEventListener('click', closeLoadModal);
-
-saveLoadBtn.addEventListener('click', () => {
-  if (!activeLoadRow) return;
-
-  activeLoadRow.dataset.load = editRoute.value.trim() || '-';
-  activeLoadRow.dataset.company = editCompany.value.trim() || '-';
-  activeLoadRow.dataset.type = editType.value.trim() || '-';
-  activeLoadRow.dataset.tonnage = editTonnage.value.trim() || '-';
-  activeLoadRow.dataset.price = editPrice.value.trim() || '-';
-  activeLoadRow.dataset.status = editStatus.value.trim() || '-';
-
-  const cells = activeLoadRow.children;
-  if (cells.length >= 6) {
-    if (cells[0].textContent.startsWith('YL-')) {
-      cells[1].textContent = (editRoute.value.split('→')[0] || cells[1].textContent).trim();
-      cells[2].textContent = (editRoute.value.split('→')[1] || cells[2].textContent).trim();
-      cells[3].textContent = editType.value.trim() || cells[3].textContent;
-      cells[4].textContent = (editTonnage.value || cells[4].textContent).replace(' Ton','').trim();
-      cells[5].textContent = editStatus.value.trim() || cells[5].textContent;
-    } else {
-      cells[0].textContent = (editRoute.value.split('→')[0] || cells[0].textContent).trim();
-      cells[1].textContent = (editRoute.value.split('→')[1] || cells[1].textContent).trim();
-      cells[2].textContent = editType.value.trim() || cells[2].textContent;
-      cells[3].textContent = editTonnage.value.trim() || cells[3].textContent;
-      cells[4].textContent = editPrice.value.trim() || cells[4].textContent;
-      cells[5].innerHTML = '<span class="tag">' + (editStatus.value.trim() || '-') + '</span>';
-    }
-  }
-
-  loadRoute.textContent = activeLoadRow.dataset.load;
-  loadCompany.textContent = activeLoadRow.dataset.company;
-  loadType.textContent = activeLoadRow.dataset.type;
-  loadTonnage.textContent = activeLoadRow.dataset.tonnage;
-  loadPrice.textContent = activeLoadRow.dataset.price;
-  loadStatus.textContent = activeLoadRow.dataset.status;
-
-  alert('Yük ilanı güncellendi.');
-  closeLoadModal();
-});
-
-markPassiveBtn.addEventListener('click', () => {
-  if (!activeLoadRow) return;
-  activeLoadRow.dataset.status = 'Pasif';
-  const statusCell = activeLoadRow.children[5];
-  if (statusCell) {
-    if (activeLoadRow.children[0].textContent.startsWith('YL-')) {
-      statusCell.textContent = 'Pasif';
-    } else {
-      statusCell.innerHTML = '<span class="tag">Pasif</span>';
-    }
-  }
-  loadStatus.textContent = 'Pasif';
-  editStatus.value = 'Pasif';
-  alert('İlan pasife alındı.');
-});
-
-[messageModal, loadModal].forEach(modal => {
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) modal.classList.remove('active');
-  });
-});
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
-    closeMessageModal();
-    closeLoadModal();
-  }
 });
 </script>
 </body>
