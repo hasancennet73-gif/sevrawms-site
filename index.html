@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Final Lock Step 8</title>
+<title>SEVRA | Final Review Step 9</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#061325;
-  --bg2:#0a1830;
   --line:rgba(255,255,255,.08);
   --line2:rgba(255,255,255,.12);
   --text:#eef4ff;
@@ -17,9 +16,6 @@
   --yellow-dark:#d5a927;
   --shadow:0 22px 60px rgba(0,0,0,.34);
   --shadow-soft:0 12px 30px rgba(0,0,0,.22);
-  --radius-xl:34px;
-  --radius-lg:24px;
-  --radius-md:18px;
   --max:1380px;
 }
 html{scroll-behavior:smooth}
@@ -35,9 +31,8 @@ body{
 a{text-decoration:none;color:inherit}
 .container{max-width:var(--max);margin:0 auto;padding:0 22px}
 .topbar{
-  position:sticky;top:0;z-index:100;
-  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:100;background:rgba(4,12,24,.88);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
 }
 .topbar-inner{
   min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;
@@ -54,13 +49,9 @@ a{text-decoration:none;color:inherit}
 .brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
 .nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
 .actions{display:flex;gap:12px;align-items:center}
-
-.btn,.action-btn,.overview-link,.social-btn,.msg-btn{
-  transition:.2s ease;
-}
+.btn,.action-btn,.overview-link,.social-btn,.msg-btn{transition:.2s ease}
 .btn{
-  min-height:48px;padding:0 22px;border-radius:14px;
-  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 22px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
   font-weight:700;border:1px solid transparent;cursor:pointer;
 }
 .btn:hover,.action-btn:hover,.overview-link:hover,.social-btn:hover,.msg-btn:hover{transform:translateY(-1px)}
@@ -71,17 +62,13 @@ a{text-decoration:none;color:inherit}
 
 .hero{padding:30px 0 18px}
 .hero-shell{
-  border:1px solid var(--line);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow);
+  border:1px solid var(--line);border-radius:34px;overflow:hidden;box-shadow:var(--shadow);
   background:
     linear-gradient(90deg, rgba(7,21,42,.94) 0%, rgba(7,21,42,.84) 38%, rgba(7,21,42,.18) 72%),
     url('truck-hero.jpg') right center / cover no-repeat,
     linear-gradient(135deg,#0b2449,#081427);
 }
-.hero-grid{
-  min-height:520px;
-  display:grid;grid-template-columns:1.05fr .95fr;gap:22px;
-  align-items:end;padding:46px;
-}
+.hero-grid{min-height:520px;display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:end;padding:46px}
 .hero-left h1{font-size:58px;line-height:.98;letter-spacing:-2px;max-width:760px;margin-bottom:16px}
 .hero-left p{font-size:19px;color:#d7dfec;max-width:690px;margin-bottom:24px}
 .hero-tag{
@@ -89,19 +76,15 @@ a{text-decoration:none;color:inherit}
   background:rgba(241,200,77,.12);border:1px solid rgba(241,200,77,.24);color:#ffe08a;font-size:14px;font-weight:700;margin-bottom:18px;
 }
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}
-.hero-stats{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border:1px solid var(--line);background:rgba(9,20,39,.58);backdrop-filter:blur(8px);
-  border-radius:24px;overflow:hidden;max-width:980px;
-}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:rgba(9,20,39,.58);backdrop-filter:blur(8px);border-radius:24px;overflow:hidden;max-width:980px}
 .hero-stat{padding:20px;border-right:1px solid var(--line)}
 .hero-stat:last-child{border-right:none}
 .hero-stat strong{display:block;font-size:24px;margin-bottom:4px}
 .hero-stat span{font-size:13px;color:#cad6e9}
 .hero-right{display:flex;align-items:flex-end;justify-content:flex-end}
 .mock-card{
-  width:100%;max-width:390px;
-  border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,32,67,.90),rgba(8,18,37,.96));
+  width:100%;max-width:390px;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(13,32,67,.90),rgba(8,18,37,.96));
   border-radius:24px;padding:22px;box-shadow:var(--shadow-soft);
 }
 .mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -109,9 +92,10 @@ a{text-decoration:none;color:inherit}
 .pill{
   display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;align-items:center;font-size:12px;font-weight:700;
 }
-.mock-box{
-  border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;margin-bottom:12px;
+.mock-box,.overview-card,.small-card,.quick-box,.carrier-kpi,.report-kpi,.login-kpi,.card,.report-box,.login-box{
+  border:1px solid var(--line);background:rgba(255,255,255,.03);
 }
+.mock-box{border-radius:18px;padding:16px;margin-bottom:12px}
 .mock-box:last-child{margin-bottom:0}
 .mock-box strong{display:block;font-size:18px;margin-bottom:4px}
 .mock-box p{font-size:14px;color:var(--muted)}
@@ -119,8 +103,8 @@ a{text-decoration:none;color:inherit}
 .overview{padding:0 0 20px}
 .overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .overview-card{
-  border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
-  padding:20px;box-shadow:var(--shadow-soft);min-height:182px;display:flex;flex-direction:column;justify-content:space-between;
+  border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
+  padding:20px;box-shadow:var(--shadow-soft);min-height:184px;display:flex;flex-direction:column;justify-content:space-between;
 }
 .overview-card strong{display:block;font-size:28px;margin-bottom:8px}
 .overview-card p{font-size:14px;color:var(--muted);margin-bottom:14px}
@@ -153,8 +137,7 @@ section{padding:10px 0 22px}
 .side-brand span{display:block;font-size:12px;color:#b9c7db}
 .side-menu{display:grid;gap:10px}
 .menu-item{
-  min-height:44px;border-radius:14px;display:flex;align-items:center;padding:0 14px;
-  background:rgba(255,255,255,.03);font-size:14px;font-weight:700;color:#d7dfec;
+  min-height:44px;border-radius:14px;display:flex;align-items:center;padding:0 14px;background:rgba(255,255,255,.03);font-size:14px;font-weight:700;color:#d7dfec;
 }
 .menu-item.active{background:var(--yellow);color:#0d1e3b}
 .content{padding:20px}
@@ -170,22 +153,18 @@ section{padding:10px 0 22px}
   display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;
 }
 .small-card,.quick-box,.carrier-kpi,.report-kpi,.login-kpi{
-  border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;min-height:110px;
+  border-radius:18px;padding:16px;min-height:110px;
 }
 .small-card small{display:block;font-size:12px;color:#bfccdf;margin-bottom:8px}
 .small-card strong,.quick-box strong,.carrier-kpi strong,.report-kpi strong,.login-kpi strong{
   display:block;font-size:30px;line-height:1.05;margin-bottom:6px;
 }
-.small-card span,.quick-box span,.carrier-kpi span,.report-kpi span,.login-kpi span{
-  font-size:13px;color:#afbdd2;
-}
+.small-card span,.quick-box span,.carrier-kpi span,.report-kpi span,.login-kpi span{font-size:13px;color:#afbdd2}
 
 .two-col,.report-panels,.login-panels{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
 .report-panels,.login-panels{grid-template-columns:1fr 1fr}
 
-.card,.report-box,.login-box{
-  border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:18px;
-}
+.card,.report-box,.login-box{border-radius:20px;padding:18px}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .card-head strong{font-size:28px}
 
@@ -423,8 +402,8 @@ tbody tr:last-child td{border-bottom:none}
   <div class="container">
     <div class="cta-box">
       <div>
-        <strong>SEVRA final kompozisyona yaklaşıyor</strong>
-        <p>Referans görseldeki ağır kurumsal hissi koruyarak ana vitrin, dashboard, nakliyeciler, raporlar ve giriş yap blokları tek büyük ürün deneyimine dönüştürülüyor.</p>
+        <strong>SEVRA final review tamamlandı</strong>
+        <p>Ana vitrin, dashboard, nakliyeciler, raporlar ve giriş yap blokları tek parça kurumsal ürün hissine daha yakın hale getirildi. Sonraki adım final paket olacaktır.</p>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <a class="btn btn-primary" href="giris.html">Panele Geç</a>
@@ -436,8 +415,8 @@ tbody tr:last-child td{border-bottom:none}
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div><strong>SEVRA</strong><br>Final lock step 8</div>
-    <div>Ana sayfa görünümü kilitlenmeye yakın son toplu düzen paketi</div>
+    <div><strong>SEVRA</strong><br>Final review step 9</div>
+    <div>Son rötuş / final review paketi</div>
   </div>
 </footer>
 </body>
