@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Ürün Link Güncelleme</title>
+<title>SEVRA | Login Link Fix</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#071427; --line:rgba(255,255,255,.10); --text:#eef4ff; --muted:#aebbd1;
-  --yellow:#f3c744; --yellow-dark:#d7a61c; --shadow:0 22px 60px rgba(0,0,0,.35); --max:1320px;
-}
+:root{--bg:#071427;--line:rgba(255,255,255,.10);--text:#eef4ff;--muted:#aebbd1;--yellow:#f3c744;--yellow-dark:#d7a61c;--shadow:0 22px 60px rgba(0,0,0,.35);--max:1320px}
 body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#071427,#08111d 70%,#050b14);line-height:1.6}
 a{text-decoration:none;color:inherit}
 .container{max-width:var(--max);margin:0 auto;padding:0 22px}
@@ -18,30 +15,30 @@ a{text-decoration:none;color:inherit}
 .brand{display:flex;align-items:center;gap:14px}
 .brand-mark{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--yellow),#f8df91);color:#0d1d38;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .brand-text strong{display:block;font-size:30px}.brand-text span{display:block;font-size:12px;color:#d6e0ef}
-.nav{display:flex;gap:26px;color:#d2dcef;font-size:15px}
-.actions{display:flex;gap:12px}
-.btn{min-height:48px;padding:0 22px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
-.btn-primary{background:var(--yellow);color:#0b1830}.btn-secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff}
-.hero{padding:34px 0 32px}
-.hero-shell{border:1px solid var(--line);border-radius:34px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(90deg, rgba(6,19,39,.95) 0%, rgba(6,19,39,.86) 38%, rgba(6,19,39,.28) 70%), url('truck-hero.jpg') right center / cover no-repeat}
-.hero-grid{min-height:640px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:end;padding:52px}
-.hero-tag{display:inline-flex;min-height:42px;padding:0 16px;align-items:center;border-radius:999px;background:rgba(243,199,68,.12);border:1px solid rgba(243,199,68,.24);color:#ffe08a;font-size:14px;font-weight:700;margin-bottom:22px}
-.hero-title{font-size:60px;line-height:.98;letter-spacing:-2px;max-width:760px;margin-bottom:18px}
-.hero-text{max-width:680px;font-size:19px;color:#d7dfec;margin-bottom:26px}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);background:rgba(11,23,45,.68);border:1px solid rgba(255,255,255,.08);border-radius:24px;overflow:hidden;max-width:980px}
-.hero-stat{padding:24px 22px;border-right:1px solid rgba(255,255,255,.08)} .hero-stat:last-child{border-right:none}
-.hero-stat strong{display:block;font-size:22px;margin-bottom:4px}.hero-stat span{font-size:13px;color:#cad6e9}
-.hero-side{max-width:360px;margin-left:auto}
-.summary-box{padding:24px;border:1px solid rgba(255,255,255,.08);border-radius:24px;background:linear-gradient(180deg,rgba(14,31,63,.86),rgba(9,20,39,.94));box-shadow:var(--shadow)}
-.summary-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.summary-head strong{font-size:28px}.summary-head span{font-size:13px;color:#ffe08a;font-weight:700}
-.summary-item{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;margin-bottom:12px}.summary-item:last-child{margin-bottom:0}
-.summary-item strong{display:block;font-size:18px;margin-bottom:5px}.summary-item p{font-size:14px;color:var(--muted)}
-.section{padding:34px 0}
+.nav{display:flex;gap:24px;color:#d2dcef;font-size:15px}
+.actions{display:flex;gap:12px;align-items:center}
+.btn{min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.btn-primary{background:var(--yellow);color:#0b1830}
+.btn-secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff}
+.hero{padding:36px 0}
+.hero-box{padding:42px;border-radius:30px;background:linear-gradient(135deg,#0e2447,#0a1b34);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero-box h1{font-size:48px;line-height:1.02;margin-bottom:12px}
+.hero-box p{max-width:880px;color:var(--muted);font-size:18px;margin-bottom:18px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.q{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.q strong{display:block;font-size:24px;margin-bottom:4px}
+.q span{font-size:13px;color:var(--muted)}
 .card{border:1px solid rgba(255,255,255,.08);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));box-shadow:var(--shadow)}
-.cta{padding:28px}.cta h2{font-size:36px;margin-bottom:10px}.cta p{color:var(--muted);margin-bottom:16px}
-footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)} .footer-inner{min-height:90px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px}
-@media (max-width:980px){.nav,.actions{display:none}.hero-grid{grid-template-columns:1fr;padding:24px}.hero-title{font-size:40px}.hero-stats{grid-template-columns:1fr 1fr}}
+.inner{padding:24px}
+.section{padding:0 0 36px}
+.links{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.linkbox{padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03)}
+.linkbox h3{font-size:24px;margin-bottom:8px}
+.linkbox p{color:var(--muted);font-size:14px;margin-bottom:16px}
+.footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)}
+.footer-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px}
+@media (max-width:980px){.nav,.actions{display:none}.quick,.links{grid-template-columns:1fr 1fr}.hero-box h1{font-size:36px}}
+@media (max-width:700px){.quick,.links{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -56,43 +53,26 @@ footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)} .f
       <a href="panel.html">Panel</a>
       <a href="urunler.html">Ürünler</a>
       <a href="basvuru.html">Başvuru</a>
-      <a href="tesekkurler.html">Teşekkür</a>
+      <a href="giris.html">Giriş Yap</a>
+      <a href="uye-ol.html">Üye Ol</a>
     </nav>
     <div class="actions">
-      <a class="btn btn-secondary" href="panel.html">Panele Geç</a>
-      <a class="btn btn-primary" href="urunler.html">Ürünleri Aç</a>
+      <a class="btn btn-secondary" href="giris.html">Giriş Yap</a>
+      <a class="btn btn-primary" href="uye-ol.html">Üye Ol</a>
     </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="container">
-    <div class="hero-shell">
-      <div class="hero-grid">
-        <div>
-          <div class="hero-tag">SEVRA • Ağır kurumsal lojistik vitrini</div>
-          <h1 class="hero-title">Yük verenleri ve nakliyecileri tek platformda buluşturan güçlü dijital operasyon vitrini</h1>
-          <p class="hero-text">SEVRA; ağır kurumsal görünüm, güçlü panel yapısı, başvuru merkezi ve ürün satış alanını tek platform mantığında toplar.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="urunler.html">Ürünler</a>
-            <a class="btn btn-secondary" href="panel.html">Panele Geç</a>
-          </div>
-          <div class="hero-stats">
-            <div class="hero-stat"><strong>&gt; 1,250+</strong><span>Mutlu Müşteri</span></div>
-            <div class="hero-stat"><strong>&gt; 7,500+</strong><span>Taşınan Yük</span></div>
-            <div class="hero-stat"><strong>₺300,000+</strong><span>Toplam Kazanç</span></div>
-            <div class="hero-stat"><strong>2021</strong><span>Kurulma Yılı</span></div>
-          </div>
-        </div>
-        <div class="hero-side">
-          <div class="summary-box">
-            <div class="summary-head"><strong>SEVRA</strong><span>Hazır</span></div>
-            <div class="summary-item"><strong>Kurumsal Ana Vitrin</strong><p>Daha güçlü başlık ve daha ürün gibi görünen ilk karşılaşma alanı.</p></div>
-            <div class="summary-item"><strong>Çalışan Panel</strong><p>Sol menü tıklamalarıyla tek sayfa içinde bölüm değiştirir.</p></div>
-            <div class="summary-item"><strong>Başvuru Merkezi</strong><p>Sekmeli ve çalışan başvuru alanı sistemde hazır.</p></div>
-            <div class="summary-item"><strong>Ürün Satış Alanı</strong><p>Ağır vasıta parçaları için ürün ekranı sisteme eklendi.</p></div>
-          </div>
-        </div>
+    <div class="hero-box">
+      <h1>SEVRA ana vitrin artık giriş ve üyelik ekranlarına bağlı</h1>
+      <p>Platformun ana menüsüne Giriş Yap ve Üye Ol yönleri eklendi. Kullanıcılar artık doğrudan giriş ve kayıt ekranlarına geçebilir.</p>
+      <div class="quick">
+        <div class="q"><strong>6</strong><span>Ana menü bağlantısı</span></div>
+        <div class="q"><strong>Giriş</strong><span>Kullanıcı oturumu yönü</span></div>
+        <div class="q"><strong>Üyelik</strong><span>Kayıt ekranı yönü</span></div>
+        <div class="q"><strong>SEVRA</strong><span>Tek platform akışı</span></div>
       </div>
     </div>
   </div>
@@ -100,18 +80,32 @@ footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)} .f
 
 <section class="section">
   <div class="container">
-    <div class="card cta">
-      <h2>Yeni eklenen modül: Ürünler</h2>
-      <p>Ürünler ekranı artık sisteme bağlandı. Üst menüden ve panelden açılabilir.</p>
-      <a class="btn btn-primary" href="urunler.html">Ürünler Sayfasını Aç</a>
+    <div class="card inner">
+      <div class="links">
+        <div class="linkbox">
+          <h3>Giriş Yap</h3>
+          <p>Mevcut kullanıcı hesabıyla sisteme giriş ekranı.</p>
+          <a class="btn btn-primary" href="giris.html">Giriş Ekranı</a>
+        </div>
+        <div class="linkbox">
+          <h3>Üye Ol</h3>
+          <p>Yeni kullanıcılar için kurumsal üyelik ekranı.</p>
+          <a class="btn btn-primary" href="uye-ol.html">Üyelik Ekranı</a>
+        </div>
+        <div class="linkbox">
+          <h3>Panel</h3>
+          <p>Giriş sonrası yönetim ekranı yönü.</p>
+          <a class="btn btn-secondary" href="panel.html">Panele Git</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<footer>
+<footer class="footer">
   <div class="container footer-inner">
-    <div><strong>SEVRA</strong><br>Ürün link bağlantısı güncellendi</div>
-    <div>Link güncelleme paketi</div>
+    <div><strong>SEVRA</strong><br>Login link bağlantıları eklendi</div>
+    <div>index.html güncellendi</div>
   </div>
 </footer>
 </body>
