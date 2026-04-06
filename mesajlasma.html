@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | Mesajlaşma ve Görüşme Modülü</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#071427;
+  --line:rgba(255,255,255,.10);
+  --text:#eef4ff;
+  --muted:#aebbd1;
+  --yellow:#f3c744;
+  --yellow-dark:#d7a61c;
+  --shadow:0 22px 60px rgba(0,0,0,.35);
+  --max:1380px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
+    linear-gradient(180deg,#071427,#08111d 70%,#050b14);
+  line-height:1.6;
+}
+a{text-decoration:none;color:inherit}
+.container{max-width:var(--max);margin:0 auto;padding:0 22px}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{
+  width:54px;height:54px;border-radius:16px;
+  background:linear-gradient(135deg,var(--yellow),#f8df91);
+  color:#0d1d38;font-size:24px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(243,199,68,.28);
+}
+.brand-text strong{display:block;font-size:30px;letter-spacing:.4px}
+.brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
+.nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
+.nav a:hover{color:#fff}
+.actions{display:flex;align-items:center;gap:12px}
+.btn{
+  min-height:46px;padding:0 18px;border-radius:12px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--yellow);color:#0b1830}
+.btn-primary:hover{background:var(--yellow-dark)}
+.btn-secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+.hero{padding:34px 0 24px}
+.hero-box{
+  padding:42px;border-radius:30px;
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    linear-gradient(135deg,#0e2447,#0a1b34);
+  border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.hero-box h1{font-size:50px;line-height:1.02;margin-bottom:12px}
+.hero-box p{max-width:900px;color:var(--muted);font-size:18px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.stat{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;
+  background:rgba(255,255,255,.03);padding:18px;
+}
+.stat strong{display:block;font-size:26px;margin-bottom:4px}
+.stat span{font-size:13px;color:var(--muted)}
+.card{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
+  box-shadow:var(--shadow);
+}
+.inner{padding:22px}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:16px;flex-wrap:wrap;
+}
+.card-head h2,.card-head h3{font-size:28px}
+.card-head p{font-size:14px;color:var(--muted)}
+.tag{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:28px;padding:0 10px;border-radius:999px;
+  background:rgba(243,199,68,.14);color:#ffe08a;font-size:12px;font-weight:700;
+}
+section{padding:24px 0}
+.layout{display:grid;grid-template-columns:320px 1fr 320px;gap:18px}
+.thread-list{display:grid;gap:12px}
+.thread{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;
+  background:rgba(255,255,255,.03);padding:16px;cursor:pointer;transition:.2s ease;
+}
+.thread:hover{background:rgba(255,255,255,.06)}
+.thread.active{border-color:rgba(243,199,68,.40);background:rgba(243,199,68,.08)}
+.thread strong{display:block;font-size:18px;margin-bottom:4px}
+.thread span{display:block;font-size:13px;color:var(--muted)}
+.thread small{display:block;margin-top:8px;font-size:12px;color:#d6e0ef}
+.chat-wrap{display:grid;grid-template-rows:auto 1fr auto;min-height:760px}
+.chat-top{
+  padding:20px;border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.chat-title strong{display:block;font-size:24px}
+.chat-title span{font-size:13px;color:var(--muted)}
+.offer-box{
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+}
+.offer-chip{
+  min-height:34px;padding:0 12px;border-radius:999px;
+  background:rgba(243,199,68,.12);border:1px solid rgba(243,199,68,.20);
+  color:#ffe08a;display:inline-flex;align-items:center;font-size:12px;font-weight:700;
+}
+.chat-body{
+  padding:20px;display:grid;gap:14px;align-content:start;
+  max-height:520px;overflow:auto;
+}
+.msg{
+  max-width:78%;
+  padding:14px 16px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.msg strong{display:block;font-size:13px;margin-bottom:5px}
+.msg span{display:block;font-size:14px}
+.msg small{display:block;margin-top:8px;font-size:11px;color:#b9c6d8}
+.msg.left{
+  background:rgba(255,255,255,.04);
+}
+.msg.right{
+  margin-left:auto;
+  background:rgba(243,199,68,.12);
+  border-color:rgba(243,199,68,.24);
+}
+.chat-bottom{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:18px 20px;
+}
+.compose{
+  display:grid;grid-template-columns:1fr auto auto;gap:12px;
+}
+.compose textarea{
+  min-height:90px;resize:vertical;
+  background:#091425;border:1px solid rgba(255,255,255,.10);
+  color:#fff;border-radius:14px;padding:14px;font-size:15px;outline:none;
+}
+.side-stack{display:grid;gap:18px}
+.info-list{display:grid;gap:12px}
+.info-item{
+  border:1px solid rgba(255,255,255,.08);border-radius:16px;
+  background:rgba(255,255,255,.03);padding:16px;
+}
+.info-item strong{display:block;font-size:18px;margin-bottom:5px}
+.info-item span{font-size:13px;color:var(--muted)}
+.table-wrap table{width:100%;border-collapse:collapse;font-size:13px}
+.table-wrap thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
+.table-wrap tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
+.table-wrap tbody tr:last-child td{border-bottom:none}
+.note{
+  margin-top:14px;padding:14px 16px;border-radius:14px;
+  background:rgba(243,199,68,.08);border:1px solid rgba(243,199,68,.18);
+  color:#ffe6a1;font-size:13px;
+}
+.footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);margin-top:42px}
+.footer-inner{min-height:90px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px}
+.footer-inner strong{color:#fff}
+@media (max-width:1200px){
+  .layout{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .nav,.actions{display:none}
+  .hero-box h1{font-size:36px}
+  .stats{grid-template-columns:1fr 1fr}
+  .compose{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>MESAJLAŞMA + GÖRÜŞME MODÜLÜ</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="panel.html">Panel</a>
+      <a href="giris.html">Giriş</a>
+      <a href="uye-ol.html">Üyelik</a>
+    </nav>
+    <div class="actions">
+      <a class="btn btn-secondary" href="panel.html">Panele Geç</a>
+      <a class="btn btn-primary" href="index.html">Ana Vitrin</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-box">
+      <h1>Yük veren ile taşıyıcı arasında iç mesajlaşma ve görüşme alanı</h1>
+      <p>SEVRA içinde teklif, pazarlık ve operasyon konuşmalarının sistem içinde yapılmasına yönelik kurumsal mesajlaşma ekranı. Admin tarafı da görüşme geçmişini ve durumu görebilir.</p>
+      <div class="stats">
+        <div class="stat"><strong>26</strong><span>Aktif görüşme</span></div>
+        <div class="stat"><strong>8</strong><span>Sıcak pazarlık</span></div>
+        <div class="stat"><strong>14</strong><span>Onay bekleyen teklif</span></div>
+        <div class="stat"><strong>SEVRA</strong><span>İç iletişim sistemi</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container layout">
+    <div class="card inner">
+      <div class="card-head">
+        <div>
+          <h2>Konuşmalar</h2>
+          <p>Yük veren / taşıyıcı / firma görüşmeleri</p>
+        </div>
+        <div class="tag">Thread listesi</div>
+      </div>
+
+      <div class="thread-list" id="threadList">
+        <div class="thread active" data-thread="1">
+          <strong>Atlas Gıda ↔ Demir Lojistik</strong>
+          <span>İstanbul → Ankara komple yük görüşmesi</span>
+          <small>Son mesaj: Fiyat güncellendi • 5 dk önce</small>
+        </div>
+        <div class="thread" data-thread="2">
+          <strong>Mera Plastik ↔ Yıldır Trans</strong>
+          <span>İzmir → Bursa parsiyel teklif</span>
+          <small>Son mesaj: Araç teyidi bekleniyor • 12 dk önce</small>
+        </div>
+        <div class="thread" data-thread="3">
+          <strong>Nevra Kimya ↔ Orhan Nakliyat</strong>
+          <span>Kocaeli → Mersin yükleme planı</span>
+          <small>Son mesaj: Yükleme saati gönderildi • 27 dk önce</small>
+        </div>
+        <div class="thread" data-thread="4">
+          <strong>Atlas Gıda ↔ SEVRA Admin</strong>
+          <span>Özel kurumsal anlaşma görüşmesi</span>
+          <small>Son mesaj: Evrak kontrol ediliyor • 45 dk önce</small>
+        </div>
+      </div>
+
+      <div class="note">Bu liste, sistem içi görüşme ve teklif pazarlığı mantığını gösterir. Telefon/e-posta bilgileri ilk aşamada gizli tutulabilir.</div>
+    </div>
+
+    <div class="card chat-wrap">
+      <div class="chat-top">
+        <div class="chat-title">
+          <strong>Atlas Gıda ↔ Demir Lojistik</strong>
+          <span>İstanbul → Ankara komple yük • Görüşme durumu: aktif</span>
+        </div>
+        <div class="offer-box">
+          <div class="offer-chip">Son Teklif: ₺129.000</div>
+          <div class="offer-chip">Durum: Pazarlık</div>
+          <div class="offer-chip">Gizli iletişim açık</div>
+        </div>
+      </div>
+
+      <div class="chat-body">
+        <div class="msg left">
+          <strong>Atlas Gıda</strong>
+          <span>Merhaba, 22 ton komple yük için Ankara hattında fiyat paylaşabilir misiniz?</span>
+          <small>09:12</small>
+        </div>
+
+        <div class="msg right">
+          <strong>Demir Lojistik</strong>
+          <span>Merhaba, ilk teklifimiz ₺136.000. Uygunsa araç planlamasını başlatabiliriz.</span>
+          <small>09:15</small>
+        </div>
+
+        <div class="msg left">
+          <strong>Atlas Gıda</strong>
+          <span>Bu fiyatı biraz aşağı çekebilir misiniz? Düzenli sevkiyat ihtimalimiz de olabilir.</span>
+          <small>09:18</small>
+        </div>
+
+        <div class="msg right">
+          <strong>Demir Lojistik</strong>
+          <span>Düzenli taşıma potansiyeli varsa ₺129.000 seviyesine inebiliriz. Yükleme saati de önemli.</span>
+          <small>09:20</small>
+        </div>
+
+        <div class="msg left">
+          <strong>Atlas Gıda</strong>
+          <span>Yükleme yarın sabah 08:00 civarı olabilir. Bu durumda teklifi sabitleyebilir miyiz?</span>
+          <small>09:24</small>
+        </div>
+
+        <div class="msg right">
+          <strong>Demir Lojistik</strong>
+          <span>Evet, teklifimizi ₺129.000 olarak güncelledim. Onay verirseniz rezervasyonu açalım.</span>
+          <small>09:27</small>
+        </div>
+      </div>
+
+      <div class="chat-bottom">
+        <div class="compose">
+          <textarea placeholder="Mesajınızı yazın..."></textarea>
+          <a class="btn btn-secondary" href="#">Teklif Güncelle</a>
+          <a class="btn btn-primary" href="#">Gönder</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-stack">
+      <div class="card inner">
+        <div class="card-head">
+          <div>
+            <h3>Admin Görünümü</h3>
+            <p>Mesaj geçmişi ve teklif takibi</p>
+          </div>
+          <div class="tag">Yönetim</div>
+        </div>
+
+        <div class="info-list">
+          <div class="info-item"><strong>Mesaj Durumu</strong><span>Görüşme aktif, son fiyat güncellemesi yapıldı.</span></div>
+          <div class="info-item"><strong>Gizli Bilgi Politikası</strong><span>Telefon, e-posta ve IBAN bilgileri ilk aşamada gizlidir.</span></div>
+          <div class="info-item"><strong>Onay Sonrası</strong><span>Kabul edilen görüşmelerde iletişim detayları açılabilir.</span></div>
+          <div class="info-item"><strong>Komisyon Takibi</strong><span>Admin panelden işlem geçmişini ve pazarlığı izleyebilir.</span></div>
+        </div>
+      </div>
+
+      <div class="card inner table-wrap">
+        <div class="card-head">
+          <div>
+            <h3>Teklif Geçmişi</h3>
+            <p>Son pazarlık hareketleri</p>
+          </div>
+          <div class="tag">Kayıt</div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tarih</th>
+              <th>Taraf</th>
+              <th>Teklif</th>
+              <th>Durum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>09:15</td><td>Demir Lojistik</td><td>₺136.000</td><td>İlk Teklif</td></tr>
+            <tr><td>09:20</td><td>Demir Lojistik</td><td>₺129.000</td><td>Güncellendi</td></tr>
+            <tr><td>09:24</td><td>Atlas Gıda</td><td>Onay Talebi</td><td>Bekliyor</td></tr>
+            <tr><td>09:27</td><td>Demir Lojistik</td><td>₺129.000</td><td>Son Fiyat</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div><strong>SEVRA</strong><br>Mesajlaşma ve görüşme modülü</div>
+    <div>Mesajlaşma UI paketi</div>
+  </div>
+</footer>
+
+<script>
+const threads = document.querySelectorAll('.thread');
+threads.forEach(t => {
+  t.addEventListener('click', () => {
+    threads.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
