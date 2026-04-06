@@ -3,16 +3,29 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Final Polish Step 7</title>
+<title>SEVRA | Final Lock Step 8</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#061325; --line:rgba(255,255,255,.08); --text:#eef4ff; --muted:#aebcd3;
-  --yellow:#f1c84d; --yellow-dark:#d5a927; --shadow:0 22px 60px rgba(0,0,0,.34); --max:1380px;
+  --bg:#061325;
+  --bg2:#0a1830;
+  --line:rgba(255,255,255,.08);
+  --line2:rgba(255,255,255,.12);
+  --text:#eef4ff;
+  --muted:#aebcd3;
+  --yellow:#f1c84d;
+  --yellow-dark:#d5a927;
+  --shadow:0 22px 60px rgba(0,0,0,.34);
+  --shadow-soft:0 12px 30px rgba(0,0,0,.22);
+  --radius-xl:34px;
+  --radius-lg:24px;
+  --radius-md:18px;
+  --max:1380px;
 }
 html{scroll-behavior:smooth}
 body{
-  font-family:Arial,Helvetica,sans-serif; color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
   background:
     radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
     radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
@@ -21,120 +34,232 @@ body{
 }
 a{text-decoration:none;color:inherit}
 .container{max-width:var(--max);margin:0 auto;padding:0 22px}
-.topbar{position:sticky;top:0;z-index:100;background:rgba(4,12,24,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.topbar-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
 .brand{display:flex;align-items:center;gap:14px}
-.brand-mark{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--yellow),#f8df91);color:#0d1d38;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(241,200,77,.28)}
+.brand-mark{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(135deg,var(--yellow),#f8df91);
+  color:#0d1d38;font-size:24px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(241,200,77,.28);
+}
 .brand-text strong{display:block;font-size:31px;letter-spacing:.4px}
 .brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
 .nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
 .actions{display:flex;gap:12px;align-items:center}
-.btn{min-height:48px;padding:0 22px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--yellow);color:#0b1830}.btn-primary:hover{background:var(--yellow-dark)}
+
+.btn,.action-btn,.overview-link,.social-btn,.msg-btn{
+  transition:.2s ease;
+}
+.btn{
+  min-height:48px;padding:0 22px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;cursor:pointer;
+}
+.btn:hover,.action-btn:hover,.overview-link:hover,.social-btn:hover,.msg-btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--yellow);color:#0b1830}
+.btn-primary:hover{background:var(--yellow-dark)}
 .btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+
 .hero{padding:30px 0 18px}
-.hero-shell{border:1px solid var(--line);border-radius:34px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(90deg, rgba(7,21,42,.94) 0%, rgba(7,21,42,.84) 38%, rgba(7,21,42,.18) 72%), url('truck-hero.jpg') right center / cover no-repeat, linear-gradient(135deg,#0b2449,#081427)}
-.hero-grid{min-height:520px;display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:end;padding:46px}
+.hero-shell{
+  border:1px solid var(--line);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow);
+  background:
+    linear-gradient(90deg, rgba(7,21,42,.94) 0%, rgba(7,21,42,.84) 38%, rgba(7,21,42,.18) 72%),
+    url('truck-hero.jpg') right center / cover no-repeat,
+    linear-gradient(135deg,#0b2449,#081427);
+}
+.hero-grid{
+  min-height:520px;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:22px;
+  align-items:end;padding:46px;
+}
 .hero-left h1{font-size:58px;line-height:.98;letter-spacing:-2px;max-width:760px;margin-bottom:16px}
 .hero-left p{font-size:19px;color:#d7dfec;max-width:690px;margin-bottom:24px}
-.hero-tag{display:inline-flex;min-height:42px;padding:0 16px;align-items:center;border-radius:999px;background:rgba(241,200,77,.12);border:1px solid rgba(241,200,77,.24);color:#ffe08a;font-size:14px;font-weight:700;margin-bottom:18px}
+.hero-tag{
+  display:inline-flex;min-height:42px;padding:0 16px;align-items:center;border-radius:999px;
+  background:rgba(241,200,77,.12);border:1px solid rgba(241,200,77,.24);color:#ffe08a;font-size:14px;font-weight:700;margin-bottom:18px;
+}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(255,255,255,.08);background:rgba(9,20,39,.58);backdrop-filter:blur(8px);border-radius:24px;overflow:hidden;max-width:980px}
-.hero-stat{padding:20px;border-right:1px solid rgba(255,255,255,.08)}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);background:rgba(9,20,39,.58);backdrop-filter:blur(8px);
+  border-radius:24px;overflow:hidden;max-width:980px;
+}
+.hero-stat{padding:20px;border-right:1px solid var(--line)}
 .hero-stat:last-child{border-right:none}
 .hero-stat strong{display:block;font-size:24px;margin-bottom:4px}
 .hero-stat span{font-size:13px;color:#cad6e9}
 .hero-right{display:flex;align-items:flex-end;justify-content:flex-end}
-.mock-card{width:100%;max-width:390px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(13,32,67,.86),rgba(8,18,37,.95));border-radius:24px;padding:22px;box-shadow:var(--shadow)}
+.mock-card{
+  width:100%;max-width:390px;
+  border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,32,67,.90),rgba(8,18,37,.96));
+  border-radius:24px;padding:22px;box-shadow:var(--shadow-soft);
+}
 .mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .mock-head strong{font-size:30px}
-.pill{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;align-items:center;font-size:12px;font-weight:700}
-.mock-box{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;margin-bottom:12px}
+.pill{
+  display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;align-items:center;font-size:12px;font-weight:700;
+}
+.mock-box{
+  border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;margin-bottom:12px;
+}
 .mock-box:last-child{margin-bottom:0}
 .mock-box strong{display:block;font-size:18px;margin-bottom:4px}
 .mock-box p{font-size:14px;color:var(--muted)}
+
 .overview{padding:0 0 20px}
 .overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.overview-card{border:1px solid rgba(255,255,255,.08);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));padding:20px;box-shadow:var(--shadow)}
+.overview-card{
+  border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
+  padding:20px;box-shadow:var(--shadow-soft);min-height:182px;display:flex;flex-direction:column;justify-content:space-between;
+}
 .overview-card strong{display:block;font-size:28px;margin-bottom:8px}
 .overview-card p{font-size:14px;color:var(--muted);margin-bottom:14px}
-.overview-link{display:inline-flex;min-height:36px;padding:0 12px;border-radius:10px;background:rgba(241,200,77,.14);align-items:center;font-size:12px;font-weight:700;color:#ffe08a}
+.overview-link{
+  display:inline-flex;min-height:36px;padding:0 12px;border-radius:10px;background:rgba(241,200,77,.14);align-items:center;font-size:12px;font-weight:700;color:#ffe08a;
+}
+.overview-link:hover{background:rgba(241,200,77,.22)}
+
 section{padding:10px 0 22px}
-.section-title-row{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;padding-left:8px}
+.section-title-row{
+  display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;padding-left:8px;
+}
 .section-title{font-size:40px}
 .section-sub{font-size:14px;color:var(--muted)}
-.section-shell{border:1px solid rgba(255,255,255,.08);border-radius:30px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(180deg,#0d2143,#0a1a35)}
+
+.section-shell{
+  border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--shadow);
+  background:linear-gradient(180deg,#0d2143,#0a1a35);
+}
 .preview{display:grid;grid-template-columns:255px 1fr}
-.sidebar{background:linear-gradient(180deg,#0f264a,#0a1c37);border-right:1px solid rgba(255,255,255,.08);padding:22px 18px}
+.sidebar{
+  background:linear-gradient(180deg,#0f264a,#0a1c37);border-right:1px solid var(--line);padding:22px 18px;
+}
 .side-brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.side-logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900}
+.side-logo{
+  width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);
+  display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900;
+}
 .side-brand strong{display:block;font-size:18px}
 .side-brand span{display:block;font-size:12px;color:#b9c7db}
 .side-menu{display:grid;gap:10px}
-.menu-item{min-height:44px;border-radius:14px;display:flex;align-items:center;padding:0 14px;background:rgba(255,255,255,.03);font-size:14px;font-weight:700;color:#d7dfec}
+.menu-item{
+  min-height:44px;border-radius:14px;display:flex;align-items:center;padding:0 14px;
+  background:rgba(255,255,255,.03);font-size:14px;font-weight:700;color:#d7dfec;
+}
 .menu-item.active{background:var(--yellow);color:#0d1e3b}
 .content{padding:20px}
-.panel-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.panel-top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;
+}
 .panel-top h2{font-size:34px}
 .panel-top p{font-size:14px;color:var(--muted)}
 .userbox{display:flex;align-items:center;gap:12px}
 .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
-.small-card{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px}
+
+.stats-row,.quick-wrap,.carrier-kpis,.report-kpis,.login-kpis{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;
+}
+.small-card,.quick-box,.carrier-kpi,.report-kpi,.login-kpi{
+  border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;min-height:110px;
+}
 .small-card small{display:block;font-size:12px;color:#bfccdf;margin-bottom:8px}
-.small-card strong{display:block;font-size:34px;line-height:1;margin-bottom:4px}
-.small-card span{font-size:13px;color:#afbdd2}
-.two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
-.card{border:1px solid rgba(255,255,255,.08);border-radius:20px;background:rgba(255,255,255,.03);padding:18px}
+.small-card strong,.quick-box strong,.carrier-kpi strong,.report-kpi strong,.login-kpi strong{
+  display:block;font-size:30px;line-height:1.05;margin-bottom:6px;
+}
+.small-card span,.quick-box span,.carrier-kpi span,.report-kpi span,.login-kpi span{
+  font-size:13px;color:#afbdd2;
+}
+
+.two-col,.report-panels,.login-panels{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.report-panels,.login-panels{grid-template-columns:1fr 1fr}
+
+.card,.report-box,.login-box{
+  border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:18px;
+}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .card-head strong{font-size:28px}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.filter{min-height:38px;padding:0 12px;border-radius:10px;background:#102545;border:1px solid rgba(255,255,255,.08);color:#d8e1ef;display:inline-flex;align-items:center;font-size:13px}
+
+.filters,.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.action-row{margin-bottom:0}
+.filter,.action-btn{
+  min-height:38px;padding:0 12px;border-radius:10px;background:#102545;border:1px solid var(--line);color:#d8e1ef;display:inline-flex;align-items:center;font-size:13px;font-weight:700;
+}
+.action-btn.primary,.filter.primary{background:var(--yellow);color:#0d1a34;border-color:transparent}
+
 table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
-tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
+thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid var(--line);font-size:12px}
+tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff;vertical-align:top}
 tbody tr:last-child td{border-bottom:none}
-.chart-box{height:220px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)),repeating-linear-gradient(to top, rgba(255,255,255,.06), rgba(255,255,255,.06) 1px, transparent 1px, transparent 44px),repeating-linear-gradient(to right, rgba(255,255,255,.04), rgba(255,255,255,.04) 1px, transparent 1px, transparent 66px);position:relative;overflow:hidden}
+
+.chart-box{
+  height:220px;border-radius:16px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)),
+    repeating-linear-gradient(to top, rgba(255,255,255,.06), rgba(255,255,255,.06) 1px, transparent 1px, transparent 44px),
+    repeating-linear-gradient(to right, rgba(255,255,255,.04), rgba(255,255,255,.04) 1px, transparent 1px, transparent 66px);
+  position:relative;overflow:hidden;
+}
 .chart-box svg{position:absolute;left:14px;right:14px;top:14px;bottom:14px;width:calc(100% - 28px);height:calc(100% - 28px)}
-.message-item{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+
+.message-item{
+  display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);
+}
 .message-item:last-child{border-bottom:none}
 .msg-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
 .message-item strong{display:block;font-size:15px;margin-bottom:3px}
 .message-item span{font-size:12px;color:#b7c5d8}
-.msg-btn{min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;display:inline-flex;align-items:center;font-weight:700;font-size:12px}
-.quick-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.quick-box{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.quick-box strong{display:block;font-size:24px;margin-bottom:4px}
-.quick-box span{font-size:13px;color:var(--muted)}
-.carrier-top,.report-top,.login-top{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin-bottom:16px}
+.msg-btn{
+  min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;display:inline-flex;align-items:center;font-weight:700;font-size:12px;
+}
+
+.carrier-top,.report-top,.login-top{
+  display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin-bottom:16px;
+}
 .carrier-title strong,.report-title strong,.login-title strong{display:block;font-size:30px;margin-bottom:4px}
 .carrier-title span,.report-title span,.login-title span{font-size:14px;color:var(--muted)}
-.action-row{display:flex;gap:10px;flex-wrap:wrap}
-.action-btn{min-height:38px;padding:0 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
-.action-btn.primary{background:var(--yellow);color:#09152a;border-color:transparent}
-.carrier-table-wrap,.report-table-wrap{border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.02)}
-.carrier-kpis,.report-kpis,.login-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
-.carrier-kpi,.report-kpi,.login-kpi{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px}
-.carrier-kpi strong,.report-kpi strong,.login-kpi strong{display:block;font-size:28px;margin-bottom:4px}
-.carrier-kpi span,.report-kpi span,.login-kpi span{font-size:13px;color:var(--muted)}
-.status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-.report-panels,.login-panels{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.report-box,.login-box{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px}
-.report-box strong,.login-box strong{display:block;font-size:20px;margin-bottom:10px}
+
+.carrier-table-wrap,.report-table-wrap{
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.02)
+}
+.status{
+  display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a;
+}
+
 .login-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .login-field{display:flex;flex-direction:column;gap:6px}
 .login-field label{font-size:13px;color:#dce6f5;font-weight:700}
-.login-field input,.login-field select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:13px 14px;font-size:15px;outline:none}
+.login-field input,.login-field select{
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:13px 14px;font-size:15px;outline:none;
+}
 .login-full{grid-column:1/-1}
 .social-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.social-btn{min-height:46px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;font-weight:700}
+.social-btn{
+  min-height:46px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;font-weight:700;
+}
+.social-btn:hover{background:rgba(255,255,255,.06)}
+
 .cta-strip{padding:8px 0 28px}
-.cta-box{border:1px solid rgba(255,255,255,.08);border-radius:28px;background:linear-gradient(180deg,rgba(13,32,67,.92),rgba(8,18,37,.96));padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.cta-box{
+  border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(13,32,67,.92),rgba(8,18,37,.96));padding:24px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center
+}
 .cta-box strong{display:block;font-size:34px;margin-bottom:8px}
 .cta-box p{font-size:15px;color:var(--muted)}
-.footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);margin-top:24px}
-.footer-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px}
+
+.footer{border-top:1px solid var(--line);background:rgba(0,0,0,.18);margin-top:24px}
+.footer-inner{
+  min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px
+}
+
 @media (max-width:1180px){
   .hero-grid,.preview,.two-col,.report-panels,.login-panels,.cta-box{grid-template-columns:1fr}
   .stats-row,.hero-stats,.quick-wrap,.carrier-kpis,.report-kpis,.login-kpis,.overview-grid{grid-template-columns:1fr 1fr}
@@ -226,7 +351,7 @@ tbody tr:last-child td{border-bottom:none}
         <div class="panel-top"><div><h2>Dashboard</h2><p>Kurumsal yük ve teklif yönetim görünümü</p></div><div class="userbox"><div class="avatar"></div><div><strong style="display:block;font-size:14px">Operasyon Yöneticisi</strong><span style="font-size:12px;color:#b8c6da">SEVRA Panel</span></div></div></div>
         <div class="stats-row"><div class="small-card"><small>Toplam Yük İlanı</small><strong>532</strong><span>aktif ilan görünümü</span></div><div class="small-card"><small>Onay Bekleyen Teklifler</small><strong>14</strong><span>cevap süreci</span></div><div class="small-card"><small>Aktif Nakliyeciler</small><strong>1,205</strong><span>firma havuzu</span></div><div class="small-card"><small>Toplam Hacim</small><strong>₺298,200</strong><span>operasyon hacmi</span></div></div>
         <div class="two-col">
-          <div class="card"><div class="card-head"><strong>Yük İlanlarım</strong><span class="pill">Aktif görünüm</span></div><div class="filters"><div class="filter">Kalkış</div><div class="filter">Varış</div><div class="filter">Yük Tipi</div><div class="filter" style="background:var(--yellow);color:#0d1a34;border-color:transparent;">Ara</div></div><table><thead><tr><th>Yükleme</th><th>İndirme</th><th>Yük Tipi</th><th>Tonaj</th><th>Teklif</th><th>Durum</th></tr></thead><tbody><tr><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22 Ton</td><td>₺129.000</td><td>Onaylandı</td></tr><tr><td>İstanbul</td><td>Bilecik</td><td>Yük tip</td><td>9 Ton</td><td>₺23.900</td><td>Görüşme</td></tr><tr><td>Ankara</td><td>Malatya</td><td>Sandık</td><td>36 Ton</td><td>₺23.200</td><td>Teklifte</td></tr><tr><td>Kocaeli</td><td>Nevşehir</td><td>Komple</td><td>33 Ton</td><td>₺28.200</td><td>Sevkiyat</td></tr><tr><td>Karagöl</td><td>Bilecik</td><td>Tonajlı</td><td>22 Ton</td><td>₺28.200</td><td>Onaylı</td></tr></tbody></table></div>
+          <div class="card"><div class="card-head"><strong>Yük İlanlarım</strong><span class="pill">Aktif görünüm</span></div><div class="filters"><div class="filter">Kalkış</div><div class="filter">Varış</div><div class="filter">Yük Tipi</div><div class="filter primary">Ara</div></div><table><thead><tr><th>Yükleme</th><th>İndirme</th><th>Yük Tipi</th><th>Tonaj</th><th>Teklif</th><th>Durum</th></tr></thead><tbody><tr><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22 Ton</td><td>₺129.000</td><td>Onaylandı</td></tr><tr><td>İstanbul</td><td>Bilecik</td><td>Yük tip</td><td>9 Ton</td><td>₺23.900</td><td>Görüşme</td></tr><tr><td>Ankara</td><td>Malatya</td><td>Sandık</td><td>36 Ton</td><td>₺23.200</td><td>Teklifte</td></tr><tr><td>Kocaeli</td><td>Nevşehir</td><td>Komple</td><td>33 Ton</td><td>₺28.200</td><td>Sevkiyat</td></tr><tr><td>Karagöl</td><td>Bilecik</td><td>Tonajlı</td><td>22 Ton</td><td>₺28.200</td><td>Onaylı</td></tr></tbody></table></div>
           <div class="card"><div class="card-head"><strong>Aylık Kazanç & Teklif Durumu</strong><span class="pill">Canlı</span></div><div class="chart-box"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline fill="none" stroke="#f1c84d" stroke-width="2.6" points="0,76 12,68 24,66 36,62 48,57 60,49 72,42 84,33 100,24"></polyline></svg></div><div style="margin-top:16px"><div class="card-head"><strong style="font-size:22px">Son Mesajlar</strong><span class="pill">Görüşme</span></div><div class="message-item"><div class="msg-avatar"></div><div><strong>Orhan Nakliyat</strong><span>Yük için fiyat güncellendi</span></div><div class="msg-btn">Yanıtla</div></div><div class="message-item"><div class="msg-avatar"></div><div><strong>Demir Lojistik</strong><span>Yeni araç bilgisi paylaşıldı</span></div><div class="msg-btn">Aç</div></div><div class="message-item"><div class="msg-avatar"></div><div><strong>Yıldır Trans</strong><span>Son teklif bekleniyor</span></div><div class="msg-btn">Gör</div></div></div></div>
         </div>
       </div>
@@ -248,7 +373,7 @@ tbody tr:last-child td{border-bottom:none}
       <div class="content">
         <div class="carrier-top"><div class="carrier-title"><strong>Nakliyeciler</strong><span>Referans görsele daha yakın premium taşıyıcı görünümü</span></div><div class="action-row"><div class="action-btn">Tüm Firmalar</div><div class="action-btn">Aktifler</div><div class="action-btn">Onay Bekleyen</div><div class="action-btn primary">Yeni Firma Ekle</div></div></div>
         <div class="carrier-kpis"><div class="carrier-kpi"><strong>1,205</strong><span>Aktif taşıyıcı</span></div><div class="carrier-kpi"><strong>36</strong><span>Onay bekleyen profil</span></div><div class="carrier-kpi"><strong>118</strong><span>Bu ay yeni firma</span></div><div class="carrier-kpi"><strong>84%</strong><span>Onay oranı</span></div></div>
-        <div class="card"><div class="card-head"><strong>Taşıyıcı Havuzu</strong><span class="pill">Premium tablo</span></div><div class="filters"><div class="filter">Firma adı</div><div class="filter">Şehir</div><div class="filter">Araç tipi</div><div class="filter">Durum</div><div class="filter" style="background:var(--yellow);color:#0d1a34;border-color:transparent;">Filtrele</div></div><div class="carrier-table-wrap"><table><thead><tr><th>Firma</th><th>E-posta</th><th>Telefon</th><th>Takvim</th><th>Plaka</th><th>Durum</th><th>İşlem</th></tr></thead><tbody><tr><td>Orhan Nakliyat</td><td>orhan@firma.com</td><td>0 505 232 9346</td><td>6/25</td><td>07 AB 2035</td><td><span class="status">Aktif</span></td><td><div class="action-row"><div class="action-btn primary">Teklifi Onayla</div><div class="action-btn">Profili Aç</div></div></td></tr><tr><td>Demir Lojistik</td><td>demir@firma.com</td><td>0 505 022 0066</td><td>8/12</td><td>08 AC 2034</td><td><span class="status">Onay Bekliyor</span></td><td><div class="action-row"><div class="action-btn">Randevu Aç</div><div class="action-btn">Mesaj Yaz</div></div></td></tr><tr><td>Yıldır Trans</td><td>yildiz@firma.com</td><td>0 505 003 0165</td><td>9/42</td><td>01 AZ 2034</td><td><span class="status">Aktif</span></td><td><div class="action-row"><div class="action-btn">Dosyayı Gör</div><div class="action-btn">Teklif Ver</div></div></td></tr><tr><td>Atlas Lojistik</td><td>atlas@firma.com</td><td>0 532 444 2200</td><td>4/11</td><td>34 AT 4422</td><td><span class="status">Pasif</span></td><td><div class="action-row"><div class="action-btn">Yeniden Aç</div><div class="action-btn">Detay</div></div></td></tr></tbody></table></div></div>
+        <div class="card"><div class="card-head"><strong>Taşıyıcı Havuzu</strong><span class="pill">Premium tablo</span></div><div class="filters"><div class="filter">Firma adı</div><div class="filter">Şehir</div><div class="filter">Araç tipi</div><div class="filter">Durum</div><div class="filter primary">Filtrele</div></div><div class="carrier-table-wrap"><table><thead><tr><th>Firma</th><th>E-posta</th><th>Telefon</th><th>Takvim</th><th>Plaka</th><th>Durum</th><th>İşlem</th></tr></thead><tbody><tr><td>Orhan Nakliyat</td><td>orhan@firma.com</td><td>0 505 232 9346</td><td>6/25</td><td>07 AB 2035</td><td><span class="status">Aktif</span></td><td><div class="action-row"><div class="action-btn primary">Teklifi Onayla</div><div class="action-btn">Profili Aç</div></div></td></tr><tr><td>Demir Lojistik</td><td>demir@firma.com</td><td>0 505 022 0066</td><td>8/12</td><td>08 AC 2034</td><td><span class="status">Onay Bekliyor</span></td><td><div class="action-row"><div class="action-btn">Randevu Aç</div><div class="action-btn">Mesaj Yaz</div></div></td></tr><tr><td>Yıldır Trans</td><td>yildiz@firma.com</td><td>0 505 003 0165</td><td>9/42</td><td>01 AZ 2034</td><td><span class="status">Aktif</span></td><td><div class="action-row"><div class="action-btn">Dosyayı Gör</div><div class="action-btn">Teklif Ver</div></div></td></tr><tr><td>Atlas Lojistik</td><td>atlas@firma.com</td><td>0 532 444 2200</td><td>4/11</td><td>34 AT 4422</td><td><span class="status">Pasif</span></td><td><div class="action-row"><div class="action-btn">Yeniden Aç</div><div class="action-btn">Detay</div></div></td></tr></tbody></table></div></div>
       </div>
     </div>
   </div>
@@ -288,11 +413,7 @@ tbody tr:last-child td{border-bottom:none}
       <div class="content">
         <div class="login-top"><div class="login-title"><strong>Giriş Yap</strong><span>Referans görsele daha yakın premium erişim görünümü</span></div><div class="action-row"><div class="action-btn">Üye Girişi</div><div class="action-btn">Firma Girişi</div><div class="action-btn">Yönetim</div><div class="action-btn primary">Hızlı Başlat</div></div></div>
         <div class="login-kpis"><div class="login-kpi"><strong>248</strong><span>Aktif kullanıcı</span></div><div class="login-kpi"><strong>34</strong><span>Bu ay yeni kayıt</span></div><div class="login-kpi"><strong>12</strong><span>Onay bekleyen firma</span></div><div class="login-kpi"><strong>16</strong><span>Yüksek ilgi</span></div></div>
-        <div class="login-panels">
-          <div class="login-box"><strong>Kurumsal Giriş Formu</strong><div class="login-form"><div class="login-field login-full"><label>E-posta</label><input type="text" placeholder="mail@firma.com"></div><div class="login-field login-full"><label>Şifre</label><input type="password" placeholder="••••••••"></div><div class="login-field"><label>Kullanıcı Türü</label><select><option>Yük Veren</option><option>Taşıyıcı</option><option>Kurumsal Üye</option><option>Yönetim</option></select></div><div class="login-field"><label>Hatırla</label><select><option>Evet</option><option>Hayır</option></select></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px"><a class="btn btn-secondary" href="giris.html">Giriş Yap</a><a class="btn btn-primary" href="uye-ol.html">Üye Ol</a></div></div>
-          <div class="login-box"><strong>Sosyal ve Hızlı Giriş</strong><div class="social-grid"><div class="social-btn">Google ile Giriş</div><div class="social-btn">Facebook ile Giriş</div></div><div class="card" style="margin-top:14px"><div class="card-head"><strong style="font-size:20px">Telefon ile Giriş</strong><span class="pill">OTP</span></div><div class="login-form"><div class="login-field login-full"><label>Telefon Numarası</label><input type="text" placeholder="+90 5xx xxx xx xx"></div><div class="login-field login-full"><label>Doğrulama Kodu</label><input type="text" placeholder="6 haneli kod"></div></div></div></div>
-        </div>
-        <div class="card" style="margin-top:16px"><div class="card-head"><strong>Erişim Özeti</strong><span class="pill">Admin</span></div><div class="report-table-wrap"><table><thead><tr><th>Başlık</th><th>Değer</th><th>Durum</th><th>Yorum</th></tr></thead><tbody><tr><td>Aktif kullanıcı</td><td>248</td><td><span class="status">Stabil</span></td><td>Düzenli giriş var</td></tr><tr><td>Bu ay yeni kayıt</td><td>34</td><td><span class="status">Yükseliş</span></td><td>Kurumsal ilgi artıyor</td></tr><tr><td>Onay bekleyen firma</td><td>12</td><td><span class="status">Takipte</span></td><td>Onay akışı sürüyor</td></tr><tr><td>Sosyal giriş ilgisi</td><td>%22</td><td><span class="status">Pozitif</span></td><td>Google/Facebook merakı yüksek</td></tr></tbody></table></div></div>
+        <div class="login-panels"><div class="login-box"><strong>Kurumsal Giriş Formu</strong><div class="login-form"><div class="login-field login-full"><label>E-posta</label><input type="text" placeholder="mail@firma.com"></div><div class="login-field login-full"><label>Şifre</label><input type="password" placeholder="••••••••"></div><div class="login-field"><label>Kullanıcı Türü</label><select><option>Yük Veren</option><option>Taşıyıcı</option><option>Kurumsal Üye</option><option>Yönetim</option></select></div><div class="login-field"><label>Hatırla</label><select><option>Evet</option><option>Hayır</option></select></div></div><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px"><a class="btn btn-secondary" href="giris.html">Giriş Yap</a><a class="btn btn-primary" href="uye-ol.html">Üye Ol</a></div></div><div class="login-box"><strong>Sosyal ve Hızlı Giriş</strong><div class="social-grid"><div class="social-btn">Google ile Giriş</div><div class="social-btn">Facebook ile Giriş</div></div><div class="card" style="margin-top:14px"><div class="card-head"><strong style="font-size:20px">Telefon ile Giriş</strong><span class="pill">OTP</span></div><div class="login-form"><div class="login-field login-full"><label>Telefon Numarası</label><input type="text" placeholder="+90 5xx xxx xx xx"></div><div class="login-field login-full"><label>Doğrulama Kodu</label><input type="text" placeholder="6 haneli kod"></div></div></div></div></div><div class="card" style="margin-top:16px"><div class="card-head"><strong>Erişim Özeti</strong><span class="pill">Admin</span></div><div class="report-table-wrap"><table><thead><tr><th>Başlık</th><th>Değer</th><th>Durum</th><th>Yorum</th></tr></thead><tbody><tr><td>Aktif kullanıcı</td><td>248</td><td><span class="status">Stabil</span></td><td>Düzenli giriş var</td></tr><tr><td>Bu ay yeni kayıt</td><td>34</td><td><span class="status">Yükseliş</span></td><td>Kurumsal ilgi artıyor</td></tr><tr><td>Onay bekleyen firma</td><td>12</td><td><span class="status">Takipte</span></td><td>Onay akışı sürüyor</td></tr><tr><td>Sosyal giriş ilgisi</td><td>%22</td><td><span class="status">Pozitif</span></td><td>Google/Facebook merakı yüksek</td></tr></tbody></table></div></div>
       </div>
     </div>
   </div>
@@ -315,8 +436,8 @@ tbody tr:last-child td{border-bottom:none}
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div><strong>SEVRA</strong><br>Final polish step 7</div>
-    <div>Ana sayfa blokları tek bütün ürün deneyimine daha da yaklaştırıldı</div>
+    <div><strong>SEVRA</strong><br>Final lock step 8</div>
+    <div>Ana sayfa görünümü kilitlenmeye yakın son toplu düzen paketi</div>
   </div>
 </footer>
 </body>
