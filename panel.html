@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Çalışan Panel</title>
+<title>SEVRA | Panel Login Link Fix</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#071427; --panel:#0f254a; --line:rgba(255,255,255,.10); --text:#eef4ff; --muted:#aebbd1;
-  --yellow:#f3c744; --shadow:0 22px 60px rgba(0,0,0,.35);
-}
+:root{--bg:#071427;--line:rgba(255,255,255,.10);--text:#eef4ff;--muted:#aebbd1;--yellow:#f3c744;--shadow:0 22px 60px rgba(0,0,0,.35)}
 body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#071427,#08111d 70%,#050b14);line-height:1.6}
 a{text-decoration:none;color:inherit}
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
@@ -18,41 +15,19 @@ a{text-decoration:none;color:inherit}
 .side-logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900}
 .side-brand strong{display:block;font-size:18px}.side-brand span{display:block;color:#b8c5d8;font-size:12px}
 .side-menu{display:flex;flex-direction:column;gap:10px}
-.menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;border:1px solid transparent;cursor:pointer}
-.menu-item:hover{background:rgba(255,255,255,.06)} .menu-item.active{background:var(--yellow);color:#0c1a34}
-.main{padding:24px;background:radial-gradient(circle at top right, rgba(243,199,68,.07), transparent 18%),linear-gradient(180deg,#0d2143,#0a1a35)}
+.menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;border:1px solid transparent}
+.menu-item.active{background:var(--yellow);color:#0c1a34}
+.main{padding:24px;background:linear-gradient(180deg,#0d2143,#0a1a35)}
 .top-row{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px;flex-wrap:wrap}
 .top-row h1{font-size:40px}.top-row p{color:var(--muted)}
-.btn{min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid transparent}
-.btn-primary{background:var(--yellow);color:#0b1830}.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.btn{min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.btn-primary{background:var(--yellow);color:#0b1830}.btn-secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff}
 .card{border:1px solid rgba(255,255,255,.08);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));box-shadow:var(--shadow)}
-.stat-card,.inner-card{padding:20px}
-.stat-card small{display:block;color:#c0cce0;margin-bottom:8px;font-size:12px}
-.stat-card strong{display:block;font-size:34px;line-height:1;margin-bottom:6px}
-.stat-card span{color:#aebcd3;font-size:13px}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
-.card-head h3{font-size:26px}
-.tag{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(243,199,68,.14);color:#ffe08a;font-size:12px;font-weight:700}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
-tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
-tbody tr:last-child td{border-bottom:none}
-.message{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
-.message:last-child{border-bottom:none}
-.message-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
-.message strong{display:block;font-size:15px;margin-bottom:3px}.message span{color:#b7c5d8;font-size:12px}
-.message-btn{min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;display:inline-flex;align-items:center;font-weight:700;font-size:12px}
-section.panel-section{display:none} section.panel-section.active{display:block}
-.section-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
-.section-top h2{font-size:34px}.section-top p{color:var(--muted)}
-.list-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.info-list{display:grid;gap:12px}
-.info-item{border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.03);padding:16px}
-.info-item strong{display:block;font-size:18px;margin-bottom:6px}.info-item span{color:var(--muted);font-size:14px}
-@media (max-width:1100px){.layout,.grid,.sub-grid,.list-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.sidebar{position:relative;height:auto}}
+.inner{padding:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.info{padding:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03)}
+.info strong{display:block;font-size:24px;margin-bottom:8px}.info span{font-size:14px;color:var(--muted)}
+@media (max-width:980px){.layout,.grid{grid-template-columns:1fr}.sidebar{position:relative;height:auto}}
 </style>
 </head>
 <body>
@@ -63,82 +38,40 @@ section.panel-section{display:none} section.panel-section.active{display:block}
       <div><strong>SEVRA</strong><span>Kurumsal Panel</span></div>
     </div>
     <div class="side-menu">
-      <a class="menu-item active" data-target="kontrol-paneli">Kontrol Paneli</a>
-      <a class="menu-item" data-target="yuk-ilanlari">Yük İlanları</a>
-      <a class="menu-item" data-target="tekliflerim">Tekliflerim</a>
-      <a class="menu-item" data-target="nakliyeciler">Nakliyeciler</a>
-      <a class="menu-item" data-target="yuk-verenler">Yük Verenler</a>
-      <a class="menu-item" data-target="mesajlar">Mesajlar</a>
-      <a class="menu-item" data-target="raporlar">Raporlar</a>
-      <a class="menu-item" data-target="urunler">Ürünler</a>
-      <a class="menu-item" data-target="ayarlar">Ayarlar</a>
-      <a class="menu-item" href="index.html">Ana Sayfaya Dön</a>
+      <a class="menu-item active" href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item" href="urunler.html">Ürünler</a>
+      <a class="menu-item" href="giris.html">Giriş Yap</a>
+      <a class="menu-item" href="uye-ol.html">Üye Ol</a>
+      <a class="menu-item" href="basvuru.html">Başvuru Merkezi</a>
+      <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
 
   <main class="main">
-    <section id="kontrol-paneli" class="panel-section active">
-      <div class="top-row">
-        <div><h1>SEVRA Panel</h1><p>Yük ilanları, nakliyeciler, başvurular, ürünler ve raporların tek ürün hissinde toplandığı yönetim yüzü.</p></div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a class="btn btn-secondary" href="basvuru.html">Başvuru Merkezi</a>
-          <a class="btn btn-secondary" href="urunler.html">Ürünler</a>
-          <a class="btn btn-primary" href="index.html">Ana Vitrin</a>
+    <div class="top-row">
+      <div>
+        <h1>Panel Login Bağlantıları</h1>
+        <p>Panelden giriş ve üyelik ekranlarına hızlı erişim eklendi.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-secondary" href="giris.html">Giriş Yap</a>
+        <a class="btn btn-primary" href="uye-ol.html">Üye Ol</a>
+      </div>
+    </div>
+
+    <div class="card inner">
+      <div class="grid">
+        <div class="info">
+          <strong>Giriş Ekranı</strong>
+          <span>Mevcut kullanıcılar için giriş bağlantısı panel menüsüne eklendi.</span>
+        </div>
+        <div class="info">
+          <strong>Üyelik Ekranı</strong>
+          <span>Yeni kullanıcılar için üye ol bağlantısı panel menüsüne eklendi.</span>
         </div>
       </div>
-      <div class="stats">
-        <div class="card stat-card"><small>Toplam Yük İlanı</small><strong>532</strong><span>aktif ilan görünümü</span></div>
-        <div class="card stat-card"><small>Bekleyen Teklif</small><strong>14</strong><span>cevap süreci</span></div>
-        <div class="card stat-card"><small>Aktif Nakliyeci</small><strong>1,205</strong><span>havuz görünümü</span></div>
-        <div class="card stat-card"><small>Aktif Ürün</small><strong>120</strong><span>ürün vitrini</span></div>
-      </div>
-    </section>
-
-    <section id="yuk-ilanlari" class="panel-section"><div class="section-top"><div><h2>Yük İlanları</h2><p>Açık yükler, rota ve teklif durumu.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><table><thead><tr><th>No</th><th>Çıkış</th><th>Varış</th><th>Tip</th><th>Tonaj</th><th>Durum</th></tr></thead><tbody><tr><td>YL-001</td><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22</td><td>Açık</td></tr><tr><td>YL-002</td><td>İzmir</td><td>Bursa</td><td>Parsiyel</td><td>8</td><td>Teklif Bekliyor</td></tr><tr><td>YL-003</td><td>Konya</td><td>Mersin</td><td>Hammadde</td><td>16</td><td>Görüşme</td></tr><tr><td>YL-004</td><td>Manisa</td><td>Gebze</td><td>Paletli</td><td>13</td><td>Açık</td></tr></tbody></table></div></section>
-    <section id="tekliflerim" class="panel-section"><div class="section-top"><div><h2>Tekliflerim</h2><p>Bekleyen, onaylanan ve kapanan teklifler.</p></div><div class="tag">Çalışan bölüm</div></div><div class="list-grid"><div class="card inner-card info-list"><div class="info-item"><strong>İstanbul → Ankara</strong><span>₺129.000 • Beklemede</span></div><div class="info-item"><strong>İzmir → Bursa</strong><span>₺48.500 • Geri dönüş bekleniyor</span></div><div class="info-item"><strong>Gaziantep → Kayseri</strong><span>₺81.400 • Görüşme sürüyor</span></div></div><div class="card inner-card info-list"><div class="info-item"><strong>Teklif Özeti</strong><span>14 aktif teklif, 3 sıcak görüşme, 2 onay bekliyor.</span></div><div class="info-item"><strong>Bu Ay Hacim</strong><span>₺298.000 tahmini işlem hacmi.</span></div></div></div></section>
-    <section id="nakliyeciler" class="panel-section"><div class="section-top"><div><h2>Nakliyeciler</h2><p>Aktif taşıyıcı firmalar ve durumları.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><table><thead><tr><th>Firma</th><th>Yetkili</th><th>Telefon</th><th>Statü</th></tr></thead><tbody><tr><td>Orhan Nakliyat</td><td>Orhan Bey</td><td>0555 101 2020</td><td>Onay Bekliyor</td></tr><tr><td>Demir Lojistik</td><td>Deniz Hanım</td><td>0555 202 3030</td><td>Araştırılıyor</td></tr><tr><td>Yıldır Trans</td><td>Yasin Bey</td><td>0555 303 4040</td><td>Aktif</td></tr></tbody></table></div></section>
-    <section id="yuk-verenler" class="panel-section"><div class="section-top"><div><h2>Yük Verenler</h2><p>Kurumsal müşteri ve talep bırakan firmalar.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><table><thead><tr><th>Firma</th><th>Şehir</th><th>Yetkili</th><th>Durum</th></tr></thead><tbody><tr><td>Atlas Gıda</td><td>İstanbul</td><td>Ahmet Bey</td><td>Aktif</td></tr><tr><td>Nevra Kimya</td><td>Kocaeli</td><td>Selin Hanım</td><td>Teklif Bekliyor</td></tr><tr><td>Mera Plastik</td><td>İzmir</td><td>Fatih Bey</td><td>Görüşme</td></tr></tbody></table></div></section>
-    <section id="mesajlar" class="panel-section"><div class="section-top"><div><h2>Mesajlar</h2><p>Son görüşmeler ve operasyon mesajları.</p></div><div class="tag">Çalışan bölüm</div></div><div class="card inner-card"><div class="message"><div class="message-avatar"></div><div><strong>Orhan Nakliyat</strong><span>Yükleme saati için dönüş bekliyoruz.</span></div><div class="message-btn">Aç</div></div><div class="message"><div class="message-avatar"></div><div><strong>Atlas Gıda</strong><span>Yeni sevkiyat talebi bırakıldı.</span></div><div class="message-btn">Aç</div></div><div class="message"><div class="message-avatar"></div><div><strong>Demir Lojistik</strong><span>Yeni araç eklendi, profil güncellendi.</span></div><div class="message-btn">Aç</div></div></div></section>
-    <section id="raporlar" class="panel-section"><div class="section-top"><div><h2>Raporlar</h2><p>Özet rakamlar ve dönemsel görünüm.</p></div><div class="tag">Çalışan bölüm</div></div><div class="sub-grid"><div class="card inner-card"><div class="card-head"><h3>Hacim Özeti</h3><div class="tag">Bu Ay</div></div><table><tbody><tr><td>Toplam Hacim</td><td>₺298.000</td></tr><tr><td>Yeni İlan</td><td>38</td></tr><tr><td>Aktif Teklif</td><td>14</td></tr><tr><td>Aktif Nakliyeci</td><td>1,205</td></tr></tbody></table></div><div class="card inner-card"><div class="card-head"><h3>Operasyon Özeti</h3><div class="tag">Canlı</div></div><table><tbody><tr><td>Açık Yük</td><td>19</td></tr><tr><td>Görüşme</td><td>7</td></tr><tr><td>Onay Bekleyen</td><td>5</td></tr><tr><td>Kapanan</td><td>12</td></tr></tbody></table></div></div></section>
-
-    <section id="urunler" class="panel-section">
-      <div class="section-top">
-        <div><h2>Ürünler</h2><p>Ürün satış ekranına hızlı geçiş ve özet görünüm.</p></div>
-        <div class="tag">Yeni bölüm</div>
-      </div>
-      <div class="list-grid">
-        <div class="card inner-card info-list">
-          <div class="info-item"><strong>Ürün Vitrini</strong><span>Ağır vasıta parçaları ve lojistik ürünleri ayrı ekran üzerinden listelenir.</span></div>
-          <div class="info-item"><strong>Aktif Ürün</strong><span>120 ürün kartı kapasitesi planlandı.</span></div>
-          <div class="info-item"><strong>Ürün Ekleme</strong><span>Görsel yükleme, fiyat ve stok mantığı ürünler ekranında hazır.</span></div>
-        </div>
-        <div class="card inner-card info-list">
-          <div class="info-item"><strong>Hızlı Geçiş</strong><span><a href="urunler.html">Ürünler ekranını aç</a></span></div>
-          <div class="info-item"><strong>Satış Alanı</strong><span>Çamurluk, menteşe, kilit ve diğer ürünler vitrinlenir.</span></div>
-        </div>
-      </div>
-      <div style="margin-top:18px">
-        <a class="btn btn-primary" href="urunler.html">Ürünler Sayfasını Aç</a>
-      </div>
-    </section>
-
-    <section id="ayarlar" class="panel-section"><div class="section-top"><div><h2>Ayarlar</h2><p>Panel ayarları ve hızlı bağlantılar.</p></div><div class="tag">Çalışan bölüm</div></div><div class="list-grid"><div class="card inner-card info-list"><div class="info-item"><strong>Panel Teması</strong><span>Sarı + lacivert kurumsal tema aktif.</span></div><div class="info-item"><strong>Bildirimler</strong><span>Mesaj ve başvuru bildirimleri açık.</span></div><div class="info-item"><strong>Yönlendirme</strong><span>Ana vitrin ve başvuru merkezi bağlantıları hazır.</span></div></div><div class="card inner-card info-list"><div class="info-item"><strong>Hızlı Geçiş</strong><span><a href="index.html">Ana Sayfaya Dön</a></span></div><div class="info-item"><strong>Başvuru Merkezi</strong><span><a href="basvuru.html">Başvuru ekranını aç</a></span></div></div></div></section>
+    </div>
   </main>
 </div>
-
-<script>
-const items = document.querySelectorAll('.menu-item[data-target]');
-const sections = document.querySelectorAll('.panel-section');
-items.forEach(item => {
-  item.addEventListener('click', () => {
-    const target = item.getAttribute('data-target');
-    items.forEach(i => i.classList.remove('active'));
-    item.classList.add('active');
-    sections.forEach(sec => sec.classList.remove('active'));
-    const activeSection = document.getElementById(target);
-    if (activeSection) activeSection.classList.add('active');
-  });
-});
-</script>
 </body>
 </html>
