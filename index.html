@@ -3,42 +3,174 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Mesaj Link Güncelleme</title>
+<title>SEVRA | Final Layout Step 1</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#071427;--line:rgba(255,255,255,.10);--text:#eef4ff;--muted:#aebbd1;--yellow:#f3c744;--yellow-dark:#d7a61c;--shadow:0 22px 60px rgba(0,0,0,.35);--max:1320px}
-body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#071427,#08111d 70%,#050b14);line-height:1.6}
+:root{
+  --bg:#061325;
+  --bg2:#0b1f41;
+  --panel:#10264b;
+  --panel2:#132c56;
+  --line:rgba(255,255,255,.08);
+  --text:#eef4ff;
+  --muted:#aebcd3;
+  --yellow:#f1c84d;
+  --yellow-dark:#d5a927;
+  --shadow:0 22px 60px rgba(0,0,0,.34);
+  --max:1380px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
+  line-height:1.5;
+}
 a{text-decoration:none;color:inherit}
 .container{max-width:var(--max);margin:0 auto;padding:0 22px}
-.topbar{position:sticky;top:0;z-index:100;background:rgba(4,12,24,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.topbar-inner{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
 .brand{display:flex;align-items:center;gap:14px}
-.brand-mark{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--yellow),#f8df91);color:#0d1d38;font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center}
-.brand-text strong{display:block;font-size:30px}.brand-text span{display:block;font-size:12px;color:#d6e0ef}
-.nav{display:flex;gap:22px;color:#d2dcef;font-size:15px;flex-wrap:wrap}
+.brand-mark{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(135deg,var(--yellow),#f8df91);
+  color:#0d1d38;font-size:24px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(241,200,77,.28);
+}
+.brand-text strong{display:block;font-size:31px;letter-spacing:.4px}
+.brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
+.nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
 .actions{display:flex;gap:12px;align-items:center}
-.btn{min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.btn{
+  min-height:48px;padding:0 22px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer;
+}
+.btn:hover{transform:translateY(-1px)}
 .btn-primary{background:var(--yellow);color:#0b1830}
-.btn-secondary{background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff}
-.hero{padding:36px 0}
-.hero-box{padding:42px;border-radius:30px;background:linear-gradient(135deg,#0e2447,#0a1b34);border:1px solid var(--line);box-shadow:var(--shadow)}
-.hero-box h1{font-size:48px;line-height:1.02;margin-bottom:12px}
-.hero-box p{max-width:880px;color:var(--muted);font-size:18px;margin-bottom:18px}
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.q{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.q strong{display:block;font-size:24px;margin-bottom:4px}
-.q span{font-size:13px;color:var(--muted)}
-.card{border:1px solid rgba(255,255,255,.08);border-radius:22px;background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));box-shadow:var(--shadow)}
-.inner{padding:24px}
-.section{padding:0 0 36px}
-.links{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-.linkbox{padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03)}
-.linkbox h3{font-size:24px;margin-bottom:8px}
-.linkbox p{color:var(--muted);font-size:14px;margin-bottom:16px}
-.footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18)}
+.btn-primary:hover{background:var(--yellow-dark)}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
+.hero{padding:30px 0 26px}
+.hero-shell{
+  border:1px solid var(--line);
+  border-radius:34px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  background:
+    linear-gradient(90deg, rgba(7,21,42,.94) 0%, rgba(7,21,42,.84) 38%, rgba(7,21,42,.18) 72%),
+    url('truck-hero.jpg') right center / cover no-repeat,
+    linear-gradient(135deg,#0b2449,#081427);
+}
+.hero-grid{
+  min-height:520px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:20px;
+  align-items:end;
+  padding:46px;
+}
+.hero-left h1{
+  font-size:58px;line-height:.98;letter-spacing:-2px;max-width:760px;margin-bottom:16px;
+}
+.hero-left p{font-size:19px;color:#d7dfec;max-width:690px;margin-bottom:24px}
+.hero-tag{
+  display:inline-flex;min-height:42px;padding:0 16px;align-items:center;border-radius:999px;
+  background:rgba(241,200,77,.12);border:1px solid rgba(241,200,77,.24);color:#ffe08a;font-size:14px;font-weight:700;
+  margin-bottom:18px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(9,20,39,.58);backdrop-filter:blur(8px);
+  border-radius:24px;overflow:hidden;max-width:980px;
+}
+.hero-stat{padding:20px;border-right:1px solid rgba(255,255,255,.08)}
+.hero-stat:last-child{border-right:none}
+.hero-stat strong{display:block;font-size:24px;margin-bottom:4px}
+.hero-stat span{font-size:13px;color:#cad6e9}
+.hero-right{display:flex;align-items:flex-end;justify-content:flex-end}
+.mock-card{
+  width:100%;
+  max-width:380px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,rgba(13,32,67,.86),rgba(8,18,37,.95));
+  border-radius:24px;padding:22px;box-shadow:var(--shadow);
+}
+.mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mock-head strong{font-size:30px}
+.pill{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;align-items:center;font-size:12px;font-weight:700}
+.mock-box{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;margin-bottom:12px}
+.mock-box:last-child{margin-bottom:0}
+.mock-box strong{display:block;font-size:18px;margin-bottom:4px}
+.mock-box p{font-size:14px;color:var(--muted)}
+section{padding:10px 0 26px}
+.section-shell{border:1px solid rgba(255,255,255,.08);border-radius:30px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(180deg,#0d2143,#0a1a35)}
+.preview{display:grid;grid-template-columns:255px 1fr}
+.sidebar{background:linear-gradient(180deg,#0f264a,#0a1c37);border-right:1px solid rgba(255,255,255,.08);padding:22px 18px}
+.side-brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.side-logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900}
+.side-brand strong{display:block;font-size:18px}
+.side-brand span{display:block;font-size:12px;color:#b9c7db}
+.side-menu{display:grid;gap:10px}
+.menu-item{min-height:44px;border-radius:14px;display:flex;align-items:center;padding:0 14px;background:rgba(255,255,255,.03);font-size:14px;font-weight:700;color:#d7dfec}
+.menu-item.active{background:var(--yellow);color:#0d1e3b}
+.content{padding:20px}
+.panel-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.panel-top h2{font-size:34px}
+.panel-top p{font-size:14px;color:var(--muted)}
+.userbox{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.small-card{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px}
+.small-card small{display:block;font-size:12px;color:#bfccdf;margin-bottom:8px}
+.small-card strong{display:block;font-size:34px;line-height:1;margin-bottom:4px}
+.small-card span{font-size:13px;color:#afbdd2}
+.two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.card{border:1px solid rgba(255,255,255,.08);border-radius:20px;background:rgba(255,255,255,.03);padding:18px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.card-head strong{font-size:28px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filter{min-height:38px;padding:0 12px;border-radius:10px;background:#102545;border:1px solid rgba(255,255,255,.08);color:#d8e1ef;display:inline-flex;align-items:center;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
+tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
+tbody tr:last-child td{border-bottom:none}
+.chart-box{height:220px;border-radius:16px;background:
+linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)),
+repeating-linear-gradient(to top, rgba(255,255,255,.06), rgba(255,255,255,.06) 1px, transparent 1px, transparent 44px),
+repeating-linear-gradient(to right, rgba(255,255,255,.04), rgba(255,255,255,.04) 1px, transparent 1px, transparent 66px);
+position:relative;overflow:hidden}
+.chart-box svg{position:absolute;left:14px;right:14px;top:14px;bottom:14px;width:calc(100% - 28px);height:calc(100% - 28px)}
+.message-item{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.message-item:last-child{border-bottom:none}
+.msg-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#dbe4f3,#8ea5cd)}
+.message-item strong{display:block;font-size:15px;margin-bottom:3px}
+.message-item span{font-size:12px;color:#b7c5d8}
+.msg-btn{min-height:34px;padding:0 12px;border-radius:10px;background:var(--yellow);color:#09152a;display:inline-flex;align-items:center;font-weight:700;font-size:12px}
+.section-title{font-size:38px;margin-bottom:18px;padding-left:8px}
+.footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);margin-top:26px}
 .footer-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px}
-@media (max-width:980px){.nav,.actions{display:none}.quick,.links{grid-template-columns:1fr 1fr}.hero-box h1{font-size:36px}}
-@media (max-width:700px){.quick,.links{grid-template-columns:1fr}}
+@media (max-width:1180px){
+  .hero-grid,.preview,.two-col{grid-template-columns:1fr}
+  .stats-row,.hero-stats{grid-template-columns:1fr 1fr}
+  .hero-left h1{font-size:44px}
+}
+@media (max-width:860px){
+  .nav,.actions{display:none}
+  .stats-row,.hero-stats{grid-template-columns:1fr}
+  .hero-grid{padding:24px}
+}
 </style>
 </head>
 <body>
@@ -46,57 +178,342 @@ a{text-decoration:none;color:inherit}
   <div class="container topbar-inner">
     <a class="brand" href="index.html">
       <div class="brand-mark">S</div>
-      <div class="brand-text"><strong>SEVRA</strong><span>MESAJLAŞMA LİNKLERİ GÜNCEL</span></div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>DİJİTAL LOJİSTİK PLATFORMU</span>
+      </div>
     </a>
     <nav class="nav">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="panel.html">Panel</a>
-      <a href="urunler.html">Ürünler</a>
-      <a href="basvuru.html">Başvuru</a>
-      <a href="giris.html">Giriş Yap</a>
-      <a href="uye-ol.html">Üye Ol</a>
-      <a href="mesajlasma.html">Mesajlaşma</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#nakliyeciler">Nakliyeciler</a>
+      <a href="#raporlar">Raporlar</a>
+      <a href="#giris">Giriş Yap</a>
     </nav>
     <div class="actions">
-      <a class="btn btn-secondary" href="mesajlasma.html">Mesajlaşma</a>
-      <a class="btn btn-primary" href="panel.html">Panele Geç</a>
+      <a class="btn btn-secondary" href="giris.html">Panele Geç</a>
+      <a class="btn btn-primary" href="basvuru.html">Başvuru Yap</a>
     </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="container">
-    <div class="hero-box">
-      <h1>SEVRA ana akışına mesajlaşma modülü bağlandı</h1>
-      <p>İç mesajlaşma, teklif pazarlığı ve görüşme ekranı artık ana sayfadan ve panelden erişilebilir hale getirildi.</p>
-      <div class="quick">
-        <div class="q"><strong>Mesaj</strong><span>Yeni modül ana menüye eklendi</span></div>
-        <div class="q"><strong>Teklif</strong><span>Pazarlık alanı sistemde hazır</span></div>
-        <div class="q"><strong>Admin</strong><span>Görüşme geçmişi takibi</span></div>
-        <div class="q"><strong>SEVRA</strong><span>Kurumsal iç iletişim</span></div>
+    <div class="hero-shell">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-tag">SEVRA: Nakliye İşleriniz İçin Dijital Çözüm</div>
+          <h1>Yük verenleri ve nakliyecileri tek platformda buluşturan güçlü dijital operasyon vitrini</h1>
+          <p>SEVRA, ağır kurumsal görünüm, güçlü panel yapısı ve teklif akışını tek ürün mantığında toplayan yeni nesil dijital lojistik yüzüdür.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="basvuru.html">Başvuru Yap</a>
+            <a class="btn btn-secondary" href="giris.html">Panele Geç</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong>&gt;1,250+</strong><span>Mutlu Müşteri</span></div>
+            <div class="hero-stat"><strong>&gt;7,500+</strong><span>Taşınan Yük</span></div>
+            <div class="hero-stat"><strong>₺300,000+</strong><span>Toplam Kazanç</span></div>
+            <div class="hero-stat"><strong>2021</strong><span>Kurulma yılı</span></div>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="mock-card">
+            <div class="mock-head">
+              <strong>SEVRA</strong>
+              <span class="pill">Hazır</span>
+            </div>
+            <div class="mock-box">
+              <strong>Kurumsal Ana Vitrin</strong>
+              <p>Daha güçlü başlık, daha premium renk dili ve daha ürün gibi görünen ilk karşılaşma alanı.</p>
+            </div>
+            <div class="mock-box">
+              <strong>Canlı Tanıtım Gücü</strong>
+              <p>İnsanların görüp tanıyacağı, internette güven veren ve markayı ciddi gösteren ilk yüz.</p>
+            </div>
+            <div class="mock-box">
+              <strong>Panel Önizleme</strong>
+              <p>Yük ilanları, nakliyeciler, mesajlar ve raporlar ürün gibi sunulur.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section id="dashboard">
   <div class="container">
-    <div class="card inner">
-      <div class="links">
-        <div class="linkbox">
-          <h3>Mesajlaşma</h3>
-          <p>Yük veren ve taşıyıcı arasındaki teklif / pazarlık ekranı.</p>
-          <a class="btn btn-primary" href="mesajlasma.html">Mesajlaşmayı Aç</a>
+    <div class="section-title">Dashboard</div>
+    <div class="section-shell preview">
+      <aside class="sidebar">
+        <div class="side-brand">
+          <div class="side-logo">S</div>
+          <div><strong>SEVRA</strong><span>Dashboard</span></div>
         </div>
-        <div class="linkbox">
-          <h3>Panel</h3>
-          <p>Panel içinden de mesajlaşma yönüne erişim verilir.</p>
-          <a class="btn btn-secondary" href="panel.html">Panele Git</a>
+        <div class="side-menu">
+          <div class="menu-item active">Kontrol Paneli</div>
+          <div class="menu-item">Yük İlanları</div>
+          <div class="menu-item">Tekliflerim</div>
+          <div class="menu-item">Nakliyeciler</div>
+          <div class="menu-item">Mesajlar</div>
+          <div class="menu-item">Ayarlar</div>
         </div>
-        <div class="linkbox">
-          <h3>Başvuru</h3>
-          <p>Başvuru sonrası iletişim akışı mesajlaşma modülüne taşınabilir.</p>
-          <a class="btn btn-secondary" href="basvuru.html">Başvuru Merkezi</a>
+      </aside>
+      <div class="content">
+        <div class="panel-top">
+          <div>
+            <h2>Dashboard</h2>
+            <p>Kurumsal yük ve teklif yönetim görünümü</p>
+          </div>
+          <div class="userbox">
+            <div class="avatar"></div>
+            <div><strong style="display:block;font-size:14px">Operasyon Yöneticisi</strong><span style="font-size:12px;color:#b8c6da">SEVRA Panel</span></div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="small-card"><small>Toplam Yük İlanı</small><strong>532</strong><span>aktif ilan görünümü</span></div>
+          <div class="small-card"><small>Onay Bekleyen Teklifler</small><strong>14</strong><span>cevap süreci</span></div>
+          <div class="small-card"><small>Aktif Nakliyeciler</small><strong>1,205</strong><span>firma havuzu</span></div>
+          <div class="small-card"><small>Toplam Hacim</small><strong>₺298,200</strong><span>operasyon hacmi</span></div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head">
+              <strong>Yük İlanlarım</strong>
+              <span class="pill">Aktif görünüm</span>
+            </div>
+            <div class="filters">
+              <div class="filter">Kalkış</div>
+              <div class="filter">Varış</div>
+              <div class="filter">Yük Tipi</div>
+              <div class="filter" style="background:var(--yellow);color:#0d1a34;border-color:transparent;">Ara</div>
+            </div>
+            <table>
+              <thead>
+                <tr><th>Yükleme</th><th>İndirme</th><th>Yük Tipi</th><th>Tonaj</th><th>Teklif</th><th>Durum</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>İstanbul</td><td>Ankara</td><td>Komple</td><td>22 Ton</td><td>₺129.000</td><td>Onaylandı</td></tr>
+                <tr><td>İstanbul</td><td>Bilecik</td><td>Yük tip</td><td>9 Ton</td><td>₺23.900</td><td>Görüşme</td></tr>
+                <tr><td>Ankara</td><td>Malatya</td><td>Sandık</td><td>36 Ton</td><td>₺23.200</td><td>Teklifte</td></tr>
+                <tr><td>Kocaeli</td><td>Nevşehir</td><td>Komple</td><td>33 Ton</td><td>₺28.200</td><td>Sevkiyat</td></tr>
+                <tr><td>Karagöl</td><td>Bilecik</td><td>Tonajlı</td><td>22 Ton</td><td>₺28.200</td><td>Onaylı</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <strong>Aylık Kazanç & Teklif Durumu</strong>
+              <span class="pill">Canlı</span>
+            </div>
+            <div class="chart-box">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polyline fill="none" stroke="#f1c84d" stroke-width="2.6" points="0,76 12,68 24,66 36,62 48,57 60,49 72,42 84,33 100,24"></polyline>
+                <circle cx="0" cy="76" r="2" fill="#f1c84d"></circle>
+                <circle cx="12" cy="68" r="2" fill="#f1c84d"></circle>
+                <circle cx="24" cy="66" r="2" fill="#f1c84d"></circle>
+                <circle cx="36" cy="62" r="2" fill="#f1c84d"></circle>
+                <circle cx="48" cy="57" r="2" fill="#f1c84d"></circle>
+                <circle cx="60" cy="49" r="2" fill="#f1c84d"></circle>
+                <circle cx="72" cy="42" r="2" fill="#f1c84d"></circle>
+                <circle cx="84" cy="33" r="2" fill="#f1c84d"></circle>
+                <circle cx="100" cy="24" r="2" fill="#f1c84d"></circle>
+              </svg>
+            </div>
+
+            <div style="margin-top:16px">
+              <div class="card-head"><strong style="font-size:22px">Son Mesajlar</strong><span class="pill">Görüşme</span></div>
+              <div class="message-item">
+                <div class="msg-avatar"></div>
+                <div><strong>Orhan Nakliyat</strong><span>Yük için fiyat güncellendi</span></div>
+                <div class="msg-btn">Yanıtla</div>
+              </div>
+              <div class="message-item">
+                <div class="msg-avatar"></div>
+                <div><strong>Demir Lojistik</strong><span>Yeni araç bilgisi paylaşıldı</span></div>
+                <div class="msg-btn">Aç</div>
+              </div>
+              <div class="message-item">
+                <div class="msg-avatar"></div>
+                <div><strong>Yıldır Trans</strong><span>Son teklif bekleniyor</span></div>
+                <div class="msg-btn">Gör</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nakliyeciler">
+  <div class="container">
+    <div class="section-title">Nakliyeciler</div>
+    <div class="section-shell preview">
+      <aside class="sidebar">
+        <div class="side-brand">
+          <div class="side-logo">S</div>
+          <div><strong>SEVRA</strong><span>Nakliyeciler</span></div>
+        </div>
+        <div class="side-menu">
+          <div class="menu-item active">Kontrol Paneli</div>
+          <div class="menu-item">Yük İlanları</div>
+          <div class="menu-item">Tekliflerim</div>
+          <div class="menu-item">Nakliyeciler</div>
+          <div class="menu-item">Mesajlaşma</div>
+          <div class="menu-item">Ayarlar</div>
+        </div>
+      </aside>
+      <div class="content">
+        <div class="panel-top">
+          <div>
+            <h2>Nakliyeciler</h2>
+            <p>Taşıyıcı havuzu ve onay görünümü</p>
+          </div>
+          <div class="userbox">
+            <div class="avatar"></div>
+            <div><strong style="display:block;font-size:14px">Operasyon Yöneticisi</strong><span style="font-size:12px;color:#b8c6da">SEVRA Panel</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <strong>Nakliyeciler</strong>
+            <span class="pill">Aktif</span>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Firma</th><th>E-posta</th><th>Telefon</th><th>Takvim</th><th>Plaka</th><th>İşlem</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Orhan Nakliyat</td><td>orhan@firma.com</td><td>0 505 232 9346</td><td>6/25</td><td>07 AB 2035</td><td>Teklifi Onayla</td></tr>
+              <tr><td>Demir Lojistik</td><td>demir@firma.com</td><td>0 505 022 0066</td><td>8/12</td><td>08 AC 2034</td><td>Randevu Aç</td></tr>
+              <tr><td>Yıldır Trans</td><td>yildiz@firma.com</td><td>0 505 003 0165</td><td>9/42</td><td>01 AZ 2034</td><td>Dosyayı Gör</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="raporlar">
+  <div class="container">
+    <div class="section-title">Raporlar</div>
+    <div class="section-shell preview">
+      <aside class="sidebar">
+        <div class="side-brand">
+          <div class="side-logo">S</div>
+          <div><strong>SEVRA</strong><span>Raporlar</span></div>
+        </div>
+        <div class="side-menu">
+          <div class="menu-item active">Kontrol Paneli</div>
+          <div class="menu-item">Yük İlanları</div>
+          <div class="menu-item">Tekliflerim</div>
+          <div class="menu-item">Nakliyeciler</div>
+          <div class="menu-item">Mesajlaşma</div>
+          <div class="menu-item">Ayarlar</div>
+        </div>
+      </aside>
+      <div class="content">
+        <div class="panel-top">
+          <div>
+            <h2>Raporlar</h2>
+            <p>Kurumsal yönetim rapor görünümü</p>
+          </div>
+          <div class="userbox">
+            <div class="avatar"></div>
+            <div><strong style="display:block;font-size:14px">Operasyon Yöneticisi</strong><span style="font-size:12px;color:#b8c6da">SEVRA Panel</span></div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><strong>Haftalık Operasyon</strong><span class="pill">7 Gün</span></div>
+            <div class="chart-box">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                <rect x="6" y="40" width="8" height="50" fill="#7a8fb6"></rect>
+                <rect x="20" y="30" width="8" height="60" fill="#f1c84d"></rect>
+                <rect x="34" y="38" width="8" height="52" fill="#5f88dd"></rect>
+                <rect x="48" y="24" width="8" height="66" fill="#f1c84d"></rect>
+                <rect x="62" y="18" width="8" height="72" fill="#5f88dd"></rect>
+                <rect x="76" y="28" width="8" height="62" fill="#b2bfd6"></rect>
+              </svg>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><strong>Dönüşüm Özeti</strong><span class="pill">Bu Ay</span></div>
+            <div class="chart-box">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                <rect x="6" y="54" width="8" height="36" fill="#7a8fb6"></rect>
+                <rect x="20" y="44" width="8" height="46" fill="#f1c84d"></rect>
+                <rect x="34" y="28" width="8" height="62" fill="#5f88dd"></rect>
+                <rect x="48" y="18" width="8" height="72" fill="#f1c84d"></rect>
+                <rect x="62" y="26" width="8" height="64" fill="#5f88dd"></rect>
+                <rect x="76" y="34" width="8" height="56" fill="#b2bfd6"></rect>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="giris">
+  <div class="container">
+    <div class="section-title">Giriş Yap</div>
+    <div class="section-shell preview">
+      <aside class="sidebar">
+        <div class="side-brand">
+          <div class="side-logo">S</div>
+          <div><strong>SEVRA</strong><span>Giriş Yap</span></div>
+        </div>
+        <div class="side-menu">
+          <div class="menu-item active">Kontrol Paneli</div>
+          <div class="menu-item">Yük İlanları</div>
+          <div class="menu-item">Tekliflerim</div>
+          <div class="menu-item">Nakliyeciler</div>
+          <div class="menu-item">Mesajlaşma</div>
+          <div class="menu-item">Ayarlar</div>
+        </div>
+      </aside>
+      <div class="content">
+        <div class="panel-top">
+          <div>
+            <h2>Giriş Yap</h2>
+            <p>Kurumsal erişim noktası</p>
+          </div>
+          <div class="userbox">
+            <div class="avatar"></div>
+            <div><strong style="display:block;font-size:14px">Kullanıcı Erişimi</strong><span style="font-size:12px;color:#b8c6da">SEVRA Panel</span></div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><strong>Kurumsal Erişim Noktası</strong><span class="pill">Hazır yapı</span></div>
+            <p style="color:var(--muted);font-size:15px">Bu alan final aşamada gerçek kullanıcı girişi, yönetici erişimi, yük veren / nakliyeci yetki alanı ve panel doğrulama akışına bağlanacaktır.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
+              <a class="btn btn-secondary" href="giris.html">Giriş Yap</a>
+              <a class="btn btn-primary" href="uye-ol.html">Üye Ol</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><strong>Erişim Özeti</strong><span class="pill">Admin</span></div>
+            <table>
+              <tbody>
+                <tr><td>Aktif kullanıcı</td><td>248</td></tr>
+                <tr><td>Bu ay yeni kayıt</td><td>34</td></tr>
+                <tr><td>Onay bekleyen firma</td><td>12</td></tr>
+                <tr><td>Yüksek ilgi gösteren firma</td><td>16</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -105,8 +522,8 @@ a{text-decoration:none;color:inherit}
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div><strong>SEVRA</strong><br>Mesajlaşma bağlantıları eklendi</div>
-    <div>index.html güncellendi</div>
+    <div><strong>SEVRA</strong><br>Final layout step 1</div>
+    <div>Referans mockup yönüne yaklaştırılmış ana kompozisyon</div>
   </div>
 </footer>
 </body>
