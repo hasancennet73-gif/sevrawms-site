@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Final Home Sections Step 3</title>
+<title>SEVRA | Final Carriers Step 4</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -172,17 +172,48 @@ tbody tr:last-child td{border-bottom:none}
 }
 .quick-box strong{display:block;font-size:24px;margin-bottom:4px}
 .quick-box span{font-size:13px;color:var(--muted)}
+.carrier-top{
+  display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin-bottom:16px;
+}
+.carrier-title strong{display:block;font-size:30px;margin-bottom:4px}
+.carrier-title span{font-size:14px;color:var(--muted)}
+.action-row{display:flex;gap:10px;flex-wrap:wrap}
+.action-btn{
+  min-height:38px;padding:0 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);display:inline-flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#fff;
+}
+.action-btn.primary{background:var(--yellow);color:#09152a;border-color:transparent}
+.carrier-table-wrap{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  overflow:hidden;
+  background:rgba(255,255,255,.02);
+}
+.carrier-kpis{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;
+}
+.carrier-kpi{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:16px;
+}
+.carrier-kpi strong{display:block;font-size:28px;margin-bottom:4px}
+.carrier-kpi span{font-size:13px;color:var(--muted)}
+.status{
+  display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;
+  font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a;
+}
 .footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);margin-top:24px}
 .footer-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px}
 @media (max-width:1180px){
   .hero-grid,.preview,.two-col{grid-template-columns:1fr}
-  .stats-row,.hero-stats,.quick-wrap{grid-template-columns:1fr 1fr}
+  .stats-row,.hero-stats,.quick-wrap,.carrier-kpis{grid-template-columns:1fr 1fr}
   .hero-left h1{font-size:44px}
 }
 @media (max-width:860px){
   .nav,.actions{display:none}
-  .stats-row,.hero-stats,.quick-wrap{grid-template-columns:1fr}
+  .stats-row,.hero-stats,.quick-wrap,.carrier-kpis{grid-template-columns:1fr}
   .hero-grid{padding:24px}
+  .carrier-top{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -380,32 +411,112 @@ tbody tr:last-child td{border-bottom:none}
         </div>
       </aside>
       <div class="content">
-        <div class="panel-top">
-          <div>
-            <h2>Nakliyeciler</h2>
-            <p>Taşıyıcı havuzu ve onay görünümü</p>
+        <div class="carrier-top">
+          <div class="carrier-title">
+            <strong>Nakliyeciler</strong>
+            <span>Referans görsele daha yakın premium taşıyıcı görünümü</span>
           </div>
-          <div class="userbox">
-            <div class="avatar"></div>
-            <div><strong style="display:block;font-size:14px">Operasyon Yöneticisi</strong><span style="font-size:12px;color:#b8c6da">SEVRA Panel</span></div>
+          <div class="action-row">
+            <div class="action-btn">Tüm Firmalar</div>
+            <div class="action-btn">Aktifler</div>
+            <div class="action-btn">Onay Bekleyen</div>
+            <div class="action-btn primary">Yeni Firma Ekle</div>
           </div>
+        </div>
+
+        <div class="carrier-kpis">
+          <div class="carrier-kpi"><strong>1,205</strong><span>Aktif taşıyıcı</span></div>
+          <div class="carrier-kpi"><strong>36</strong><span>Onay bekleyen profil</span></div>
+          <div class="carrier-kpi"><strong>118</strong><span>Bu ay yeni firma</span></div>
+          <div class="carrier-kpi"><strong>84%</strong><span>Onay oranı</span></div>
         </div>
 
         <div class="card">
           <div class="card-head">
-            <strong>Nakliyeciler</strong>
-            <span class="pill">Aktif</span>
+            <strong>Taşıyıcı Havuzu</strong>
+            <span class="pill">Premium tablo</span>
           </div>
-          <table>
-            <thead>
-              <tr><th>Firma</th><th>E-posta</th><th>Telefon</th><th>Takvim</th><th>Plaka</th><th>İşlem</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Orhan Nakliyat</td><td>orhan@firma.com</td><td>0 505 232 9346</td><td>6/25</td><td>07 AB 2035</td><td>Teklifi Onayla</td></tr>
-              <tr><td>Demir Lojistik</td><td>demir@firma.com</td><td>0 505 022 0066</td><td>8/12</td><td>08 AC 2034</td><td>Randevu Aç</td></tr>
-              <tr><td>Yıldır Trans</td><td>yildiz@firma.com</td><td>0 505 003 0165</td><td>9/42</td><td>01 AZ 2034</td><td>Dosyayı Gör</td></tr>
-            </tbody>
-          </table>
+          <div class="filters">
+            <div class="filter">Firma adı</div>
+            <div class="filter">Şehir</div>
+            <div class="filter">Araç tipi</div>
+            <div class="filter">Durum</div>
+            <div class="filter" style="background:var(--yellow);color:#0d1a34;border-color:transparent;">Filtrele</div>
+          </div>
+
+          <div class="carrier-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Firma</th>
+                  <th>E-posta</th>
+                  <th>Telefon</th>
+                  <th>Takvim</th>
+                  <th>Plaka</th>
+                  <th>Durum</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Orhan Nakliyat</td>
+                  <td>orhan@firma.com</td>
+                  <td>0 505 232 9346</td>
+                  <td>6/25</td>
+                  <td>07 AB 2035</td>
+                  <td><span class="status">Aktif</span></td>
+                  <td>
+                    <div class="action-row">
+                      <div class="action-btn primary">Teklifi Onayla</div>
+                      <div class="action-btn">Profili Aç</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Demir Lojistik</td>
+                  <td>demir@firma.com</td>
+                  <td>0 505 022 0066</td>
+                  <td>8/12</td>
+                  <td>08 AC 2034</td>
+                  <td><span class="status">Onay Bekliyor</span></td>
+                  <td>
+                    <div class="action-row">
+                      <div class="action-btn">Randevu Aç</div>
+                      <div class="action-btn">Mesaj Yaz</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Yıldır Trans</td>
+                  <td>yildiz@firma.com</td>
+                  <td>0 505 003 0165</td>
+                  <td>9/42</td>
+                  <td>01 AZ 2034</td>
+                  <td><span class="status">Aktif</span></td>
+                  <td>
+                    <div class="action-row">
+                      <div class="action-btn">Dosyayı Gör</div>
+                      <div class="action-btn">Teklif Ver</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Atlas Lojistik</td>
+                  <td>atlas@firma.com</td>
+                  <td>0 532 444 2200</td>
+                  <td>4/11</td>
+                  <td>34 AT 4422</td>
+                  <td><span class="status">Pasif</span></td>
+                  <td>
+                    <div class="action-row">
+                      <div class="action-btn">Yeniden Aç</div>
+                      <div class="action-btn">Detay</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -533,8 +644,8 @@ tbody tr:last-child td{border-bottom:none}
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div><strong>SEVRA</strong><br>Final home sections step 3</div>
-    <div>Dashboard / Nakliyeciler / Raporlar / Giriş Yap blokları güçlendirildi</div>
+    <div><strong>SEVRA</strong><br>Final carriers step 4</div>
+    <div>Nakliyeciler bloğu premium tablo ve işlem satırıyla güçlendirildi</div>
   </div>
 </footer>
 </body>
