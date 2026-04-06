@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | Üyeler ve Ziyaret Analitiği</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#071427;
+  --bg2:#0c1f3f;
+  --line:rgba(255,255,255,.10);
+  --text:#eef4ff;
+  --muted:#aebbd1;
+  --yellow:#f3c744;
+  --yellow-dark:#d7a61c;
+  --shadow:0 22px 60px rgba(0,0,0,.35);
+  --max:1320px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
+    linear-gradient(180deg,#071427,#08111d 70%,#050b14);
+  line-height:1.6;
+}
+a{text-decoration:none;color:inherit}
+.container{max-width:var(--max);margin:0 auto;padding:0 22px}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{
+  width:54px;height:54px;border-radius:16px;
+  background:linear-gradient(135deg,var(--yellow),#f8df91);
+  color:#0d1d38;font-size:24px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(243,199,68,.28);
+}
+.brand-text strong{display:block;font-size:30px;letter-spacing:.4px}
+.brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
+.nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
+.nav a:hover{color:#fff}
+.actions{display:flex;align-items:center;gap:12px}
+.btn{
+  min-height:48px;padding:0 22px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--yellow);color:#0b1830;box-shadow:0 14px 30px rgba(243,199,68,.18)}
+.btn-primary:hover{background:var(--yellow-dark)}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+.hero{padding:34px 0 24px}
+.hero-box{
+  padding:42px;border-radius:30px;
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    linear-gradient(135deg,#0e2447,#0a1b34);
+  border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.hero-box h1{font-size:52px;line-height:1.02;margin-bottom:12px}
+.hero-box p{max-width:860px;color:var(--muted);font-size:18px}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px;
+}
+.stat{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;
+  background:rgba(255,255,255,.03);padding:18px;
+}
+.stat strong{display:block;font-size:28px;margin-bottom:4px}
+.stat span{font-size:13px;color:var(--muted)}
+section{padding:26px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
+  box-shadow:var(--shadow);
+}
+.inner{padding:24px}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:18px;flex-wrap:wrap;
+}
+.card-head h2,.card-head h3{font-size:30px}
+.card-head p{color:var(--muted);font-size:14px}
+.tag{
+  display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;
+  border-radius:999px;background:rgba(243,199,68,.14);color:#ffe08a;font-size:12px;font-weight:700
+}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;color:#b8c6da;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px}
+tbody td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.06);color:#eef4ff}
+tbody tr:last-child td{border-bottom:none}
+.info-list{display:grid;gap:12px}
+.info-item{
+  border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.03);padding:16px;
+}
+.info-item strong{display:block;font-size:18px;margin-bottom:5px}
+.info-item span{font-size:13px;color:var(--muted)}
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.quick{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+}
+.quick strong{display:block;font-size:24px;margin-bottom:4px}
+.quick span{font-size:13px;color:var(--muted)}
+.bar-box{
+  margin-top:12px;height:190px;border-radius:18px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)),
+    repeating-linear-gradient(to top, rgba(255,255,255,.06), rgba(255,255,255,.06) 1px, transparent 1px, transparent 44px),
+    repeating-linear-gradient(to right, rgba(255,255,255,.04), rgba(255,255,255,.04) 1px, transparent 1px, transparent 72px);
+  padding:16px;display:flex;align-items:flex-end;gap:16px;
+}
+.bar{flex:1;border-radius:10px 10px 0 0;background:linear-gradient(180deg,var(--yellow),#d7a825);min-height:40px}
+.bar.blue{background:linear-gradient(180deg,#5f88dd,#2d5ebf)}
+.bar.gray{background:linear-gradient(180deg,#b2bfd6,#7086b4)}
+footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);margin-top:54px}
+.footer-inner{
+  min-height:90px;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px
+}
+.footer-inner strong{color:#fff}
+@media (max-width:1100px){
+  .grid,.sub-grid,.stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .nav,.actions{display:none}
+  .hero-box h1{font-size:38px}
+}
+@media (max-width:700px){
+  .grid,.sub-grid,.stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>ÜYELER + ZİYARET ANALİTİĞİ</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="panel.html">Panel</a>
+      <a href="giris.html">Giriş</a>
+      <a href="uye-ol.html">Üyelik</a>
+    </nav>
+    <div class="actions">
+      <a class="btn btn-secondary" href="panel.html">Panele Geç</a>
+      <a class="btn btn-primary" href="index.html">Ana Vitrin</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-box">
+      <h1>Üyeler ve Ziyaret Analitiği</h1>
+      <p>SEVRA içinde yeni kayıt olan üyeler, ziyaretçi ilgisi, firma bazlı incelemeler ve temel admin özetleri için kurumsal analiz ekranı.</p>
+
+      <div class="stats">
+        <div class="stat"><strong>248</strong><span>Toplam Üye</span></div>
+        <div class="stat"><strong>1,942</strong><span>Toplam Ziyaret</span></div>
+        <div class="stat"><strong>68</strong><span>Firma İncelemesi</span></div>
+        <div class="stat"><strong>34</strong><span>Yeni Kayıt / Ay</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container grid">
+    <div class="card inner">
+      <div class="card-head">
+        <div>
+          <h2>Yeni Kayıt Olan Üyeler</h2>
+          <p>Son üye kayıtları ve temel şirket bilgileri.</p>
+        </div>
+        <div class="tag">Üye listesi</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Firma</th>
+            <th>Kullanıcı</th>
+            <th>Tür</th>
+            <th>Şehir</th>
+            <th>Durum</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Atlas Gıda</td><td>Ahmet K.</td><td>Yük Veren</td><td>İstanbul</td><td>Aktif</td></tr>
+          <tr><td>Demir Lojistik</td><td>Deniz Y.</td><td>Taşıyıcı</td><td>Kocaeli</td><td>Onay Bekliyor</td></tr>
+          <tr><td>Yıldır Trans</td><td>Yasin T.</td><td>Taşıyıcı</td><td>Ankara</td><td>Aktif</td></tr>
+          <tr><td>Mera Plastik</td><td>Fatih A.</td><td>Kurumsal Üye</td><td>İzmir</td><td>Görüşme</td></tr>
+          <tr><td>Nevra Kimya</td><td>Selin D.</td><td>Yük Veren</td><td>Bursa</td><td>Aktif</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-grid">
+        <div class="quick"><strong>34</strong><span>Bu ay yeni kayıt</span></div>
+        <div class="quick"><strong>12</strong><span>Onay bekleyen profil</span></div>
+      </div>
+    </div>
+
+    <div class="card inner">
+      <div class="card-head">
+        <div>
+          <h3>Ziyaret ve İlgi Özeti</h3>
+          <p>Siteye gelen ziyaretçiler ve incelenen alanlar.</p>
+        </div>
+        <div class="tag">Admin özeti</div>
+      </div>
+
+      <div class="info-list">
+        <div class="info-item"><strong>Toplam Ziyaretçi</strong><span>1,942 ziyaret • 486 tekil kullanıcı görünümü</span></div>
+        <div class="info-item"><strong>En Çok İncelenen Sayfa</strong><span>Ana vitrin, ardından ürünler ve başvuru merkezi</span></div>
+        <div class="info-item"><strong>Firma Bazlı İlgi</strong><span>Atlas Gıda, Demir Lojistik ve Mera Plastik yüksek ilgi gösterdi</span></div>
+        <div class="info-item"><strong>Üye Ol Dönüşü</strong><span>Ziyaretçilerin %18’i üyelik sayfasına geçti</span></div>
+      </div>
+
+      <div class="bar-box">
+        <div class="bar blue" style="height:55%"></div>
+        <div class="bar" style="height:78%"></div>
+        <div class="bar gray" style="height:46%"></div>
+        <div class="bar blue" style="height:64%"></div>
+        <div class="bar" style="height:88%"></div>
+        <div class="bar gray" style="height:58%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container grid">
+    <div class="card inner">
+      <div class="card-head">
+        <div>
+          <h2>Firma Bazlı İnceleme</h2>
+          <p>Hangi firmaların hangi alanlara daha çok baktığına dair örnek görünüm.</p>
+        </div>
+        <div class="tag">İlgi takibi</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Firma</th>
+            <th>İncelenen Alan</th>
+            <th>Süre</th>
+            <th>Durum</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Atlas Gıda</td><td>Başvuru Merkezi</td><td>8 dk</td><td>Sıcak İlgi</td></tr>
+          <tr><td>Demir Lojistik</td><td>Ürünler</td><td>11 dk</td><td>Tekrar Ziyaret</td></tr>
+          <tr><td>Yıldır Trans</td><td>Panel / Raporlar</td><td>6 dk</td><td>Aktif</td></tr>
+          <tr><td>Mera Plastik</td><td>Ana Vitrin</td><td>4 dk</td><td>İzleniyor</td></tr>
+          <tr><td>Nevra Kimya</td><td>Üyelik</td><td>9 dk</td><td>Kayıt Oldu</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card inner">
+      <div class="card-head">
+        <div>
+          <h3>Admin Hızlı Kutular</h3>
+          <p>Üye, ziyaret ve firma ilgisi için hızlı yönler.</p>
+        </div>
+        <div class="tag">Kısa özet</div>
+      </div>
+
+      <div class="info-list">
+        <div class="info-item"><strong>Toplam Üye</strong><span>248 kayıtlı kullanıcı</span></div>
+        <div class="info-item"><strong>Aktif Firma</strong><span>74 firma bu ay en az 1 defa giriş yaptı</span></div>
+        <div class="info-item"><strong>Yüksek İlgi</strong><span>16 firma ürünler alanını detaylı inceledi</span></div>
+        <div class="info-item"><strong>Dönüşüm</strong><span>12 ziyaretçi üyeliğe, 8 firma başvuruya geçti</span></div>
+      </div>
+
+      <div class="sub-grid">
+        <div class="quick"><strong>74</strong><span>Aktif firma</span></div>
+        <div class="quick"><strong>16</strong><span>Yüksek ilgi</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div><strong>SEVRA</strong><br>Üyeler ve ziyaret analitiği ekranı</div>
+    <div>Analytics UI paketi</div>
+  </div>
+</footer>
+</body>
+</html>
