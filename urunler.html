@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | Ürün Satış Alanı</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#071427;
+  --bg2:#0c1f3f;
+  --panel:#0f254a;
+  --panel2:#132d59;
+  --line:rgba(255,255,255,.10);
+  --text:#eef4ff;
+  --muted:#aebbd1;
+  --yellow:#f3c744;
+  --yellow-dark:#d7a61c;
+  --shadow:0 22px 60px rgba(0,0,0,.35);
+  --max:1320px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
+    linear-gradient(180deg,#071427,#08111d 70%,#050b14);
+  line-height:1.6;
+}
+a{text-decoration:none;color:inherit}
+.container{max-width:var(--max);margin:0 auto;padding:0 22px}
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{
+  width:54px;height:54px;border-radius:16px;
+  background:linear-gradient(135deg,var(--yellow),#f8df91);
+  color:#0d1d38;font-size:24px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px rgba(243,199,68,.28);
+}
+.brand-text strong{display:block;font-size:30px;letter-spacing:.4px}
+.brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
+.nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
+.nav a:hover{color:#fff}
+.actions{display:flex;align-items:center;gap:12px}
+.btn{
+  min-height:48px;padding:0 22px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--yellow);color:#0b1830;box-shadow:0 14px 30px rgba(243,199,68,.18)}
+.btn-primary:hover{background:var(--yellow-dark)}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+.hero{padding:34px 0 24px}
+.hero-box{
+  padding:42px;border-radius:30px;
+  background:
+    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
+    linear-gradient(135deg,#0e2447,#0a1b34);
+  border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.hero-box h1{font-size:52px;line-height:1.02;margin-bottom:12px}
+.hero-box p{max-width:860px;color:var(--muted);font-size:18px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.hero-stat{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;
+  background:rgba(255,255,255,.03);padding:18px;
+}
+.hero-stat strong{display:block;font-size:24px;margin-bottom:4px}
+.hero-stat span{font-size:13px;color:var(--muted)}
+section{padding:26px 0}
+.grid{display:grid;grid-template-columns:350px 1fr;gap:18px}
+.card{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
+  box-shadow:var(--shadow);
+}
+.inner{padding:24px}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:18px;flex-wrap:wrap;
+}
+.card-head h2,.card-head h3{font-size:28px}
+.card-head p{color:var(--muted);font-size:14px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:13px;color:#dce6f5;font-weight:700}
+.field input,.field textarea,.field select{
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
+  color:#fff;border-radius:12px;padding:13px 14px;font-size:15px;outline:none;
+}
+.field textarea{min-height:110px;resize:vertical}
+.full{grid-column:1/-1}
+.upload-box{
+  min-height:180px;border:2px dashed rgba(243,199,68,.32);border-radius:18px;
+  background:rgba(243,199,68,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:18px;color:#ffe08a;margin-bottom:16px;
+}
+.upload-box strong{display:block;font-size:18px;margin-bottom:6px}
+.upload-box span{font-size:13px;color:#d8c98f}
+.note{
+  margin-top:16px;padding:14px 16px;border-radius:14px;
+  background:rgba(243,199,68,.08);border:1px solid rgba(243,199,68,.18);
+  color:#ffe6a1;font-size:13px;
+}
+.filters{
+  display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;
+}
+.filter{
+  min-height:40px;padding:0 14px;border-radius:12px;
+  background:#102545;border:1px solid rgba(255,255,255,.08);
+  color:#d8e1ef;display:inline-flex;align-items:center;font-size:13px;
+}
+.products{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.product-card{
+  border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;
+  background:rgba(255,255,255,.03);
+}
+.product-image{
+  height:180px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+    linear-gradient(135deg,#1a335d,#0b1d39);
+  display:flex;align-items:center;justify-content:center;
+  color:#ffe08a;font-size:18px;font-weight:700;
+}
+.product-body{padding:16px}
+.product-body h4{font-size:20px;margin-bottom:8px}
+.meta{display:grid;gap:6px;margin-bottom:12px}
+.meta span{font-size:13px;color:var(--muted)}
+.price{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-top:1px solid rgba(255,255,255,.08);padding-top:12px;
+}
+.price strong{font-size:24px;color:#fff}
+.tag{
+  display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;
+  border-radius:999px;background:rgba(243,199,68,.14);color:#ffe08a;font-size:12px;font-weight:700
+}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.quick-box{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+}
+.quick-box strong{display:block;font-size:22px;margin-bottom:6px}
+.quick-box span{font-size:13px;color:var(--muted)}
+footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);margin-top:54px}
+.footer-inner{
+  min-height:90px;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px
+}
+.footer-inner strong{color:#fff}
+@media (max-width:1150px){
+  .grid{grid-template-columns:1fr}
+  .products{grid-template-columns:1fr 1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .nav,.actions{display:none}
+  .hero-box h1{font-size:38px}
+}
+@media (max-width:700px){
+  .form-grid,.products,.quick-grid,.hero-stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>ÜRÜN SATIŞ ALANI</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="panel.html">Panel</a>
+      <a href="basvuru.html">Başvuru</a>
+    </nav>
+    <div class="actions">
+      <a class="btn btn-secondary" href="panel.html">Panele Geç</a>
+      <a class="btn btn-primary" href="index.html">Ana Vitrin</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-box">
+      <h1>SEVRA Ürün Satış Alanı</h1>
+      <p>Büyük araç parçaları, lojistik ekipmanları ve kurumsal yedek parça ürünleri için görsel, fiyat ve ürün kartı mantığıyla hazırlanmış satış alanı.</p>
+
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>120+</strong><span>Ürün kartı kapasitesi</span></div>
+        <div class="hero-stat"><strong>₺49K+</strong><span>Vitrin stok değeri</span></div>
+        <div class="hero-stat"><strong>6</strong><span>Ürün kategorisi</span></div>
+        <div class="hero-stat"><strong>B18</strong><span>Kurumsal ürün alanı</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container grid">
+    <div class="card inner">
+      <div class="card-head">
+        <div>
+          <h2>Ürün Ekle</h2>
+          <p>Görsel yükleme, fiyat girme ve ürün kartı oluşturma alanı.</p>
+        </div>
+        <div class="tag">Kurumsal ürün girişi</div>
+      </div>
+
+      <div class="upload-box">
+        <strong>Ürün Görseli Yükleme Alanı</strong>
+        <span>Buraya ürün fotoğrafı yüklenebilir • JPG / PNG / WEBP</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>Ürün Adı</label>
+          <input type="text" placeholder="Örn: Ağır Vasıta Çamurluk">
+        </div>
+        <div class="field">
+          <label>Kategori</label>
+          <select>
+            <option>Seçiniz</option>
+            <option>Çamurluk</option>
+            <option>Menteşe</option>
+            <option>Kilit</option>
+            <option>Bağlantı Parçası</option>
+            <option>Aksesuar</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Fiyat</label>
+          <input type="text" placeholder="₺ 4.250">
+        </div>
+        <div class="field">
+          <label>Stok Adedi</label>
+          <input type="text" placeholder="25">
+        </div>
+        <div class="field">
+          <label>Ürün Kodu</label>
+          <input type="text" placeholder="SVR-PRD-001">
+        </div>
+        <div class="field">
+          <label>Durum</label>
+          <select>
+            <option>Aktif</option>
+            <option>Pasif</option>
+            <option>Öne Çıkan</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Açıklama</label>
+          <textarea placeholder="Ürün açıklaması, uyumluluk bilgisi ve kısa detay"></textarea>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;">
+        <a class="btn btn-primary" href="#">Ürünü Kaydet</a>
+        <a class="btn btn-secondary" href="#">Temizle</a>
+      </div>
+
+      <div class="note">Bu ekran, ürün görseli yükleme + fiyat girme + ürün kartı mantığını tek yerde gösteren kurumsal satış alanı ön yüzüdür.</div>
+    </div>
+
+    <div class="card inner">
+      <div class="card-head">
+        <div>
+          <h3>Ürün Vitrini</h3>
+          <p>Çamurluk, menteşe, kilit ve diğer ağır vasıta parçaları için örnek kart yapısı.</p>
+        </div>
+        <div class="tag">Satış listesi</div>
+      </div>
+
+      <div class="filters">
+        <div class="filter">Tüm Ürünler</div>
+        <div class="filter">Çamurluk</div>
+        <div class="filter">Menteşe</div>
+        <div class="filter">Kilit</div>
+        <div class="filter">Öne Çıkanlar</div>
+      </div>
+
+      <div class="products">
+        <div class="product-card">
+          <div class="product-image">Çamurluk Görseli</div>
+          <div class="product-body">
+            <h4>Ağır Vasıta Çamurluk</h4>
+            <div class="meta">
+              <span>Kategori: Çamurluk</span>
+              <span>Ürün Kodu: SVR-PRD-001</span>
+              <span>Stok: 25 Adet</span>
+            </div>
+            <div class="price">
+              <strong>₺ 4.250</strong>
+              <span class="tag">Aktif</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">Menteşe Görseli</div>
+          <div class="product-body">
+            <h4>Dorse Kapı Menteşesi</h4>
+            <div class="meta">
+              <span>Kategori: Menteşe</span>
+              <span>Ürün Kodu: SVR-PRD-002</span>
+              <span>Stok: 42 Adet</span>
+            </div>
+            <div class="price">
+              <strong>₺ 1.190</strong>
+              <span class="tag">Öne Çıkan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">Kilit Görseli</div>
+          <div class="product-body">
+            <h4>Ağır Vasıta Kilit Takımı</h4>
+            <div class="meta">
+              <span>Kategori: Kilit</span>
+              <span>Ürün Kodu: SVR-PRD-003</span>
+              <span>Stok: 18 Adet</span>
+            </div>
+            <div class="price">
+              <strong>₺ 2.850</strong>
+              <span class="tag">Aktif</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">Bağlantı Parçası</div>
+          <div class="product-body">
+            <h4>Dorse Bağlantı Seti</h4>
+            <div class="meta">
+              <span>Kategori: Bağlantı</span>
+              <span>Ürün Kodu: SVR-PRD-004</span>
+              <span>Stok: 30 Adet</span>
+            </div>
+            <div class="price">
+              <strong>₺ 3.600</strong>
+              <span class="tag">Aktif</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">Aksesuar Görseli</div>
+          <div class="product-body">
+            <h4>Spanzet ve Sabitleme Seti</h4>
+            <div class="meta">
+              <span>Kategori: Aksesuar</span>
+              <span>Ürün Kodu: SVR-PRD-005</span>
+              <span>Stok: 64 Adet</span>
+            </div>
+            <div class="price">
+              <strong>₺ 790</strong>
+              <span class="tag">Aktif</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">Panel Parça</div>
+          <div class="product-body">
+            <h4>Panel Yan Kapak</h4>
+            <div class="meta">
+              <span>Kategori: Gövde Parça</span>
+              <span>Ürün Kodu: SVR-PRD-006</span>
+              <span>Stok: 11 Adet</span>
+            </div>
+            <div class="price">
+              <strong>₺ 5.420</strong>
+              <span class="tag">Pasif</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-grid" style="margin-top:18px;">
+        <div class="quick-box">
+          <strong>Görsel</strong>
+          <span>Her ürün için görsel yükleme alanı mantığı hazır.</span>
+        </div>
+        <div class="quick-box">
+          <strong>Fiyat</strong>
+          <span>Ürün kartında fiyat ve stok net biçimde gösterilir.</span>
+        </div>
+        <div class="quick-box">
+          <strong>Listeleme</strong>
+          <span>Kurumsal satış vitrini gibi düzenli ürün kartları sunulur.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div><strong>SEVRA</strong><br>Kurumsal ürün satış alanı</div>
+    <div>B18 • Ürün ekranı hazırlandı</div>
+  </div>
+</footer>
+</body>
+</html>
