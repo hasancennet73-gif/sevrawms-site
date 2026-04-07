@@ -82,31 +82,50 @@ a{text-decoration:none;color:inherit}
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
+    <div class="side-brand">
+      <div class="side-logo">S</div>
+      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
+    </div>
+
     <div class="side-menu">
-      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
+      <a class="menu-item " href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item " href="urunler.html">Ürünler</a>
+      <a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
       <a class="menu-item active" href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item" href="basvuru.html">Başvuru Merkezi</a>
+      <a class="menu-item " href="basvuru.html">Başvuru Merkezi</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
+
   <main class="main">
     <div class="top">
-      <div class="title"><h1>Üyeler & Analitik</h1><p>Ziyaret ve kullanıcı hareket özeti.</p></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yönetici-giriş.html')">Çıkış Yap</button></div>
+      <div class="title">
+        <h1>Üyeler & Analitik</h1>
+        <p>Bu alan sadece yönetici girişi ile açılır.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div id="adminUser" class="badge">Admin</div>
+        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
+      </div>
     </div>
+
     <div class="cards">
-      <div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
-      <div class="card"><strong>34</strong><span>Bu ay yeni kayıt</span></div>
-      <div class="card"><strong>%22</strong><span>Sosyal giriş ilgisi</span></div>
-      <div class="card"><strong>17</strong><span>Firma ilgisi</span></div>
+      
+        <div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
+        <div class="card"><strong>34</strong><span>Bu ay yeni kayıt</span></div>
+        <div class="card"><strong>%22</strong><span>Sosyal giriş ilgisi</span></div>
+        <div class="card"><strong>17</strong><span>Firma ilgisi</span></div>
+        
     </div>
-    <div class="note"><h2>Analitik Ekranı</h2><p>Bu alan adminin üye ve ziyaret bilgilerini görmesi için hazırlandı.</p></div>
+
+    <div class="note">
+      <h2>Analitik Ekranı</h2>
+      <p>Bu alan adminin üye ve ziyaret bilgilerini görmesi için hazırlandı. Tüm yönlendirmeler yeni isimlere göre düzeltildi.</p>
+    </div>
   </main>
 </div>
-<script src="kimlik%20do%C4%9Frulama.js"></script>
+
+<script src="kimlik-dogrulama.js"></script>
 <script>
 if (SEVRA_KIMLIK.requireAdmin()) {
   const auth = SEVRA_KIMLIK.getAuth();
