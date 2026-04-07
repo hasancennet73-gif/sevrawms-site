@@ -23,10 +23,29 @@
     return !!(auth && auth.role && auth.username);
   }
 
-  function requireRole(role, redirectPage) {
+  function isAdmin() {
     const auth = getAuth();
-    if (!auth || auth.role !== role) {
-      window.location.href = redirectPage;
+    return !!(auth && auth.role === "admin");
+  }
+
+  function isMember() {
+    const auth = getAuth();
+    return !!(auth && auth.role && auth.role !== "admin");
+  }
+
+  function requireAdmin(redirectPage) {
+    const auth = getAuth();
+    if (!auth || auth.role !== "admin") {
+      window.location.href = redirectPage || "admin-login.html";
+      return false;
+    }
+    return true;
+  }
+
+  function requireMember(redirectPage) {
+    const auth = getAuth();
+    if (!auth || auth.role === "admin") {
+      window.location.href = redirectPage || "uye-login.html";
       return false;
     }
     return true;
@@ -34,7 +53,7 @@
 
   function logout(redirectPage) {
     clearAuth();
-    window.location.href = redirectPage;
+    window.location.href = redirectPage || "index.html";
   }
 
   window.SEVRA_AUTH = {
@@ -42,7 +61,10 @@
     setAuth,
     clearAuth,
     isLoggedIn,
-    requireRole,
+    isAdmin,
+    isMember,
+    requireAdmin,
+    requireMember,
     logout,
   };
 })();
