@@ -1,6 +1,7 @@
 
 (function () {
-  const AUTH_KEY = "sevra_auth";
+  const AUTH_KEY = "sevra_live_auth";
+  const MEMBERS_KEY = "sevra_live_members";
 
   function getAuth() {
     try {
@@ -18,9 +19,44 @@
     localStorage.removeItem(AUTH_KEY);
   }
 
-  function isLoggedIn() {
-    const auth = getAuth();
-    return !!(auth && auth.role && auth.username);
+  function getMembers() {
+    try {
+      return JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveMembers(rows) {
+    localStorage.setItem(MEMBERS_KEY, JSON.stringify(rows));
+  }
+
+  function registerMember(payload) {
+    const members = getMembers();
+    const username = String(payload.username || "").trim();
+    if (!username) {
+      throw new Error("Kullanıcı adı zorunludur.");
+    }
+    if (members.some(x => x.username === username)) {
+      throw new Error("Bu kullanıcı adı zaten kayıtlı.");
+    }
+    members.push({
+      username,
+      password: String(payload.password || "").trim(),
+      role: String(payload.role || "member"),
+      fullName: String(payload.fullName || "").trim() || username,
+      company: String(payload.company || "").trim()
+    });
+    saveMembers(members);
+    return true;
+  }
+
+  function findMember(username, password) {
+    const members = getMembers();
+    return members.find(
+      x => x.username === String(username || "").trim() &&
+           x.password === String(password || "").trim()
+    ) || null;
   }
 
   function isAdmin() {
@@ -33,38 +69,38 @@
     return !!(auth && auth.role && auth.role !== "admin");
   }
 
-  function requireAdmin(redirectPage) {
-    const auth = getAuth();
-    if (!auth || auth.role !== "admin") {
-      window.location.href = redirectPage || "admin-login.html";
+  function requireAdmin() {
+    if (!isAdmin()) {
+      window.location.href = "yönetici-giriş.html";
       return false;
     }
     return true;
   }
 
-  function requireMember(redirectPage) {
-    const auth = getAuth();
-    if (!auth || auth.role === "admin") {
-      window.location.href = redirectPage || "uye-login.html";
+  function requireMember() {
+    if (!isMember()) {
+      window.location.href = "uye-login.html";
       return false;
     }
     return true;
   }
 
-  function logout(redirectPage) {
+  function logout(target) {
     clearAuth();
-    window.location.href = redirectPage || "index.html";
+    window.location.href = target || "index.html";
   }
 
-  window.SEVRA_AUTH = {
+  window.SEVRA_KIMLIK = {
     getAuth,
     setAuth,
     clearAuth,
-    isLoggedIn,
+    getMembers,
+    registerMember,
+    findMember,
     isAdmin,
     isMember,
     requireAdmin,
     requireMember,
-    logout,
+    logout
   };
 })();
