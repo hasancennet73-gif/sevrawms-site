@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Yönetici Girişi</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      color:#eef4ff;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+        linear-gradient(180deg,#071425,#08111b 74%,#040912);
+      display:flex;align-items:center;justify-content:center;padding:24px;
+    }
+    .card{
+      width:100%;max-width:520px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:28px;
+      background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));
+      padding:28px;
+    }
+    .logo{
+      width:64px;height:64px;border-radius:18px;
+      background:linear-gradient(135deg,#f1c84d,#f7dc89);
+      color:#0d1d38;font-weight:900;font-size:28px;
+      display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+    }
+    h1{font-size:36px;margin-bottom:8px}
+    p{color:#c7d3e6;margin-bottom:22px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+    label{font-size:13px;font-weight:700;color:#dce6f5}
+    input{
+      width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
+      color:#fff;border-radius:12px;padding:14px;font-size:15px;
+    }
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .btn{
+      min-height:48px;padding:0 18px;border-radius:12px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
+    }
+    .btn-primary{background:#f1c84d;color:#0b1830}
+    .btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
+    .note,.error{
+      margin-top:14px;border-radius:14px;padding:12px;font-size:13px;
+    }
+    .note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
+    .error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">S</div>
+    <h1>Yönetici Girişi</h1>
+    <p>Bu ekran sadece yönetici paneli içindir.</p>
+
+    <div class="field">
+      <label>Kullanıcı Adı</label>
+      <input id="username" type="text" placeholder="admin" />
+    </div>
+
+    <div class="field">
+      <label>Şifre</label>
+      <input id="password" type="password" placeholder="••••••••" />
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="adminGiris()">Yönetici Olarak Giriş Yap</button>
+      <a class="btn btn-secondary" href="uye-login.html">Üye Girişine Git</a>
+    </div>
+
+    <div id="errorBox" class="error"></div>
+
+    <div class="note">
+      Demo yönetici bilgisi:<br>
+      Kullanıcı adı: <strong>admin</strong><br>
+      Şifre: <strong>123456</strong>
+    </div>
+  </div>
+
+  <script src="kimlik-dogrulama.js"></script>
+  <script>
+    function showError(msg){
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = msg;
+    }
+
+    function adminGiris(){
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if(username === "admin" && password === "123456"){
+        SEVRA_KIMLIK.setAuth({
+          username: username,
+          role: "admin",
+          fullName: "SEVRA Admin"
+        });
+        window.location.href = "panel.html";
+        return;
+      }
+
+      showError("Yönetici bilgisi yanlış. Demo giriş için admin / 123456 kullan.");
+    }
+  </script>
+</body>
+</html>
