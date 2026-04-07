@@ -1,102 +1,38 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Üye Girişi</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --line:rgba(255,255,255,.08);
-      --text:#eef4ff;
-      --muted:#c7d3e6;
-      --yellow:#f1c84d;
-      --yellow-dark:#d5a927;
-      --shadow:0 22px 60px rgba(0,0,0,.34);
-    }
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      color:var(--text);
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-        linear-gradient(180deg,#071425,#08111b 74%,#040912);
-      display:flex;align-items:center;justify-content:center;padding:24px;
-    }
-    .card{
-      width:100%;max-width:560px;
-      border:1px solid var(--line);
-      border-radius:28px;
-      background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));
-      box-shadow:var(--shadow);
-      padding:28px;
-    }
-    .logo{
-      width:64px;height:64px;border-radius:18px;
-      background:linear-gradient(135deg,var(--yellow),#f7dc89);
-      color:#0d1d38;font-weight:900;font-size:28px;
-      display:flex;align-items:center;justify-content:center;margin-bottom:18px;
-    }
-    h1{font-size:36px;margin-bottom:8px}
-    p{color:var(--muted);margin-bottom:22px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-    label{font-size:13px;font-weight:700;color:#dce6f5}
-    input,select{
-      width:100%;
-      background:#091425;
-      border:1px solid rgba(255,255,255,.10);
-      color:#fff;
-      border-radius:12px;
-      padding:14px;
-      font-size:15px;
-      outline:none;
-    }
-    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-    .btn{
-      min-height:48px;padding:0 18px;border-radius:12px;
-      display:inline-flex;align-items:center;justify-content:center;
-      font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
-    }
-    .btn-primary{background:var(--yellow);color:#0b1830}
-    .btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
-    .note{
-      margin-top:18px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;
-      padding:12px;
-      color:#c9d5e7;
-      font-size:13px;
-      background:rgba(255,255,255,.03);
-    }
-    .error{
-      display:none;
-      margin-top:12px;
-      border-radius:12px;
-      padding:12px;
-      background:rgba(255,80,80,.12);
-      border:1px solid rgba(255,80,80,.22);
-      color:#ffd2d2;
-      font-size:13px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | Üye Girişi</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#eef4ff;min-height:100vh;
+  background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.card{width:100%;max-width:560px;border:1px solid rgba(255,255,255,.08);border-radius:28px;background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px}
+.logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#f1c84d,#f7dc89);color:#0d1d38;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+h1{font-size:36px;margin-bottom:8px} p{color:#c7d3e6;margin-bottom:22px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+label{font-size:13px;font-weight:700;color:#dce6f5}
+input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:14px;font-size:15px}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.btn{min-height:48px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none}
+.btn-primary{background:#f1c84d;color:#0b1830}.btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
+.note,.error{margin-top:14px;border-radius:14px;padding:12px;font-size:13px}
+.note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
+.error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
+</style>
 </head>
 <body>
   <div class="card">
     <div class="logo">S</div>
     <h1>Üye Girişi</h1>
-    <p>Bu ekran yük veren, nakliyeci ve standart üye girişleri içindir. Yönetici paneline buradan erişim yoktur.</p>
-
-    <div class="field">
-      <label>Kullanıcı Adı</label>
-      <input id="username" type="text" placeholder="uye1" />
-    </div>
-
-    <div class="field">
-      <label>Şifre</label>
-      <input id="password" type="password" placeholder="••••••••" />
-    </div>
-
+    <p>Bu ekran yük veren, nakliyeci ve standart üye girişleri içindir.</p>
+    <div class="field"><label>Kullanıcı Adı</label><input id="username" type="text" placeholder="uye1" /></div>
+    <div class="field"><label>Şifre</label><input id="password" type="password" placeholder="••••••••" /></div>
     <div class="field">
       <label>Üye Tipi</label>
       <select id="role">
@@ -105,21 +41,13 @@
         <option value="carrier">Nakliyeci</option>
       </select>
     </div>
-
     <div class="btn-row">
       <button class="btn btn-primary" onclick="loginMember()">Üye Olarak Giriş Yap</button>
       <a class="btn btn-secondary" href="admin-login.html">Yönetici Girişine Git</a>
     </div>
-
     <div id="errorBox" class="error"></div>
-
-    <div class="note">
-      Demo üye bilgisi:<br>
-      Kullanıcı adı: <strong>uye1</strong><br>
-      Şifre: <strong>123456</strong>
-    </div>
+    <div class="note">Demo üye bilgisi: <strong>uye1 / 123456</strong></div>
   </div>
-
   <script src="auth.js"></script>
   <script>
     function showError(msg){
@@ -127,21 +55,15 @@
       box.style.display = "block";
       box.textContent = msg;
     }
-
     function loginMember(){
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
       const role = document.getElementById("role").value;
-
       if(username === "uye1" && password === "123456"){
-        SEVRA_AUTH.setAuth({
-          role: role,
-          username: username
-        });
+        SEVRA_AUTH.setAuth({ role: role, username: username });
         window.location.href = "uye-panel.html";
         return;
       }
-
       showError("Üye bilgisi yanlış. Demo giriş için uye1 / 123456 kullan.");
     }
   </script>
