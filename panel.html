@@ -89,10 +89,10 @@ a{text-decoration:none;color:inherit}
 
     <div class="side-menu">
       <a class="menu-item active" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
-      <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item" href="basvuru.html">Başvuru Merkezi</a>
+      <a class="menu-item " href="urunler.html">Ürünler</a>
+      <a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
+      <a class="menu-item " href="uyeler-analytics.html">Üyeler & Analitik</a>
+      <a class="menu-item " href="basvuru.html">Başvuru Merkezi</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
@@ -110,10 +110,12 @@ a{text-decoration:none;color:inherit}
     </div>
 
     <div class="cards">
-      <div class="card"><strong>532</strong><span>Toplam yük ilanı</span></div>
-      <div class="card"><strong>120</strong><span>Aktif ürün</span></div>
-      <div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
-      <div class="card"><strong>14</strong><span>Bekleyen teklif</span></div>
+      
+        <div class="card"><strong>532</strong><span>Toplam yük ilanı</span></div>
+        <div class="card"><strong>120</strong><span>Aktif ürün</span></div>
+        <div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
+        <div class="card"><strong>14</strong><span>Bekleyen teklif</span></div>
+        
     </div>
 
     <div class="note">
@@ -125,10 +127,10 @@ a{text-decoration:none;color:inherit}
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
-  if (SEVRA_KIMLIK.requireAdmin()) {
-    const auth = SEVRA_KIMLIK.getAuth();
-    document.getElementById("adminUser").textContent = "Admin: " + auth.username;
-  }
+if (SEVRA_KIMLIK.requireAdmin()) {
+  const auth = SEVRA_KIMLIK.getAuth();
+  document.getElementById("adminUser").textContent = "Admin: " + auth.username;
+}
 </script>
 </body>
 </html>
