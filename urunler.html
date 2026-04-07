@@ -11,7 +11,6 @@
   --text:#eef4ff;
   --muted:#aebcd3;
   --yellow:#f1c84d;
-  --yellow-dark:#d5a927;
   --shadow:0 22px 60px rgba(0,0,0,.34);
 }
 body{
@@ -23,18 +22,6 @@ body{
     linear-gradient(180deg,#071425,#08111b 74%,#040912);
 }
 a{text-decoration:none;color:inherit}
-.btn{
-  min-height:46px;padding:0 18px;border-radius:12px;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;
-}
-.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-.badge{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:34px;padding:0 12px;border-radius:999px;
-  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
-}
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
 .sidebar{
   background:linear-gradient(180deg,#10274b,#0b1c37);
@@ -58,26 +45,36 @@ a{text-decoration:none;color:inherit}
 .menu-item.active{background:var(--yellow);color:#0c1a34}
 .main{padding:26px}
 .top{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  margin-bottom:18px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;
 }
 .title h1{font-size:38px;margin-bottom:8px}
 .title p{color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;
+  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
+}
+.btn{
+  min-height:46px;padding:0 18px;border-radius:12px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;
+}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
 .card{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
 }
 .card strong{display:block;font-size:28px;margin-bottom:6px}
 .card span{color:var(--muted);font-size:13px}
 .note{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
 }
 .note h2{font-size:24px;margin-bottom:10px}
 .note p{color:#c7d3e6}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){
   .cards{grid-template-columns:1fr}
 }
 </style>
@@ -85,47 +82,36 @@ a{text-decoration:none;color:inherit}
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="side-brand">
-      <div class="side-logo">S</div>
-      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
-    </div>
+    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
     <div class="side-menu">
-      <a class="menu-item " href="panel.html">Kontrol Paneli</a>
-<a class="menu-item active" href="urunler.html">Ürünler</a>
-<a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
-<a class="menu-item " href="uyeler-analytics.html">Üyeler & Analitik</a>
-<a class="menu-item " href="basvuru.html">Başvurular</a>
-<a class="menu-item " href="index.html">Ana Sayfa</a>
+      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item active" href="urunler.html">Ürünler</a>
+      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
+      <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
+      <a class="menu-item" href="basvuru.html">Başvuru Merkezi</a>
+      <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
   <main class="main">
     <div class="top">
-      <div class="title">
-        <h1>Ürünler</h1>
-        <p>Sadece yönetici görebilir.</p>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <div id="adminUser" class="badge">Admin</div>
-        <button class="btn" onclick="SEVRA_AUTH.logout('admin-login.html')">Çıkış Yap</button>
-      </div>
+      <div class="title"><h1>Ürünler</h1><p>Sadece yönetici görebilir.</p></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yönetici-giriş.html')">Çıkış Yap</button></div>
     </div>
     <div class="cards">
       <div class="card"><strong>120</strong><span>Aktif ürün</span></div>
-<div class="card"><strong>18</strong><span>Yeni ürün</span></div>
-<div class="card"><strong>9</strong><span>Bekleyen güncelleme</span></div>
+      <div class="card"><strong>18</strong><span>Yeni ürün</span></div>
+      <div class="card"><strong>9</strong><span>Bekleyen güncelleme</span></div>
+      <div class="card"><strong>SEVRA</strong><span>Kurumsal ürün alanı</span></div>
     </div>
-    <div class="note">
-      <h2>Ürün Modülü İskeleti</h2>
-      <p>Bu alan ürünlerin gerçek veritabanı bağlantısı öncesi yönetici tarafı yerleşimidir. Sonraki adımda kayıt, düzenleme ve silme bağlanacaktır.</p>
-    </div>
+    <div class="note"><h2>Ürün Modülü</h2><p>Bu alan yönetici tarafında ürün ekranı iskeletidir. Sonraki adımda gerçek kayıt/düzenleme bağlanacaktır.</p></div>
   </main>
 </div>
-<script src="auth.js"></script>
+<script src="kimlik%20do%C4%9Frulama.js"></script>
 <script>
-  if (SEVRA_AUTH.requireAdmin("admin-login.html")) {
-    const auth = SEVRA_AUTH.getAuth();
-    document.getElementById("adminUser").textContent = "Admin: " + auth.username;
-  }
+if (SEVRA_KIMLIK.requireAdmin()) {
+  const auth = SEVRA_KIMLIK.getAuth();
+  document.getElementById("adminUser").textContent = "Admin: " + auth.username;
+}
 </script>
 </body>
 </html>
