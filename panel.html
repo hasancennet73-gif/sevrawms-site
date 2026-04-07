@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Yönetici Paneli</title>
+<title>SEVRA | Yönetici Kontrol Paneli</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -11,6 +11,8 @@
   --text:#eef4ff;
   --muted:#aebcd3;
   --yellow:#f1c84d;
+  --yellow-dark:#d5a927;
+  --shadow:0 22px 60px rgba(0,0,0,.34);
 }
 body{
   font-family:Arial,Helvetica,sans-serif;
@@ -19,6 +21,19 @@ body{
     radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
     radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
     linear-gradient(180deg,#071425,#08111b 74%,#040912);
+}
+a{text-decoration:none;color:inherit}
+.btn{
+  min-height:46px;padding:0 18px;border-radius:12px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;
+}
+.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:34px;padding:0 12px;border-radius:999px;
+  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
 }
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
 .sidebar{
@@ -33,6 +48,8 @@ body{
   display:flex;align-items:center;justify-content:center;
   color:#0d1e3b;font-weight:900;font-size:18px;
 }
+.side-brand strong{display:block;font-size:20px}
+.side-brand span{display:block;color:#b8c5d8;font-size:12px}
 .side-menu{display:grid;gap:10px}
 .menu-item{
   min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;
@@ -46,23 +63,12 @@ body{
 }
 .title h1{font-size:38px;margin-bottom:8px}
 .title p{color:var(--muted)}
-.badge{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:34px;padding:0 12px;border-radius:999px;
-  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
-}
-.btn{
-  min-height:46px;padding:0 18px;border-radius:12px;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;
-}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
 .card{
   border:1px solid rgba(255,255,255,.08);
   border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
 }
-.card strong{display:block;font-size:30px;margin-bottom:6px}
+.card strong{display:block;font-size:28px;margin-bottom:6px}
 .card span{color:var(--muted);font-size:13px}
 .note{
   border:1px solid rgba(255,255,255,.08);
@@ -72,9 +78,6 @@ body{
 .note p{color:#c7d3e6}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
-  .cards{grid-template-columns:1fr 1fr}
-}
-@media (max-width:680px){
   .cards{grid-template-columns:1fr}
 }
 </style>
@@ -84,58 +87,44 @@ body{
   <aside class="sidebar">
     <div class="side-brand">
       <div class="side-logo">S</div>
-      <div>
-        <div style="font-size:20px;font-weight:700">SEVRA</div>
-        <div style="font-size:12px;color:#b8c5d8">Yönetici Paneli</div>
-      </div>
+      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
     </div>
-
     <div class="side-menu">
-      <div class="menu-item active">Kontrol Paneli</div>
-      <div class="menu-item">Ürünler</div>
-      <div class="menu-item">Mesajlaşma</div>
-      <div class="menu-item">Üyeler & Analitik</div>
-      <div class="menu-item">Başvurular</div>
-      <div class="menu-item">Ayarlar</div>
-      <a class="menu-item" href="index.html">Ana Sayfa</a>
+      <a class="menu-item active" href="panel.html">Kontrol Paneli</a>
+<a class="menu-item " href="urunler.html">Ürünler</a>
+<a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
+<a class="menu-item " href="uyeler-analytics.html">Üyeler & Analitik</a>
+<a class="menu-item " href="basvuru.html">Başvurular</a>
+<a class="menu-item " href="index.html">Ana Sayfa</a>
     </div>
   </aside>
-
   <main class="main">
     <div class="top">
       <div class="title">
-        <h1>Yönetici Paneli</h1>
-        <p>Bu alan sadece admin girişi ile açılır.</p>
+        <h1>Yönetici Kontrol Paneli</h1>
+        <p>Admin girişi olmadan açılmaz. Bu sayfa artık korumalıdır.</p>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <div id="adminUser" class="badge">Admin</div>
-        <button class="btn" onclick="logoutAdmin()">Çıkış Yap</button>
+        <button class="btn" onclick="SEVRA_AUTH.logout('admin-login.html')">Çıkış Yap</button>
       </div>
     </div>
-
     <div class="cards">
       <div class="card"><strong>532</strong><span>Toplam yük ilanı</span></div>
-      <div class="card"><strong>120</strong><span>Aktif ürün</span></div>
-      <div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
-      <div class="card"><strong>14</strong><span>Bekleyen teklif</span></div>
+<div class="card"><strong>120</strong><span>Aktif ürün</span></div>
+<div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
     </div>
-
     <div class="note">
-      <h2>Auth Step 1 Durumu</h2>
-      <p>Bu sürümde panel artık doğrudan açık değildir. Önce admin-login.html üzerinden yönetici girişi yapılmalıdır. Bu client-side temel iskelettir. Gerçek güvenli backend ve veritabanı bir sonraki adımda bağlanacaktır.</p>
+      <h2>Auth Step 2 Durumu</h2>
+      <p>Bu adımda admin menüsü gerçek sayfalara bölündü. Ürünler, mesajlaşma, üyeler ve başvurular için ayrı korumalı ekranlar eklendi.</p>
     </div>
   </main>
 </div>
-
 <script src="auth.js"></script>
 <script>
-  if (SEVRA_AUTH.requireRole("admin", "admin-login.html")) {
+  if (SEVRA_AUTH.requireAdmin("admin-login.html")) {
     const auth = SEVRA_AUTH.getAuth();
     document.getElementById("adminUser").textContent = "Admin: " + auth.username;
-  }
-
-  function logoutAdmin(){
-    SEVRA_AUTH.logout("admin-login.html");
   }
 </script>
 </body>
