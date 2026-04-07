@@ -33,7 +33,7 @@
     p{color:#c7d3e6;margin-bottom:22px}
     .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
     label{font-size:13px;font-weight:700;color:#dce6f5}
-    input,select{
+    input{
       width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
       color:#fff;border-radius:12px;padding:14px;font-size:15px;
     }
@@ -60,7 +60,7 @@
 
     <div class="field">
       <label>Kullanıcı Adı</label>
-      <input id="username" type="text" placeholder="uye1" />
+      <input id="username" type="text" placeholder="uye1 veya oluşturduğun kullanıcı adı" />
     </div>
 
     <div class="field">
@@ -68,17 +68,9 @@
       <input id="password" type="password" placeholder="••••••••" />
     </div>
 
-    <div class="field">
-      <label>Üye Tipi</label>
-      <select id="role">
-        <option value="member">Standart Üye</option>
-        <option value="shipper">Yük Veren</option>
-        <option value="carrier">Nakliyeci</option>
-      </select>
-    </div>
-
     <div class="btn-row">
       <button class="btn btn-primary" onclick="uyeGiris()">Üye Olarak Giriş Yap</button>
+      <a class="btn btn-secondary" href="uye-ol.html">Üye Ol</a>
       <a class="btn btn-secondary" href="yönetici-giriş.html">Yönetici Girişine Git</a>
     </div>
 
@@ -102,19 +94,30 @@
     function uyeGiris(){
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
-      const role = document.getElementById("role").value;
 
       if(username === "uye1" && password === "123456"){
         SEVRA_KIMLIK.setAuth({
           username: username,
-          role: role,
+          role: "member",
           fullName: "Demo Üye"
         });
         window.location.href = "uye-panel.html";
         return;
       }
 
-      showError("Üye bilgisi yanlış. Demo giriş için uye1 / 123456 kullan.");
+      const kayitli = SEVRA_KIMLIK.findMember(username, password);
+      if(kayitli){
+        SEVRA_KIMLIK.setAuth({
+          username: kayitli.username,
+          role: kayitli.role,
+          fullName: kayitli.fullName,
+          company: kayitli.company
+        });
+        window.location.href = "uye-panel.html";
+        return;
+      }
+
+      showError("Üye bilgisi yanlış. Demo giriş için uye1 / 123456 kullan veya önce üye oluştur.");
     }
   </script>
 </body>
