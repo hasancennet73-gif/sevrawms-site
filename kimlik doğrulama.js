@@ -1,4 +1,4 @@
-
+/* DOSYA: kimlik-dogrulama.js */
 (function () {
   const AUTH_KEY = "sevra_live_auth";
 
@@ -30,7 +30,7 @@
 
   function requireAdmin() {
     if (!isAdmin()) {
-      window.location.href = "yönetici-giriş.html";
+      window.location.href = "yonetici-giris.html";
       return false;
     }
     return true;
