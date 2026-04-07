@@ -9,18 +9,24 @@
 body{
   font-family:Arial,Helvetica,sans-serif;
   color:#eef4ff;
-  background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
 }
 .wrap{max-width:1100px;margin:0 auto;padding:26px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.title h1{font-size:38px;margin-bottom:8px}.title p{color:#aebcd3}
+.title h1{font-size:38px;margin-bottom:8px}
+.title p{color:#aebcd3}
 .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
 .btn{min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
 .card{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.card strong{display:block;font-size:28px;margin-bottom:6px}.card span{color:#aebcd3;font-size:13px}
+.card strong{display:block;font-size:28px;margin-bottom:6px}
+.card span{color:#aebcd3;font-size:13px}
 .note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.note h2{font-size:24px;margin-bottom:10px}.note p{color:#c7d3e6}
+.note h2{font-size:24px;margin-bottom:10px}
+.note p{color:#c7d3e6}
 @media (max-width:820px){.cards{grid-template-columns:1fr}}
 </style>
 </head>
@@ -33,23 +39,26 @@ body{
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <div id="memberUser" class="badge">Üye</div>
-      <button class="btn" onclick="SEVRA_AUTH.logout('uye-login.html')">Çıkış Yap</button>
+      <button class="btn" onclick="SEVRA_KIMLIK.logout('uye-login.html')">Çıkış Yap</button>
     </div>
   </div>
+
   <div class="cards">
     <div class="card"><strong>3</strong><span>Aktif teklifim</span></div>
     <div class="card"><strong>7</strong><span>Mesajım</span></div>
     <div class="card"><strong>2</strong><span>Bekleyen işlem</span></div>
   </div>
+
   <div class="note">
-    <h2>Auth Step 2 Durumu</h2>
-    <p>Üye paneli ile yönetici paneli ayrımı korunuyor. Üye yönetici ekranını açamaz.</p>
+    <h2>Üye Alanı</h2>
+    <p>Bu ekran sadece normal üyeler içindir. Yönetici bu ekrandan ayrı tutulur.</p>
   </div>
 </div>
-<script src="auth.js"></script>
+
+<script src="kimlik%20do%C4%9Frulama.js"></script>
 <script>
-  if (SEVRA_AUTH.requireMember("uye-login.html")) {
-    const auth = SEVRA_AUTH.getAuth();
+  if (SEVRA_KIMLIK.requireMember()) {
+    const auth = SEVRA_KIMLIK.getAuth();
     document.getElementById("memberUser").textContent = "Üye: " + auth.username + " / " + auth.role;
   }
 </script>
