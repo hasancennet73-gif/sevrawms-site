@@ -82,31 +82,50 @@ a{text-decoration:none;color:inherit}
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
+    <div class="side-brand">
+      <div class="side-logo">S</div>
+      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
+    </div>
+
     <div class="side-menu">
-      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
-      <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
+      <a class="menu-item " href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item " href="urunler.html">Ürünler</a>
+      <a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
+      <a class="menu-item " href="uyeler-analytics.html">Üyeler & Analitik</a>
       <a class="menu-item active" href="basvuru.html">Başvuru Merkezi</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
+
   <main class="main">
     <div class="top">
-      <div class="title"><h1>Başvuru Merkezi</h1><p>Yük veren ve nakliyeci başvuruları burada toplanır.</p></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yönetici-giriş.html')">Çıkış Yap</button></div>
+      <div class="title">
+        <h1>Başvuru Merkezi</h1>
+        <p>Bu alan sadece yönetici girişi ile açılır.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div id="adminUser" class="badge">Admin</div>
+        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
+      </div>
     </div>
+
     <div class="cards">
-      <div class="card"><strong>12</strong><span>Yeni başvuru</span></div>
-      <div class="card"><strong>5</strong><span>İncelemede</span></div>
-      <div class="card"><strong>3</strong><span>Onay bekliyor</span></div>
-      <div class="card"><strong>SEVRA</strong><span>Başvuru yönetimi</span></div>
+      
+        <div class="card"><strong>12</strong><span>Yeni başvuru</span></div>
+        <div class="card"><strong>5</strong><span>İncelemede</span></div>
+        <div class="card"><strong>3</strong><span>Onay bekliyor</span></div>
+        <div class="card"><strong>SEVRA</strong><span>Başvuru yönetimi</span></div>
+        
     </div>
-    <div class="note"><h2>Başvuru Yönetimi</h2><p>Bu alan admin tarafında başvuru kontrolü için ayrıldı.</p></div>
+
+    <div class="note">
+      <h2>Başvuru Yönetimi</h2>
+      <p>Başvuru ekranı da admin korumasına bağlandı. Çıkış ve JS yolu yeni isimlerle güncellendi.</p>
+    </div>
   </main>
 </div>
-<script src="kimlik%20do%C4%9Frulama.js"></script>
+
+<script src="kimlik-dogrulama.js"></script>
 <script>
 if (SEVRA_KIMLIK.requireAdmin()) {
   const auth = SEVRA_KIMLIK.getAuth();
