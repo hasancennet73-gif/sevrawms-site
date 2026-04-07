@@ -1,263 +1,140 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEVRA | Kurumsal Üyelik</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | Üye Ol</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#071427;
-  --line:rgba(255,255,255,.10);
-  --text:#eef4ff;
-  --muted:#aebbd1;
-  --yellow:#f3c744;
-  --yellow-dark:#d7a61c;
-  --shadow:0 22px 60px rgba(0,0,0,.35);
-  --max:1180px;
-}
-html{scroll-behavior:smooth}
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;color:#eef4ff;min-height:100vh;
   background:
-    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
-    radial-gradient(circle at left top, rgba(36,78,154,.16), transparent 24%),
-    linear-gradient(180deg,#071427,#08111d 70%,#050b14);
-  line-height:1.6;
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
+  display:flex;align-items:center;justify-content:center;padding:24px;
 }
-a{text-decoration:none;color:inherit}
-.container{max-width:var(--max);margin:0 auto;padding:0 22px}
-.topbar{
-  position:sticky;top:0;z-index:100;
-  background:rgba(4,12,24,.88);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line);
-}
-.topbar-inner{
-  min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:18px;
-}
-.brand{display:flex;align-items:center;gap:14px}
-.brand-mark{
-  width:54px;height:54px;border-radius:16px;
-  background:linear-gradient(135deg,var(--yellow),#f8df91);
-  color:#0d1d38;font-size:24px;font-weight:800;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 12px 30px rgba(243,199,68,.28);
-}
-.brand-text strong{display:block;font-size:30px;letter-spacing:.4px}
-.brand-text span{display:block;font-size:12px;color:#d6e0ef;letter-spacing:.8px}
-.nav{display:flex;gap:28px;color:#d2dcef;font-size:15px}
-.nav a:hover{color:#fff}
-.actions{display:flex;align-items:center;gap:12px}
-.btn{
-  min-height:48px;padding:0 22px;border-radius:14px;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid transparent;transition:.2s ease;cursor:pointer;
-}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--yellow);color:#0b1830;box-shadow:0 14px 30px rgba(243,199,68,.18)}
-.btn-primary:hover{background:var(--yellow-dark)}
-.btn-secondary{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff}
-.btn-secondary:hover{background:rgba(255,255,255,.08)}
-.wrap{padding:36px 0 54px}
-.hero{
-  padding:42px;border-radius:30px;
-  background:
-    radial-gradient(circle at top right, rgba(243,199,68,.08), transparent 18%),
-    linear-gradient(135deg,#0e2447,#0a1b34);
-  border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:20px;
-}
-.hero h1{font-size:50px;line-height:1.02;margin-bottom:12px}
-.hero p{max-width:860px;color:var(--muted);font-size:18px}
-.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
 .card{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
-  background:linear-gradient(180deg,rgba(10,23,45,.96),rgba(7,17,34,.96));
-  box-shadow:var(--shadow);
+  width:100%;max-width:640px;border:1px solid rgba(255,255,255,.08);border-radius:28px;
+  background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px;
 }
-.inner{padding:24px}
-.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-.card-head h2,.card-head h3{font-size:30px}
-.card-head p{color:var(--muted);font-size:14px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{display:flex;flex-direction:column;gap:7px}
-.field label{font-size:13px;color:#dce6f5;font-weight:700}
-.field input,.field textarea,.field select{
-  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
-  color:#fff;border-radius:12px;padding:13px 14px;font-size:15px;outline:none;
+.logo{
+  width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#f1c84d,#f7dc89);
+  color:#0d1d38;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;
 }
-.full{grid-column:1/-1}
-.note{
-  margin-top:16px;padding:14px 16px;border-radius:14px;
-  background:rgba(243,199,68,.08);border:1px solid rgba(243,199,68,.18);
-  color:#ffe6a1;font-size:13px;
+h1{font-size:36px;margin-bottom:8px} p{color:#c7d3e6;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+label{font-size:13px;font-weight:700;color:#dce6f5}
+input,select{
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:14px;font-size:15px;
 }
-.info-list{display:grid;gap:12px}
-.info-item{
-  border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.03);padding:16px;
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.btn{
+  min-height:48px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
 }
-.info-item strong{display:block;font-size:18px;margin-bottom:5px}
-.info-item span{font-size:13px;color:var(--muted)}
-.quick-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-.quick{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.quick strong{display:block;font-size:24px;margin-bottom:4px}
-.quick span{font-size:13px;color:var(--muted)}
-.social-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-.social-btn{
-  min-height:54px;border-radius:14px;border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;
-  font-weight:700;color:#fff
-}
-.otp-box{
-  margin-top:18px;padding:18px;border-radius:18px;background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.08)
-}
-.otp-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
-.footer{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.18);margin-top:42px}
-.footer-inner{min-height:90px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:#b2bed2;font-size:14px}
-.footer-inner strong{color:#fff}
-@media (max-width:980px){
-  .nav,.actions{display:none}
-  .layout,.form-grid,.quick-stats,.social-grid{grid-template-columns:1fr}
-  .hero h1{font-size:36px}
-  .otp-row{grid-template-columns:1fr}
-}
+.btn-primary{background:#f1c84d;color:#0b1830}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
+.note,.ok,.error{margin-top:14px;border-radius:14px;padding:12px;font-size:13px}
+.note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
+.ok{display:none;background:rgba(50,180,120,.12);border:1px solid rgba(50,180,120,.22);color:#d6ffe8}
+.error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="container topbar-inner">
-    <a class="brand" href="index.html"><div class="brand-mark">S</div><div class="brand-text"><strong>SEVRA</strong><span>KURUMSAL ÜYELİK</span></div></a>
-    <nav class="nav">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="urunler.html">Ürünler</a>
-      <a href="basvuru.html">Başvuru</a>
-      <a href="giris.html">Giriş Yap</a>
-    </nav>
-    <div class="actions">
-      <a class="btn btn-secondary" href="giris.html">Giriş Yap</a>
-      <a class="btn btn-primary" href="panel.html">Panele Geç</a>
+<div class="card">
+  <div class="logo">S</div>
+  <h1>Üye Ol</h1>
+  <p>Yeni üye kaydı oluştur. Bu sürümde kayıtlar tarayıcıda tutulur ve sonra üye girişi ile kullanılabilir.</p>
+
+  <div class="grid">
+    <div class="field">
+      <label>Ad Soyad</label>
+      <input id="fullName" type="text" placeholder="Hasan Arslan" />
+    </div>
+    <div class="field">
+      <label>Firma</label>
+      <input id="company" type="text" placeholder="SEVRA Lojistik" />
     </div>
   </div>
-</header>
 
-<div class="wrap">
-  <div class="container">
-    <div class="hero">
-      <h1>Kurumsal üyelik seçenekleri hazır</h1>
-      <p>SEVRA için firma hesabı, klasik üyelik, Google ile üyelik, Facebook ile üyelik ve telefon doğrulamalı kayıt yönleri tek yapıda toplandı.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Kullanıcı Adı</label>
+      <input id="username" type="text" placeholder="yeniuye" />
     </div>
-
-    <div class="layout">
-      <div class="card inner">
-        <div class="card-head">
-          <div>
-            <h2>Üye Ol</h2>
-            <p>Firma ve kullanıcı kayıt alanı.</p>
-          </div>
-          <a class="btn btn-secondary" href="giris.html">Zaten Hesabım Var</a>
-        </div>
-
-        <div class="form-grid">
-          <div class="field">
-            <label>Ad Soyad / Firma</label>
-            <input type="text" placeholder="Firma adı">
-          </div>
-          <div class="field">
-            <label>Yetkili Kişi</label>
-            <input type="text" placeholder="Yetkili">
-          </div>
-          <div class="field">
-            <label>E-posta</label>
-            <input type="text" placeholder="mail@firma.com">
-          </div>
-          <div class="field">
-            <label>Telefon</label>
-            <input type="text" placeholder="+90 5xx xxx xx xx">
-          </div>
-          <div class="field">
-            <label>Kullanıcı Türü</label>
-            <select>
-              <option>Yük Veren</option>
-              <option>Taşıyıcı</option>
-              <option>Kurumsal Üye</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Şehir</label>
-            <input type="text" placeholder="İstanbul">
-          </div>
-          <div class="field full">
-            <label>Şifre</label>
-            <input type="password" placeholder="••••••••">
-          </div>
-        </div>
-
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
-          <a class="btn btn-primary" href="giris.html">Kaydı Oluştur</a>
-          <a class="btn btn-secondary" href="giris.html">Girişe Dön</a>
-        </div>
-
-        <div class="social-grid">
-          <a class="social-btn" href="#">Google ile Üye Ol</a>
-          <a class="social-btn" href="#">Facebook ile Üye Ol</a>
-        </div>
-
-        <div class="otp-box">
-          <div class="card-head" style="margin-bottom:12px">
-            <div>
-              <h3 style="font-size:22px">Telefon Doğrulaması</h3>
-              <p>Kayıt sırasında telefon numarası onay alanı.</p>
-            </div>
-          </div>
-          <div class="otp-row">
-            <div class="field">
-              <label>Telefon Numarası</label>
-              <input type="text" placeholder="+90 5xx xxx xx xx">
-            </div>
-            <a class="btn btn-primary" href="#">Kod Gönder</a>
-          </div>
-          <div class="form-grid" style="margin-top:12px">
-            <div class="field full">
-              <label>Onay Kodu</label>
-              <input type="text" placeholder="6 haneli kod">
-            </div>
-          </div>
-        </div>
-
-        <div class="note">Bu üyelik ekranı kurumsal final hedefi için sosyal üyelik ve telefon doğrulama yönlerini de kapsar.</div>
-      </div>
-
-      <div class="card inner">
-        <div class="card-head">
-          <div>
-            <h3>Üyelik Standardı</h3>
-            <p>Kurumsal platform için beklenen üyelik seçenekleri.</p>
-          </div>
-        </div>
-
-        <div class="info-list">
-          <div class="info-item"><strong>Klasik Üyelik</strong><span>E-posta ve şifre ile standart kayıt akışı.</span></div>
-          <div class="info-item"><strong>Google ile Üyelik</strong><span>Hızlı ve modern kurumsal kayıt yönü.</span></div>
-          <div class="info-item"><strong>Facebook ile Üyelik</strong><span>Alternatif sosyal üyelik akışı.</span></div>
-          <div class="info-item"><strong>Telefon ile Onay</strong><span>Kayıt güvenliği için SMS / OTP mantığına hazır alan.</span></div>
-        </div>
-
-        <div class="quick-stats">
-          <div class="quick"><strong>4</strong><span>Üyelik yöntemi</span></div>
-          <div class="quick"><strong>Firma</strong><span>Kurumsal hesap mantığı</span></div>
-          <div class="quick"><strong>SEVRA</strong><span>Platform standardı</span></div>
-        </div>
-      </div>
+    <div class="field">
+      <label>Şifre</label>
+      <input id="password" type="password" placeholder="••••••••" />
     </div>
+  </div>
+
+  <div class="field">
+    <label>Üye Tipi</label>
+    <select id="role">
+      <option value="member">Standart Üye</option>
+      <option value="shipper">Yük Veren</option>
+      <option value="carrier">Nakliyeci</option>
+    </select>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="uyeOl()">Kaydı Oluştur</button>
+    <a class="btn btn-secondary" href="uye-login.html">Üye Girişine Git</a>
+  </div>
+
+  <div id="okBox" class="ok"></div>
+  <div id="errorBox" class="error"></div>
+
+  <div class="note">
+    Not: Bu adım canlı site rotasına uygun geçiş paketidir. Gerçek veritabanı bağlanana kadar yeni üyeler tarayıcı belleğinde saklanır.
   </div>
 </div>
 
-<footer class="footer">
-  <div class="container footer-inner">
-    <div><strong>SEVRA</strong><br>Kurumsal üyelik ekranı</div>
-    <div>Google / Facebook / Telefon yönleri eklendi</div>
-  </div>
-</footer>
+<script src="kimlik%20do%C4%9Frulama.js"></script>
+<script>
+function showOk(msg){
+  const box = document.getElementById("okBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
+function showError(msg){
+  const box = document.getElementById("errorBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
+
+function uyeOl(){
+  document.getElementById("okBox").style.display = "none";
+  document.getElementById("errorBox").style.display = "none";
+
+  const payload = {
+    fullName: document.getElementById("fullName").value.trim(),
+    company: document.getElementById("company").value.trim(),
+    username: document.getElementById("username").value.trim(),
+    password: document.getElementById("password").value.trim(),
+    role: document.getElementById("role").value
+  };
+
+  if(!payload.fullName || !payload.username || !payload.password){
+    showError("Ad soyad, kullanıcı adı ve şifre zorunludur.");
+    return;
+  }
+
+  try{
+    SEVRA_KIMLIK.registerMember(payload);
+    showOk("Kayıt oluşturuldu. Artık üye girişi ekranından giriş yapabilirsin.");
+    document.getElementById("fullName").value = "";
+    document.getElementById("company").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("role").value = "member";
+  }catch(err){
+    showError(err.message);
+  }
+}
+</script>
 </body>
 </html>
