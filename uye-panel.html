@@ -56,7 +56,6 @@ linear-gradient(180deg,#071425,#08111b 74%,#040912);}
       <h2>Profil Özeti</h2>
       <div class="list" id="profileList"></div>
     </div>
-
     <div class="panel">
       <h2>Teklif / Not Özeti</h2>
       <div class="list" id="offerSummaryList"></div>
@@ -71,79 +70,56 @@ linear-gradient(180deg,#071425,#08111b 74%,#040912);}
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
-if (SEVRA_KIMLIK.requireMember()) {
-  const auth = SEVRA_KIMLIK.getAuth();
-  document.getElementById("memberUser").textContent = "Üye: " + auth.username + " / " + auth.role;
+if(SEVRA_KIMLIK.requireMember()){
+  const auth=SEVRA_KIMLIK.getAuth();
+  document.getElementById("memberUser").textContent="Üye: "+auth.username+" / "+auth.role;
 }
-if (typeof SEVRA_KIMLIK.trackVisit === "function") {
-  SEVRA_KIMLIK.trackVisit("uye-panel");
-}
-
-function roleText(role){
-  if(role === "carrier") return "Nakliyeci";
-  if(role === "shipper") return "Yük Veren";
-  return "Standart Üye";
-}
-
+if(typeof SEVRA_KIMLIK.trackVisit==="function"){SEVRA_KIMLIK.trackVisit("uye-panel");}
+function roleText(role){if(role==="carrier") return "Nakliyeci"; if(role==="shipper") return "Yük Veren"; return "Standart Üye";}
 function loadMemberPanel(){
-  const auth = SEVRA_KIMLIK.getAuth() || {};
-  const loads = (typeof SEVRA_KIMLIK.getLoads === "function") ? SEVRA_KIMLIK.getLoads() : [];
-  const offers = (typeof SEVRA_KIMLIK.getOffers === "function") ? SEVRA_KIMLIK.getOffers() : [];
-  const myLoads = loads.filter(x => x.createdBy === (auth.username || ""));
-  const myOffers = offers.filter(x => x.member === (auth.username || ""));
-  const approvedOffers = myOffers.filter(x => x.status === "Onaylandı").length;
-  const notedOffers = myOffers.filter(x => (x.adminNote || "").trim()).length;
-  const receivedOffers = offers.filter(x => myLoads.some(l => String(l.id) === String(x.loadId)));
-  const receivedNoted = receivedOffers.filter(x => (x.adminNote || "").trim()).length;
+  const auth=SEVRA_KIMLIK.getAuth()||{}, loads=SEVRA_KIMLIK.getLoads?SEVRA_KIMLIK.getLoads():[], offers=SEVRA_KIMLIK.getOffers?SEVRA_KIMLIK.getOffers():[];
+  const myLoads=loads.filter(x=>x.createdBy===(auth.username||""));
+  const myOffers=offers.filter(x=>x.member===(auth.username||""));
+  const approvedOffers=myOffers.filter(x=>x.status==="Onaylandı").length;
+  const notedOffers=myOffers.filter(x=>(x.adminNote||"").trim()).length;
+  const receivedOffers=offers.filter(x=>myLoads.some(l=>String(l.id)===String(x.loadId)));
+  const receivedNoted=receivedOffers.filter(x=>(x.adminNote||"").trim()).length;
 
-  document.getElementById("welcomeText").textContent =
-    (auth.fullName || auth.username || "Üye") + " için kişisel panel görünümü.";
-
-  document.getElementById("summaryCards").innerHTML = `
+  document.getElementById("welcomeText").textContent=(auth.fullName||auth.username||"Üye")+" için kişisel panel görünümü.";
+  document.getElementById("summaryCards").innerHTML=`
     <div class="card"><strong>${myLoads.length}</strong><span>Aktif ilan</span></div>
     <div class="card"><strong>${myOffers.length}</strong><span>Teklif</span></div>
     <div class="card"><strong>${approvedOffers}</strong><span>Onaylı</span></div>
-    <div class="card"><strong>${auth.role === "shipper" ? receivedNoted : notedOffers}</strong><span>Admin notlu</span></div>
-  `;
-
-  document.getElementById("profileList").innerHTML = `
-    <div class="item"><strong>Ad Soyad</strong><span>${auth.fullName || "-"}</span></div>
-    <div class="item"><strong>Kullanıcı Adı</strong><span>${auth.username || "-"}</span></div>
+    <div class="card"><strong>${auth.role==="shipper"?receivedNoted:notedOffers}</strong><span>Admin notlu</span></div>`;
+  document.getElementById("profileList").innerHTML=`
+    <div class="item"><strong>Ad Soyad</strong><span>${auth.fullName||"-"}</span></div>
+    <div class="item"><strong>Kullanıcı Adı</strong><span>${auth.username||"-"}</span></div>
     <div class="item"><strong>Rol</strong><span>${roleText(auth.role)}</span></div>
-    <div class="item"><strong>Firma</strong><span>${auth.company || "-"}</span></div>
-  `;
+    <div class="item"><strong>Firma</strong><span>${auth.company||"-"}</span></div>`;
 
-  let html = "";
-  if(auth.role === "carrier"){
-    const waiting = myOffers.filter(x => x.status === "Bekliyor").length;
-    const rejected = myOffers.filter(x => x.status === "Reddedildi").length;
-    html = `
+  let html="";
+  if(auth.role==="carrier"){
+    const waiting=myOffers.filter(x=>x.status==="Bekliyor").length;
+    html=`
       <div class="item"><strong>Toplam Teklif</strong><span>${myOffers.length} teklif verdin.</span></div>
       <div class="item"><strong>Bekleyen</strong><span>${waiting} teklif beklemede.</span></div>
       <div class="item"><strong>Onaylı</strong><span>${approvedOffers} teklif onaylandı.</span></div>
-      <div class="item"><strong>Admin Notu</strong><span>${notedOffers} teklifte yönetici notu var.</span></div>
-    `;
-  } else if(auth.role === "shipper"){
-    const approvedReceived = receivedOffers.filter(x => x.status === "Onaylandı").length;
-    const pendingReceived = receivedOffers.filter(x => x.status === "Bekliyor").length;
-    html = `
+      <div class="item"><strong>Admin Notu</strong><span>${notedOffers} teklifte yönetici notu var.</span></div>`;
+  }else if(auth.role==="shipper"){
+    const pendingReceived=receivedOffers.filter(x=>x.status==="Bekliyor").length;
+    html=`
       <div class="item"><strong>İlanların</strong><span>${myLoads.length} ilan açtın.</span></div>
       <div class="item"><strong>Gelen Teklif</strong><span>${receivedOffers.length} teklif aldın.</span></div>
       <div class="item"><strong>Bekleyen</strong><span>${pendingReceived} teklif inceleniyor.</span></div>
-      <div class="item"><strong>Admin Notu</strong><span>${receivedNoted} teklifte yönetici notu bulunuyor.</span></div>
-    `;
-  } else {
-    html = `
+      <div class="item"><strong>Admin Notu</strong><span>${receivedNoted} teklifte yönetici notu bulunuyor.</span></div>`;
+  }else{
+    html=`
       <div class="item"><strong>Platform</strong><span>${loads.length} ilan ve ${offers.length} teklif sistemde bulunuyor.</span></div>
-      <div class="item"><strong>Keşif</strong><span>İlan / teklif akışından detayları inceleyebilirsin.</span></div>
-    `;
+      <div class="item"><strong>Keşif</strong><span>İlan / teklif akışından detayları inceleyebilirsin.</span></div>`;
   }
-  document.getElementById("offerSummaryList").innerHTML = html;
-
-  document.getElementById("platformText").textContent =
-    "Sistemde " + loads.length + " ilan ve " + offers.length + " teklif bulunuyor.";
+  document.getElementById("offerSummaryList").innerHTML=html;
+  document.getElementById("platformText").textContent="Sistemde "+loads.length+" ilan ve "+offers.length+" teklif bulunuyor.";
 }
-
 loadMemberPanel();
 </script>
 </body>
