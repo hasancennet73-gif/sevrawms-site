@@ -15,7 +15,7 @@ body{
   display:flex;align-items:center;justify-content:center;padding:24px;
 }
 .card{
-  width:100%;max-width:640px;border:1px solid rgba(255,255,255,.08);border-radius:28px;
+  width:100%;max-width:700px;border:1px solid rgba(255,255,255,.08);border-radius:28px;
   background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px;
 }
 .logo{
@@ -47,7 +47,7 @@ input,select{
 <div class="card">
   <div class="logo">S</div>
   <h1>Üye Ol</h1>
-  <p>Yeni üye kaydı oluştur. Bu sürümde kayıtlar tarayıcıda tutulur ve sonra üye girişi ile kullanılabilir.</p>
+  <p>Standart üyelik kayıt formu, telefon alanı ve sağlayıcı bilgisi ile güçlendirildi.</p>
 
   <div class="grid">
     <div class="field">
@@ -71,12 +71,28 @@ input,select{
     </div>
   </div>
 
+  <div class="grid">
+    <div class="field">
+      <label>Telefon</label>
+      <input id="phone" type="text" placeholder="+90 5xx xxx xx xx" />
+    </div>
+    <div class="field">
+      <label>Üye Tipi</label>
+      <select id="role">
+        <option value="member">Standart Üye</option>
+        <option value="shipper">Yük Veren</option>
+        <option value="carrier">Nakliyeci</option>
+      </select>
+    </div>
+  </div>
+
   <div class="field">
-    <label>Üye Tipi</label>
-    <select id="role">
-      <option value="member">Standart Üye</option>
-      <option value="shipper">Yük Veren</option>
-      <option value="carrier">Nakliyeci</option>
+    <label>Sağlayıcı</label>
+    <select id="provider">
+      <option value="manual">Standart Üyelik</option>
+      <option value="phone">Telefon Hazırlığı</option>
+      <option value="google">Google Hazırlığı</option>
+      <option value="facebook">Facebook Hazırlığı</option>
     </select>
   </div>
 
@@ -89,7 +105,7 @@ input,select{
   <div id="errorBox" class="error"></div>
 
   <div class="note">
-    Not: Bu adımda yeni üyeler tarayıcı belleğinde saklanır. Sonraki aşamada gerçek veritabanına bağlanacaktır.
+    Not: Google ve Facebook tarafı şu an gerçek OAuth değil, hazırlık sağlayıcı işareti olarak kaydedilir.
   </div>
 </div>
 
@@ -120,7 +136,9 @@ function uyeOl(){
     company: document.getElementById("company").value.trim(),
     username: document.getElementById("username").value.trim(),
     password: document.getElementById("password").value.trim(),
-    role: document.getElementById("role").value
+    phone: document.getElementById("phone").value.trim(),
+    role: document.getElementById("role").value,
+    provider: document.getElementById("provider").value
   };
 
   if(!payload.fullName || !payload.username || !payload.password){
@@ -135,7 +153,9 @@ function uyeOl(){
     document.getElementById("company").value = "";
     document.getElementById("username").value = "";
     document.getElementById("password").value = "";
+    document.getElementById("phone").value = "";
     document.getElementById("role").value = "member";
+    document.getElementById("provider").value = "manual";
   }catch(err){
     showError(err.message);
   }
