@@ -47,7 +47,7 @@ input,select{
 <div class="card">
   <div class="logo">S</div>
   <h1>Üye Ol</h1>
-  <p>Standart üyelik kayıt formu, telefon alanı ve sağlayıcı bilgisi ile güçlendirildi.</p>
+  <p id="roleText">Standart üyelik kayıt formu, telefon alanı ve sağlayıcı bilgisi ile güçlendirildi.</p>
 
   <div class="grid">
     <div class="field">
@@ -122,6 +122,29 @@ function showError(msg){
   box.textContent = msg;
 }
 
+function getParam(name){
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
+
+function setRoleFromUrl(){
+  const role = getParam("role");
+  if(!role) return;
+
+  const select = document.getElementById("role");
+  if(["member","shipper","carrier"].includes(role)){
+    select.value = role;
+  }
+
+  if(role === "carrier"){
+    document.getElementById("roleText").textContent = "Nakliyeci kaydı için form hazırlandı.";
+  }else if(role === "shipper"){
+    document.getElementById("roleText").textContent = "Yük veren kaydı için form hazırlandı.";
+  }else{
+    document.getElementById("roleText").textContent = "Standart üyelik kaydı için form hazırlandı.";
+  }
+}
+
 function uyeOl(){
   document.getElementById("okBox").style.display = "none";
   document.getElementById("errorBox").style.display = "none";
@@ -160,6 +183,8 @@ function uyeOl(){
     showError(err.message);
   }
 }
+
+setRoleFromUrl();
 </script>
 </body>
 </html>
