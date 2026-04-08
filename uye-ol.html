@@ -6,19 +6,37 @@
 <title>SEVRA | Üye Ol</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Helvetica,sans-serif;color:#eef4ff;min-height:100vh;background:
-radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-linear-gradient(180deg,#071425,#08111b 74%,#040912);display:flex;align-items:center;justify-content:center;padding:24px;}
-.card{width:100%;max-width:700px;border:1px solid rgba(255,255,255,.08);border-radius:28px;background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px;}
-.logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#f1c84d,#f7dc89);color:#0d1d38;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
-h1{font-size:36px;margin-bottom:8px} p{color:#c7d3e6;margin-bottom:22px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+body{
+  font-family:Arial,Helvetica,sans-serif;color:#eef4ff;min-height:100vh;
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.card{
+  width:100%;max-width:700px;border:1px solid rgba(255,255,255,.08);border-radius:28px;
+  background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px;
+}
+.logo{
+  width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#f1c84d,#f7dc89);
+  color:#0d1d38;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+h1{font-size:36px;margin-bottom:8px}
+p{color:#c7d3e6;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 label{font-size:13px;font-weight:700;color:#dce6f5}
-input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:14px;font-size:15px;}
+input,select{
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:14px;font-size:15px;
+}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-.btn{min-height:48px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;}
-.btn-primary{background:#f1c84d;color:#0b1830}.btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
+.btn{
+  min-height:48px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
+}
+.btn-primary{background:#f1c84d;color:#0b1830}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
 .note,.ok,.error{margin-top:14px;border-radius:14px;padding:12px;font-size:13px}
 .note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
 .ok{display:none;background:rgba(50,180,120,.12);border:1px solid rgba(50,180,120,.22);color:#d6ffe8}
@@ -30,7 +48,7 @@ input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10
 <div class="card">
   <div class="logo">S</div>
   <h1>Üye Ol</h1>
-  <p id="roleText">Standart üyelik kayıt formu, telefon alanı ve sağlayıcı bilgisi ile güçlendirildi.</p>
+  <p id="roleText">Standart üyelik kayıt formu hazır.</p>
 
   <div class="grid">
     <div class="field"><label>Ad Soyad</label><input id="fullName" type="text" placeholder="Hasan Arslan" /></div>
@@ -44,12 +62,24 @@ input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10
 
   <div class="grid">
     <div class="field"><label>Telefon</label><input id="phone" type="text" placeholder="+90 5xx xxx xx xx" /></div>
-    <div class="field"><label>Üye Tipi</label><select id="role"><option value="member">Standart Üye</option><option value="shipper">Yük Veren</option><option value="carrier">Nakliyeci</option></select></div>
+    <div class="field">
+      <label>Üye Tipi</label>
+      <select id="role">
+        <option value="member">Standart Üye</option>
+        <option value="shipper">Yük Veren</option>
+        <option value="carrier">Nakliyeci</option>
+      </select>
+    </div>
   </div>
 
   <div class="field">
     <label>Sağlayıcı</label>
-    <select id="provider"><option value="manual">Standart Üyelik</option><option value="phone">Telefon Hazırlığı</option><option value="google">Google Hazırlığı</option><option value="facebook">Facebook Hazırlığı</option></select>
+    <select id="provider">
+      <option value="manual">Standart Üyelik</option>
+      <option value="phone">Telefon Hazırlığı</option>
+      <option value="google">Google Hazırlığı</option>
+      <option value="facebook">Facebook Hazırlığı</option>
+    </select>
   </div>
 
   <div class="btn-row">
@@ -60,60 +90,108 @@ input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10
   <div id="okBox" class="ok"></div>
   <div id="errorBox" class="error"></div>
 
-  <div class="note">Not: Başarılı kayıt sonrası sistem seni doğru giriş akışına yönlendirir.</div>
+  <div class="note">Başarılı kayıt sonrası sistem seni giriş ekranına yönlendirir.</div>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
-function showOk(msg){const b=document.getElementById("okBox");b.style.display="block";b.textContent=msg;}
-function showError(msg){const b=document.getElementById("errorBox");b.style.display="block";b.textContent=msg;}
-function getParam(name){const p=new URLSearchParams(window.location.search);return p.get(name)||""}
-function buildLoginHref(){
-  const role=getParam("role"),redirect=getParam("redirect"),loadId=getParam("load_id");
-  let href="uye-login.html"; const q=[];
-  if(role) q.push("role="+encodeURIComponent(role));
-  if(redirect) q.push("redirect="+encodeURIComponent(redirect));
-  if(loadId) q.push("load_id="+encodeURIComponent(loadId));
-  if(q.length) href+="?"+q.join("&");
+function showOk(msg) {
+  const box = document.getElementById("okBox");
+  box.style.display = "block";
+  box.textContent = msg;
+  document.getElementById("errorBox").style.display = "none";
+}
+
+function showError(msg) {
+  const box = document.getElementById("errorBox");
+  box.style.display = "block";
+  box.textContent = msg;
+  document.getElementById("okBox").style.display = "none";
+}
+
+function getParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name) || "";
+}
+
+function buildLoginHref() {
+  const role = getParam("role");
+  const redirect = getParam("redirect");
+  const loadId = getParam("load_id");
+  let href = "uye-login.html";
+  const parts = [];
+  if (role) parts.push("role=" + encodeURIComponent(role));
+  if (redirect) parts.push("redirect=" + encodeURIComponent(redirect));
+  if (loadId) parts.push("load_id=" + encodeURIComponent(loadId));
+  if (parts.length) href += "?" + parts.join("&");
   return href;
 }
-function setRoleFromUrl(){
-  const role=getParam("role"),redirect=getParam("redirect");
-  document.getElementById("loginBtn").href=buildLoginHref();
-  if(role&&["member","shipper","carrier"].includes(role)) document.getElementById("role").value=role;
-  if(role==="carrier") document.getElementById("roleText").textContent="Nakliyeci kaydı için form hazırlandı.";
-  else if(role==="shipper") document.getElementById("roleText").textContent="Yük veren kaydı için form hazırlandı.";
-  else document.getElementById("roleText").textContent="Standart üyelik kaydı için form hazırlandı.";
-  if(redirect==="ilan-teklif") document.getElementById("roleText").textContent+=" Kayıt sonrası seçili ilan akışına geçebilirsin.";
+
+function setRoleFromUrl() {
+  const role = getParam("role");
+  const redirect = getParam("redirect");
+  document.getElementById("loginBtn").href = buildLoginHref();
+
+  if (role && ["member", "shipper", "carrier"].includes(role)) {
+    document.getElementById("role").value = role;
+  }
+
+  if (role === "carrier") {
+    document.getElementById("roleText").textContent = "Nakliyeci kaydı için form hazırlandı.";
+  } else if (role === "shipper") {
+    document.getElementById("roleText").textContent = "Yük veren kaydı için form hazırlandı.";
+  } else {
+    document.getElementById("roleText").textContent = "Standart üyelik kayıt formu hazır.";
+  }
+
+  if (redirect === "ilan-teklif") {
+    document.getElementById("roleText").textContent += " Kayıt sonrası seçili ilan akışına geçebilirsin.";
+  }
 }
-function uyeOl(){
-  document.getElementById("okBox").style.display="none";
-  document.getElementById("errorBox").style.display="none";
-  if(typeof SEVRA_KIMLIK==="undefined"||typeof SEVRA_KIMLIK.registerMember!=="function"){showError("Kimlik sistemi eksik. kimlik-dogrulama.js dosyasını kontrol et.");return;}
-  const payload={
-    fullName:document.getElementById("fullName").value.trim(),
-    company:document.getElementById("company").value.trim(),
-    username:document.getElementById("username").value.trim(),
-    password:document.getElementById("password").value.trim(),
-    phone:document.getElementById("phone").value.trim(),
-    role:document.getElementById("role").value,
-    provider:document.getElementById("provider").value
+
+function uyeOl() {
+  document.getElementById("okBox").style.display = "none";
+  document.getElementById("errorBox").style.display = "none";
+
+  if (typeof SEVRA_KIMLIK === "undefined" || typeof SEVRA_KIMLIK.registerMember !== "function") {
+    showError("Kimlik sistemi eksik. kimlik-dogrulama.js dosyasını kontrol et.");
+    return;
+  }
+
+  const payload = {
+    fullName: document.getElementById("fullName").value.trim(),
+    company: document.getElementById("company").value.trim(),
+    username: document.getElementById("username").value.trim(),
+    password: document.getElementById("password").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    role: document.getElementById("role").value,
+    provider: document.getElementById("provider").value
   };
-  if(!payload.fullName||!payload.username||!payload.password){showError("Ad soyad, kullanıcı adı ve şifre zorunludur.");return;}
-  try{
+
+  if (!payload.fullName || !payload.username || !payload.password) {
+    showError("Ad soyad, kullanıcı adı ve şifre zorunludur.");
+    return;
+  }
+
+  try {
     SEVRA_KIMLIK.registerMember(payload);
-    const nextUrl=buildLoginHref();
+    const nextUrl = buildLoginHref();
     showOk("Kayıt oluşturuldu. 2 saniye içinde giriş ekranına yönlendiriliyorsun.");
-    document.getElementById("fullName").value="";
-    document.getElementById("company").value="";
-    document.getElementById("username").value="";
-    document.getElementById("password").value="";
-    document.getElementById("phone").value="";
-    document.getElementById("role").value="member";
-    document.getElementById("provider").value="manual";
-    setTimeout(function(){window.location.href=nextUrl;},2000);
-  }catch(err){showError(err.message);}
+    document.getElementById("fullName").value = "";
+    document.getElementById("company").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("role").value = "member";
+    document.getElementById("provider").value = "manual";
+    setTimeout(function () {
+      window.location.href = nextUrl;
+    }, 2000);
+  } catch (err) {
+    showError(err.message);
+  }
 }
+
 setRoleFromUrl();
 </script>
 </body>
