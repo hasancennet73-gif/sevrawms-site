@@ -89,11 +89,11 @@ input,select{
   <div id="errorBox" class="error"></div>
 
   <div class="note">
-    Not: Bu adım canlı site rotasına uygun geçiş paketidir. Gerçek veritabanı bağlanana kadar yeni üyeler tarayıcı belleğinde saklanır.
+    Not: Bu adımda yeni üyeler tarayıcı belleğinde saklanır. Sonraki aşamada gerçek veritabanına bağlanacaktır.
   </div>
 </div>
 
-<script src="kimlik%20do%C4%9Frulama.js"></script>
+<script src="kimlik-dogrulama.js"></script>
 <script>
 function showOk(msg){
   const box = document.getElementById("okBox");
@@ -109,6 +109,11 @@ function showError(msg){
 function uyeOl(){
   document.getElementById("okBox").style.display = "none";
   document.getElementById("errorBox").style.display = "none";
+
+  if(typeof SEVRA_KIMLIK === "undefined" || typeof SEVRA_KIMLIK.registerMember !== "function"){
+    showError("Kimlik sistemi eksik. kimlik-dogrulama.js dosyasını kontrol et.");
+    return;
+  }
 
   const payload = {
     fullName: document.getElementById("fullName").value.trim(),
