@@ -11,6 +11,7 @@
   --text:#eef4ff;
   --muted:#aebcd3;
   --yellow:#f1c84d;
+  --shadow:0 22px 60px rgba(0,0,0,.34);
 }
 body{
   font-family:Arial,Helvetica,sans-serif;
@@ -58,11 +59,12 @@ a{text-decoration:none;color:inherit}
 }
 .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.card{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
-}
+.card{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
 .card strong{display:block;font-size:28px;margin-bottom:6px}
 .card span{color:var(--muted);font-size:13px}
+.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.note h2{font-size:24px;margin-bottom:10px}
+.note p{color:#c7d3e6}
 .table-wrap{
   border:1px solid rgba(255,255,255,.08);
   border-radius:18px;background:rgba(255,255,255,.03);padding:18px;margin-bottom:18px;
@@ -74,11 +76,6 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
   display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;
   background:rgba(241,200,77,.14);color:#ffe08a;
 }
-.note{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
-}
-.note h2{font-size:24px;margin-bottom:10px}
-.note p{color:#c7d3e6}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
@@ -92,142 +89,36 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="side-brand">
-      <div class="side-logo">S</div>
-      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
-    </div>
-
+    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
     <div class="side-menu">
-      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
+      <a class="menu-item " href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item " href="urunler.html">Ürünler</a>
+      <a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
       <a class="menu-item active" href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item" href="basvuru.html">Başvuru Merkezi</a>
+      <a class="menu-item " href="basvuru-yonetim.html">Başvuru Yönetimi</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
-
   <main class="main">
     <div class="top">
-      <div class="title">
-        <h1>Üyeler & Analitik</h1>
-        <p>Kayıt olan üyeleri burada görür, pasife alır veya silersin.</p>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <div id="adminUser" class="badge">Admin</div>
-        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
-      </div>
+      <div class="title"><h1>Üyeler & Analitik</h1><p>Bu alan sadece yönetici girişi ile açılır.</p></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
     </div>
-
-    <div class="cards" id="summaryCards">
-      <div class="card"><strong>0</strong><span>Kayıtlı üye</span></div>
-      <div class="card"><strong>0</strong><span>Aktif</span></div>
-      <div class="card"><strong>0</strong><span>Pasif</span></div>
-      <div class="card"><strong>0</strong><span>Yeni kayıt</span></div>
+    <div class="cards">
+    <div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
+    <div class="card"><strong>34</strong><span>Bu ay yeni kayıt</span></div>
+    <div class="card"><strong>%22</strong><span>Sosyal giriş ilgisi</span></div>
+    <div class="card"><strong>17</strong><span>Firma ilgisi</span></div>
     </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Ad Soyad</th>
-            <th>Firma</th>
-            <th>Kullanıcı</th>
-            <th>Rol</th>
-            <th>Durum</th>
-            <th>İşlem</th>
-          </tr>
-        </thead>
-        <tbody id="memberRows"></tbody>
-      </table>
-    </div>
-
-    <div class="note">
-      <h2>Üye Yönetimi</h2>
-      <p>Bu adımda üye kayıtları artık yönetici tarafında listelenir. Pasife alma ve silme işlemleri eklenmiştir.</p>
-    </div>
+    <div class="note"><h2>Analitik Ekranı</h2><p>Başvuru yönetimi ile public başvuru formu ayrıldı. Bu sayfa yönlendirmeleri yeni yapıya uyumlu hale geldi.</p></div>
   </main>
 </div>
-
 <script src="kimlik-dogrulama.js"></script>
 <script>
 if (SEVRA_KIMLIK.requireAdmin()) {
   const auth = SEVRA_KIMLIK.getAuth();
   document.getElementById("adminUser").textContent = "Admin: " + auth.username;
 }
-
-function textRole(role){
-  if(role === "carrier") return "Nakliyeci";
-  if(role === "shipper") return "Yük Veren";
-  return "Standart Üye";
-}
-
-function loadMembers(){
-  const rows = (typeof SEVRA_KIMLIK.getMembers === "function") ? SEVRA_KIMLIK.getMembers() : [];
-  const total = rows.length;
-  const aktif = rows.filter(x => x.status !== "Pasif").length;
-  const pasif = rows.filter(x => x.status === "Pasif").length;
-  const yeni = rows.length;
-
-  document.getElementById("summaryCards").innerHTML = `
-    <div class="card"><strong>${total}</strong><span>Kayıtlı üye</span></div>
-    <div class="card"><strong>${aktif}</strong><span>Aktif</span></div>
-    <div class="card"><strong>${pasif}</strong><span>Pasif</span></div>
-    <div class="card"><strong>${yeni}</strong><span>Yeni kayıt</span></div>
-  `;
-
-  if(!rows.length){
-    document.getElementById("memberRows").innerHTML = '<tr><td colspan="6">Henüz kayıtlı üye yok.</td></tr>';
-    return;
-  }
-
-  document.getElementById("memberRows").innerHTML = rows.map(x => `
-    <tr>
-      <td>${x.fullName || "-"}</td>
-      <td>${x.company || "-"}</td>
-      <td>${x.username || "-"}</td>
-      <td>${textRole(x.role)}</td>
-      <td><span class="status">${x.status || "Aktif"}</span></td>
-      <td>
-        <div class="actions">
-          <button class="btn" onclick="pasifYap('${x.id}')">Pasif Yap</button>
-          <button class="btn primary" onclick="aktifYap('${x.id}')">Aktif Yap</button>
-          <button class="btn" onclick="uyeSil('${x.id}')">Sil</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function pasifYap(id){
-  try{
-    SEVRA_KIMLIK.setMemberStatus(id, "Pasif");
-    loadMembers();
-  }catch(err){
-    alert(err.message);
-  }
-}
-
-function aktifYap(id){
-  try{
-    SEVRA_KIMLIK.setMemberStatus(id, "Aktif");
-    loadMembers();
-  }catch(err){
-    alert(err.message);
-  }
-}
-
-function uyeSil(id){
-  if(!confirm("Üye silinsin mi?")) return;
-  try{
-    SEVRA_KIMLIK.removeMember(id);
-    loadMembers();
-  }catch(err){
-    alert(err.message);
-  }
-}
-
-loadMembers();
 </script>
 </body>
 </html>
