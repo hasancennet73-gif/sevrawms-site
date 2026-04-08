@@ -6,38 +6,22 @@
 <title>SEVRA | Yük İlanı Detayı</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --line:rgba(255,255,255,.08);
-  --text:#eef4ff;
-  --muted:#aebcd3;
-  --yellow:#f1c84d;
-}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-    linear-gradient(180deg,#071425,#08111b 74%,#040912);
-}
+:root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
+radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+linear-gradient(180deg,#071425,#08111b 74%,#040912);}
 .container{max-width:1080px;margin:0 auto;padding:26px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.title h1{font-size:38px;margin-bottom:8px}
-.title p{color:var(--muted)}
-.btn{
-  min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none;
-}
+.title h1{font-size:38px;margin-bottom:8px}.title p{color:var(--muted)}
+.btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
 .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.panel,.note{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
-}
+.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
 .panel h2,.note h2{font-size:24px;margin-bottom:10px}
 .list{display:grid;gap:10px}
 .item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
-.item strong{display:block;font-size:15px;margin-bottom:4px}
-.item span{font-size:13px;color:#c7d3e6}
+.item strong{display:block;font-size:15px;margin-bottom:4px}.item span{font-size:13px;color:#c7d3e6}
 .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
 .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 @media (max-width:900px){.grid{grid-template-columns:1fr}}
@@ -48,12 +32,12 @@ body{
   <div class="top">
     <div class="title">
       <h1>Yük İlanı Detayı</h1>
-      <p>İlanı incele, sonra üyelik ile teklif ver.</p>
+      <p>İlanı incele, sonra üyelik ile direkt bu ilana geç.</p>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <a class="btn" href="yuk-ilanlari.html">Yük İlanlarına Dön</a>
-      <a class="btn" href="uye-login.html">Üye Girişi</a>
-      <a class="btn primary" href="uye-ol.html">Üye Ol</a>
+      <a id="loginBtnTop" class="btn" href="uye-login.html">Üye Girişi</a>
+      <a id="registerBtnTop" class="btn primary" href="platform-kayit-secimi.html">Üye Ol / Giriş</a>
     </div>
   </div>
 
@@ -65,11 +49,11 @@ body{
 
     <div class="note">
       <h2>Teklif Vermek İçin</h2>
-      <p>Bu vitrin ekranı kamuya açıktır. Teklif oluşturmak için üyelik girişi yapıp ilan / teklif akışına geçmen gerekir.</p>
+      <p>Giriş yaptığında doğrudan bu seçilen ilan akışına yönlendirilirsin.</p>
       <div class="cta">
-        <a class="btn primary" href="platform-kayit-secimi.html?from=load-detail">Kayıt / Girişe Git</a>
-        <a class="btn" href="uye-login.html">Üye Girişi</a>
-        <a class="btn" href="giris.html">Giriş Seçimi</a>
+        <a id="flowBtn" class="btn primary" href="platform-kayit-secimi.html">Kayıt / Girişe Git</a>
+        <a id="loginBtn" class="btn" href="uye-login.html">Üye Girişi</a>
+        <a id="entryBtn" class="btn" href="giris.html">Giriş Seçimi</a>
       </div>
     </div>
   </div>
@@ -77,32 +61,27 @@ body{
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
-if (typeof SEVRA_KIMLIK !== "undefined" && typeof SEVRA_KIMLIK.trackVisit === "function") {
-  SEVRA_KIMLIK.trackVisit("yuk-ilani-detay");
+if(typeof SEVRA_KIMLIK!=="undefined"&&typeof SEVRA_KIMLIK.trackVisit==="function"){SEVRA_KIMLIK.trackVisit("yuk-ilani-detay");}
+function getParam(name){const params=new URLSearchParams(window.location.search);return params.get(name)}
+function syncLinks(id){
+  const suffix="?redirect=ilan-teklif&load_id="+encodeURIComponent(id||"");
+  document.getElementById("flowBtn").href="platform-kayit-secimi.html"+suffix;
+  document.getElementById("loginBtn").href="uye-login.html"+suffix;
+  document.getElementById("entryBtn").href="giris.html"+suffix;
+  document.getElementById("loginBtnTop").href="uye-login.html"+suffix;
+  document.getElementById("registerBtnTop").href="platform-kayit-secimi.html"+suffix;
 }
-
-function getParam(name){
-  const params = new URLSearchParams(window.location.search);
-  return params.get(name);
-}
-
 function loadDetail(){
-  const id = getParam("id");
-  const rows = (typeof SEVRA_KIMLIK !== "undefined" && typeof SEVRA_KIMLIK.getLoads === "function") ? SEVRA_KIMLIK.getLoads() : [];
-  const row = rows.find(x => String(x.id) === String(id));
-
-  if(!row){
-    document.getElementById("detailList").innerHTML = '<div class="item"><strong>İlan bulunamadı</strong><span>Geçersiz veya silinmiş ilan.</span></div>';
-    return;
-  }
-
-  document.getElementById("detailList").innerHTML = `
-    <div class="item"><strong>Başlık</strong><span>${row.title || "-"}</span></div>
-    <div class="item"><strong>Firma</strong><span>${row.owner || "-"}</span></div>
-    <div class="item"><strong>Güzergah</strong><span>${row.route || "-"}</span></div>
-    <div class="item"><strong>Ağırlık</strong><span>${row.weight || "-"}</span></div>
-    <div class="item"><strong>Durum</strong><span><span class="status">${row.status || "Açık"}</span></span></div>
-  `;
+  const id=getParam("id"); syncLinks(id);
+  const rows=(typeof SEVRA_KIMLIK!=="undefined"&&typeof SEVRA_KIMLIK.getLoads==="function")?SEVRA_KIMLIK.getLoads():[];
+  const row=rows.find(x=>String(x.id)===String(id));
+  if(!row){document.getElementById("detailList").innerHTML='<div class="item"><strong>İlan bulunamadı</strong><span>Geçersiz veya silinmiş ilan.</span></div>'; return;}
+  document.getElementById("detailList").innerHTML=`
+    <div class="item"><strong>Başlık</strong><span>${row.title||"-"}</span></div>
+    <div class="item"><strong>Firma</strong><span>${row.owner||"-"}</span></div>
+    <div class="item"><strong>Güzergah</strong><span>${row.route||"-"}</span></div>
+    <div class="item"><strong>Ağırlık</strong><span>${row.weight||"-"}</span></div>
+    <div class="item"><strong>Durum</strong><span><span class="status">${row.status||"Açık"}</span></span></div>`;
 }
 loadDetail();
 </script>
