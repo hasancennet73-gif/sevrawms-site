@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Üye Girişi</title>
+<title>SEVRA | Üye Ol</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:#eef4ff;
-  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;color:#eef4ff;min-height:100vh;
   background:
     radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
     radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
@@ -17,243 +15,194 @@ body{
   display:flex;align-items:center;justify-content:center;padding:24px;
 }
 .card{
-  width:100%;max-width:760px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:28px;
-  background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));
-  padding:28px;
+  width:100%;max-width:700px;border:1px solid rgba(255,255,255,.08);border-radius:28px;
+  background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px;
 }
 .logo{
-  width:64px;height:64px;border-radius:18px;
-  background:linear-gradient(135deg,#f1c84d,#f7dc89);
-  color:#0d1d38;font-weight:900;font-size:28px;
-  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#f1c84d,#f7dc89);
+  color:#0d1d38;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;
 }
-h1{font-size:36px;margin-bottom:8px}
-p{color:#c7d3e6;margin-bottom:22px}
+h1{font-size:36px;margin-bottom:8px} p{color:#c7d3e6;margin-bottom:22px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 label{font-size:13px;font-weight:700;color:#dce6f5}
 input,select{
-  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
-  color:#fff;border-radius:12px;padding:14px;font-size:15px;
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:14px;font-size:15px;
 }
 .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
 .btn{
-  min-height:48px;padding:0 18px;border-radius:12px;
-  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
   font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
 }
 .btn-primary{background:#f1c84d;color:#0b1830}
 .btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
-.note,.error,.ok{
-  margin-top:14px;border-radius:14px;padding:12px;font-size:13px;
-}
+.note,.ok,.error{margin-top:14px;border-radius:14px;padding:12px;font-size:13px}
 .note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
-.error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
 .ok{display:none;background:rgba(50,180,120,.12);border:1px solid rgba(50,180,120,.22);color:#d6ffe8}
+.error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
 @media(max-width:760px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo">S</div>
-    <h1>Üye Girişi</h1>
-    <p id="subText">Klasik giriş, telefon ile hızlı giriş ve sosyal giriş hazırlığı bu ekranda toplandı.</p>
+<div class="card">
+  <div class="logo">S</div>
+  <h1>Üye Ol</h1>
+  <p id="roleText">Standart üyelik kayıt formu, telefon alanı ve sağlayıcı bilgisi ile güçlendirildi.</p>
 
-    <div class="grid">
-      <div class="field">
-        <label>Kullanıcı Adı</label>
-        <input id="username" type="text" placeholder="uye1 veya oluşturduğun kullanıcı adı" />
-      </div>
-      <div class="field">
-        <label>Şifre</label>
-        <input id="password" type="password" placeholder="••••••••" />
-      </div>
+  <div class="grid">
+    <div class="field">
+      <label>Ad Soyad</label>
+      <input id="fullName" type="text" placeholder="Hasan Arslan" />
     </div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="uyeGiris()">Klasik Giriş</button>
-      <a id="registerBtn" class="btn btn-secondary" href="uye-ol.html">Üye Ol</a>
-      <a class="btn btn-secondary" href="yonetici-giris.html">Yönetici Girişine Git</a>
-    </div>
-
-    <div class="note" style="margin-top:18px">Telefon ile hızlı giriş hazırlığı</div>
-    <div class="grid">
-      <div class="field">
-        <label>Telefon</label>
-        <input id="phone" type="text" placeholder="+90 5xx xxx xx xx" />
-      </div>
-      <div class="field">
-        <label>Rol</label>
-        <select id="phoneRole">
-          <option value="member">Standart Üye</option>
-          <option value="shipper">Yük Veren</option>
-          <option value="carrier">Nakliyeci</option>
-        </select>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="telefonGiris()">Telefon ile Hızlı Giriş</button>
-    </div>
-
-    <div class="note" style="margin-top:18px">Sosyal giriş hazırlığı</div>
-    <div class="grid">
-      <div class="field">
-        <label>Ad Soyad</label>
-        <input id="socialName" type="text" placeholder="Hasan Arslan" />
-      </div>
-      <div class="field">
-        <label>Rol</label>
-        <select id="socialRole">
-          <option value="member">Standart Üye</option>
-          <option value="shipper">Yük Veren</option>
-          <option value="carrier">Nakliyeci</option>
-        </select>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="sosyalGiris('google')">Google ile Devam</button>
-      <button class="btn btn-secondary" onclick="sosyalGiris('facebook')">Facebook ile Devam</button>
-    </div>
-
-    <div id="okBox" class="ok"></div>
-    <div id="errorBox" class="error"></div>
-
-    <div class="note">
-      Demo klasik giriş bilgisi:<br>
-      Kullanıcı adı: <strong>uye1</strong><br>
-      Şifre: <strong>123456</strong>
+    <div class="field">
+      <label>Firma</label>
+      <input id="company" type="text" placeholder="SEVRA Lojistik" />
     </div>
   </div>
 
-  <script src="kimlik-dogrulama.js"></script>
-  <script>
-    function getParam(name){
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name) || "";
-    }
+  <div class="grid">
+    <div class="field">
+      <label>Kullanıcı Adı</label>
+      <input id="username" type="text" placeholder="yeniuye" />
+    </div>
+    <div class="field">
+      <label>Şifre</label>
+      <input id="password" type="password" placeholder="••••••••" />
+    </div>
+  </div>
 
-    function buildTarget(){
-      const redirect = getParam("redirect");
-      if(redirect === "ilan-teklif") return "ilan-teklif.html";
-      return "uye-panel.html";
-    }
+  <div class="grid">
+    <div class="field">
+      <label>Telefon</label>
+      <input id="phone" type="text" placeholder="+90 5xx xxx xx xx" />
+    </div>
+    <div class="field">
+      <label>Üye Tipi</label>
+      <select id="role">
+        <option value="member">Standart Üye</option>
+        <option value="shipper">Yük Veren</option>
+        <option value="carrier">Nakliyeci</option>
+      </select>
+    </div>
+  </div>
 
-    function syncEntryContext(){
-      const role = getParam("role");
-      const redirect = getParam("redirect");
-      const registerBtn = document.getElementById("registerBtn");
+  <div class="field">
+    <label>Sağlayıcı</label>
+    <select id="provider">
+      <option value="manual">Standart Üyelik</option>
+      <option value="phone">Telefon Hazırlığı</option>
+      <option value="google">Google Hazırlığı</option>
+      <option value="facebook">Facebook Hazırlığı</option>
+    </select>
+  </div>
 
-      if(role && ["member","shipper","carrier"].includes(role)){
-        document.getElementById("phoneRole").value = role;
-        document.getElementById("socialRole").value = role;
-      }
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="uyeOl()">Kaydı Oluştur</button>
+    <a id="loginBtn" class="btn btn-secondary" href="uye-login.html">Üye Girişine Git</a>
+  </div>
 
-      let registerHref = "uye-ol.html";
-      const params = [];
-      if(role) params.push("role=" + encodeURIComponent(role));
-      if(redirect) params.push("redirect=" + encodeURIComponent(redirect));
-      if(params.length) registerHref += "?" + params.join("&");
-      registerBtn.href = registerHref;
+  <div id="okBox" class="ok"></div>
+  <div id="errorBox" class="error"></div>
 
-      if(redirect === "ilan-teklif"){
-        document.getElementById("subText").textContent = "Bu giriş sonrası doğrudan ilan / teklif akışına yönlendirilirsin.";
-      }
-    }
+  <div class="note">
+    Not: Google ve Facebook tarafı şu an gerçek OAuth değil, hazırlık sağlayıcı işareti olarak kaydedilir.
+  </div>
+</div>
 
-    function showError(msg){
-      const box = document.getElementById("errorBox");
-      box.style.display = "block";
-      box.textContent = msg;
-      document.getElementById("okBox").style.display = "none";
-    }
-    function showOk(msg){
-      const box = document.getElementById("okBox");
-      box.style.display = "block";
-      box.textContent = msg;
-      document.getElementById("errorBox").style.display = "none";
-    }
+<script src="kimlik-dogrulama.js"></script>
+<script>
+function showOk(msg){
+  const box = document.getElementById("okBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
+function showError(msg){
+  const box = document.getElementById("errorBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
 
-    function gotoPanel(user){
-      SEVRA_KIMLIK.setAuth({
-        username: user.username,
-        role: user.role,
-        fullName: user.fullName,
-        company: user.company || "",
-        phone: user.phone || "",
-        provider: user.provider || "manual"
-      });
-      window.location.href = buildTarget();
-    }
+function getParam(name){
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
 
-    function uyeGiris(){
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+function buildLoginHref(){
+  const role = getParam("role");
+  const redirect = getParam("redirect");
+  let href = "uye-login.html";
+  const params = [];
+  if(role) params.push("role=" + encodeURIComponent(role));
+  if(redirect) params.push("redirect=" + encodeURIComponent(redirect));
+  if(params.length) href += "?" + params.join("&");
+  return href;
+}
 
-      if(username === "uye1" && password === "123456"){
-        gotoPanel({
-          username: username,
-          role: getParam("role") || "member",
-          fullName: "Demo Üye",
-          company: "",
-          provider: "manual"
-        });
-        return;
-      }
+function setRoleFromUrl(){
+  const role = getParam("role");
+  const redirect = getParam("redirect");
+  document.getElementById("loginBtn").href = buildLoginHref();
 
-      if(typeof SEVRA_KIMLIK === "undefined"){
-        showError("Kimlik dosyası yüklenmedi. kimlik-dogrulama.js dosyasını kontrol et.");
-        return;
-      }
+  if(!role) return;
 
-      const kayitli = SEVRA_KIMLIK.findMember(username, password);
-      if(kayitli){
-        gotoPanel(kayitli);
-        return;
-      }
+  const select = document.getElementById("role");
+  if(["member","shipper","carrier"].includes(role)){
+    select.value = role;
+  }
 
-      showError("Üye bilgisi yanlış. Demo giriş için uye1 / 123456 kullan veya önce üye oluştur.");
-    }
+  if(role === "carrier"){
+    document.getElementById("roleText").textContent = "Nakliyeci kaydı için form hazırlandı.";
+  }else if(role === "shipper"){
+    document.getElementById("roleText").textContent = "Yük veren kaydı için form hazırlandı.";
+  }else{
+    document.getElementById("roleText").textContent = "Standart üyelik kaydı için form hazırlandı.";
+  }
 
-    function telefonGiris(){
-      if(typeof SEVRA_KIMLIK.quickPhoneLogin !== "function"){
-        showError("Telefon giriş sistemi yüklenmedi.");
-        return;
-      }
-      try{
-        const row = SEVRA_KIMLIK.quickPhoneLogin({
-          phone: document.getElementById("phone").value.trim(),
-          role: document.getElementById("phoneRole").value,
-          fullName: "Telefon Üyesi",
-          company: ""
-        });
-        showOk("Telefon ile hızlı giriş hazırlandı. Yönlendiriliyorsun.");
-        gotoPanel(row);
-      }catch(err){
-        showError(err.message);
-      }
-    }
+  if(redirect === "ilan-teklif"){
+    document.getElementById("roleText").textContent += " Kayıt sonrası ilan / teklif akışına geçebilirsin.";
+  }
+}
 
-    function sosyalGiris(provider){
-      if(typeof SEVRA_KIMLIK.socialLoginMock !== "function"){
-        showError("Sosyal giriş sistemi yüklenmedi.");
-        return;
-      }
-      try{
-        const row = SEVRA_KIMLIK.socialLoginMock(provider, {
-          fullName: document.getElementById("socialName").value.trim(),
-          role: document.getElementById("socialRole").value,
-          company: ""
-        });
-        showOk((provider === "google" ? "Google" : "Facebook") + " ile hazırlık girişi tamamlandı.");
-        gotoPanel(row);
-      }catch(err){
-        showError(err.message);
-      }
-    }
+function uyeOl(){
+  document.getElementById("okBox").style.display = "none";
+  document.getElementById("errorBox").style.display = "none";
 
-    syncEntryContext();
-  </script>
+  if(typeof SEVRA_KIMLIK === "undefined" || typeof SEVRA_KIMLIK.registerMember !== "function"){
+    showError("Kimlik sistemi eksik. kimlik-dogrulama.js dosyasını kontrol et.");
+    return;
+  }
+
+  const payload = {
+    fullName: document.getElementById("fullName").value.trim(),
+    company: document.getElementById("company").value.trim(),
+    username: document.getElementById("username").value.trim(),
+    password: document.getElementById("password").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    role: document.getElementById("role").value,
+    provider: document.getElementById("provider").value
+  };
+
+  if(!payload.fullName || !payload.username || !payload.password){
+    showError("Ad soyad, kullanıcı adı ve şifre zorunludur.");
+    return;
+  }
+
+  try{
+    SEVRA_KIMLIK.registerMember(payload);
+    showOk("Kayıt oluşturuldu. Şimdi giriş ekranına geçebilirsin.");
+    document.getElementById("fullName").value = "";
+    document.getElementById("company").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("role").value = "member";
+    document.getElementById("provider").value = "manual";
+  }catch(err){
+    showError(err.message);
+  }
+}
+
+setRoleFromUrl();
+</script>
 </body>
 </html>
