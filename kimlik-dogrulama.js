@@ -2,6 +2,7 @@
   const AUTH_KEY = "sevra_live_auth";
   const MEMBERS_KEY = "sevra_live_members";
   const APPLICATIONS_KEY = "sevra_live_applications";
+  const PRODUCTS_KEY = "sevra_live_products";
 
   function getAuth() {
     try { return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }
@@ -124,6 +125,64 @@
     return row;
   }
 
+  function getProducts() {
+    try {
+      const rows = JSON.parse(localStorage.getItem(PRODUCTS_KEY) || "[]");
+      if (Array.isArray(rows) && rows.length) return rows;
+    } catch (e) {}
+    const seed = [
+      { id: 1, code: "SR-001", name: "Kapı Menteşesi", category: "Yedek Parça", price: 350, status: "Aktif" },
+      { id: 2, code: "SR-002", name: "Çamurluk", category: "Kaporta", price: 1250, status: "Aktif" },
+      { id: 3, code: "SR-003", name: "Kilit Seti", category: "Güvenlik", price: 480, status: "Aktif" }
+    ];
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(seed));
+    return seed;
+  }
+
+  function saveProducts(rows) {
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(rows));
+  }
+
+  function addProduct(payload) {
+    const rows = getProducts();
+    const code = String(payload.code || "").trim();
+    const name = String(payload.name || "").trim();
+    const category = String(payload.category || "").trim();
+    const price = Number(payload.price || 0);
+
+    if (!code || !name) throw new Error("Ürün kodu ve ürün adı zorunludur.");
+    if (rows.some(x => String(x.code).toUpperCase() === code.toUpperCase())) {
+      throw new Error("Bu ürün kodu zaten kayıtlı.");
+    }
+
+    const row = {
+      id: Date.now(),
+      code,
+      name,
+      category: category || "-",
+      price,
+      status: "Aktif"
+    };
+
+    rows.push(row);
+    saveProducts(rows);
+    return row;
+  }
+
+  function removeProduct(id) {
+    const rows = getProducts().filter(x => String(x.id) !== String(id));
+    saveProducts(rows);
+  }
+
+  function setProductStatus(id, status) {
+    const rows = getProducts();
+    const row = rows.find(x => String(x.id) === String(id));
+    if (!row) throw new Error("Ürün bulunamadı.");
+    row.status = status;
+    saveProducts(rows);
+    return row;
+  }
+
   function isAdmin() {
     const auth = getAuth();
     return !!(auth && auth.role === "admin");
@@ -170,6 +229,11 @@
     addApplication,
     removeApplication,
     setApplicationStatus,
+    getProducts,
+    saveProducts,
+    addProduct,
+    removeProduct,
+    setProductStatus,
     isAdmin,
     isMember,
     requireAdmin,
