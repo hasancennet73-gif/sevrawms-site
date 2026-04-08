@@ -40,11 +40,15 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
 .highlight{box-shadow:0 0 0 2px rgba(241,200,77,.55) inset;background:rgba(241,200,77,.08)!important}
-.note{margin-top:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.note h2{font-size:24px;margin-bottom:10px}
+.focus-box,.note{margin-bottom:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.focus-box h2,.note h2{font-size:24px;margin-bottom:10px}
+.focus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.focus-item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
+.focus-item strong{display:block;font-size:14px;margin-bottom:4px}
+.focus-item span{font-size:13px;color:#c7d3e6}
 .note p{color:#c7d3e6}
-@media (max-width:1100px){.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:680px){.form-grid{grid-template-columns:1fr}}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}.form-grid,.focus-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){.form-grid,.focus-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -58,6 +62,11 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
       <a class="btn" href="uye-panel.html">Üye Paneline Dön</a>
       <div id="memberUser" class="badge">Üye</div>
     </div>
+  </div>
+
+  <div id="focusBox" class="focus-box" style="display:none">
+    <h2>Seçili İlan Odağı</h2>
+    <div id="focusGrid" class="focus-grid"></div>
   </div>
 
   <div class="grid">
@@ -102,7 +111,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 
   <div class="note">
     <h2>Akış Notu</h2>
-    <p>Yük veren üyeler ilan açar. Nakliyeci üyeler açık ilanlara teklif verir. Vitrinden gelen kullanıcı seçilen ilana odaklı yönlendirilir.</p>
+    <p>Vitrinden seçili gelen ilan varsa üstte özet kutusunda görünür. Böylece kullanıcı hangi ilana geldiğini net görür.</p>
   </div>
 </div>
 
@@ -132,8 +141,21 @@ function loadFlow(){
   const loads = (typeof SEVRA_KIMLIK.getLoads === "function") ? SEVRA_KIMLIK.getLoads() : [];
   const offers = (typeof SEVRA_KIMLIK.getOffers === "function") ? SEVRA_KIMLIK.getOffers() : [];
   const focusLoadId = getParam("load_id");
+  const focusLoad = loads.find(x => String(x.id) === String(focusLoadId));
 
   document.getElementById("flowText").textContent = roleText(auth.role) + " akışı aktif.";
+
+  if(focusLoad){
+    document.getElementById("focusBox").style.display = "block";
+    document.getElementById("focusGrid").innerHTML = `
+      <div class="focus-item"><strong>Başlık</strong><span>${focusLoad.title || "-"}</span></div>
+      <div class="focus-item"><strong>Firma</strong><span>${focusLoad.owner || "-"}</span></div>
+      <div class="focus-item"><strong>Güzergah</strong><span>${focusLoad.route || "-"}</span></div>
+      <div class="focus-item"><strong>Ağırlık</strong><span>${focusLoad.weight || "-"}</span></div>
+    `;
+  }else{
+    document.getElementById("focusBox").style.display = "none";
+  }
 
   if(auth.role === "shipper"){
     document.getElementById("loadFormArea").innerHTML = `
