@@ -4,6 +4,7 @@
   const APPLICATIONS_KEY = "sevra_live_applications";
   const PRODUCTS_KEY = "sevra_live_products";
   const MESSAGES_KEY = "sevra_live_messages";
+  const VISITS_KEY = "sevra_live_visits";
 
   function getAuth() {
     try { return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }
@@ -23,19 +24,15 @@
     catch (e) { return []; }
   }
 
-  function saveMembers(rows) {
-    localStorage.setItem(MEMBERS_KEY, JSON.stringify(rows));
-  }
+  function saveMembers(rows) { localStorage.setItem(MEMBERS_KEY, JSON.stringify(rows)); }
 
   function registerMember(payload) {
     const members = getMembers();
     const username = String(payload.username || "").trim();
     const password = String(payload.password || "").trim();
-
     if (!username) throw new Error("Kullanıcı adı zorunludur.");
     if (!password) throw new Error("Şifre zorunludur.");
     if (members.some(x => x.username === username)) throw new Error("Bu kullanıcı adı zaten kayıtlı.");
-
     const row = {
       id: Date.now(),
       username,
@@ -46,7 +43,6 @@
       status: "Aktif",
       createdAt: new Date().toISOString()
     };
-
     members.push(row);
     saveMembers(members);
     return row;
@@ -81,9 +77,7 @@
     catch (e) { return []; }
   }
 
-  function saveApplications(rows) {
-    localStorage.setItem(APPLICATIONS_KEY, JSON.stringify(rows));
-  }
+  function saveApplications(rows) { localStorage.setItem(APPLICATIONS_KEY, JSON.stringify(rows)); }
 
   function addApplication(payload) {
     const rows = getApplications();
@@ -91,22 +85,16 @@
     const contact = String(payload.contact || "").trim();
     const phone = String(payload.phone || "").trim();
     const appType = String(payload.appType || "").trim();
-
     if (!company || !contact || !phone || !appType) {
       throw new Error("Firma, yetkili, telefon ve başvuru tipi zorunludur.");
     }
-
     const row = {
       id: Date.now(),
-      company,
-      contact,
-      phone,
-      appType,
+      company, contact, phone, appType,
       note: String(payload.note || "").trim(),
       status: "Bekliyor",
       createdAt: new Date().toISOString()
     };
-
     rows.push(row);
     saveApplications(rows);
     return row;
@@ -140,9 +128,7 @@
     return seed;
   }
 
-  function saveProducts(rows) {
-    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(rows));
-  }
+  function saveProducts(rows) { localStorage.setItem(PRODUCTS_KEY, JSON.stringify(rows)); }
 
   function addProduct(payload) {
     const rows = getProducts();
@@ -150,21 +136,9 @@
     const name = String(payload.name || "").trim();
     const category = String(payload.category || "").trim();
     const price = Number(payload.price || 0);
-
     if (!code || !name) throw new Error("Ürün kodu ve ürün adı zorunludur.");
-    if (rows.some(x => String(x.code).toUpperCase() == code.toUpperCase())) {
-      throw new Error("Bu ürün kodu zaten kayıtlı.");
-    }
-
-    const row = {
-      id: Date.now(),
-      code,
-      name,
-      category: category || "-",
-      price,
-      status: "Aktif"
-    };
-
+    if (rows.some(x => String(x.code).toUpperCase() === code.toUpperCase())) throw new Error("Bu ürün kodu zaten kayıtlı.");
+    const row = { id: Date.now(), code, name, category: category || "-", price, status: "Aktif" };
     rows.push(row);
     saveProducts(rows);
     return row;
@@ -197,9 +171,7 @@
     return seed;
   }
 
-  function saveMessages(rows) {
-    localStorage.setItem(MESSAGES_KEY, JSON.stringify(rows));
-  }
+  function saveMessages(rows) { localStorage.setItem(MESSAGES_KEY, JSON.stringify(rows)); }
 
   function addMessage(payload) {
     const rows = getMessages();
@@ -211,9 +183,9 @@
       status: "Yeni",
       createdAt: new Date().toISOString()
     };
-    rows.unshift(row)
-    saveMessages(rows)
-    return row
+    rows.unshift(row);
+    saveMessages(rows);
+    return row;
   }
 
   function removeMessage(id) {
@@ -228,6 +200,38 @@
     row.status = status;
     saveMessages(rows);
     return row;
+  }
+
+  function getVisits() {
+    try { return JSON.parse(localStorage.getItem(VISITS_KEY) || "[]"); }
+    catch (e) { return []; }
+  }
+
+  function saveVisits(rows) { localStorage.setItem(VISITS_KEY, JSON.stringify(rows)); }
+
+  function trackVisit(pageName) {
+    const rows = getVisits();
+    rows.push({
+      id: Date.now() + Math.random(),
+      page: String(pageName || "unknown"),
+      time: new Date().toISOString(),
+      user: getAuth()?.username || "ziyaretci"
+    });
+    saveVisits(rows);
+  }
+
+  function getVisitSummary() {
+    const rows = getVisits();
+    const byPage = {};
+    rows.forEach(x => {
+      const key = x.page || "unknown";
+      byPage[key] = (byPage[key] || 0) + 1;
+    });
+    return {
+      total: rows.length,
+      byPage,
+      recent: rows.slice(-20).reverse()
+    };
   }
 
   function isAdmin() {
@@ -262,34 +266,12 @@
   }
 
   window.SEVRA_KIMLIK = {
-    getAuth,
-    setAuth,
-    clearAuth,
-    getMembers,
-    saveMembers,
-    registerMember,
-    findMember,
-    removeMember,
-    setMemberStatus,
-    getApplications,
-    saveApplications,
-    addApplication,
-    removeApplication,
-    setApplicationStatus,
-    getProducts,
-    saveProducts,
-    addProduct,
-    removeProduct,
-    setProductStatus,
-    getMessages,
-    saveMessages,
-    addMessage,
-    removeMessage,
-    setMessageStatus,
-    isAdmin,
-    isMember,
-    requireAdmin,
-    requireMember,
-    logout
+    getAuth, setAuth, clearAuth,
+    getMembers, saveMembers, registerMember, findMember, removeMember, setMemberStatus,
+    getApplications, saveApplications, addApplication, removeApplication, setApplicationStatus,
+    getProducts, saveProducts, addProduct, removeProduct, setProductStatus,
+    getMessages, saveMessages, addMessage, removeMessage, setMessageStatus,
+    getVisits, saveVisits, trackVisit, getVisitSummary,
+    isAdmin, isMember, requireAdmin, requireMember, logout
   };
 })();
