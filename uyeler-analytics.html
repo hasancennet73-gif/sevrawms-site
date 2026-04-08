@@ -48,53 +48,33 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
     <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
     <div class="side-menu">
       <a class="menu-item" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
       <a class="menu-item active" href="uyeler-analytics.html">Üyeler & Analitik</a>
       <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
       <a class="menu-item" href="ilan-teklif-yonetim.html">İlan & Teklif</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
-
   <main class="main">
     <div class="top">
-      <div class="title"><h1>Üyeler & Analitik</h1><p>Provider, rol ve aktivite dağılımı burada toplanır.</p></div>
+      <div class="title"><h1>Üyeler & Analitik</h1><p>Stabil üye yönetim ekranı.</p></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
     </div>
-
-    <div class="cards" id="summaryCards">
-      <div class="card"><strong>0</strong><span>Kayıtlı üye</span></div>
-      <div class="card"><strong>0</strong><span>Aktif</span></div>
-      <div class="card"><strong>0</strong><span>Pasif</span></div>
-      <div class="card"><strong>0</strong><span>Nakliyeci</span></div>
-      <div class="card"><strong>0</strong><span>Yük Veren</span></div>
-    </div>
-
+    <div class="cards" id="summaryCards"></div>
     <div class="grid">
       <div class="table-wrap">
         <h2 style="margin-bottom:10px">Üye Listesi</h2>
-        <table>
-          <thead><tr><th>Ad Soyad</th><th>Kullanıcı</th><th>Rol</th><th>Sağlayıcı</th><th>Telefon</th><th>Durum</th><th>İşlem</th></tr></thead>
-          <tbody id="memberRows"></tbody>
-        </table>
+        <table><thead><tr><th>Ad Soyad</th><th>Kullanıcı</th><th>Rol</th><th>Sağlayıcı</th><th>Durum</th><th>İşlem</th></tr></thead><tbody id="memberRows"></tbody></table>
       </div>
-
-      <div class="note">
-        <h2>Dağılım Özeti</h2>
-        <div class="list" id="providerList"></div>
-      </div>
+      <div class="note"><h2>Dağılım</h2><div class="list" id="providerList"></div></div>
     </div>
   </main>
 </div>
-
 <script src="kimlik-dogrulama.js"></script>
 <script>
-if(SEVRA_KIMLIK.requireAdmin()){
+if (SEVRA_KIMLIK.requireAdmin()) {
   const auth=SEVRA_KIMLIK.getAuth();
   document.getElementById("adminUser").textContent="Admin: "+auth.username;
 }
-if(typeof SEVRA_KIMLIK.trackVisit==="function"){SEVRA_KIMLIK.trackVisit("uyeler-analytics");}
 function textRole(role){if(role==="carrier") return "Nakliyeci"; if(role==="shipper") return "Yük Veren"; return "Standart Üye";}
 function textProvider(p){if(p==="phone") return "Telefon"; if(p==="google") return "Google"; if(p==="facebook") return "Facebook"; return "Standart";}
 function loadMembers(){
@@ -107,35 +87,24 @@ function loadMembers(){
     <div class="card"><strong>${pasif}</strong><span>Pasif</span></div>
     <div class="card"><strong>${carrier}</strong><span>Nakliyeci</span></div>
     <div class="card"><strong>${shipper}</strong><span>Yük Veren</span></div>`;
-  document.getElementById("memberRows").innerHTML=!rows.length?'<tr><td colspan="7">Henüz kayıtlı üye yok.</td></tr>':rows.map(x=>`
+  document.getElementById("memberRows").innerHTML=!rows.length?'<tr><td colspan="6">Henüz kayıtlı üye yok.</td></tr>':rows.map(x=>`
     <tr>
       <td>${x.fullName||"-"}</td>
       <td>${x.username||"-"}</td>
       <td>${textRole(x.role)}</td>
       <td>${textProvider(x.provider)}</td>
-      <td>${x.phone||"-"}</td>
       <td><span class="status">${x.status||"Aktif"}</span></td>
-      <td>
-        <div class="actions">
-          <button class="btn" onclick="pasifYap('${x.id}')">Pasif Yap</button>
-          <button class="btn primary" onclick="aktifYap('${x.id}')">Aktif Yap</button>
-          <button class="btn" onclick="uyeSil('${x.id}')">Sil</button>
-        </div>
-      </td>
+      <td><div class="actions"><button class="btn" onclick="pasifYap('${x.id}')">Pasif</button><button class="btn primary" onclick="aktifYap('${x.id}')">Aktif</button></div></td>
     </tr>`).join('');
-
   const providers={manual:0,phone:0,google:0,facebook:0}; rows.forEach(x=>{const k=x.provider||"manual";providers[k]=(providers[k]||0)+1;});
   document.getElementById("providerList").innerHTML=`
     <div class="item"><strong>Standart</strong><span>${providers.manual||0} üye</span></div>
     <div class="item"><strong>Telefon</strong><span>${providers.phone||0} üye</span></div>
     <div class="item"><strong>Google</strong><span>${providers.google||0} üye</span></div>
-    <div class="item"><strong>Facebook</strong><span>${providers.facebook||0} üye</span></div>
-    <div class="item"><strong>Nakliyeci</strong><span>${carrier} üye</span></div>
-    <div class="item"><strong>Yük Veren</strong><span>${shipper} üye</span></div>`;
+    <div class="item"><strong>Facebook</strong><span>${providers.facebook||0} üye</span></div>`;
 }
 function pasifYap(id){try{SEVRA_KIMLIK.setMemberStatus(id,"Pasif");loadMembers();}catch(err){alert(err.message);}}
 function aktifYap(id){try{SEVRA_KIMLIK.setMemberStatus(id,"Aktif");loadMembers();}catch(err){alert(err.message);}}
-function uyeSil(id){if(!confirm("Üye silinsin mi?")) return; try{SEVRA_KIMLIK.removeMember(id);loadMembers();}catch(err){alert(err.message);}}
 loadMembers();
 </script>
 </body>
