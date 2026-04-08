@@ -59,7 +59,7 @@ input,select{
   <div class="card">
     <div class="logo">S</div>
     <h1>Üye Girişi</h1>
-    <p>Klasik giriş, telefon ile hızlı giriş ve sosyal giriş hazırlığı bu ekranda toplandı.</p>
+    <p id="subText">Klasik giriş, telefon ile hızlı giriş ve sosyal giriş hazırlığı bu ekranda toplandı.</p>
 
     <div class="grid">
       <div class="field">
@@ -74,7 +74,7 @@ input,select{
 
     <div class="btn-row">
       <button class="btn btn-primary" onclick="uyeGiris()">Klasik Giriş</button>
-      <a class="btn btn-secondary" href="uye-ol.html">Üye Ol</a>
+      <a id="registerBtn" class="btn btn-secondary" href="uye-ol.html">Üye Ol</a>
       <a class="btn btn-secondary" href="yonetici-giris.html">Yönetici Girişine Git</a>
     </div>
 
@@ -129,6 +129,39 @@ input,select{
 
   <script src="kimlik-dogrulama.js"></script>
   <script>
+    function getParam(name){
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name) || "";
+    }
+
+    function buildTarget(){
+      const redirect = getParam("redirect");
+      if(redirect === "ilan-teklif") return "ilan-teklif.html";
+      return "uye-panel.html";
+    }
+
+    function syncEntryContext(){
+      const role = getParam("role");
+      const redirect = getParam("redirect");
+      const registerBtn = document.getElementById("registerBtn");
+
+      if(role && ["member","shipper","carrier"].includes(role)){
+        document.getElementById("phoneRole").value = role;
+        document.getElementById("socialRole").value = role;
+      }
+
+      let registerHref = "uye-ol.html";
+      const params = [];
+      if(role) params.push("role=" + encodeURIComponent(role));
+      if(redirect) params.push("redirect=" + encodeURIComponent(redirect));
+      if(params.length) registerHref += "?" + params.join("&");
+      registerBtn.href = registerHref;
+
+      if(redirect === "ilan-teklif"){
+        document.getElementById("subText").textContent = "Bu giriş sonrası doğrudan ilan / teklif akışına yönlendirilirsin.";
+      }
+    }
+
     function showError(msg){
       const box = document.getElementById("errorBox");
       box.style.display = "block";
@@ -151,7 +184,7 @@ input,select{
         phone: user.phone || "",
         provider: user.provider || "manual"
       });
-      window.location.href = "uye-panel.html";
+      window.location.href = buildTarget();
     }
 
     function uyeGiris(){
@@ -161,7 +194,7 @@ input,select{
       if(username === "uye1" && password === "123456"){
         gotoPanel({
           username: username,
-          role: "member",
+          role: getParam("role") || "member",
           fullName: "Demo Üye",
           company: "",
           provider: "manual"
@@ -195,7 +228,7 @@ input,select{
           fullName: "Telefon Üyesi",
           company: ""
         });
-        showOk("Telefon ile hızlı giriş hazırlandı. Panele yönlendiriliyorsun.");
+        showOk("Telefon ile hızlı giriş hazırlandı. Yönlendiriliyorsun.");
         gotoPanel(row);
       }catch(err){
         showError(err.message);
@@ -219,6 +252,8 @@ input,select{
         showError(err.message);
       }
     }
+
+    syncEntryContext();
   </script>
 </body>
 </html>
