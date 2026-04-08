@@ -14,7 +14,7 @@ body{
     linear-gradient(180deg,#071425,#08111b 74%,#040912);
   display:flex;align-items:center;justify-content:center;padding:24px;
 }
-.wrap{width:100%;max-width:980px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.wrap{width:100%;max-width:1080px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .card{
   border:1px solid rgba(255,255,255,.08);border-radius:28px;
   background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));
@@ -35,6 +35,7 @@ li{margin-bottom:8px}
 }
 .btn-primary{background:#f1c84d;color:#0b1830}
 .btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
+.note{margin-top:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7;border-radius:14px;padding:12px;font-size:13px}
 @media(max-width:860px){.wrap{grid-template-columns:1fr}}
 </style>
 </head>
@@ -43,22 +44,23 @@ li{margin-bottom:8px}
   <div class="card">
     <div class="logo">S</div>
     <h1>Üye Girişi</h1>
-    <p>Yük veren, nakliyeci ve standart üyeler bu taraftan giriş yapar.</p>
+    <p>Standart üyelik, telefon ile giriş ve sosyal giriş hazırlık seçenekleri bu tarafta toplanır.</p>
     <ul>
-      <li>Üye girişi</li>
-      <li>Yeni kayıt</li>
-      <li>Üye paneli erişimi</li>
+      <li>Klasik kullanıcı adı / şifre</li>
+      <li>Telefon ile hızlı giriş hazırlığı</li>
+      <li>Google / Facebook hazırlık butonları</li>
     </ul>
     <div class="btn-row">
       <a class="btn btn-primary" href="uye-login.html">Üye Girişi</a>
       <a class="btn btn-secondary" href="uye-ol.html">Üye Ol</a>
     </div>
+    <div class="note">Bu adım gerçek OAuth değil, hazırlık ve yerel akış simülasyonudur.</div>
   </div>
 
   <div class="card">
     <div class="logo">S</div>
     <h1>Yönetici Girişi</h1>
-    <p>Bu ekran yalnızca yönetici içindir. Normal kullanıcı bu taraftan panele giremez.</p>
+    <p>Yönetici tarafı ayrı ve kapalı kalır. Üye girişi ile yönetici alanına geçiş olmaz.</p>
     <ul>
       <li>Yönetici paneli</li>
       <li>Ürünler</li>
