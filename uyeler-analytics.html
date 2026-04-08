@@ -63,12 +63,12 @@ a{text-decoration:none;color:inherit}
 }
 .card strong{display:block;font-size:28px;margin-bottom:6px}
 .card span{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
 .table-wrap{
   border:1px solid rgba(255,255,255,.08);
   border-radius:18px;background:rgba(255,255,255,.03);padding:18px;margin-bottom:18px;
   overflow:auto;
 }
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
 .status{
@@ -119,7 +119,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
     <div class="top">
       <div class="title">
         <h1>Üyeler & Analitik</h1>
-        <p>Kayıtlı üyeleri ve temel ziyaret akışını burada görürsün.</p>
+        <p>Sağlayıcı bazlı üyelik dağılımı ve detaylı üye listesi.</p>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <div id="adminUser" class="badge">Admin</div>
@@ -141,9 +141,10 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
           <thead>
             <tr>
               <th>Ad Soyad</th>
-              <th>Firma</th>
               <th>Kullanıcı</th>
               <th>Rol</th>
+              <th>Sağlayıcı</th>
+              <th>Telefon</th>
               <th>Durum</th>
               <th>İşlem</th>
             </tr>
@@ -152,26 +153,12 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
         </table>
       </div>
 
-      <div class="table-wrap">
-        <h2 style="margin-bottom:10px">Ziyaret Özeti</h2>
+      <div class="note">
+        <h2>Sağlayıcı Dağılımı</h2>
+        <div class="list" id="providerList"></div>
+        <h2 style="margin-top:18px">Ziyaret Özeti</h2>
         <div class="list" id="visitList"></div>
-        <h2 style="margin:18px 0 10px">Son Ziyaretler</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Sayfa</th>
-              <th>Kullanıcı</th>
-              <th>Zaman</th>
-            </tr>
-          </thead>
-          <tbody id="visitRows"></tbody>
-        </table>
       </div>
-    </div>
-
-    <div class="note" style="margin-top:18px">
-      <h2>Analytics Step 1</h2>
-      <p>Bu adımda temel ziyaret kaydı localStorage üzerinden tutulur. Yönetici hangi sayfanın daha çok açıldığını ve son ziyaretleri görebilir.</p>
     </div>
   </main>
 </div>
@@ -192,9 +179,16 @@ function textRole(role){
   return "Standart Üye";
 }
 
+function textProvider(p){
+  if(p === "phone") return "Telefon";
+  if(p === "google") return "Google";
+  if(p === "facebook") return "Facebook";
+  return "Standart";
+}
+
 function loadMembers(){
   const rows = (typeof SEVRA_KIMLIK.getMembers === "function") ? SEVRA_KIMLIK.getMembers() : [];
-  const visitSummary = (typeof SEVRA_KIMLIK.getVisitSummary === "function") ? SEVRA_KIMLIK.getVisitSummary() : { total: 0, byPage: {}, recent: [] };
+  const visitSummary = (typeof SEVRA_KIMLIK.getVisitSummary === "function") ? SEVRA_KIMLIK.getVisitSummary() : { total: 0, byPage: {} };
   const total = rows.length;
   const aktif = rows.filter(x => x.status !== "Pasif").length;
   const pasif = rows.filter(x => x.status === "Pasif").length;
@@ -203,18 +197,19 @@ function loadMembers(){
     <div class="card"><strong>${total}</strong><span>Kayıtlı üye</span></div>
     <div class="card"><strong>${aktif}</strong><span>Aktif</span></div>
     <div class="card"><strong>${pasif}</strong><span>Pasif</span></div>
-    <div class="card"><strong>${visitSummary.total}</strong><span>Toplam ziyaret</span></div>
+    <div class="card"><strong>${visitSummary.total || 0}</strong><span>Toplam ziyaret</span></div>
   `;
 
   if(!rows.length){
-    document.getElementById("memberRows").innerHTML = '<tr><td colspan="6">Henüz kayıtlı üye yok.</td></tr>';
+    document.getElementById("memberRows").innerHTML = '<tr><td colspan="7">Henüz kayıtlı üye yok.</td></tr>';
   } else {
     document.getElementById("memberRows").innerHTML = rows.map(x => `
       <tr>
         <td>${x.fullName || "-"}</td>
-        <td>${x.company || "-"}</td>
         <td>${x.username || "-"}</td>
         <td>${textRole(x.role)}</td>
+        <td>${textProvider(x.provider)}</td>
+        <td>${x.phone || "-"}</td>
         <td><span class="status">${x.status || "Aktif"}</span></td>
         <td>
           <div class="actions">
@@ -227,6 +222,19 @@ function loadMembers(){
     `).join('');
   }
 
+  const providers = { manual:0, phone:0, google:0, facebook:0 };
+  rows.forEach(x => {
+    const key = x.provider || "manual";
+    providers[key] = (providers[key] || 0) + 1;
+  });
+
+  document.getElementById("providerList").innerHTML = `
+    <div class="item"><strong>Standart</strong><span>${providers.manual || 0} üye</span></div>
+    <div class="item"><strong>Telefon</strong><span>${providers.phone || 0} üye</span></div>
+    <div class="item"><strong>Google</strong><span>${providers.google || 0} üye</span></div>
+    <div class="item"><strong>Facebook</strong><span>${providers.facebook || 0} üye</span></div>
+  `;
+
   const byPage = visitSummary.byPage || {};
   const pageEntries = Object.entries(byPage);
   if(!pageEntries.length){
@@ -236,31 +244,16 @@ function loadMembers(){
       <div class="item"><strong>${page}</strong><span>${count} görüntülenme</span></div>
     `).join('');
   }
-
-  const recent = visitSummary.recent || [];
-  if(!recent.length){
-    document.getElementById("visitRows").innerHTML = '<tr><td colspan="3">Son ziyaret bulunmuyor.</td></tr>';
-  } else {
-    document.getElementById("visitRows").innerHTML = recent.slice(0,10).map(x => `
-      <tr>
-        <td>${x.page || "-"}</td>
-        <td>${x.user || "ziyaretci"}</td>
-        <td>${new Date(x.time).toLocaleString('tr-TR')}</td>
-      </tr>
-    `).join('');
-  }
 }
 
 function pasifYap(id){
   try{ SEVRA_KIMLIK.setMemberStatus(id, "Pasif"); loadMembers(); }
   catch(err){ alert(err.message); }
 }
-
 function aktifYap(id){
   try{ SEVRA_KIMLIK.setMemberStatus(id, "Aktif"); loadMembers(); }
   catch(err){ alert(err.message); }
 }
-
 function uyeSil(id){
   if(!confirm("Üye silinsin mi?")) return;
   try{ SEVRA_KIMLIK.removeMember(id); loadMembers(); }
