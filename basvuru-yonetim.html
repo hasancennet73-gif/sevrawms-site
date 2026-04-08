@@ -27,7 +27,7 @@ a{text-decoration:none;color:inherit}
 .btn{min-height:40px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
 .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.card,.table-wrap,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.card,.table-wrap{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
 .card strong{display:block;font-size:28px;margin-bottom:6px}.card span{color:var(--muted);font-size:13px}
 .filter{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-bottom:18px}
 label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
@@ -47,51 +47,35 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
     <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
     <div class="side-menu">
       <a class="menu-item" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
       <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
       <a class="menu-item active" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
       <a class="menu-item" href="ilan-teklif-yonetim.html">İlan & Teklif</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
-
   <main class="main">
     <div class="top">
-      <div class="title"><h1>Başvuru Yönetimi</h1><p>Başvuruları filtrele ve durumlandır.</p></div>
+      <div class="title"><h1>Başvuru Yönetimi</h1><p>Stabil başvuru yönetim ekranı.</p></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
     </div>
-
-    <div class="cards" id="summaryCards">
-      <div class="card"><strong>0</strong><span>Toplam</span></div>
-      <div class="card"><strong>0</strong><span>Bekliyor</span></div>
-      <div class="card"><strong>0</strong><span>Onaylandı</span></div>
-      <div class="card"><strong>0</strong><span>Reddedildi</span></div>
-    </div>
-
+    <div class="cards" id="summaryCards"></div>
     <div class="filter">
       <div><label>Anahtar Kelime</label><input id="searchBox" type="text" placeholder="Firma, yetkili, tip ara"></div>
       <div><label>Durum</label><select id="statusBox"><option value="">Tümü</option><option value="Bekliyor">Bekliyor</option><option value="Onaylandı">Onaylandı</option><option value="Reddedildi">Reddedildi</option></select></div>
       <div><button class="btn primary" onclick="loadApps()">Filtrele</button></div>
     </div>
-
     <div class="table-wrap">
       <h2 style="margin-bottom:10px">Başvuru Listesi</h2>
-      <table>
-        <thead><tr><th>Firma</th><th>Yetkili</th><th>Telefon</th><th>Tip</th><th>Not</th><th>Durum</th><th>İşlem</th></tr></thead>
-        <tbody id="appRows"></tbody>
-      </table>
+      <table><thead><tr><th>Firma</th><th>Yetkili</th><th>Telefon</th><th>Tip</th><th>Not</th><th>Durum</th><th>İşlem</th></tr></thead><tbody id="appRows"></tbody></table>
     </div>
   </main>
 </div>
-
 <script src="kimlik-dogrulama.js"></script>
 <script>
-if(SEVRA_KIMLIK.requireAdmin()){
+if (SEVRA_KIMLIK.requireAdmin()) {
   const auth=SEVRA_KIMLIK.getAuth();
   document.getElementById("adminUser").textContent="Admin: "+auth.username;
 }
-if(typeof SEVRA_KIMLIK.trackVisit==="function"){SEVRA_KIMLIK.trackVisit("basvuru-yonetim");}
 function loadApps(){
   const rows=SEVRA_KIMLIK.getApplications?SEVRA_KIMLIK.getApplications():[];
   const q=document.getElementById("searchBox").value.trim().toLowerCase();
@@ -113,13 +97,7 @@ function loadApps(){
       <td>${x.appType||"-"}</td>
       <td>${x.note||"-"}</td>
       <td><span class="status">${x.status||"Bekliyor"}</span></td>
-      <td>
-        <div class="actions">
-          <button class="btn" onclick="setApp('${x.id}','Bekliyor')">Beklet</button>
-          <button class="btn primary" onclick="setApp('${x.id}','Onaylandı')">Onayla</button>
-          <button class="btn" onclick="setApp('${x.id}','Reddedildi')">Reddet</button>
-        </div>
-      </td>
+      <td><div class="actions"><button class="btn" onclick="setApp('${x.id}','Bekliyor')">Beklet</button><button class="btn primary" onclick="setApp('${x.id}','Onaylandı')">Onayla</button><button class="btn" onclick="setApp('${x.id}','Reddedildi')">Reddet</button></div></td>
     </tr>`).join('');
 }
 function setApp(id,status){try{SEVRA_KIMLIK.setApplicationStatus(id,status);loadApps();}catch(err){alert(err.message);}}
