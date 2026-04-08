@@ -1,34 +1,145 @@
 (function () {
-const AUTH_KEY="sevra_live_auth",MEMBERS_KEY="sevra_live_members",APPLICATIONS_KEY="sevra_live_applications",PRODUCTS_KEY="sevra_live_products",MESSAGES_KEY="sevra_live_messages",VISITS_KEY="sevra_live_visits",LOADS_KEY="sevra_live_loads",OFFERS_KEY="sevra_live_offers";
-function parse(k,f){try{const r=localStorage.getItem(k);return r?JSON.parse(r):f}catch(e){return f}}
-function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function getAuth(){return parse(AUTH_KEY,null)} function setAuth(d){save(AUTH_KEY,d)} function clearAuth(){localStorage.removeItem(AUTH_KEY)}
-function ensureMemberDefaults(r){return{id:r.id||Date.now(),username:r.username||"",password:r.password||"",phone:r.phone||"",provider:r.provider||"manual",role:r.role||"member",fullName:r.fullName||r.username||"Üye",company:r.company||"",status:r.status||"Aktif",createdAt:r.createdAt||new Date().toISOString()}}
-function getMembers(){const a=parse(MEMBERS_KEY,[]);return Array.isArray(a)?a.map(ensureMemberDefaults):[]} function saveMembers(r){save(MEMBERS_KEY,r.map(ensureMemberDefaults))}
-function registerMember(p){const m=getMembers(),u=String(p.username||"").trim(),pw=String(p.password||"").trim();if(!u)throw new Error("Kullanıcı adı zorunludur.");if(!pw)throw new Error("Şifre zorunludur.");if(m.some(x=>String(x.username).toUpperCase()===u.toUpperCase()))throw new Error("Bu kullanıcı adı zaten kayıtlı.");const row=ensureMemberDefaults({id:Date.now(),username:u,password:pw,phone:String(p.phone||"").trim(),provider:String(p.provider||"manual").trim()||"manual",role:String(p.role||"member").trim()||"member",fullName:String(p.fullName||"").trim()||u,company:String(p.company||"").trim(),status:"Aktif",createdAt:new Date().toISOString()});m.push(row);saveMembers(m);return row}
-function findMember(u,pw){u=String(u||"").trim();pw=String(pw||"").trim();return getMembers().find(x=>String(x.username)===u&&String(x.password)===pw&&String(x.status)!=="Pasif")||null}
-function findMemberByPhone(phone){const n=String(phone||"").replace(/\s+/g,"");return getMembers().find(x=>String(x.phone||"").replace(/\s+/g,"")===n&&String(x.status)!=="Pasif")||null}
-function quickPhoneLogin(p){const phone=String(p.phone||"").trim();if(!phone)throw new Error("Telefon numarası zorunludur.");let row=findMemberByPhone(phone);if(!row){const m=getMembers();row=ensureMemberDefaults({id:Date.now(),username:"tel_"+phone.replace(/\D/g,""),password:"phone-login",phone:phone,provider:"phone",role:String(p.role||"member").trim()||"member",fullName:String(p.fullName||"Telefon Üyesi").trim(),company:String(p.company||"").trim(),status:"Aktif",createdAt:new Date().toISOString()});m.push(row);saveMembers(m)}return row}
-function socialLoginMock(provider,p){const sp=String(provider||"social").trim().toLowerCase(),fn=String(p.fullName||"").trim()||(sp==="google"?"Google Üyesi":"Facebook Üyesi"),role=String(p.role||"member").trim()||"member",company=String(p.company||"").trim(),username=sp+"_"+fn.toLowerCase().replace(/[^a-z0-9]+/g,"_");const m=getMembers();let row=m.find(x=>x.username===username&&x.provider===sp);if(!row){row=ensureMemberDefaults({id:Date.now(),username:username,password:sp+"-login",phone:"",provider:sp,role:role,fullName:fn,company:company,status:"Aktif",createdAt:new Date().toISOString()});m.push(row);saveMembers(m)}return row}
-function removeMember(id){saveMembers(getMembers().filter(x=>String(x.id)!==String(id)))} function setMemberStatus(id,status){const r=getMembers(),row=r.find(x=>String(x.id)===String(id));if(!row)throw new Error("Üye bulunamadı.");row.status=status;saveMembers(r);return row}
-function getApplications(){return parse(APPLICATIONS_KEY,[])} function saveApplications(r){save(APPLICATIONS_KEY,r)} function addApplication(p){const r=getApplications(),company=String(p.company||"").trim(),contact=String(p.contact||"").trim(),phone=String(p.phone||"").trim(),appType=String(p.appType||"").trim();if(!company||!contact||!phone||!appType)throw new Error("Firma, yetkili, telefon ve başvuru tipi zorunludur.");const row={id:Date.now(),company,contact,phone,appType,note:String(p.note||"").trim(),status:"Bekliyor",createdAt:new Date().toISOString()};r.push(row);saveApplications(r);return row}
-function removeApplication(id){saveApplications(getApplications().filter(x=>String(x.id)!==String(id)))} function setApplicationStatus(id,status){const r=getApplications(),row=r.find(x=>String(x.id)===String(id));if(!row)throw new Error("Başvuru bulunamadı.");row.status=status;saveApplications(r);return row}
-function getProducts(){const r=parse(PRODUCTS_KEY,[]);if(Array.isArray(r)&&r.length)return r;const seed=[{id:1,code:"SR-001",name:"Kapı Menteşesi",category:"Yedek Parça",price:350,status:"Aktif"},{id:2,code:"SR-002",name:"Çamurluk",category:"Kaporta",price:1250,status:"Aktif"},{id:3,code:"SR-003",name:"Kilit Seti",category:"Güvenlik",price:480,status:"Aktif"}];save(PRODUCTS_KEY,seed);return seed}
-function saveProducts(r){save(PRODUCTS_KEY,r)} function addProduct(p){const r=getProducts(),code=String(p.code||"").trim(),name=String(p.name||"").trim(),category=String(p.category||"").trim(),price=Number(p.price||0);if(!code||!name)throw new Error("Ürün kodu ve ürün adı zorunludur.");if(r.some(x=>String(x.code).toUpperCase()===code.toUpperCase()))throw new Error("Bu ürün kodu zaten kayıtlı.");const row={id:Date.now(),code,name,category:category||"-",price,status:"Aktif"};r.push(row);saveProducts(r);return row}
-function removeProduct(id){saveProducts(getProducts().filter(x=>String(x.id)!==String(id)))} function setProductStatus(id,status){const r=getProducts(),row=r.find(x=>String(x.id)===String(id));if(!row)throw new Error("Ürün bulunamadı.");row.status=status;saveProducts(r);return row}
-function getMessages(){const r=parse(MESSAGES_KEY,[]);if(Array.isArray(r)&&r.length)return r;const seed=[{id:1,from:"Orhan Nakliyat",subject:"Teklif güncellemesi",message:"İstanbul çıkışlı yük için yeni fiyat gönderdik.",status:"Yeni",createdAt:new Date().toISOString()},{id:2,from:"Demir Lojistik",subject:"Yeni araç bilgisi",message:"Aracımız yarın için uygun durumda.",status:"Okundu",createdAt:new Date().toISOString()}];save(MESSAGES_KEY,seed);return seed}
-function saveMessages(r){save(MESSAGES_KEY,r)} function addMessage(p){const r=getMessages(),row={id:Date.now(),from:String(p.from||"").trim()||"Bilinmeyen",subject:String(p.subject||"").trim()||"Konu yok",message:String(p.message||"").trim()||"-",status:"Yeni",createdAt:new Date().toISOString()};r.unshift(row);saveMessages(r);return row}
-function removeMessage(id){saveMessages(getMessages().filter(x=>String(x.id)!==String(id)))} function setMessageStatus(id,status){const r=getMessages(),row=r.find(x=>String(x.id)===String(id));if(!row)throw new Error("Mesaj bulunamadı.");row.status=status;saveMessages(r);return row}
-function getVisits(){return parse(VISITS_KEY,[])} function saveVisits(r){save(VISITS_KEY,r)} function trackVisit(page){const r=getVisits();r.push({id:Date.now()+Math.random(),page:String(page||"unknown"),time:new Date().toISOString(),user:getAuth()?.username||"ziyaretci"});saveVisits(r)}
-function getVisitSummary(){const r=getVisits(),byPage={};r.forEach(x=>{const k=x.page||"unknown";byPage[k]=(byPage[k]||0)+1});return{total:r.length,byPage:byPage,recent:r.slice(-20).reverse()}}
-function getLoads(){const r=parse(LOADS_KEY,[]);if(Array.isArray(r)&&r.length)return r;const seed=[{id:1,title:"İstanbul → Ankara Parsiyel",owner:"Atlas Lojistik",route:"İstanbul / Ankara",weight:"4 ton",status:"Açık",createdBy:"system",createdAt:new Date().toISOString()},{id:2,title:"Bursa → İzmir Komple",owner:"SEVRA Demo",route:"Bursa / İzmir",weight:"12 ton",status:"Açık",createdBy:"system",createdAt:new Date().toISOString()}];save(LOADS_KEY,seed);return seed}
-function saveLoads(r){save(LOADS_KEY,r)} function addLoad(p){const r=getLoads(),a=getAuth()||{},title=String(p.title||"").trim(),route=String(p.route||"").trim(),weight=String(p.weight||"").trim();if(!title||!route||!weight)throw new Error("Başlık, güzergah ve ağırlık zorunludur.");const row={id:Date.now(),title,route,weight,owner:a.company||a.fullName||a.username||"Üye",status:"Açık",createdBy:a.username||"unknown",createdAt:new Date().toISOString()};r.unshift(row);saveLoads(r);return row}
-function setLoadStatus(id,status){const r=getLoads(),row=r.find(x=>String(x.id)===String(id));if(!row)throw new Error("İlan bulunamadı.");row.status=status;saveLoads(r);return row}
-function getOffers(){return parse(OFFERS_KEY,[])} function saveOffers(r){save(OFFERS_KEY,r)} function addOffer(p){const r=getOffers(),a=getAuth()||{},loadId=String(p.loadId||"").trim(),price=String(p.price||"").trim(),note=String(p.note||"").trim();if(!loadId||!price)throw new Error("İlan ve fiyat zorunludur.");const row={id:Date.now(),loadId,member:a.username||"unknown",memberName:a.company||a.fullName||a.username||"Üye",price,note,status:"Bekliyor",createdAt:new Date().toISOString()};r.unshift(row);saveOffers(r);return row}
-function setOfferStatus(id,status){const r=getOffers(),row=r.find(x=>String(x.id)===String(id));if(!row)throw new Error("Teklif bulunamadı.");row.status=status;saveOffers(r);return row}
-function isAdmin(){const a=getAuth();return !!(a&&a.role==="admin")} function isMember(){const a=getAuth();return !!(a&&a.role&&a.role!=="admin")}
-function requireAdmin(){if(!isAdmin()){window.location.href="yonetici-giris.html";return false}return true}
-function requireMember(){if(!isMember()){window.location.href="uye-login.html";return false}return true}
-function logout(target){clearAuth();window.location.href=target||"index.html"}
-window.SEVRA_KIMLIK={getAuth,setAuth,clearAuth,getMembers,saveMembers,registerMember,findMember,findMemberByPhone,quickPhoneLogin,socialLoginMock,removeMember,setMemberStatus,getApplications,saveApplications,addApplication,removeApplication,setApplicationStatus,getProducts,saveProducts,addProduct,removeProduct,setProductStatus,getMessages,saveMessages,addMessage,removeMessage,setMessageStatus,getVisits,saveVisits,trackVisit,getVisitSummary,getLoads,saveLoads,addLoad,setLoadStatus,getOffers,saveOffers,addOffer,setOfferStatus,isAdmin,isMember,requireAdmin,requireMember,logout};
+  const AUTH_KEY="sevra_live_auth",MEMBERS_KEY="sevra_live_members",APPLICATIONS_KEY="sevra_live_applications",PRODUCTS_KEY="sevra_live_products",MESSAGES_KEY="sevra_live_messages",VISITS_KEY="sevra_live_visits",LOADS_KEY="sevra_live_loads",OFFERS_KEY="sevra_live_offers";
+
+  function parse(k,f){try{const r=localStorage.getItem(k);return r?JSON.parse(r):f}catch(e){return f}}
+  function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+  function getAuth(){return parse(AUTH_KEY,null)}
+  function setAuth(d){save(AUTH_KEY,d)}
+  function clearAuth(){localStorage.removeItem(AUTH_KEY)}
+
+  function ensureMemberDefaults(r){return{id:r.id||Date.now(),username:r.username||"",password:r.password||"",phone:r.phone||"",provider:r.provider||"manual",role:r.role||"member",fullName:r.fullName||r.username||"Üye",company:r.company||"",status:r.status||"Aktif",createdAt:r.createdAt||new Date().toISOString()}}
+  function getMembers(){const a=parse(MEMBERS_KEY,[]);return Array.isArray(a)?a.map(ensureMemberDefaults):[]}
+  function saveMembers(r){save(MEMBERS_KEY,r.map(ensureMemberDefaults))}
+  function registerMember(p){
+    const m=getMembers(),u=String(p.username||"").trim(),pw=String(p.password||"").trim();
+    if(!u) throw new Error("Kullanıcı adı zorunludur.");
+    if(!pw) throw new Error("Şifre zorunludur.");
+    if(m.some(x=>String(x.username).toUpperCase()===u.toUpperCase())) throw new Error("Bu kullanıcı adı zaten kayıtlı.");
+    const row=ensureMemberDefaults({id:Date.now(),username:u,password:pw,phone:String(p.phone||"").trim(),provider:String(p.provider||"manual").trim()||"manual",role:String(p.role||"member").trim()||"member",fullName:String(p.fullName||"").trim()||u,company:String(p.company||"").trim(),status:"Aktif",createdAt:new Date().toISOString()});
+    m.push(row); saveMembers(m); return row;
+  }
+  function findMember(u,pw){u=String(u||"").trim(); pw=String(pw||"").trim(); return getMembers().find(x=>String(x.username)===u&&String(x.password)===pw&&String(x.status)!=="Pasif")||null}
+  function findMemberByPhone(phone){const n=String(phone||"").replace(/\s+/g,""); return getMembers().find(x=>String(x.phone||"").replace(/\s+/g,"")===n&&String(x.status)!=="Pasif")||null}
+  function quickPhoneLogin(p){
+    const phone=String(p.phone||"").trim();
+    if(!phone) throw new Error("Telefon numarası zorunludur.");
+    let row=findMemberByPhone(phone);
+    if(!row){
+      const m=getMembers();
+      row=ensureMemberDefaults({id:Date.now(),username:"tel_"+phone.replace(/\D/g,""),password:"phone-login",phone:phone,provider:"phone",role:String(p.role||"member").trim()||"member",fullName:String(p.fullName||"Telefon Üyesi").trim(),company:String(p.company||"").trim(),status:"Aktif",createdAt:new Date().toISOString()});
+      m.push(row); saveMembers(m);
+    }
+    return row;
+  }
+  function socialLoginMock(provider,p){
+    const sp=String(provider||"social").trim().toLowerCase(), fn=String(p.fullName||"").trim()||(sp==="google"?"Google Üyesi":"Facebook Üyesi"), role=String(p.role||"member").trim()||"member", company=String(p.company||"").trim(), username=sp+"_"+fn.toLowerCase().replace(/[^a-z0-9]+/g,"_");
+    const m=getMembers(); let row=m.find(x=>x.username===username&&x.provider===sp);
+    if(!row){
+      row=ensureMemberDefaults({id:Date.now(),username:username,password:sp+"-login",phone:"",provider:sp,role:role,fullName:fn,company:company,status:"Aktif",createdAt:new Date().toISOString()});
+      m.push(row); saveMembers(m);
+    }
+    return row;
+  }
+  function removeMember(id){saveMembers(getMembers().filter(x=>String(x.id)!==String(id)))}
+  function setMemberStatus(id,status){const r=getMembers(),row=r.find(x=>String(x.id)===String(id)); if(!row) throw new Error("Üye bulunamadı."); row.status=status; saveMembers(r); return row;}
+
+  function getApplications(){return parse(APPLICATIONS_KEY,[])}
+  function saveApplications(r){save(APPLICATIONS_KEY,r)}
+  function addApplication(p){
+    const r=getApplications(), company=String(p.company||"").trim(), contact=String(p.contact||"").trim(), phone=String(p.phone||"").trim(), appType=String(p.appType||"").trim();
+    if(!company||!contact||!phone||!appType) throw new Error("Firma, yetkili, telefon ve başvuru tipi zorunludur.");
+    const row={id:Date.now(),company,contact,phone,appType,note:String(p.note||"").trim(),status:"Bekliyor",createdAt:new Date().toISOString()};
+    r.push(row); saveApplications(r); return row;
+  }
+  function removeApplication(id){saveApplications(getApplications().filter(x=>String(x.id)!==String(id)))}
+  function setApplicationStatus(id,status){const r=getApplications(),row=r.find(x=>String(x.id)===String(id)); if(!row) throw new Error("Başvuru bulunamadı."); row.status=status; saveApplications(r); return row;}
+
+  function getProducts(){
+    const r=parse(PRODUCTS_KEY,[]);
+    if(Array.isArray(r)&&r.length) return r;
+    const seed=[{id:1,code:"SR-001",name:"Kapı Menteşesi",category:"Yedek Parça",price:350,status:"Aktif"},{id:2,code:"SR-002",name:"Çamurluk",category:"Kaporta",price:1250,status:"Aktif"},{id:3,code:"SR-003",name:"Kilit Seti",category:"Güvenlik",price:480,status:"Aktif"}];
+    save(PRODUCTS_KEY,seed); return seed;
+  }
+  function saveProducts(r){save(PRODUCTS_KEY,r)}
+  function addProduct(p){
+    const r=getProducts(), code=String(p.code||"").trim(), name=String(p.name||"").trim(), category=String(p.category||"").trim(), price=Number(p.price||0);
+    if(!code||!name) throw new Error("Ürün kodu ve ürün adı zorunludur.");
+    if(r.some(x=>String(x.code).toUpperCase()===code.toUpperCase())) throw new Error("Bu ürün kodu zaten kayıtlı.");
+    const row={id:Date.now(),code,name,category:category||"-",price,status:"Aktif"};
+    r.push(row); saveProducts(r); return row;
+  }
+  function removeProduct(id){saveProducts(getProducts().filter(x=>String(x.id)!==String(id)))}
+  function setProductStatus(id,status){const r=getProducts(),row=r.find(x=>String(x.id)===String(id)); if(!row) throw new Error("Ürün bulunamadı."); row.status=status; saveProducts(r); return row;}
+
+  function getMessages(){
+    const r=parse(MESSAGES_KEY,[]);
+    if(Array.isArray(r)&&r.length) return r;
+    const seed=[{id:1,from:"Orhan Nakliyat",subject:"Teklif güncellemesi",message:"İstanbul çıkışlı yük için yeni fiyat gönderdik.",status:"Yeni",createdAt:new Date().toISOString()},{id:2,from:"Demir Lojistik",subject:"Yeni araç bilgisi",message:"Aracımız yarın için uygun durumda.",status:"Okundu",createdAt:new Date().toISOString()}];
+    save(MESSAGES_KEY,seed); return seed;
+  }
+  function saveMessages(r){save(MESSAGES_KEY,r)}
+  function addMessage(p){
+    const r=getMessages(), row={id:Date.now(),from:String(p.from||"").trim()||"Bilinmeyen",subject:String(p.subject||"").trim()||"Konu yok",message:String(p.message||"").trim()||"-",status:"Yeni",createdAt:new Date().toISOString()};
+    r.unshift(row); saveMessages(r); return row;
+  }
+  function removeMessage(id){saveMessages(getMessages().filter(x=>String(x.id)!==String(id)))}
+  function setMessageStatus(id,status){const r=getMessages(),row=r.find(x=>String(x.id)===String(id)); if(!row) throw new Error("Mesaj bulunamadı."); row.status=status; saveMessages(r); return row;}
+
+  function getVisits(){return parse(VISITS_KEY,[])}
+  function saveVisits(r){save(VISITS_KEY,r)}
+  function trackVisit(page){const r=getVisits(); r.push({id:Date.now()+Math.random(),page:String(page||"unknown"),time:new Date().toISOString(),user:getAuth()?.username||"ziyaretci"}); saveVisits(r)}
+  function getVisitSummary(){const r=getVisits(),byPage={}; r.forEach(x=>{const k=x.page||"unknown"; byPage[k]=(byPage[k]||0)+1}); return {total:r.length,byPage:byPage,recent:r.slice(-20).reverse()}}
+
+  function getLoads(){
+    const r=parse(LOADS_KEY,[]);
+    if(Array.isArray(r)&&r.length) return r;
+    const seed=[{id:1,title:"İstanbul → Ankara Parsiyel",owner:"Atlas Lojistik",route:"İstanbul / Ankara",weight:"4 ton",status:"Açık",createdBy:"system",createdAt:new Date().toISOString()},{id:2,title:"Bursa → İzmir Komple",owner:"SEVRA Demo",route:"Bursa / İzmir",weight:"12 ton",status:"Açık",createdBy:"system",createdAt:new Date().toISOString()}];
+    save(LOADS_KEY,seed); return seed;
+  }
+  function saveLoads(r){save(LOADS_KEY,r)}
+  function addLoad(p){
+    const r=getLoads(), a=getAuth()||{}, title=String(p.title||"").trim(), route=String(p.route||"").trim(), weight=String(p.weight||"").trim();
+    if(!title||!route||!weight) throw new Error("Başlık, güzergah ve ağırlık zorunludur.");
+    const row={id:Date.now(),title,route,weight,owner:a.company||a.fullName||a.username||"Üye",status:"Açık",createdBy:a.username||"unknown",createdAt:new Date().toISOString()};
+    r.unshift(row); saveLoads(r); return row;
+  }
+  function setLoadStatus(id,status){const r=getLoads(),row=r.find(x=>String(x.id)===String(id)); if(!row) throw new Error("İlan bulunamadı."); row.status=status; saveLoads(r); return row;}
+
+  function getOffers(){
+    const r=parse(OFFERS_KEY,[]);
+    return Array.isArray(r) ? r.map(x=>({
+      ...x,
+      adminNote: x.adminNote || "",
+      updatedAt: x.updatedAt || x.createdAt || new Date().toISOString()
+    })) : [];
+  }
+  function saveOffers(r){save(OFFERS_KEY,r)}
+  function addOffer(p){
+    const r=getOffers(), a=getAuth()||{}, loadId=String(p.loadId||"").trim(), price=String(p.price||"").trim(), note=String(p.note||"").trim();
+    if(!loadId||!price) throw new Error("İlan ve fiyat zorunludur.");
+    const row={id:Date.now(),loadId,member:a.username||"unknown",memberName:a.company||a.fullName||a.username||"Üye",price,note,status:"Bekliyor",adminNote:"",createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+    r.unshift(row); saveOffers(r); return row;
+  }
+  function setOfferStatus(id,status){
+    const r=getOffers(), row=r.find(x=>String(x.id)===String(id));
+    if(!row) throw new Error("Teklif bulunamadı.");
+    row.status=status;
+    row.updatedAt=new Date().toISOString();
+    saveOffers(r); return row;
+  }
+  function setOfferAdminNote(id,adminNote){
+    const r=getOffers(), row=r.find(x=>String(x.id)===String(id));
+    if(!row) throw new Error("Teklif bulunamadı.");
+    row.adminNote=String(adminNote||"").trim();
+    row.updatedAt=new Date().toISOString();
+    saveOffers(r); return row;
+  }
+
+  function isAdmin(){const a=getAuth(); return !!(a&&a.role==="admin")}
+  function isMember(){const a=getAuth(); return !!(a&&a.role&&a.role!=="admin")}
+  function requireAdmin(){if(!isAdmin()){window.location.href="yonetici-giris.html";return false} return true}
+  function requireMember(){if(!isMember()){window.location.href="uye-login.html";return false} return true}
+  function logout(target){clearAuth();window.location.href=target||"index.html"}
+
+  window.SEVRA_KIMLIK={getAuth,setAuth,clearAuth,getMembers,saveMembers,registerMember,findMember,findMemberByPhone,quickPhoneLogin,socialLoginMock,removeMember,setMemberStatus,getApplications,saveApplications,addApplication,removeApplication,setApplicationStatus,getProducts,saveProducts,addProduct,removeProduct,setProductStatus,getMessages,saveMessages,addMessage,removeMessage,setMessageStatus,getVisits,saveVisits,trackVisit,getVisitSummary,getLoads,saveLoads,addLoad,setLoadStatus,getOffers,saveOffers,addOffer,setOfferStatus,setOfferAdminNote,isAdmin,isMember,requireAdmin,requireMember,logout};
 })();
