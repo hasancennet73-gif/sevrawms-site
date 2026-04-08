@@ -33,6 +33,7 @@
     if (!username) throw new Error("Kullanıcı adı zorunludur.");
     if (!password) throw new Error("Şifre zorunludur.");
     if (members.some(x => x.username === username)) throw new Error("Bu kullanıcı adı zaten kayıtlı.");
+
     const row = {
       id: Date.now(),
       username,
@@ -43,6 +44,7 @@
       status: "Aktif",
       createdAt: new Date().toISOString()
     };
+
     members.push(row);
     saveMembers(members);
     return row;
@@ -85,9 +87,11 @@
     const contact = String(payload.contact || "").trim();
     const phone = String(payload.phone || "").trim();
     const appType = String(payload.appType || "").trim();
+
     if (!company || !contact || !phone || !appType) {
       throw new Error("Firma, yetkili, telefon ve başvuru tipi zorunludur.");
     }
+
     const row = {
       id: Date.now(),
       company, contact, phone, appType,
@@ -95,6 +99,7 @@
       status: "Bekliyor",
       createdAt: new Date().toISOString()
     };
+
     rows.push(row);
     saveApplications(rows);
     return row;
@@ -138,6 +143,7 @@
     const price = Number(payload.price || 0);
     if (!code || !name) throw new Error("Ürün kodu ve ürün adı zorunludur.");
     if (rows.some(x => String(x.code).toUpperCase() === code.toUpperCase())) throw new Error("Bu ürün kodu zaten kayıtlı.");
+
     const row = { id: Date.now(), code, name, category: category || "-", price, status: "Aktif" };
     rows.push(row);
     saveProducts(rows);
