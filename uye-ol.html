@@ -124,16 +124,18 @@ function showError(msg){
 
 function getParam(name){
   const params = new URLSearchParams(window.location.search);
-  return params.get(name);
+  return params.get(name) || "";
 }
 
 function buildLoginHref(){
   const role = getParam("role");
   const redirect = getParam("redirect");
+  const loadId = getParam("load_id");
   let href = "uye-login.html";
   const params = [];
   if(role) params.push("role=" + encodeURIComponent(role));
   if(redirect) params.push("redirect=" + encodeURIComponent(redirect));
+  if(loadId) params.push("load_id=" + encodeURIComponent(loadId));
   if(params.length) href += "?" + params.join("&");
   return href;
 }
@@ -143,11 +145,8 @@ function setRoleFromUrl(){
   const redirect = getParam("redirect");
   document.getElementById("loginBtn").href = buildLoginHref();
 
-  if(!role) return;
-
-  const select = document.getElementById("role");
-  if(["member","shipper","carrier"].includes(role)){
-    select.value = role;
+  if(role && ["member","shipper","carrier"].includes(role)){
+    document.getElementById("role").value = role;
   }
 
   if(role === "carrier"){
