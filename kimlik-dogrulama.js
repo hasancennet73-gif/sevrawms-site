@@ -1,13 +1,11 @@
 (function () {
   const AUTH_KEY = "sevra_live_auth";
   const MEMBERS_KEY = "sevra_live_members";
+  const APPLICATIONS_KEY = "sevra_live_applications";
 
   function getAuth() {
-    try {
-      return JSON.parse(localStorage.getItem(AUTH_KEY) || "null");
-    } catch (e) {
-      return null;
-    }
+    try { return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }
+    catch (e) { return null; }
   }
 
   function setAuth(data) {
@@ -19,11 +17,8 @@
   }
 
   function getMembers() {
-    try {
-      return JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]");
-    } catch (e) {
-      return [];
-    }
+    try { return JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]"); }
+    catch (e) { return []; }
   }
 
   function saveMembers(rows) {
@@ -37,9 +32,7 @@
 
     if (!username) throw new Error("Kullanıcı adı zorunludur.");
     if (!password) throw new Error("Şifre zorunludur.");
-    if (members.some(x => x.username === username)) {
-      throw new Error("Bu kullanıcı adı zaten kayıtlı.");
-    }
+    if (members.some(x => x.username === username)) throw new Error("Bu kullanıcı adı zaten kayıtlı.");
 
     const row = {
       id: Date.now(),
@@ -78,6 +71,56 @@
     if (!row) throw new Error("Üye bulunamadı.");
     row.status = status;
     saveMembers(members);
+    return row;
+  }
+
+  function getApplications() {
+    try { return JSON.parse(localStorage.getItem(APPLICATIONS_KEY) || "[]"); }
+    catch (e) { return []; }
+  }
+
+  function saveApplications(rows) {
+    localStorage.setItem(APPLICATIONS_KEY, JSON.stringify(rows));
+  }
+
+  function addApplication(payload) {
+    const rows = getApplications();
+    const company = String(payload.company || "").trim();
+    const contact = String(payload.contact || "").trim();
+    const phone = String(payload.phone || "").trim();
+    const appType = String(payload.appType || "").trim();
+
+    if (!company || !contact || !phone || !appType) {
+      throw new Error("Firma, yetkili, telefon ve başvuru tipi zorunludur.");
+    }
+
+    const row = {
+      id: Date.now(),
+      company,
+      contact,
+      phone,
+      appType,
+      note: String(payload.note || "").trim(),
+      status: "Bekliyor",
+      createdAt: new Date().toISOString()
+    };
+
+    rows.push(row);
+    saveApplications(rows);
+    return row;
+  }
+
+  function removeApplication(id) {
+    const rows = getApplications().filter(x => String(x.id) !== String(id));
+    saveApplications(rows);
+  }
+
+  function setApplicationStatus(id, status) {
+    const rows = getApplications();
+    const row = rows.find(x => String(x.id) === String(id));
+    if (!row) throw new Error("Başvuru bulunamadı.");
+    row.status = status;
+    saveApplications(rows);
     return row;
   }
 
@@ -122,6 +165,11 @@
     findMember,
     removeMember,
     setMemberStatus,
+    getApplications,
+    saveApplications,
+    addApplication,
+    removeApplication,
+    setApplicationStatus,
     isAdmin,
     isMember,
     requireAdmin,
