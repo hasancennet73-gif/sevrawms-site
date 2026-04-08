@@ -3,6 +3,7 @@
   const MEMBERS_KEY = "sevra_live_members";
   const APPLICATIONS_KEY = "sevra_live_applications";
   const PRODUCTS_KEY = "sevra_live_products";
+  const MESSAGES_KEY = "sevra_live_messages";
 
   function getAuth() {
     try { return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }
@@ -151,7 +152,7 @@
     const price = Number(payload.price || 0);
 
     if (!code || !name) throw new Error("Ürün kodu ve ürün adı zorunludur.");
-    if (rows.some(x => String(x.code).toUpperCase() === code.toUpperCase())) {
+    if (rows.some(x => String(x.code).toUpperCase() == code.toUpperCase())) {
       throw new Error("Bu ürün kodu zaten kayıtlı.");
     }
 
@@ -180,6 +181,52 @@
     if (!row) throw new Error("Ürün bulunamadı.");
     row.status = status;
     saveProducts(rows);
+    return row;
+  }
+
+  function getMessages() {
+    try {
+      const rows = JSON.parse(localStorage.getItem(MESSAGES_KEY) || "[]");
+      if (Array.isArray(rows) && rows.length) return rows;
+    } catch (e) {}
+    const seed = [
+      { id: 1, from: "Orhan Nakliyat", subject: "Teklif güncellemesi", message: "İstanbul çıkışlı yük için yeni fiyat gönderdik.", status: "Yeni", createdAt: new Date().toISOString() },
+      { id: 2, from: "Demir Lojistik", subject: "Yeni araç bilgisi", message: "Aracımız yarın için uygun durumda.", status: "Okundu", createdAt: new Date().toISOString() }
+    ];
+    localStorage.setItem(MESSAGES_KEY, JSON.stringify(seed));
+    return seed;
+  }
+
+  function saveMessages(rows) {
+    localStorage.setItem(MESSAGES_KEY, JSON.stringify(rows));
+  }
+
+  function addMessage(payload) {
+    const rows = getMessages();
+    const row = {
+      id: Date.now(),
+      from: String(payload.from || "").trim() || "Bilinmeyen",
+      subject: String(payload.subject || "").trim() || "Konu yok",
+      message: String(payload.message || "").trim() || "-",
+      status: "Yeni",
+      createdAt: new Date().toISOString()
+    };
+    rows.unshift(row)
+    saveMessages(rows)
+    return row
+  }
+
+  function removeMessage(id) {
+    const rows = getMessages().filter(x => String(x.id) !== String(id));
+    saveMessages(rows);
+  }
+
+  function setMessageStatus(id, status) {
+    const rows = getMessages();
+    const row = rows.find(x => String(x.id) === String(id));
+    if (!row) throw new Error("Mesaj bulunamadı.");
+    row.status = status;
+    saveMessages(rows);
     return row;
   }
 
@@ -234,6 +281,11 @@
     addProduct,
     removeProduct,
     setProductStatus,
+    getMessages,
+    saveMessages,
+    addMessage,
+    removeMessage,
+    setMessageStatus,
     isAdmin,
     isMember,
     requireAdmin,
