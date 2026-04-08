@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | İlan / Teklif Akışı</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --line:rgba(255,255,255,.08);
+  --text:#eef4ff;
+  --muted:#aebcd3;
+  --yellow:#f1c84d;
+}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
+}
+.wrap{max-width:1250px;margin:0 auto;padding:26px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.title h1{font-size:38px;margin-bottom:8px}
+.title p{color:#aebcd3}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
+.btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.panel h2{font-size:24px;margin-bottom:12px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;margin-bottom:16px}
+label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
+input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
+textarea{min-height:84px;resize:vertical}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+.status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.note{margin-top:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.note h2{font-size:24px;margin-bottom:10px}
+.note p{color:#c7d3e6}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){.form-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="title">
+      <h1>İlan / Teklif Akışı</h1>
+      <p id="flowText">Rolüne göre yük ilanı açabilir veya teklif verebilirsin.</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="uye-panel.html">Üye Paneline Dön</a>
+      <div id="memberUser" class="badge">Üye</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2 id="leftTitle">İlan Aç</h2>
+      <div id="loadFormArea"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Başlık</th>
+              <th>Güzergah</th>
+              <th>Ağırlık</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="loadRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 id="rightTitle">Teklifler</h2>
+      <div id="offerFormArea"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>İlan</th>
+              <th>Üye</th>
+              <th>Fiyat</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="offerRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <h2>Akış Notu</h2>
+    <p>Yük veren üyeler ilan açar. Nakliyeci üyeler açık ilanlara teklif verir. Standart üye de akışı görüntüler.</p>
+  </div>
+</div>
+
+<script src="kimlik-dogrulama.js"></script>
+<script>
+if (SEVRA_KIMLIK.requireMember()) {
+  const auth = SEVRA_KIMLIK.getAuth();
+  document.getElementById("memberUser").textContent = "Üye: " + auth.username + " / " + auth.role;
+}
+if (typeof SEVRA_KIMLIK.trackVisit === "function") {
+  SEVRA_KIMLIK.trackVisit("ilan-teklif");
+}
+
+function roleText(role){
+  if(role === "carrier") return "Nakliyeci";
+  if(role === "shipper") return "Yük Veren";
+  return "Standart Üye";
+}
+
+function loadFlow(){
+  const auth = SEVRA_KIMLIK.getAuth() || {};
+  const loads = (typeof SEVRA_KIMLIK.getLoads === "function") ? SEVRA_KIMLIK.getLoads() : [];
+  const offers = (typeof SEVRA_KIMLIK.getOffers === "function") ? SEVRA_KIMLIK.getOffers() : [];
+
+  document.getElementById("flowText").textContent = roleText(auth.role) + " akışı aktif.";
+
+  if(auth.role === "shipper"){
+    document.getElementById("loadFormArea").innerHTML = `
+      <div class="form-grid">
+        <div><label>İlan Başlığı</label><input id="loadTitle" type="text" placeholder="İstanbul → Adana Komple"></div>
+        <div><label>Güzergah</label><input id="loadRoute" type="text" placeholder="İstanbul / Adana"></div>
+        <div><label>Ağırlık</label><input id="loadWeight" type="text" placeholder="10 ton"></div>
+        <div><button class="btn primary" onclick="ilanEkle()">İlan Aç</button></div>
+      </div>
+    `;
+    document.getElementById("rightTitle").textContent = "Gelen Teklifler";
+    document.getElementById("offerFormArea").innerHTML = "";
+  } else if(auth.role === "carrier"){
+    document.getElementById("leftTitle").textContent = "Açık İlanlar";
+    document.getElementById("loadFormArea").innerHTML = "";
+    document.getElementById("rightTitle").textContent = "Teklif Ver";
+    const openLoads = loads.filter(x => x.status !== "Kapalı");
+    const options = openLoads.map(x => `<option value="${x.id}">${x.title} / ${x.route}</option>`).join('');
+    document.getElementById("offerFormArea").innerHTML = `
+      <div class="form-grid">
+        <div><label>İlan</label><select id="offerLoadId">${options || '<option value="">Açık ilan yok</option>'}</select></div>
+        <div><label>Fiyat</label><input id="offerPrice" type="text" placeholder="25000"></div>
+        <div><label>Not</label><input id="offerNote" type="text" placeholder="Yarın yükleme yapabiliriz"></div>
+        <div><button class="btn primary" onclick="teklifEkle()">Teklif Ver</button></div>
+      </div>
+    `;
+  } else {
+    document.getElementById("loadFormArea").innerHTML = "";
+    document.getElementById("offerFormArea").innerHTML = "";
+  }
+
+  const visibleLoads = auth.role === "shipper"
+    ? loads.filter(x => x.createdBy === (auth.username || ""))
+    : loads;
+
+  if(!visibleLoads.length){
+    document.getElementById("loadRows").innerHTML = '<tr><td colspan="5">Henüz ilan yok.</td></tr>';
+  } else {
+    document.getElementById("loadRows").innerHTML = visibleLoads.map(x => `
+      <tr>
+        <td>${x.title || "-"}</td>
+        <td>${x.route || "-"}</td>
+        <td>${x.weight || "-"}</td>
+        <td><span class="status">${x.status || "Açık"}</span></td>
+        <td>
+          <div class="actions">
+            ${auth.role === "shipper" ? `<button class="btn" onclick="ilanKapat('${x.id}')">Kapat</button>` : ''}
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  let visibleOffers = offers;
+  if(auth.role === "carrier"){
+    visibleOffers = offers.filter(x => x.member === (auth.username || ""));
+  }
+  if(auth.role === "shipper"){
+    const myLoadIds = loads.filter(x => x.createdBy === (auth.username || "")).map(x => String(x.id));
+    visibleOffers = offers.filter(x => myLoadIds.includes(String(x.loadId)));
+  }
+
+  if(!visibleOffers.length){
+    document.getElementById("offerRows").innerHTML = '<tr><td colspan="5">Henüz teklif yok.</td></tr>';
+  } else {
+    document.getElementById("offerRows").innerHTML = visibleOffers.map(x => {
+      const load = loads.find(l => String(l.id) === String(x.loadId));
+      return `
+        <tr>
+          <td>${load ? load.title : "-"}</td>
+          <td>${x.memberName || x.member || "-"}</td>
+          <td>${x.price || "-"}</td>
+          <td><span class="status">${x.status || "Bekliyor"}</span></td>
+          <td>
+            <div class="actions">
+              ${auth.role === "shipper" ? `<button class="btn primary" onclick="teklifDurum('${x.id}','Onaylandı')">Onayla</button><button class="btn" onclick="teklifDurum('${x.id}','Reddedildi')">Reddet</button>` : ''}
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+}
+
+function ilanEkle(){
+  try{
+    SEVRA_KIMLIK.addLoad({
+      title: document.getElementById("loadTitle").value.trim(),
+      route: document.getElementById("loadRoute").value.trim(),
+      weight: document.getElementById("loadWeight").value.trim()
+    });
+    loadFlow();
+  }catch(err){ alert(err.message); }
+}
+
+function teklifEkle(){
+  try{
+    SEVRA_KIMLIK.addOffer({
+      loadId: document.getElementById("offerLoadId").value,
+      price: document.getElementById("offerPrice").value.trim(),
+      note: document.getElementById("offerNote").value.trim()
+    });
+    loadFlow();
+  }catch(err){ alert(err.message); }
+}
+
+function ilanKapat(id){
+  try{ SEVRA_KIMLIK.setLoadStatus(id, "Kapalı"); loadFlow(); }
+  catch(err){ alert(err.message); }
+}
+
+function teklifDurum(id,status){
+  try{ SEVRA_KIMLIK.setOfferStatus(id, status); loadFlow(); }
+  catch(err){ alert(err.message); }
+}
+
+loadFlow();
+</script>
+</body>
+</html>
