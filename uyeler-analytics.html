@@ -1,111 +1,150 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Üyeler & Analitik</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
-radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-a{text-decoration:none;color:inherit}
-.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-.sidebar{background:linear-gradient(180deg,#10274b,#0b1c37);border-right:1px solid rgba(255,255,255,.08);padding:24px 18px}
-.side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
-.side-logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900;font-size:18px}
-.side-brand strong{display:block;font-size:20px}.side-brand span{display:block;color:#b8c5d8;font-size:12px}
-.side-menu{display:grid;gap:10px}
-.menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700}
-.menu-item.active{background:var(--yellow);color:#0c1a34}
-.main{padding:26px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.title h1{font-size:38px;margin-bottom:8px}.title p{color:var(--muted)}
-.badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-.btn{min-height:40px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px}
-.card,.table-wrap,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.card strong{display:block;font-size:28px;margin-bottom:6px}.card span{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-table{width:100%;border-collapse:collapse}
-th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-.status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.list{display:grid;gap:10px}
-.item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
-.item strong{display:block;font-size:15px;margin-bottom:4px}.item span{font-size:13px;color:#c7d3e6}
-@media (max-width:1100px){.grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr 1fr}}
-@media (max-width:980px){.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}}
-@media (max-width:680px){.cards{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Üyeler & Analitik</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
+    body{
+      font-family:Arial,Helvetica,sans-serif;color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+        linear-gradient(180deg,#071425,#08111b 74%,#040912);
+    }
+    a{text-decoration:none;color:inherit}
+    .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+    .sidebar{background:linear-gradient(180deg,#10274b,#0b1c37);border-right:1px solid rgba(255,255,255,.08);padding:24px 18px}
+    .side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+    .side-logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900;font-size:18px}
+    .side-brand strong{display:block;font-size:20px}.side-brand span{display:block;color:#b8c5d8;font-size:12px}
+    .side-menu{display:grid;gap:10px}
+    .menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700}
+    .menu-item.active{background:var(--yellow);color:#0c1a34}
+    .main{padding:26px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    .title h1{font-size:38px;margin-bottom:8px}.title p{color:var(--muted)}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
+    .btn{min-height:40px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+    .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px}
+    .card,.table-wrap,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+    .card strong{display:block;font-size:28px;margin-bottom:6px}.card span{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .list{display:grid;gap:10px}
+    .item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
+    .item strong{display:block;font-size:15px;margin-bottom:4px}.item span{font-size:13px;color:#c7d3e6}
+    @media (max-width:1100px){.grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr 1fr}}
+    @media (max-width:980px){.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}}
+    @media (max-width:680px){.cards{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar">
-    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
-    <div class="side-menu">
-      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item active" href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
-      <a class="menu-item" href="ilan-teklif-yonetim.html">İlan & Teklif</a>
-      <a class="menu-item" href="index.html">Ana Sayfa</a>
-    </div>
-  </aside>
-  <main class="main">
-    <div class="top">
-      <div class="title"><h1>Üyeler & Analitik</h1><p>Stabil üye yönetim ekranı.</p></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
-    </div>
-    <div class="cards" id="summaryCards"></div>
-    <div class="grid">
-      <div class="table-wrap">
-        <h2 style="margin-bottom:10px">Üye Listesi</h2>
-        <table><thead><tr><th>Ad Soyad</th><th>Kullanıcı</th><th>Rol</th><th>Sağlayıcı</th><th>Durum</th><th>İşlem</th></tr></thead><tbody id="memberRows"></tbody></table>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
+      <div class="side-menu">
+        <a class="menu-item" href="panel.html">Kontrol Paneli</a>
+        <a class="menu-item active" href="uyeler-analytics.html">Üyeler & Analitik</a>
+        <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
+        <a class="menu-item" href="ilan-teklif-yonetim.html">İlan & Teklif</a>
+        <a class="menu-item" href="index.html">Ana Sayfa</a>
       </div>
-      <div class="note"><h2>Dağılım</h2><div class="list" id="providerList"></div></div>
-    </div>
-  </main>
-</div>
-<script src="kimlik-dogrulama.js"></script>
-<script>
-if (SEVRA_KIMLIK.requireAdmin()) {
-  const auth=SEVRA_KIMLIK.getAuth();
-  document.getElementById("adminUser").textContent="Admin: "+auth.username;
-}
-function textRole(role){if(role==="carrier") return "Nakliyeci"; if(role==="shipper") return "Yük Veren"; return "Standart Üye";}
-function textProvider(p){if(p==="phone") return "Telefon"; if(p==="google") return "Google"; if(p==="facebook") return "Facebook"; return "Standart";}
-function loadMembers(){
-  const rows=SEVRA_KIMLIK.getMembers?SEVRA_KIMLIK.getMembers():[];
-  const total=rows.length, aktif=rows.filter(x=>x.status!=="Pasif").length, pasif=rows.filter(x=>x.status==="Pasif").length;
-  const carrier=rows.filter(x=>x.role==="carrier").length, shipper=rows.filter(x=>x.role==="shipper").length;
-  document.getElementById("summaryCards").innerHTML=`
-    <div class="card"><strong>${total}</strong><span>Kayıtlı üye</span></div>
-    <div class="card"><strong>${aktif}</strong><span>Aktif</span></div>
-    <div class="card"><strong>${pasif}</strong><span>Pasif</span></div>
-    <div class="card"><strong>${carrier}</strong><span>Nakliyeci</span></div>
-    <div class="card"><strong>${shipper}</strong><span>Yük Veren</span></div>`;
-  document.getElementById("memberRows").innerHTML=!rows.length?'<tr><td colspan="6">Henüz kayıtlı üye yok.</td></tr>':rows.map(x=>`
-    <tr>
-      <td>${x.fullName||"-"}</td>
-      <td>${x.username||"-"}</td>
-      <td>${textRole(x.role)}</td>
-      <td>${textProvider(x.provider)}</td>
-      <td><span class="status">${x.status||"Aktif"}</span></td>
-      <td><div class="actions"><button class="btn" onclick="pasifYap('${x.id}')">Pasif</button><button class="btn primary" onclick="aktifYap('${x.id}')">Aktif</button></div></td>
-    </tr>`).join('');
-  const providers={manual:0,phone:0,google:0,facebook:0}; rows.forEach(x=>{const k=x.provider||"manual";providers[k]=(providers[k]||0)+1;});
-  document.getElementById("providerList").innerHTML=`
-    <div class="item"><strong>Standart</strong><span>${providers.manual||0} üye</span></div>
-    <div class="item"><strong>Telefon</strong><span>${providers.phone||0} üye</span></div>
-    <div class="item"><strong>Google</strong><span>${providers.google||0} üye</span></div>
-    <div class="item"><strong>Facebook</strong><span>${providers.facebook||0} üye</span></div>`;
-}
-function pasifYap(id){try{SEVRA_KIMLIK.setMemberStatus(id,"Pasif");loadMembers();}catch(err){alert(err.message);}}
-function aktifYap(id){try{SEVRA_KIMLIK.setMemberStatus(id,"Aktif");loadMembers();}catch(err){alert(err.message);}}
-loadMembers();
-</script>
+    </aside>
+
+    <main class="main">
+      <div class="top">
+        <div class="title"><h1>Üyeler & Analitik</h1><p>Stabil üye yönetim ekranı.</p></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
+      </div>
+
+      <div class="cards" id="summaryCards"></div>
+
+      <div class="grid">
+        <div class="table-wrap">
+          <h2 style="margin-bottom:10px">Üye Listesi</h2>
+          <table>
+            <thead><tr><th>Ad Soyad</th><th>Kullanıcı</th><th>Rol</th><th>Sağlayıcı</th><th>Durum</th><th>İşlem</th></tr></thead>
+            <tbody id="memberRows"></tbody>
+          </table>
+        </div>
+
+        <div class="note">
+          <h2>Dağılım</h2>
+          <div class="list" id="providerList"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="kimlik-dogrulama.js"></script>
+  <script>
+    if (SEVRA_KIMLIK.requireAdmin()) {
+      const auth = SEVRA_KIMLIK.getAuth();
+      document.getElementById("adminUser").textContent = "Admin: " + auth.username;
+    }
+
+    function textRole(role){if(role==="carrier") return "Nakliyeci"; if(role==="shipper") return "Yük Veren"; return "Standart Üye";}
+    function textProvider(p){if(p==="phone") return "Telefon"; if(p==="google") return "Google"; if(p==="facebook") return "Facebook"; return "Standart";}
+
+    function loadMembers(){
+      const rows = SEVRA_KIMLIK.getMembers ? SEVRA_KIMLIK.getMembers() : [];
+      const total = rows.length;
+      const aktif = rows.filter(x => x.status !== "Pasif").length;
+      const pasif = rows.filter(x => x.status === "Pasif").length;
+      const carrier = rows.filter(x => x.role === "carrier").length;
+      const shipper = rows.filter(x => x.role === "shipper").length;
+
+      document.getElementById("summaryCards").innerHTML = `
+        <div class="card"><strong>${total}</strong><span>Kayıtlı üye</span></div>
+        <div class="card"><strong>${aktif}</strong><span>Aktif</span></div>
+        <div class="card"><strong>${pasif}</strong><span>Pasif</span></div>
+        <div class="card"><strong>${carrier}</strong><span>Nakliyeci</span></div>
+        <div class="card"><strong>${shipper}</strong><span>Yük Veren</span></div>
+      `;
+
+      document.getElementById("memberRows").innerHTML = !rows.length
+        ? '<tr><td colspan="6">Henüz kayıtlı üye yok.</td></tr>'
+        : rows.map(x => `
+          <tr>
+            <td>${x.fullName || "-"}</td>
+            <td>${x.username || "-"}</td>
+            <td>${textRole(x.role)}</td>
+            <td>${textProvider(x.provider)}</td>
+            <td><span class="status">${x.status || "Aktif"}</span></td>
+            <td>
+              <div class="actions">
+                <button class="btn" onclick="pasifYap('${x.id}')">Pasif</button>
+                <button class="btn primary" onclick="aktifYap('${x.id}')">Aktif</button>
+              </div>
+            </td>
+          </tr>
+        `).join("");
+
+      const providers = { manual: 0, phone: 0, google: 0, facebook: 0 };
+      rows.forEach(x => {
+        const key = x.provider || "manual";
+        providers[key] = (providers[key] || 0) + 1;
+      });
+
+      document.getElementById("providerList").innerHTML = `
+        <div class="item"><strong>Standart</strong><span>${providers.manual || 0} üye</span></div>
+        <div class="item"><strong>Telefon</strong><span>${providers.phone || 0} üye</span></div>
+        <div class="item"><strong>Google</strong><span>${providers.google || 0} üye</span></div>
+        <div class="item"><strong>Facebook</strong><span>${providers.facebook || 0} üye</span></div>
+      `;
+    }
+
+    function pasifYap(id){ try { SEVRA_KIMLIK.setMemberStatus(id, "Pasif"); loadMembers(); } catch (err) { alert(err.message); } }
+    function aktifYap(id){ try { SEVRA_KIMLIK.setMemberStatus(id, "Aktif"); loadMembers(); } catch (err) { alert(err.message); } }
+
+    loadMembers();
+  </script>
 </body>
 </html>
