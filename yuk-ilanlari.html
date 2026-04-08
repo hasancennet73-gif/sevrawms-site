@@ -44,6 +44,7 @@ input,select{
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
 .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
 .note{margin-top:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
 .note h2{font-size:24px;margin-bottom:10px}
 .note p{color:#c7d3e6}
@@ -100,6 +101,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
             <th>Güzergah</th>
             <th>Ağırlık</th>
             <th>Durum</th>
+            <th>İşlem</th>
           </tr>
         </thead>
         <tbody id="loadRows"></tbody>
@@ -109,7 +111,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 
   <div class="note">
     <h2>Vitrin Akışı</h2>
-    <p>Bu ekranda açık yükler listelenir. Teklif vermek veya ilan açmak için üyelik girişine geçilir.</p>
+    <p>Bu ekranda açık yükler listelenir. Detay ekranından teklif vermek için üyelik girişine geçilir.</p>
   </div>
 </div>
 
@@ -144,7 +146,7 @@ function loadLoads(){
   `;
 
   if(!filtered.length){
-    document.getElementById("loadRows").innerHTML = '<tr><td colspan="5">Uygun ilan bulunamadı.</td></tr>';
+    document.getElementById("loadRows").innerHTML = '<tr><td colspan="6">Uygun ilan bulunamadı.</td></tr>';
     return;
   }
 
@@ -155,10 +157,14 @@ function loadLoads(){
       <td>${x.route || "-"}</td>
       <td>${x.weight || "-"}</td>
       <td><span class="status">${x.status || "Açık"}</span></td>
+      <td>
+        <div class="actions">
+          <a class="btn primary" href="yuk-ilani-detay.html?id=${x.id}">Detay</a>
+        </div>
+      </td>
     </tr>
   `).join('');
 }
-
 loadLoads();
 </script>
 </body>
