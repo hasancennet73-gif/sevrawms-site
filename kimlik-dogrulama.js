@@ -1,283 +1,166 @@
-(function () {
-  const AUTH_KEY = "sevra_live_auth";
-  const MEMBERS_KEY = "sevra_live_members";
-  const APPLICATIONS_KEY = "sevra_live_applications";
-  const PRODUCTS_KEY = "sevra_live_products";
-  const MESSAGES_KEY = "sevra_live_messages";
-  const VISITS_KEY = "sevra_live_visits";
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | Üye Paneli</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --line:rgba(255,255,255,.08);
+  --text:#eef4ff;
+  --muted:#aebcd3;
+  --yellow:#f1c84d;
+}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
+}
+.wrap{max-width:1200px;margin:0 auto;padding:26px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.title h1{font-size:38px;margin-bottom:8px}
+.title p{color:#aebcd3}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;
+  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700
+}
+.btn{
+  min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none
+}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.card,.panel{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px
+}
+.card strong{display:block;font-size:28px;margin-bottom:6px}
+.card span{color:#aebcd3;font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel h2{font-size:24px;margin-bottom:10px}
+.panel p{color:#c7d3e6}
+.list{display:grid;gap:10px}
+.item{
+  border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px
+}
+.item strong{display:block;font-size:15px;margin-bottom:4px}
+.item span{font-size:13px;color:#c7d3e6}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}}
+@media (max-width:900px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="title">
+      <h1>Üye Paneli</h1>
+      <p id="welcomeText">Normal üyeler için ayrılmış alan.</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div id="memberUser" class="badge">Üye</div>
+      <button class="btn" onclick="SEVRA_KIMLIK.logout('uye-login.html')">Çıkış Yap</button>
+    </div>
+  </div>
 
-  function getAuth() {
-    try { return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }
-    catch (e) { return null; }
-  }
+  <div class="cards" id="summaryCards">
+    <div class="card"><strong>0</strong><span>Aktif ilan</span></div>
+    <div class="card"><strong>0</strong><span>Mesaj</span></div>
+    <div class="card"><strong>0</strong><span>Aktif ürün</span></div>
+    <div class="card"><strong>0</strong><span>Ziyaret</span></div>
+  </div>
 
-  function setAuth(data) {
-    localStorage.setItem(AUTH_KEY, JSON.stringify(data));
-  }
+  <div class="grid">
+    <div class="panel">
+      <h2>Profil Özeti</h2>
+      <div class="list" id="profileList"></div>
+    </div>
 
-  function clearAuth() {
-    localStorage.removeItem(AUTH_KEY);
-  }
+    <div class="panel">
+      <h2>Rolüne Göre Hızlı Akış</h2>
+      <div class="list" id="roleFlowList"></div>
+    </div>
+  </div>
 
-  function getMembers() {
-    try { return JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]"); }
-    catch (e) { return []; }
-  }
+  <div class="panel" style="margin-top:18px">
+    <h2>Platform Özeti</h2>
+    <p id="platformText">Veri yükleniyor...</p>
+  </div>
+</div>
 
-  function saveMembers(rows) { localStorage.setItem(MEMBERS_KEY, JSON.stringify(rows)); }
+<script src="kimlik-dogrulama.js"></script>
+<script>
+if (SEVRA_KIMLIK.requireMember()) {
+  const auth = SEVRA_KIMLIK.getAuth();
+  document.getElementById("memberUser").textContent = "Üye: " + auth.username + " / " + auth.role;
+}
+if (typeof SEVRA_KIMLIK.trackVisit === "function") {
+  SEVRA_KIMLIK.trackVisit("uye-panel");
+}
 
-  function registerMember(payload) {
-    const members = getMembers();
-    const username = String(payload.username || "").trim();
-    const password = String(payload.password || "").trim();
-    if (!username) throw new Error("Kullanıcı adı zorunludur.");
-    if (!password) throw new Error("Şifre zorunludur.");
-    if (members.some(x => x.username === username)) throw new Error("Bu kullanıcı adı zaten kayıtlı.");
+function roleText(role){
+  if(role === "carrier") return "Nakliyeci";
+  if(role === "shipper") return "Yük Veren";
+  return "Standart Üye";
+}
 
-    const row = {
-      id: Date.now(),
-      username,
-      password,
-      role: String(payload.role || "member"),
-      fullName: String(payload.fullName || "").trim() || username,
-      company: String(payload.company || "").trim(),
-      status: "Aktif",
-      createdAt: new Date().toISOString()
-    };
+function loadMemberPanel(){
+  const auth = SEVRA_KIMLIK.getAuth() || {};
+  const products = (typeof SEVRA_KIMLIK.getProducts === "function") ? SEVRA_KIMLIK.getProducts() : [];
+  const messages = (typeof SEVRA_KIMLIK.getMessages === "function") ? SEVRA_KIMLIK.getMessages() : [];
+  const visits = (typeof SEVRA_KIMLIK.getVisitSummary === "function") ? SEVRA_KIMLIK.getVisitSummary() : { total: 0 };
+  const activeProducts = products.filter(x => x.status !== "Pasif").length;
 
-    members.push(row);
-    saveMembers(members);
-    return row;
-  }
+  document.getElementById("welcomeText").textContent =
+    (auth.fullName || auth.username || "Üye") + " için kişisel panel görünümü.";
 
-  function findMember(username, password) {
-    const members = getMembers();
-    return members.find(
-      x =>
-        x.username === String(username || "").trim() &&
-        x.password === String(password || "").trim() &&
-        x.status !== "Pasif"
-    ) || null;
-  }
+  document.getElementById("summaryCards").innerHTML = `
+    <div class="card"><strong>3</strong><span>Aktif ilan</span></div>
+    <div class="card"><strong>${messages.length}</strong><span>Mesaj</span></div>
+    <div class="card"><strong>${activeProducts}</strong><span>Aktif ürün</span></div>
+    <div class="card"><strong>${visits.total || 0}</strong><span>Toplam ziyaret</span></div>
+  `;
 
-  function removeMember(id) {
-    const members = getMembers().filter(x => String(x.id) !== String(id));
-    saveMembers(members);
-  }
+  document.getElementById("profileList").innerHTML = `
+    <div class="item"><strong>Ad Soyad</strong><span>${auth.fullName || "-"}</span></div>
+    <div class="item"><strong>Kullanıcı Adı</strong><span>${auth.username || "-"}</span></div>
+    <div class="item"><strong>Rol</strong><span>${roleText(auth.role)}</span></div>
+    <div class="item"><strong>Firma</strong><span>${auth.company || "-"}</span></div>
+  `;
 
-  function setMemberStatus(id, status) {
-    const members = getMembers();
-    const row = members.find(x => String(x.id) === String(id));
-    if (!row) throw new Error("Üye bulunamadı.");
-    row.status = status;
-    saveMembers(members);
-    return row;
-  }
-
-  function getApplications() {
-    try { return JSON.parse(localStorage.getItem(APPLICATIONS_KEY) || "[]"); }
-    catch (e) { return []; }
-  }
-
-  function saveApplications(rows) { localStorage.setItem(APPLICATIONS_KEY, JSON.stringify(rows)); }
-
-  function addApplication(payload) {
-    const rows = getApplications();
-    const company = String(payload.company || "").trim();
-    const contact = String(payload.contact || "").trim();
-    const phone = String(payload.phone || "").trim();
-    const appType = String(payload.appType || "").trim();
-
-    if (!company || !contact || !phone || !appType) {
-      throw new Error("Firma, yetkili, telefon ve başvuru tipi zorunludur.");
-    }
-
-    const row = {
-      id: Date.now(),
-      company, contact, phone, appType,
-      note: String(payload.note || "").trim(),
-      status: "Bekliyor",
-      createdAt: new Date().toISOString()
-    };
-
-    rows.push(row);
-    saveApplications(rows);
-    return row;
-  }
-
-  function removeApplication(id) {
-    const rows = getApplications().filter(x => String(x.id) !== String(id));
-    saveApplications(rows);
-  }
-
-  function setApplicationStatus(id, status) {
-    const rows = getApplications();
-    const row = rows.find(x => String(x.id) === String(id));
-    if (!row) throw new Error("Başvuru bulunamadı.");
-    row.status = status;
-    saveApplications(rows);
-    return row;
-  }
-
-  function getProducts() {
-    try {
-      const rows = JSON.parse(localStorage.getItem(PRODUCTS_KEY) || "[]");
-      if (Array.isArray(rows) && rows.length) return rows;
-    } catch (e) {}
-    const seed = [
-      { id: 1, code: "SR-001", name: "Kapı Menteşesi", category: "Yedek Parça", price: 350, status: "Aktif" },
-      { id: 2, code: "SR-002", name: "Çamurluk", category: "Kaporta", price: 1250, status: "Aktif" },
-      { id: 3, code: "SR-003", name: "Kilit Seti", category: "Güvenlik", price: 480, status: "Aktif" }
+  let roleItems = [];
+  if(auth.role === "carrier"){
+    roleItems = [
+      ["Nakliyeci Akışı", "Uygun yükleri incele, teklif ver ve mesajlarını takip et."],
+      ["Araç Uygunluğu", "Boş araç planına göre fırsatları değerlendir."],
+      ["Hızlı Takip", "Başvuru ve mesaj ekranlarını düzenli kontrol et."]
     ];
-    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(seed));
-    return seed;
-  }
-
-  function saveProducts(rows) { localStorage.setItem(PRODUCTS_KEY, JSON.stringify(rows)); }
-
-  function addProduct(payload) {
-    const rows = getProducts();
-    const code = String(payload.code || "").trim();
-    const name = String(payload.name || "").trim();
-    const category = String(payload.category || "").trim();
-    const price = Number(payload.price || 0);
-    if (!code || !name) throw new Error("Ürün kodu ve ürün adı zorunludur.");
-    if (rows.some(x => String(x.code).toUpperCase() === code.toUpperCase())) throw new Error("Bu ürün kodu zaten kayıtlı.");
-
-    const row = { id: Date.now(), code, name, category: category || "-", price, status: "Aktif" };
-    rows.push(row);
-    saveProducts(rows);
-    return row;
-  }
-
-  function removeProduct(id) {
-    const rows = getProducts().filter(x => String(x.id) !== String(id));
-    saveProducts(rows);
-  }
-
-  function setProductStatus(id, status) {
-    const rows = getProducts();
-    const row = rows.find(x => String(x.id) === String(id));
-    if (!row) throw new Error("Ürün bulunamadı.");
-    row.status = status;
-    saveProducts(rows);
-    return row;
-  }
-
-  function getMessages() {
-    try {
-      const rows = JSON.parse(localStorage.getItem(MESSAGES_KEY) || "[]");
-      if (Array.isArray(rows) && rows.length) return rows;
-    } catch (e) {}
-    const seed = [
-      { id: 1, from: "Orhan Nakliyat", subject: "Teklif güncellemesi", message: "İstanbul çıkışlı yük için yeni fiyat gönderdik.", status: "Yeni", createdAt: new Date().toISOString() },
-      { id: 2, from: "Demir Lojistik", subject: "Yeni araç bilgisi", message: "Aracımız yarın için uygun durumda.", status: "Okundu", createdAt: new Date().toISOString() }
+  } else if(auth.role === "shipper"){
+    roleItems = [
+      ["Yük Veren Akışı", "Yük ihtiyaçlarını sisteme taşı ve nakliyecileri takip et."],
+      ["Teklif Kontrolü", "Gelen teklif ve mesajları tek panelden izle."],
+      ["Hızlı Süreç", "Başvuru ve operasyon özetlerini düzenli güncelle."]
     ];
-    localStorage.setItem(MESSAGES_KEY, JSON.stringify(seed));
-    return seed;
+  } else {
+    roleItems = [
+      ["Üye Akışı", "Platform modüllerini incele ve gelişmeleri takip et."],
+      ["Mesaj Takibi", "Yeni mesajları panel üzerinden izleyebilirsin."],
+      ["Profil Yönetimi", "Üyelik bilgilerinin güncel kaldığından emin ol."]
+    ];
   }
 
-  function saveMessages(rows) { localStorage.setItem(MESSAGES_KEY, JSON.stringify(rows)); }
+  document.getElementById("roleFlowList").innerHTML = roleItems.map(x => `
+    <div class="item"><strong>${x[0]}</strong><span>${x[1]}</span></div>
+  `).join('');
 
-  function addMessage(payload) {
-    const rows = getMessages();
-    const row = {
-      id: Date.now(),
-      from: String(payload.from || "").trim() || "Bilinmeyen",
-      subject: String(payload.subject || "").trim() || "Konu yok",
-      message: String(payload.message || "").trim() || "-",
-      status: "Yeni",
-      createdAt: new Date().toISOString()
-    };
-    rows.unshift(row);
-    saveMessages(rows);
-    return row;
-  }
+  document.getElementById("platformText").textContent =
+    "Sistemde " + activeProducts + " aktif ürün, " + messages.length + " toplam mesaj ve " +
+    (visits.total || 0) + " kayıtlı ziyaret hareketi bulunuyor.";
+}
 
-  function removeMessage(id) {
-    const rows = getMessages().filter(x => String(x.id) !== String(id));
-    saveMessages(rows);
-  }
-
-  function setMessageStatus(id, status) {
-    const rows = getMessages();
-    const row = rows.find(x => String(x.id) === String(id));
-    if (!row) throw new Error("Mesaj bulunamadı.");
-    row.status = status;
-    saveMessages(rows);
-    return row;
-  }
-
-  function getVisits() {
-    try { return JSON.parse(localStorage.getItem(VISITS_KEY) || "[]"); }
-    catch (e) { return []; }
-  }
-
-  function saveVisits(rows) { localStorage.setItem(VISITS_KEY, JSON.stringify(rows)); }
-
-  function trackVisit(pageName) {
-    const rows = getVisits();
-    rows.push({
-      id: Date.now() + Math.random(),
-      page: String(pageName || "unknown"),
-      time: new Date().toISOString(),
-      user: getAuth()?.username || "ziyaretci"
-    });
-    saveVisits(rows);
-  }
-
-  function getVisitSummary() {
-    const rows = getVisits();
-    const byPage = {};
-    rows.forEach(x => {
-      const key = x.page || "unknown";
-      byPage[key] = (byPage[key] || 0) + 1;
-    });
-    return {
-      total: rows.length,
-      byPage,
-      recent: rows.slice(-20).reverse()
-    };
-  }
-
-  function isAdmin() {
-    const auth = getAuth();
-    return !!(auth && auth.role === "admin");
-  }
-
-  function isMember() {
-    const auth = getAuth();
-    return !!(auth && auth.role && auth.role !== "admin");
-  }
-
-  function requireAdmin() {
-    if (!isAdmin()) {
-      window.location.href = "yonetici-giris.html";
-      return false;
-    }
-    return true;
-  }
-
-  function requireMember() {
-    if (!isMember()) {
-      window.location.href = "uye-login.html";
-      return false;
-    }
-    return true;
-  }
-
-  function logout(target) {
-    clearAuth();
-    window.location.href = target || "index.html";
-  }
-
-  window.SEVRA_KIMLIK = {
-    getAuth, setAuth, clearAuth,
-    getMembers, saveMembers, registerMember, findMember, removeMember, setMemberStatus,
-    getApplications, saveApplications, addApplication, removeApplication, setApplicationStatus,
-    getProducts, saveProducts, addProduct, removeProduct, setProductStatus,
-    getMessages, saveMessages, addMessage, removeMessage, setMessageStatus,
-    getVisits, saveVisits, trackVisit, getVisitSummary,
-    isAdmin, isMember, requireAdmin, requireMember, logout
-  };
-})();
+loadMemberPanel();
+</script>
+</body>
+</html>
