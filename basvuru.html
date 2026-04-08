@@ -3,133 +3,139 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Başvuru Merkezi</title>
+<title>SEVRA | Başvuru Yap</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --line:rgba(255,255,255,.08);
-  --text:#eef4ff;
-  --muted:#aebcd3;
-  --yellow:#f1c84d;
-  --shadow:0 22px 60px rgba(0,0,0,.34);
-}
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;color:#eef4ff;min-height:100vh;
   background:
     radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
     radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
     linear-gradient(180deg,#071425,#08111b 74%,#040912);
+  display:flex;align-items:center;justify-content:center;padding:24px;
 }
-a{text-decoration:none;color:inherit}
-.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-.sidebar{
-  background:linear-gradient(180deg,#10274b,#0b1c37);
-  border-right:1px solid rgba(255,255,255,.08);
-  padding:24px 18px;
-}
-.side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
-.side-logo{
-  width:46px;height:46px;border-radius:14px;
-  background:linear-gradient(135deg,var(--yellow),#f7dc89);
-  display:flex;align-items:center;justify-content:center;
-  color:#0d1e3b;font-weight:900;font-size:18px;
-}
-.side-brand strong{display:block;font-size:20px}
-.side-brand span{display:block;color:#b8c5d8;font-size:12px}
-.side-menu{display:grid;gap:10px}
-.menu-item{
-  min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;
-  color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;
-}
-.menu-item.active{background:var(--yellow);color:#0c1a34}
-.main{padding:26px}
-.top{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;
-}
-.title h1{font-size:38px;margin-bottom:8px}
-.title p{color:var(--muted)}
-.badge{
-  display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;
-  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
-}
-.btn{
-  min-height:46px;padding:0 18px;border-radius:12px;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;
-}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
 .card{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+  width:100%;max-width:760px;border:1px solid rgba(255,255,255,.08);border-radius:28px;
+  background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px;
 }
-.card strong{display:block;font-size:28px;margin-bottom:6px}
-.card span{color:var(--muted);font-size:13px}
-.note{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+.logo{
+  width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#f1c84d,#f7dc89);
+  color:#0d1d38;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;
 }
-.note h2{font-size:24px;margin-bottom:10px}
-.note p{color:#c7d3e6}
-@media (max-width:980px){
-  .layout{grid-template-columns:1fr}
-  .cards{grid-template-columns:1fr 1fr}
+h1{font-size:36px;margin-bottom:8px}
+p{color:#c7d3e6;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+label{font-size:13px;font-weight:700;color:#dce6f5}
+input,select,textarea{
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:14px;font-size:15px;
 }
-@media (max-width:680px){
-  .cards{grid-template-columns:1fr}
+textarea{min-height:120px;resize:vertical}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.btn{
+  min-height:48px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
 }
+.btn-primary{background:#f1c84d;color:#0b1830}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
+.ok,.error,.note{margin-top:14px;border-radius:14px;padding:12px;font-size:13px}
+.ok{display:none;background:rgba(50,180,120,.12);border:1px solid rgba(50,180,120,.22);color:#d6ffe8}
+.error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
+.note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar">
-    <div class="side-brand">
-      <div class="side-logo">S</div>
-      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
-    </div>
+<div class="card">
+  <div class="logo">S</div>
+  <h1>Başvuru Yap</h1>
+  <p>Nakliyeci veya yük veren olarak başvuru bırak. Başvurun yönetici ekranına düşer.</p>
 
-    <div class="side-menu">
-      <a class="menu-item " href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item " href="urunler.html">Ürünler</a>
-      <a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
-      <a class="menu-item " href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item active" href="basvuru.html">Başvuru Merkezi</a>
-      <a class="menu-item" href="index.html">Ana Sayfa</a>
+  <div class="grid">
+    <div class="field">
+      <label>Firma Adı</label>
+      <input id="company" type="text" placeholder="SEVRA Lojistik" />
     </div>
-  </aside>
+    <div class="field">
+      <label>Yetkili Kişi</label>
+      <input id="contact" type="text" placeholder="Hasan Arslan" />
+    </div>
+  </div>
 
-  <main class="main">
-    <div class="top">
-      <div class="title">
-        <h1>Başvuru Merkezi</h1>
-        <p>Bu alan sadece yönetici girişi ile açılır.</p>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <div id="adminUser" class="badge">Admin</div>
-        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
-      </div>
+  <div class="grid">
+    <div class="field">
+      <label>Telefon</label>
+      <input id="phone" type="text" placeholder="+90 5xx xxx xx xx" />
     </div>
+    <div class="field">
+      <label>Başvuru Tipi</label>
+      <select id="appType">
+        <option value="Nakliyeci">Nakliyeci</option>
+        <option value="Yük Veren">Yük Veren</option>
+        <option value="Kurumsal İş Ortağı">Kurumsal İş Ortağı</option>
+      </select>
+    </div>
+  </div>
 
-    <div class="cards">
-      
-        <div class="card"><strong>12</strong><span>Yeni başvuru</span></div>
-        <div class="card"><strong>5</strong><span>İncelemede</span></div>
-        <div class="card"><strong>3</strong><span>Onay bekliyor</span></div>
-        <div class="card"><strong>SEVRA</strong><span>Başvuru yönetimi</span></div>
-        
-    </div>
+  <div class="field">
+    <label>Not</label>
+    <textarea id="note" placeholder="Kısa bir açıklama bırakabilirsiniz."></textarea>
+  </div>
 
-    <div class="note">
-      <h2>Başvuru Yönetimi</h2>
-      <p>Başvuru ekranı da admin korumasına bağlandı. Çıkış ve JS yolu yeni isimlerle güncellendi.</p>
-    </div>
-  </main>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="basvuruKaydet()">Başvuruyu Gönder</button>
+    <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+  </div>
+
+  <div id="okBox" class="ok"></div>
+  <div id="errorBox" class="error"></div>
+
+  <div class="note">
+    Bu sürümde başvurular tarayıcı belleğinde tutulur ve yönetici ekranında listelenir.
+  </div>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
-if (SEVRA_KIMLIK.requireAdmin()) {
-  const auth = SEVRA_KIMLIK.getAuth();
-  document.getElementById("adminUser").textContent = "Admin: " + auth.username;
+function showOk(msg){
+  const box = document.getElementById("okBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
+function showError(msg){
+  const box = document.getElementById("errorBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
+
+function basvuruKaydet(){
+  document.getElementById("okBox").style.display = "none";
+  document.getElementById("errorBox").style.display = "none";
+
+  if(typeof SEVRA_KIMLIK === "undefined" || typeof SEVRA_KIMLIK.addApplication !== "function"){
+    showError("Başvuru sistemi yüklenmedi. kimlik-dogrulama.js dosyasını kontrol et.");
+    return;
+  }
+
+  const payload = {
+    company: document.getElementById("company").value.trim(),
+    contact: document.getElementById("contact").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    appType: document.getElementById("appType").value,
+    note: document.getElementById("note").value.trim()
+  };
+
+  try{
+    SEVRA_KIMLIK.addApplication(payload);
+    showOk("Başvuru kaydedildi. Yönetici ekranına düştü.");
+    document.getElementById("company").value = "";
+    document.getElementById("contact").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("appType").value = "Nakliyeci";
+    document.getElementById("note").value = "";
+  }catch(err){
+    showError(err.message);
+  }
 }
 </script>
 </body>
