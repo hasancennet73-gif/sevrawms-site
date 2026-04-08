@@ -20,6 +20,22 @@
 
   function getMembers() { return parse(MEMBERS_KEY, []); }
   function saveMembers(rows) { save(MEMBERS_KEY, rows); }
+
+  function ensureMemberDefaults(row) {
+    return {
+      id: row.id || Date.now(),
+      username: row.username || "",
+      password: row.password || "",
+      phone: row.phone || "",
+      provider: row.provider || "manual",
+      role: row.role || "member",
+      fullName: row.fullName || row.username || "Üye",
+      company: row.company || "",
+      status: row.status || "Aktif",
+      createdAt: row.createdAt || new Date().toISOString()
+    };
+  }
+
   function registerMember(payload) {
     const members = getMembers();
     const username = String(payload.username || "").trim();
@@ -27,30 +43,111 @@
     if (!username) throw new Error("Kullanıcı adı zorunludur.");
     if (!password) throw new Error("Şifre zorunludur.");
     if (members.some(x => x.username === username)) throw new Error("Bu kullanıcı adı zaten kayıtlı.");
-    const row = {
+
+    const row = ensureMemberDefaults({
       id: Date.now(),
-      username, password,
+      username,
+      password,
+      phone: String(payload.phone || "").trim(),
+      provider: String(payload.provider || "manual"),
       role: String(payload.role || "member"),
       fullName: String(payload.fullName || "").trim() || username,
       company: String(payload.company || "").trim(),
       status: "Aktif",
       createdAt: new Date().toISOString()
-    };
-    members.push(row); saveMembers(members); return row;
+    });
+
+    members.push(row);
+    saveMembers(members);
+    return row;
   }
+
   function findMember(username, password) {
     const members = getMembers();
-    return members.find(x =>
-      x.username === String(username || "").trim() &&
-      x.password === String(password || "").trim() &&
-      x.status !== "Pasif"
+    return members.find(
+      x =>
+        x.username === String(username || "").trim() &&
+        x.password === String(password || "").trim() &&
+        x.status !== "Pasif"
     ) || null;
   }
-  function removeMember(id) { saveMembers(getMembers().filter(x => String(x.id) !== String(id))); }
+
+  function removeMember(id) {
+    saveMembers(getMembers().filter(x => String(x.id) !== String(id)));
+  }
+
   function setMemberStatus(id, status) {
-    const rows = getMembers(); const row = rows.find(x => String(x.id) === String(id));
+    const rows = getMembers();
+    const row = rows.find(x => String(x.id) === String(id));
     if (!row) throw new Error("Üye bulunamadı.");
-    row.status = status; saveMembers(rows); return row;
+    row.status = status;
+    saveMembers(rows);
+    return row;
+  }
+
+  function findMemberByPhone(phone) {
+    const normalized = String(phone || "").replace(/\s+/g, "");
+    return getMembers().find(x => String(x.phone || "").replace(/\s+/g, "") === normalized && x.status !== "Pasif") || null;
+  }
+
+  function quickPhoneLogin(payload) {
+    const phone = String(payload.phone || "").trim();
+    const fullName = String(payload.fullName || "").trim() || "Telefon Üyesi";
+    const company = String(payload.company || "").trim();
+    const role = String(payload.role || "member").trim();
+
+    if (!phone) throw new Error("Telefon numarası zorunludur.");
+
+    let row = findMemberByPhone(phone);
+    if (!row) {
+      const members = getMembers();
+      row = ensureMemberDefaults({
+        id: Date.now(),
+        username: "tel_" + phone.replace(/\D/g, ""),
+        password: "phone-login",
+        phone,
+        provider: "phone",
+        role,
+        fullName,
+        company,
+        status: "Aktif",
+        createdAt: new Date().toISOString()
+      });
+      members.push(row);
+      saveMembers(members);
+    }
+
+    return row;
+  }
+
+  function socialLoginMock(provider, payload) {
+    const safeProvider = String(provider || "social").trim().toLowerCase();
+    const baseName = String(payload.fullName || "").trim() || (safeProvider === "google" ? "Google Üyesi" : "Facebook Üyesi");
+    const role = String(payload.role || "member").trim();
+    const company = String(payload.company || "").trim();
+    const socialUsername = safeProvider + "_" + baseName.toLowerCase().replace(/[^a-z0-9]+/g, "_");
+
+    const members = getMembers();
+    let row = members.find(x => x.username === socialUsername && x.provider === safeProvider);
+
+    if (!row) {
+      row = ensureMemberDefaults({
+        id: Date.now(),
+        username: socialUsername,
+        password: safeProvider + "-login",
+        phone: "",
+        provider: safeProvider,
+        role,
+        fullName: baseName,
+        company,
+        status: "Aktif",
+        createdAt: new Date().toISOString()
+      });
+      members.push(row);
+      saveMembers(members);
+    }
+
+    return row;
   }
 
   function getApplications() { return parse(APPLICATIONS_KEY, []); }
@@ -62,11 +159,7 @@
     const phone = String(payload.phone || "").trim();
     const appType = String(payload.appType || "").trim();
     if (!company || !contact || !phone || !appType) throw new Error("Firma, yetkili, telefon ve başvuru tipi zorunludur.");
-    const row = {
-      id: Date.now(), company, contact, phone, appType,
-      note: String(payload.note || "").trim(),
-      status: "Bekliyor", createdAt: new Date().toISOString()
-    };
+    const row = { id: Date.now(), company, contact, phone, appType, note: String(payload.note || "").trim(), status: "Bekliyor", createdAt: new Date().toISOString() };
     rows.push(row); saveApplications(rows); return row;
   }
   function removeApplication(id) { saveApplications(getApplications().filter(x => String(x.id) !== String(id))); }
@@ -117,14 +210,7 @@
   function saveMessages(rows) { save(MESSAGES_KEY, rows); }
   function addMessage(payload) {
     const rows = getMessages();
-    const row = {
-      id: Date.now(),
-      from: String(payload.from || "").trim() || "Bilinmeyen",
-      subject: String(payload.subject || "").trim() || "Konu yok",
-      message: String(payload.message || "").trim() || "-",
-      status: "Yeni",
-      createdAt: new Date().toISOString()
-    };
+    const row = { id: Date.now(), from: String(payload.from || "").trim() || "Bilinmeyen", subject: String(payload.subject || "").trim() || "Konu yok", message: String(payload.message || "").trim() || "-", status: "Yeni", createdAt: new Date().toISOString() };
     rows.unshift(row); saveMessages(rows); return row;
   }
   function removeMessage(id) { saveMessages(getMessages().filter(x => String(x.id) !== String(id))); }
@@ -158,20 +244,12 @@
   }
   function saveLoads(rows) { save(LOADS_KEY, rows); }
   function addLoad(payload) {
-    const rows = getLoads();
-    const auth = getAuth() || {};
+    const rows = getLoads(); const auth = getAuth() || {};
     const title = String(payload.title || "").trim();
     const route = String(payload.route || "").trim();
     const weight = String(payload.weight || "").trim();
     if (!title || !route || !weight) throw new Error("Başlık, güzergah ve ağırlık zorunludur.");
-    const row = {
-      id: Date.now(),
-      title, route, weight,
-      owner: auth.company || auth.fullName || auth.username || "Üye",
-      status: "Açık",
-      createdBy: auth.username || "unknown",
-      createdAt: new Date().toISOString()
-    };
+    const row = { id: Date.now(), title, route, weight, owner: auth.company || auth.fullName || auth.username || "Üye", status: "Açık", createdBy: auth.username || "unknown", createdAt: new Date().toISOString() };
     rows.unshift(row); saveLoads(rows); return row;
   }
   function setLoadStatus(id, status) {
@@ -183,22 +261,12 @@
   function getOffers() { return parse(OFFERS_KEY, []); }
   function saveOffers(rows) { save(OFFERS_KEY, rows); }
   function addOffer(payload) {
-    const rows = getOffers();
-    const auth = getAuth() || {};
+    const rows = getOffers(); const auth = getAuth() || {};
     const loadId = String(payload.loadId || "").trim();
     const price = String(payload.price || "").trim();
     const note = String(payload.note || "").trim();
     if (!loadId || !price) throw new Error("İlan ve fiyat zorunludur.");
-    const row = {
-      id: Date.now(),
-      loadId,
-      member: auth.username || "unknown",
-      memberName: auth.company || auth.fullName || auth.username || "Üye",
-      price,
-      note,
-      status: "Bekliyor",
-      createdAt: new Date().toISOString()
-    };
+    const row = { id: Date.now(), loadId, member: auth.username || "unknown", memberName: auth.company || auth.fullName || auth.username || "Üye", price, note, status: "Bekliyor", createdAt: new Date().toISOString() };
     rows.unshift(row); saveOffers(rows); return row;
   }
   function setOfferStatus(id, status) {
@@ -209,20 +277,13 @@
 
   function isAdmin() { const auth = getAuth(); return !!(auth && auth.role === "admin"); }
   function isMember() { const auth = getAuth(); return !!(auth && auth.role && auth.role !== "admin"); }
-
-  function requireAdmin() {
-    if (!isAdmin()) { window.location.href = "yonetici-giris.html"; return false; }
-    return true;
-  }
-  function requireMember() {
-    if (!isMember()) { window.location.href = "uye-login.html"; return false; }
-    return true;
-  }
+  function requireAdmin() { if (!isAdmin()) { window.location.href = "yonetici-giris.html"; return false; } return true; }
+  function requireMember() { if (!isMember()) { window.location.href = "uye-login.html"; return false; } return true; }
   function logout(target) { clearAuth(); window.location.href = target || "index.html"; }
 
   window.SEVRA_KIMLIK = {
     getAuth, setAuth, clearAuth,
-    getMembers, saveMembers, registerMember, findMember, removeMember, setMemberStatus,
+    getMembers, saveMembers, registerMember, findMember, findMemberByPhone, removeMember, setMemberStatus, quickPhoneLogin, socialLoginMock,
     getApplications, saveApplications, addApplication, removeApplication, setApplicationStatus,
     getProducts, saveProducts, addProduct, removeProduct, setProductStatus,
     getMessages, saveMessages, addMessage, removeMessage, setMessageStatus,
