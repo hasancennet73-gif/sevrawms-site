@@ -11,7 +11,6 @@
   --text:#eef4ff;
   --muted:#aebcd3;
   --yellow:#f1c84d;
-  --shadow:0 22px 60px rgba(0,0,0,.34);
 }
 body{
   font-family:Arial,Helvetica,sans-serif;
@@ -59,24 +58,36 @@ a{text-decoration:none;color:inherit}
 }
 .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.card{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.card{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+}
 .card strong{display:block;font-size:28px;margin-bottom:6px}
 .card span{color:var(--muted);font-size:13px}
-.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.note h2{font-size:24px;margin-bottom:10px}
-.note p{color:#c7d3e6}
 .table-wrap{
   border:1px solid rgba(255,255,255,.08);
   border-radius:18px;background:rgba(255,255,255,.03);padding:18px;margin-bottom:18px;
   overflow:auto;
 }
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
 .status{
   display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;
   background:rgba(241,200,77,.14);color:#ffe08a;
 }
+.note{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+}
+.note h2{font-size:24px;margin-bottom:10px}
+.note p{color:#c7d3e6}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
+.list{display:grid;gap:10px}
+.item{
+  border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px;
+}
+.item strong{display:block;font-size:15px;margin-bottom:4px}
+.item span{font-size:13px;color:#c7d3e6}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr 1fr}
@@ -89,36 +100,174 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
+    <div class="side-brand">
+      <div class="side-logo">S</div>
+      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
+    </div>
+
     <div class="side-menu">
-      <a class="menu-item " href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item " href="urunler.html">Ürünler</a>
-      <a class="menu-item " href="mesajlasma.html">Mesajlaşma</a>
+      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item" href="urunler.html">Ürünler</a>
+      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
       <a class="menu-item active" href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item " href="basvuru-yonetim.html">Başvuru Yönetimi</a>
+      <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
+
   <main class="main">
     <div class="top">
-      <div class="title"><h1>Üyeler & Analitik</h1><p>Bu alan sadece yönetici girişi ile açılır.</p></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
+      <div class="title">
+        <h1>Üyeler & Analitik</h1>
+        <p>Kayıtlı üyeleri ve temel ziyaret akışını burada görürsün.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div id="adminUser" class="badge">Admin</div>
+        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
+      </div>
     </div>
-    <div class="cards">
-    <div class="card"><strong>248</strong><span>Kayıtlı üye</span></div>
-    <div class="card"><strong>34</strong><span>Bu ay yeni kayıt</span></div>
-    <div class="card"><strong>%22</strong><span>Sosyal giriş ilgisi</span></div>
-    <div class="card"><strong>17</strong><span>Firma ilgisi</span></div>
+
+    <div class="cards" id="summaryCards">
+      <div class="card"><strong>0</strong><span>Kayıtlı üye</span></div>
+      <div class="card"><strong>0</strong><span>Aktif</span></div>
+      <div class="card"><strong>0</strong><span>Pasif</span></div>
+      <div class="card"><strong>0</strong><span>Toplam ziyaret</span></div>
     </div>
-    <div class="note"><h2>Analitik Ekranı</h2><p>Başvuru yönetimi ile public başvuru formu ayrıldı. Bu sayfa yönlendirmeleri yeni yapıya uyumlu hale geldi.</p></div>
+
+    <div class="grid">
+      <div class="table-wrap">
+        <h2 style="margin-bottom:10px">Üye Listesi</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Ad Soyad</th>
+              <th>Firma</th>
+              <th>Kullanıcı</th>
+              <th>Rol</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="memberRows"></tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <h2 style="margin-bottom:10px">Ziyaret Özeti</h2>
+        <div class="list" id="visitList"></div>
+        <h2 style="margin:18px 0 10px">Son Ziyaretler</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Sayfa</th>
+              <th>Kullanıcı</th>
+              <th>Zaman</th>
+            </tr>
+          </thead>
+          <tbody id="visitRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:18px">
+      <h2>Analytics Step 1</h2>
+      <p>Bu adımda temel ziyaret kaydı localStorage üzerinden tutulur. Yönetici hangi sayfanın daha çok açıldığını ve son ziyaretleri görebilir.</p>
+    </div>
   </main>
 </div>
+
 <script src="kimlik-dogrulama.js"></script>
 <script>
 if (SEVRA_KIMLIK.requireAdmin()) {
   const auth = SEVRA_KIMLIK.getAuth();
   document.getElementById("adminUser").textContent = "Admin: " + auth.username;
 }
+if (typeof SEVRA_KIMLIK.trackVisit === "function") {
+  SEVRA_KIMLIK.trackVisit("uyeler-analytics");
+}
+
+function textRole(role){
+  if(role === "carrier") return "Nakliyeci";
+  if(role === "shipper") return "Yük Veren";
+  return "Standart Üye";
+}
+
+function loadMembers(){
+  const rows = (typeof SEVRA_KIMLIK.getMembers === "function") ? SEVRA_KIMLIK.getMembers() : [];
+  const visitSummary = (typeof SEVRA_KIMLIK.getVisitSummary === "function") ? SEVRA_KIMLIK.getVisitSummary() : { total: 0, byPage: {}, recent: [] };
+  const total = rows.length;
+  const aktif = rows.filter(x => x.status !== "Pasif").length;
+  const pasif = rows.filter(x => x.status === "Pasif").length;
+
+  document.getElementById("summaryCards").innerHTML = `
+    <div class="card"><strong>${total}</strong><span>Kayıtlı üye</span></div>
+    <div class="card"><strong>${aktif}</strong><span>Aktif</span></div>
+    <div class="card"><strong>${pasif}</strong><span>Pasif</span></div>
+    <div class="card"><strong>${visitSummary.total}</strong><span>Toplam ziyaret</span></div>
+  `;
+
+  if(!rows.length){
+    document.getElementById("memberRows").innerHTML = '<tr><td colspan="6">Henüz kayıtlı üye yok.</td></tr>';
+  } else {
+    document.getElementById("memberRows").innerHTML = rows.map(x => `
+      <tr>
+        <td>${x.fullName || "-"}</td>
+        <td>${x.company || "-"}</td>
+        <td>${x.username || "-"}</td>
+        <td>${textRole(x.role)}</td>
+        <td><span class="status">${x.status || "Aktif"}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn" onclick="pasifYap('${x.id}')">Pasif Yap</button>
+            <button class="btn primary" onclick="aktifYap('${x.id}')">Aktif Yap</button>
+            <button class="btn" onclick="uyeSil('${x.id}')">Sil</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  const byPage = visitSummary.byPage || {};
+  const pageEntries = Object.entries(byPage);
+  if(!pageEntries.length){
+    document.getElementById("visitList").innerHTML = '<div class="item"><strong>Ziyaret yok</strong><span>Henüz kayıt alınmadı.</span></div>';
+  } else {
+    document.getElementById("visitList").innerHTML = pageEntries.map(([page,count]) => `
+      <div class="item"><strong>${page}</strong><span>${count} görüntülenme</span></div>
+    `).join('');
+  }
+
+  const recent = visitSummary.recent || [];
+  if(!recent.length){
+    document.getElementById("visitRows").innerHTML = '<tr><td colspan="3">Son ziyaret bulunmuyor.</td></tr>';
+  } else {
+    document.getElementById("visitRows").innerHTML = recent.slice(0,10).map(x => `
+      <tr>
+        <td>${x.page || "-"}</td>
+        <td>${x.user || "ziyaretci"}</td>
+        <td>${new Date(x.time).toLocaleString('tr-TR')}</td>
+      </tr>
+    `).join('');
+  }
+}
+
+function pasifYap(id){
+  try{ SEVRA_KIMLIK.setMemberStatus(id, "Pasif"); loadMembers(); }
+  catch(err){ alert(err.message); }
+}
+
+function aktifYap(id){
+  try{ SEVRA_KIMLIK.setMemberStatus(id, "Aktif"); loadMembers(); }
+  catch(err){ alert(err.message); }
+}
+
+function uyeSil(id){
+  if(!confirm("Üye silinsin mi?")) return;
+  try{ SEVRA_KIMLIK.removeMember(id); loadMembers(); }
+  catch(err){ alert(err.message); }
+}
+
+loadMembers();
 </script>
 </body>
 </html>
