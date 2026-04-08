@@ -1,83 +1,127 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Üye Girişi</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      color:#eef4ff;
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-        linear-gradient(180deg,#071425,#08111b 74%,#040912);
-      display:flex;align-items:center;justify-content:center;padding:24px;
-    }
-    .card{
-      width:100%;max-width:560px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:28px;
-      background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));
-      padding:28px;
-    }
-    .logo{
-      width:64px;height:64px;border-radius:18px;
-      background:linear-gradient(135deg,#f1c84d,#f7dc89);
-      color:#0d1d38;font-weight:900;font-size:28px;
-      display:flex;align-items:center;justify-content:center;margin-bottom:18px;
-    }
-    h1{font-size:36px;margin-bottom:8px}
-    p{color:#c7d3e6;margin-bottom:22px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-    label{font-size:13px;font-weight:700;color:#dce6f5}
-    input{
-      width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
-      color:#fff;border-radius:12px;padding:14px;font-size:15px;
-    }
-    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-    .btn{
-      min-height:48px;padding:0 18px;border-radius:12px;
-      display:inline-flex;align-items:center;justify-content:center;
-      font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
-    }
-    .btn-primary{background:#f1c84d;color:#0b1830}
-    .btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
-    .note,.error{
-      margin-top:14px;border-radius:14px;padding:12px;font-size:13px;
-    }
-    .note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
-    .error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | Üye Girişi</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#eef4ff;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.card{
+  width:100%;max-width:760px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));
+  padding:28px;
+}
+.logo{
+  width:64px;height:64px;border-radius:18px;
+  background:linear-gradient(135deg,#f1c84d,#f7dc89);
+  color:#0d1d38;font-weight:900;font-size:28px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+h1{font-size:36px;margin-bottom:8px}
+p{color:#c7d3e6;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+label{font-size:13px;font-weight:700;color:#dce6f5}
+input,select{
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
+  color:#fff;border-radius:12px;padding:14px;font-size:15px;
+}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.btn{
+  min-height:48px;padding:0 18px;border-radius:12px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
+}
+.btn-primary{background:#f1c84d;color:#0b1830}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
+.note,.error,.ok{
+  margin-top:14px;border-radius:14px;padding:12px;font-size:13px;
+}
+.note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
+.error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
+.ok{display:none;background:rgba(50,180,120,.12);border:1px solid rgba(50,180,120,.22);color:#d6ffe8}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
   <div class="card">
     <div class="logo">S</div>
     <h1>Üye Girişi</h1>
-    <p>Bu ekran yük veren, nakliyeci ve standart üye girişleri içindir.</p>
+    <p>Klasik giriş, telefon ile hızlı giriş ve sosyal giriş hazırlığı bu ekranda toplandı.</p>
 
-    <div class="field">
-      <label>Kullanıcı Adı</label>
-      <input id="username" type="text" placeholder="uye1 veya oluşturduğun kullanıcı adı" />
-    </div>
-
-    <div class="field">
-      <label>Şifre</label>
-      <input id="password" type="password" placeholder="••••••••" />
+    <div class="grid">
+      <div class="field">
+        <label>Kullanıcı Adı</label>
+        <input id="username" type="text" placeholder="uye1 veya oluşturduğun kullanıcı adı" />
+      </div>
+      <div class="field">
+        <label>Şifre</label>
+        <input id="password" type="password" placeholder="••••••••" />
+      </div>
     </div>
 
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="uyeGiris()">Üye Olarak Giriş Yap</button>
+      <button class="btn btn-primary" onclick="uyeGiris()">Klasik Giriş</button>
       <a class="btn btn-secondary" href="uye-ol.html">Üye Ol</a>
       <a class="btn btn-secondary" href="yonetici-giris.html">Yönetici Girişine Git</a>
     </div>
 
+    <div class="note" style="margin-top:18px">Telefon ile hızlı giriş hazırlığı</div>
+    <div class="grid">
+      <div class="field">
+        <label>Telefon</label>
+        <input id="phone" type="text" placeholder="+90 5xx xxx xx xx" />
+      </div>
+      <div class="field">
+        <label>Rol</label>
+        <select id="phoneRole">
+          <option value="member">Standart Üye</option>
+          <option value="shipper">Yük Veren</option>
+          <option value="carrier">Nakliyeci</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="telefonGiris()">Telefon ile Hızlı Giriş</button>
+    </div>
+
+    <div class="note" style="margin-top:18px">Sosyal giriş hazırlığı</div>
+    <div class="grid">
+      <div class="field">
+        <label>Ad Soyad</label>
+        <input id="socialName" type="text" placeholder="Hasan Arslan" />
+      </div>
+      <div class="field">
+        <label>Rol</label>
+        <select id="socialRole">
+          <option value="member">Standart Üye</option>
+          <option value="shipper">Yük Veren</option>
+          <option value="carrier">Nakliyeci</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="sosyalGiris('google')">Google ile Devam</button>
+      <button class="btn btn-secondary" onclick="sosyalGiris('facebook')">Facebook ile Devam</button>
+    </div>
+
+    <div id="okBox" class="ok"></div>
     <div id="errorBox" class="error"></div>
 
     <div class="note">
-      Demo üye bilgisi:<br>
+      Demo klasik giriş bilgisi:<br>
       Kullanıcı adı: <strong>uye1</strong><br>
       Şifre: <strong>123456</strong>
     </div>
@@ -89,6 +133,25 @@
       const box = document.getElementById("errorBox");
       box.style.display = "block";
       box.textContent = msg;
+      document.getElementById("okBox").style.display = "none";
+    }
+    function showOk(msg){
+      const box = document.getElementById("okBox");
+      box.style.display = "block";
+      box.textContent = msg;
+      document.getElementById("errorBox").style.display = "none";
+    }
+
+    function gotoPanel(user){
+      SEVRA_KIMLIK.setAuth({
+        username: user.username,
+        role: user.role,
+        fullName: user.fullName,
+        company: user.company || "",
+        phone: user.phone || "",
+        provider: user.provider || "manual"
+      });
+      window.location.href = "uye-panel.html";
     }
 
     function uyeGiris(){
@@ -96,12 +159,13 @@
       const password = document.getElementById("password").value.trim();
 
       if(username === "uye1" && password === "123456"){
-        SEVRA_KIMLIK.setAuth({
+        gotoPanel({
           username: username,
           role: "member",
-          fullName: "Demo Üye"
+          fullName: "Demo Üye",
+          company: "",
+          provider: "manual"
         });
-        window.location.href = "uye-panel.html";
         return;
       }
 
@@ -110,21 +174,50 @@
         return;
       }
 
-      if(typeof SEVRA_KIMLIK.findMember === "function"){
-        const kayitli = SEVRA_KIMLIK.findMember(username, password);
-        if(kayitli){
-          SEVRA_KIMLIK.setAuth({
-            username: kayitli.username,
-            role: kayitli.role,
-            fullName: kayitli.fullName,
-            company: kayitli.company
-          });
-          window.location.href = "uye-panel.html";
-          return;
-        }
+      const kayitli = SEVRA_KIMLIK.findMember(username, password);
+      if(kayitli){
+        gotoPanel(kayitli);
+        return;
       }
 
       showError("Üye bilgisi yanlış. Demo giriş için uye1 / 123456 kullan veya önce üye oluştur.");
+    }
+
+    function telefonGiris(){
+      if(typeof SEVRA_KIMLIK.quickPhoneLogin !== "function"){
+        showError("Telefon giriş sistemi yüklenmedi.");
+        return;
+      }
+      try{
+        const row = SEVRA_KIMLIK.quickPhoneLogin({
+          phone: document.getElementById("phone").value.trim(),
+          role: document.getElementById("phoneRole").value,
+          fullName: "Telefon Üyesi",
+          company: ""
+        });
+        showOk("Telefon ile hızlı giriş hazırlandı. Panele yönlendiriliyorsun.");
+        gotoPanel(row);
+      }catch(err){
+        showError(err.message);
+      }
+    }
+
+    function sosyalGiris(provider){
+      if(typeof SEVRA_KIMLIK.socialLoginMock !== "function"){
+        showError("Sosyal giriş sistemi yüklenmedi.");
+        return;
+      }
+      try{
+        const row = SEVRA_KIMLIK.socialLoginMock(provider, {
+          fullName: document.getElementById("socialName").value.trim(),
+          role: document.getElementById("socialRole").value,
+          company: ""
+        });
+        showOk((provider === "google" ? "Google" : "Facebook") + " ile hazırlık girişi tamamlandı.");
+        gotoPanel(row);
+      }catch(err){
+        showError(err.message);
+      }
     }
   </script>
 </body>
