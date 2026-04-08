@@ -89,6 +89,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 .detail-item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
 .detail-item strong{display:block;font-size:14px;margin-bottom:4px}
 .detail-item span{font-size:13px;color:#c7d3e6}
+.text-area-wrap{margin-top:12px}
 @media (max-width:1100px){.grid,.filter,.detail-grid{grid-template-columns:1fr}}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
@@ -119,7 +120,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
     <div class="top">
       <div class="title">
         <h1>İlan & Teklif Yönetimi</h1>
-        <p>Bekleyen teklifleri filtrele, detayını aç ve hızlıca karar ver.</p>
+        <p>Bekleyen teklifleri filtrele, detayını aç, admin notu düş ve karar ver.</p>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <div id="adminUser" class="badge">Admin</div>
@@ -157,6 +158,13 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
     <div class="detail-box" id="detailBox" style="display:none;margin-bottom:18px">
       <h2>Teklif Detayı</h2>
       <div id="detailGrid" class="detail-grid"></div>
+      <div class="text-area-wrap">
+        <label>Yönetici Notu</label>
+        <textarea id="adminNoteBox" placeholder="Bu teklif için iç notunu yaz..."></textarea>
+        <div class="actions" style="margin-top:10px">
+          <button class="btn primary" onclick="adminNotKaydet()">Notu Kaydet</button>
+        </div>
+      </div>
     </div>
 
     <div class="grid">
@@ -196,7 +204,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 
     <div class="note" style="margin-top:18px">
       <h2>Yönetim Mantığı</h2>
-      <p>Bu adımda admin artık teklif notunu ve ilgili ilan bilgisini üst detay kutusunda görür. Özellikle bekleyen teklifler için karar verme daha net olur.</p>
+      <p>Bu adımda admin, teklif bazında iç değerlendirme notu yazabilir. Böylece karar geçmişi ekranda kaybolmaz.</p>
     </div>
   </main>
 </div>
@@ -233,9 +241,25 @@ function showOfferDetail(offerId){
     <div class="detail-item"><strong>Teklif Veren</strong><span>${offer.memberName || offer.member || "-"}</span></div>
     <div class="detail-item"><strong>Fiyat</strong><span>${offer.price || "-"}</span></div>
     <div class="detail-item"><strong>Durum</strong><span>${offer.status || "Bekliyor"}</span></div>
-    <div class="detail-item"><strong>Not</strong><span>${offer.note || "-"}</span></div>
+    <div class="detail-item"><strong>Üye Notu</strong><span>${offer.note || "-"}</span></div>
   `;
+  document.getElementById("adminNoteBox").value = offer.adminNote || "";
   window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function adminNotKaydet(){
+  if(!activeOfferId){
+    alert("Önce bir teklif detayı aç.");
+    return;
+  }
+  try{
+    SEVRA_KIMLIK.setOfferAdminNote(activeOfferId, document.getElementById("adminNoteBox").value);
+    loadAdminFlow();
+    showOfferDetail(activeOfferId);
+    alert("Yönetici notu kaydedildi.");
+  }catch(err){
+    alert(err.message);
+  }
 }
 
 function loadAdminFlow(){
@@ -278,7 +302,7 @@ function loadAdminFlow(){
 
   const filteredOffers = offers.filter(x => {
     const load = loads.find(l => String(l.id) === String(x.loadId));
-    const full = ((load ? load.title : "") + " " + (load ? load.owner : "") + " " + (x.memberName || x.member || "") + " " + (x.price || "") + " " + (x.note || "")).toLowerCase();
+    const full = ((load ? load.title : "") + " " + (load ? load.owner : "") + " " + (x.memberName || x.member || "") + " " + (x.price || "") + " " + (x.note || "") + " " + (x.adminNote || "")).toLowerCase();
     const okQ = !q || full.includes(q);
     const okS = !statusFilter || String(x.status || "") === statusFilter;
     return okQ && okS;
