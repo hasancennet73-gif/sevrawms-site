@@ -1,5 +1,6 @@
 (function () {
   const AUTH_KEY = "sevra_live_auth";
+  const MEMBERS_KEY = "sevra_live_members";
 
   function getAuth() {
     try {
@@ -15,6 +16,69 @@
 
   function clearAuth() {
     localStorage.removeItem(AUTH_KEY);
+  }
+
+  function getMembers() {
+    try {
+      return JSON.parse(localStorage.getItem(MEMBERS_KEY) || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveMembers(rows) {
+    localStorage.setItem(MEMBERS_KEY, JSON.stringify(rows));
+  }
+
+  function registerMember(payload) {
+    const members = getMembers();
+    const username = String(payload.username || "").trim();
+    const password = String(payload.password || "").trim();
+
+    if (!username) throw new Error("Kullanıcı adı zorunludur.");
+    if (!password) throw new Error("Şifre zorunludur.");
+    if (members.some(x => x.username === username)) {
+      throw new Error("Bu kullanıcı adı zaten kayıtlı.");
+    }
+
+    const row = {
+      id: Date.now(),
+      username,
+      password,
+      role: String(payload.role || "member"),
+      fullName: String(payload.fullName || "").trim() || username,
+      company: String(payload.company || "").trim(),
+      status: "Aktif",
+      createdAt: new Date().toISOString()
+    };
+
+    members.push(row);
+    saveMembers(members);
+    return row;
+  }
+
+  function findMember(username, password) {
+    const members = getMembers();
+    return members.find(
+      x =>
+        x.username === String(username || "").trim() &&
+        x.password === String(password || "").trim() &&
+        x.status !== "Pasif"
+    ) || null;
+  }
+
+  function removeMember(id) {
+    const members = getMembers().filter(x => String(x.id) !== String(id));
+    saveMembers(members);
+  }
+
+  function setMemberStatus(id, status) {
+    const members = getMembers();
+    const row = members.find(x => String(x.id) === String(id));
+    if (!row) throw new Error("Üye bulunamadı.");
+    row.status = status;
+    saveMembers(members);
+    return row;
   }
 
   function isAdmin() {
@@ -52,6 +116,12 @@
     getAuth,
     setAuth,
     clearAuth,
+    getMembers,
+    saveMembers,
+    registerMember,
+    findMember,
+    removeMember,
+    setMemberStatus,
     isAdmin,
     isMember,
     requireAdmin,
