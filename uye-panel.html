@@ -6,38 +6,25 @@
 <title>SEVRA | Üye Paneli</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --line:rgba(255,255,255,.08);
-  --text:#eef4ff;
-  --muted:#aebcd3;
-  --yellow:#f1c84d;
-}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-    linear-gradient(180deg,#071425,#08111b 74%,#040912);
-}
+:root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
+radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+linear-gradient(180deg,#071425,#08111b 74%,#040912);}
 .wrap{max-width:1200px;margin:0 auto;padding:26px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.title h1{font-size:38px;margin-bottom:8px}
-.title p{color:#aebcd3}
+.title h1{font-size:38px;margin-bottom:8px}.title p{color:#aebcd3}
 .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
 .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
 .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
 .card,.panel{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.card strong{display:block;font-size:28px;margin-bottom:6px}
-.card span{color:#aebcd3;font-size:13px}
+.card strong{display:block;font-size:28px;margin-bottom:6px}.card span{color:#aebcd3;font-size:13px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.panel h2{font-size:24px;margin-bottom:10px}
-.panel p{color:#c7d3e6}
+.panel h2{font-size:24px;margin-bottom:10px}.panel p{color:#c7d3e6}
 .list{display:grid;gap:10px}
 .item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
-.item strong{display:block;font-size:15px;margin-bottom:4px}
-.item span{font-size:13px;color:#c7d3e6}
+.item strong{display:block;font-size:15px;margin-bottom:4px}.item span{font-size:13px;color:#c7d3e6}
 @media (max-width:1100px){.grid{grid-template-columns:1fr}}
 @media (max-width:900px){.cards{grid-template-columns:1fr 1fr}}
 @media (max-width:680px){.cards{grid-template-columns:1fr}}
@@ -61,7 +48,7 @@ body{
     <div class="card"><strong>0</strong><span>Aktif ilan</span></div>
     <div class="card"><strong>0</strong><span>Teklif</span></div>
     <div class="card"><strong>0</strong><span>Onaylı</span></div>
-    <div class="card"><strong>0</strong><span>Ziyaret</span></div>
+    <div class="card"><strong>0</strong><span>Admin notlu</span></div>
   </div>
 
   <div class="grid">
@@ -71,20 +58,14 @@ body{
     </div>
 
     <div class="panel">
-      <h2>Rolüne Göre Hızlı Akış</h2>
-      <div class="list" id="roleFlowList"></div>
+      <h2>Teklif / Not Özeti</h2>
+      <div class="list" id="offerSummaryList"></div>
     </div>
   </div>
 
-  <div class="grid" style="margin-top:18px">
-    <div class="panel">
-      <h2>İlan / Teklif Özeti</h2>
-      <div class="list" id="offerSummaryList"></div>
-    </div>
-    <div class="panel">
-      <h2>Platform Özeti</h2>
-      <p id="platformText">Veri yükleniyor...</p>
-    </div>
+  <div class="panel" style="margin-top:18px">
+    <h2>Platform Özeti</h2>
+    <p id="platformText">Veri yükleniyor...</p>
   </div>
 </div>
 
@@ -106,16 +87,14 @@ function roleText(role){
 
 function loadMemberPanel(){
   const auth = SEVRA_KIMLIK.getAuth() || {};
-  const messages = (typeof SEVRA_KIMLIK.getMessages === "function") ? SEVRA_KIMLIK.getMessages() : [];
-  const visits = (typeof SEVRA_KIMLIK.getVisitSummary === "function") ? SEVRA_KIMLIK.getVisitSummary() : { total: 0 };
   const loads = (typeof SEVRA_KIMLIK.getLoads === "function") ? SEVRA_KIMLIK.getLoads() : [];
   const offers = (typeof SEVRA_KIMLIK.getOffers === "function") ? SEVRA_KIMLIK.getOffers() : [];
   const myLoads = loads.filter(x => x.createdBy === (auth.username || ""));
   const myOffers = offers.filter(x => x.member === (auth.username || ""));
   const approvedOffers = myOffers.filter(x => x.status === "Onaylandı").length;
-  const pendingOffers = myOffers.filter(x => x.status === "Bekliyor").length;
-  const rejectedOffers = myOffers.filter(x => x.status === "Reddedildi").length;
+  const notedOffers = myOffers.filter(x => (x.adminNote || "").trim()).length;
   const receivedOffers = offers.filter(x => myLoads.some(l => String(l.id) === String(x.loadId)));
+  const receivedNoted = receivedOffers.filter(x => (x.adminNote || "").trim()).length;
 
   document.getElementById("welcomeText").textContent =
     (auth.fullName || auth.username || "Üye") + " için kişisel panel görünümü.";
@@ -124,7 +103,7 @@ function loadMemberPanel(){
     <div class="card"><strong>${myLoads.length}</strong><span>Aktif ilan</span></div>
     <div class="card"><strong>${myOffers.length}</strong><span>Teklif</span></div>
     <div class="card"><strong>${approvedOffers}</strong><span>Onaylı</span></div>
-    <div class="card"><strong>${visits.total || 0}</strong><span>Ziyaret</span></div>
+    <div class="card"><strong>${auth.role === "shipper" ? receivedNoted : notedOffers}</strong><span>Admin notlu</span></div>
   `;
 
   document.getElementById("profileList").innerHTML = `
@@ -134,60 +113,35 @@ function loadMemberPanel(){
     <div class="item"><strong>Firma</strong><span>${auth.company || "-"}</span></div>
   `;
 
-  let roleItems = [];
+  let html = "";
   if(auth.role === "carrier"){
-    roleItems = [
-      ["Nakliyeci Akışı", "Açık yükleri incele ve fiyat teklifi ver."],
-      ["Teklif Yönetimi", "Verdiğin tekliflerin durumunu ilan/teklif akışından takip et."],
-      ["Hızlı Erişim", "Yeni mesaj ve ziyaret hareketlerini panelden izle."]
-    ];
-  } else if(auth.role === "shipper"){
-    roleItems = [
-      ["Yük Veren Akışı", "Yeni yük ilanı aç ve gelen teklifleri değerlendir."],
-      ["İlan Yönetimi", "Kendi ilanlarını ilan/teklif akışından yönet."],
-      ["Hızlı Erişim", "Başvuru, mesaj ve teklif akışlarını tek panelde takip et."]
-    ];
-  } else {
-    roleItems = [
-      ["Üye Akışı", "Platform modüllerini keşfet ve yük/teklif ekranını incele."],
-      ["Takip", "Mesaj ve ziyaret bilgilerini görüntüle."],
-      ["Profil", "Bilgilerini güncel tut ve akışlara hazırlıklı ol."]
-    ];
-  }
-
-  document.getElementById("roleFlowList").innerHTML = roleItems.map(x => `
-    <div class="item"><strong>${x[0]}</strong><span>${x[1]}</span></div>
-  `).join('');
-
-  let summaryHtml = "";
-  if(auth.role === "carrier"){
-    summaryHtml = `
+    const waiting = myOffers.filter(x => x.status === "Bekliyor").length;
+    const rejected = myOffers.filter(x => x.status === "Reddedildi").length;
+    html = `
       <div class="item"><strong>Toplam Teklif</strong><span>${myOffers.length} teklif verdin.</span></div>
-      <div class="item"><strong>Bekleyen</strong><span>${pendingOffers} teklif beklemede.</span></div>
+      <div class="item"><strong>Bekleyen</strong><span>${waiting} teklif beklemede.</span></div>
       <div class="item"><strong>Onaylı</strong><span>${approvedOffers} teklif onaylandı.</span></div>
-      <div class="item"><strong>Reddedildi</strong><span>${rejectedOffers} teklif reddedildi.</span></div>
+      <div class="item"><strong>Admin Notu</strong><span>${notedOffers} teklifte yönetici notu var.</span></div>
     `;
   } else if(auth.role === "shipper"){
     const approvedReceived = receivedOffers.filter(x => x.status === "Onaylandı").length;
     const pendingReceived = receivedOffers.filter(x => x.status === "Bekliyor").length;
-    summaryHtml = `
+    html = `
       <div class="item"><strong>İlanların</strong><span>${myLoads.length} ilan açtın.</span></div>
       <div class="item"><strong>Gelen Teklif</strong><span>${receivedOffers.length} teklif aldın.</span></div>
       <div class="item"><strong>Bekleyen</strong><span>${pendingReceived} teklif inceleniyor.</span></div>
-      <div class="item"><strong>Onaylı</strong><span>${approvedReceived} teklif onaylandı.</span></div>
+      <div class="item"><strong>Admin Notu</strong><span>${receivedNoted} teklifte yönetici notu bulunuyor.</span></div>
     `;
   } else {
-    summaryHtml = `
-      <div class="item"><strong>İlan Havuzu</strong><span>${loads.length} toplam ilan sistemde bulunuyor.</span></div>
-      <div class="item"><strong>Teklif Havuzu</strong><span>${offers.length} toplam teklif bulunuyor.</span></div>
-      <div class="item"><strong>Mesajlar</strong><span>${messages.length} toplam mesaj var.</span></div>
+    html = `
+      <div class="item"><strong>Platform</strong><span>${loads.length} ilan ve ${offers.length} teklif sistemde bulunuyor.</span></div>
+      <div class="item"><strong>Keşif</strong><span>İlan / teklif akışından detayları inceleyebilirsin.</span></div>
     `;
   }
-  document.getElementById("offerSummaryList").innerHTML = summaryHtml;
+  document.getElementById("offerSummaryList").innerHTML = html;
 
   document.getElementById("platformText").textContent =
-    "Sistemde " + loads.length + " ilan, " + offers.length + " teklif, " +
-    messages.length + " toplam mesaj ve " + (visits.total || 0) + " ziyaret kaydı görünüyor.";
+    "Sistemde " + loads.length + " ilan ve " + offers.length + " teklif bulunuyor.";
 }
 
 loadMemberPanel();
