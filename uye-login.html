@@ -71,7 +71,7 @@
     <div class="btn-row">
       <button class="btn btn-primary" onclick="uyeGiris()">Üye Olarak Giriş Yap</button>
       <a class="btn btn-secondary" href="uye-ol.html">Üye Ol</a>
-      <a class="btn btn-secondary" href="yönetici-giriş.html">Yönetici Girişine Git</a>
+      <a class="btn btn-secondary" href="yonetici-giris.html">Yönetici Girişine Git</a>
     </div>
 
     <div id="errorBox" class="error"></div>
@@ -83,7 +83,7 @@
     </div>
   </div>
 
-  <script src="kimlik%20do%C4%9Frulama.js"></script>
+  <script src="kimlik-dogrulama.js"></script>
   <script>
     function showError(msg){
       const box = document.getElementById("errorBox");
@@ -105,16 +105,23 @@
         return;
       }
 
-      const kayitli = SEVRA_KIMLIK.findMember(username, password);
-      if(kayitli){
-        SEVRA_KIMLIK.setAuth({
-          username: kayitli.username,
-          role: kayitli.role,
-          fullName: kayitli.fullName,
-          company: kayitli.company
-        });
-        window.location.href = "uye-panel.html";
+      if(typeof SEVRA_KIMLIK === "undefined"){
+        showError("Kimlik dosyası yüklenmedi. kimlik-dogrulama.js dosyasını kontrol et.");
         return;
+      }
+
+      if(typeof SEVRA_KIMLIK.findMember === "function"){
+        const kayitli = SEVRA_KIMLIK.findMember(username, password);
+        if(kayitli){
+          SEVRA_KIMLIK.setAuth({
+            username: kayitli.username,
+            role: kayitli.role,
+            fullName: kayitli.fullName,
+            company: kayitli.company
+          });
+          window.location.href = "uye-panel.html";
+          return;
+        }
       }
 
       showError("Üye bilgisi yanlış. Demo giriş için uye1 / 123456 kullan veya önce üye oluştur.");
