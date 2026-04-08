@@ -22,7 +22,7 @@ linear-gradient(180deg,#071425,#08111b 74%,#040912);}
 .panel h2{font-size:24px;margin-bottom:12px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;margin-bottom:16px}
 label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
-input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
+input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
 .table-wrap{overflow:auto}
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
@@ -89,32 +89,25 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 
   <div class="note">
     <h2>Akış Notu</h2>
-    <p>Admin notu varsa üye tarafında da görünür. Böylece taşıyıcı veya yük veren son durumu daha net okur.</p>
+    <p>Admin notu varsa üye tarafında görünür. Böylece taşıyıcı veya yük veren son durumu daha net okur.</p>
   </div>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
-if (SEVRA_KIMLIK.requireMember()) {
-  const auth = SEVRA_KIMLIK.getAuth();
-  document.getElementById("memberUser").textContent = "Üye: " + auth.username + " / " + auth.role;
+if(SEVRA_KIMLIK.requireMember()){
+  const auth=SEVRA_KIMLIK.getAuth();
+  document.getElementById("memberUser").textContent="Üye: "+auth.username+" / "+auth.role;
 }
-if (typeof SEVRA_KIMLIK.trackVisit === "function") {
-  SEVRA_KIMLIK.trackVisit("ilan-teklif");
-}
-
+if(typeof SEVRA_KIMLIK.trackVisit==="function"){SEVRA_KIMLIK.trackVisit("ilan-teklif");}
 function getParam(name){const params=new URLSearchParams(window.location.search);return params.get(name)||""}
 function roleText(role){if(role==="carrier") return "Nakliyeci"; if(role==="shipper") return "Yük Veren"; return "Standart Üye";}
 function showOk(msg){document.getElementById("okText").textContent=msg;document.getElementById("okBox").style.display="block";document.getElementById("errBox").style.display="none";window.scrollTo({top:0,behavior:"smooth"});}
 function showErr(msg){document.getElementById("errText").textContent=msg;document.getElementById("errBox").style.display="block";document.getElementById("okBox").style.display="none";window.scrollTo({top:0,behavior:"smooth"});}
 
 function loadFlow(){
-  const auth=SEVRA_KIMLIK.getAuth()||{};
-  const loads=(typeof SEVRA_KIMLIK.getLoads==="function")?SEVRA_KIMLIK.getLoads():[];
-  const offers=(typeof SEVRA_KIMLIK.getOffers==="function")?SEVRA_KIMLIK.getOffers():[];
-  const focusLoadId=getParam("load_id");
-  const focusLoad=loads.find(x=>String(x.id)===String(focusLoadId));
-
+  const auth=SEVRA_KIMLIK.getAuth()||{}, loads=SEVRA_KIMLIK.getLoads?SEVRA_KIMLIK.getLoads():[], offers=SEVRA_KIMLIK.getOffers?SEVRA_KIMLIK.getOffers():[];
+  const focusLoadId=getParam("load_id"), focusLoad=loads.find(x=>String(x.id)===String(focusLoadId));
   document.getElementById("flowText").textContent=roleText(auth.role)+" akışı aktif.";
 
   if(focusLoad){
@@ -124,7 +117,7 @@ function loadFlow(){
       <div class="focus-item"><strong>Firma</strong><span>${focusLoad.owner||"-"}</span></div>
       <div class="focus-item"><strong>Güzergah</strong><span>${focusLoad.route||"-"}</span></div>
       <div class="focus-item"><strong>Ağırlık</strong><span>${focusLoad.weight||"-"}</span></div>`;
-  } else document.getElementById("focusBox").style.display="none";
+  }else document.getElementById("focusBox").style.display="none";
 
   if(auth.role==="shipper"){
     document.getElementById("loadFormArea").innerHTML=`
@@ -136,7 +129,7 @@ function loadFlow(){
       </div>`;
     document.getElementById("rightTitle").textContent="Gelen Teklifler";
     document.getElementById("offerFormArea").innerHTML="";
-  } else if(auth.role==="carrier"){
+  }else if(auth.role==="carrier"){
     document.getElementById("leftTitle").textContent="Açık İlanlar";
     const openLoads=loads.filter(x=>x.status!=="Kapalı");
     const options=openLoads.map(x=>`<option value="${x.id}" ${String(x.id)===String(focusLoadId)?"selected":""}>${x.title} / ${x.route}</option>`).join('');
@@ -149,7 +142,7 @@ function loadFlow(){
         <div><label>Not</label><input id="offerNote" type="text" placeholder="Yarın yükleme yapabiliriz"></div>
         <div><button class="btn primary" onclick="teklifEkle()">Teklif Ver</button></div>
       </div>`;
-  } else {
+  }else{
     document.getElementById("loadFormArea").innerHTML="";
     document.getElementById("offerFormArea").innerHTML="";
   }
@@ -182,12 +175,10 @@ function loadFlow(){
     </tr>`;
   }).join('');
 }
-
 function ilanEkle(){try{SEVRA_KIMLIK.addLoad({title:document.getElementById("loadTitle").value.trim(),route:document.getElementById("loadRoute").value.trim(),weight:document.getElementById("loadWeight").value.trim()});loadFlow();showOk("Yeni ilan başarıyla oluşturuldu.");}catch(err){showErr(err.message);}}
 function teklifEkle(){try{SEVRA_KIMLIK.addOffer({loadId:document.getElementById("offerLoadId").value,price:document.getElementById("offerPrice").value.trim(),note:document.getElementById("offerNote").value.trim()});document.getElementById("offerPrice").value="";document.getElementById("offerNote").value="";loadFlow();showOk("Teklif başarıyla kaydedildi.");}catch(err){showErr(err.message);}}
 function ilanKapat(id){try{SEVRA_KIMLIK.setLoadStatus(id,"Kapalı");loadFlow();showOk("İlan kapatıldı.");}catch(err){showErr(err.message);}}
 function teklifDurum(id,status){try{SEVRA_KIMLIK.setOfferStatus(id,status);loadFlow();showOk("Teklif durumu güncellendi: "+status);}catch(err){showErr(err.message);}}
-
 loadFlow();
 </script>
 </body>
