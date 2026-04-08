@@ -60,7 +60,7 @@ body{
   <div class="cards" id="summaryCards">
     <div class="card"><strong>0</strong><span>Aktif ilan</span></div>
     <div class="card"><strong>0</strong><span>Teklif</span></div>
-    <div class="card"><strong>0</strong><span>Mesaj</span></div>
+    <div class="card"><strong>0</strong><span>Onaylı</span></div>
     <div class="card"><strong>0</strong><span>Ziyaret</span></div>
   </div>
 
@@ -76,9 +76,15 @@ body{
     </div>
   </div>
 
-  <div class="panel" style="margin-top:18px">
-    <h2>Platform Özeti</h2>
-    <p id="platformText">Veri yükleniyor...</p>
+  <div class="grid" style="margin-top:18px">
+    <div class="panel">
+      <h2>İlan / Teklif Özeti</h2>
+      <div class="list" id="offerSummaryList"></div>
+    </div>
+    <div class="panel">
+      <h2>Platform Özeti</h2>
+      <p id="platformText">Veri yükleniyor...</p>
+    </div>
   </div>
 </div>
 
@@ -106,6 +112,10 @@ function loadMemberPanel(){
   const offers = (typeof SEVRA_KIMLIK.getOffers === "function") ? SEVRA_KIMLIK.getOffers() : [];
   const myLoads = loads.filter(x => x.createdBy === (auth.username || ""));
   const myOffers = offers.filter(x => x.member === (auth.username || ""));
+  const approvedOffers = myOffers.filter(x => x.status === "Onaylandı").length;
+  const pendingOffers = myOffers.filter(x => x.status === "Bekliyor").length;
+  const rejectedOffers = myOffers.filter(x => x.status === "Reddedildi").length;
+  const receivedOffers = offers.filter(x => myLoads.some(l => String(l.id) === String(x.loadId)));
 
   document.getElementById("welcomeText").textContent =
     (auth.fullName || auth.username || "Üye") + " için kişisel panel görünümü.";
@@ -113,7 +123,7 @@ function loadMemberPanel(){
   document.getElementById("summaryCards").innerHTML = `
     <div class="card"><strong>${myLoads.length}</strong><span>Aktif ilan</span></div>
     <div class="card"><strong>${myOffers.length}</strong><span>Teklif</span></div>
-    <div class="card"><strong>${messages.length}</strong><span>Mesaj</span></div>
+    <div class="card"><strong>${approvedOffers}</strong><span>Onaylı</span></div>
     <div class="card"><strong>${visits.total || 0}</strong><span>Ziyaret</span></div>
   `;
 
@@ -149,8 +159,34 @@ function loadMemberPanel(){
     <div class="item"><strong>${x[0]}</strong><span>${x[1]}</span></div>
   `).join('');
 
+  let summaryHtml = "";
+  if(auth.role === "carrier"){
+    summaryHtml = `
+      <div class="item"><strong>Toplam Teklif</strong><span>${myOffers.length} teklif verdin.</span></div>
+      <div class="item"><strong>Bekleyen</strong><span>${pendingOffers} teklif beklemede.</span></div>
+      <div class="item"><strong>Onaylı</strong><span>${approvedOffers} teklif onaylandı.</span></div>
+      <div class="item"><strong>Reddedildi</strong><span>${rejectedOffers} teklif reddedildi.</span></div>
+    `;
+  } else if(auth.role === "shipper"){
+    const approvedReceived = receivedOffers.filter(x => x.status === "Onaylandı").length;
+    const pendingReceived = receivedOffers.filter(x => x.status === "Bekliyor").length;
+    summaryHtml = `
+      <div class="item"><strong>İlanların</strong><span>${myLoads.length} ilan açtın.</span></div>
+      <div class="item"><strong>Gelen Teklif</strong><span>${receivedOffers.length} teklif aldın.</span></div>
+      <div class="item"><strong>Bekleyen</strong><span>${pendingReceived} teklif inceleniyor.</span></div>
+      <div class="item"><strong>Onaylı</strong><span>${approvedReceived} teklif onaylandı.</span></div>
+    `;
+  } else {
+    summaryHtml = `
+      <div class="item"><strong>İlan Havuzu</strong><span>${loads.length} toplam ilan sistemde bulunuyor.</span></div>
+      <div class="item"><strong>Teklif Havuzu</strong><span>${offers.length} toplam teklif bulunuyor.</span></div>
+      <div class="item"><strong>Mesajlar</strong><span>${messages.length} toplam mesaj var.</span></div>
+    `;
+  }
+  document.getElementById("offerSummaryList").innerHTML = summaryHtml;
+
   document.getElementById("platformText").textContent =
-    "Senin hesabında " + myLoads.length + " ilan, " + myOffers.length + " teklif, " +
+    "Sistemde " + loads.length + " ilan, " + offers.length + " teklif, " +
     messages.length + " toplam mesaj ve " + (visits.total || 0) + " ziyaret kaydı görünüyor.";
 }
 
