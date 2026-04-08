@@ -47,60 +47,33 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
     <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
     <div class="side-menu">
       <a class="menu-item active" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
       <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
       <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
       <a class="menu-item" href="ilan-teklif-yonetim.html">İlan & Teklif</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
-
   <main class="main">
     <div class="top">
-      <div class="title">
-        <h1>Yönetici Kontrol Paneli</h1>
-        <p>Admin tarafının ana özeti bu ekranda toplandı.</p>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <div id="adminUser" class="badge">Admin</div>
-        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
-      </div>
+      <div class="title"><h1>Yönetici Kontrol Paneli</h1><p>Stabil admin özet ekranı.</p></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
     </div>
-
-    <div class="cards" id="summaryCards">
-      <div class="card"><strong>0</strong><span>Ürün</span></div>
-      <div class="card"><strong>0</strong><span>Mesaj</span></div>
-      <div class="card"><strong>0</strong><span>Üye</span></div>
-      <div class="card"><strong>0</strong><span>Başvuru</span></div>
-      <div class="card"><strong>0</strong><span>İlan</span></div>
-      <div class="card"><strong>0</strong><span>Teklif</span></div>
-    </div>
-
+    <div class="cards" id="summaryCards"></div>
     <div class="grid">
-      <div class="panel">
-        <h2>Hızlı Yönetim Özeti</h2>
-        <div class="list" id="quickList"></div>
-      </div>
+      <div class="panel"><h2>Hızlı Özet</h2><div class="list" id="quickList"></div></div>
       <div class="panel">
         <h2>Son Başvurular</h2>
-        <table>
-          <thead><tr><th>Firma</th><th>Yetkili</th><th>Tip</th><th>Durum</th></tr></thead>
-          <tbody id="appRows"></tbody>
-        </table>
+        <table><thead><tr><th>Firma</th><th>Yetkili</th><th>Tip</th><th>Durum</th></tr></thead><tbody id="appRows"></tbody></table>
       </div>
     </div>
   </main>
 </div>
-
 <script src="kimlik-dogrulama.js"></script>
 <script>
-if(SEVRA_KIMLIK.requireAdmin()){
-  const auth=SEVRA_KIMLIK.getAuth();
-  document.getElementById("adminUser").textContent="Admin: "+auth.username;
+if (SEVRA_KIMLIK.requireAdmin()) {
+  const auth = SEVRA_KIMLIK.getAuth();
+  document.getElementById("adminUser").textContent = "Admin: " + auth.username;
 }
-if(typeof SEVRA_KIMLIK.trackVisit==="function"){SEVRA_KIMLIK.trackVisit("panel");}
-
 function loadDashboard(){
   const products=SEVRA_KIMLIK.getProducts?SEVRA_KIMLIK.getProducts():[];
   const messages=SEVRA_KIMLIK.getMessages?SEVRA_KIMLIK.getMessages():[];
@@ -109,39 +82,34 @@ function loadDashboard(){
   const loads=SEVRA_KIMLIK.getLoads?SEVRA_KIMLIK.getLoads():[];
   const offers=SEVRA_KIMLIK.getOffers?SEVRA_KIMLIK.getOffers():[];
 
-  document.getElementById("summaryCards").innerHTML=`
+  document.getElementById("summaryCards").innerHTML = `
     <div class="card"><strong>${products.length}</strong><span>Ürün</span></div>
     <div class="card"><strong>${messages.length}</strong><span>Mesaj</span></div>
     <div class="card"><strong>${members.length}</strong><span>Üye</span></div>
     <div class="card"><strong>${apps.length}</strong><span>Başvuru</span></div>
     <div class="card"><strong>${loads.length}</strong><span>İlan</span></div>
-    <div class="card"><strong>${offers.length}</strong><span>Teklif</span></div>`;
+    <div class="card"><strong>${offers.length}</strong><span>Teklif</span></div>
+  `;
 
-  const waitingOffers=offers.filter(x=>x.status==="Bekliyor").length;
-  const approvedOffers=offers.filter(x=>x.status==="Onaylandı").length;
-  const notedOffers=offers.filter(x=>(x.adminNote||"").trim()).length;
-  const activeMembers=members.filter(x=>x.status!=="Pasif").length;
-  const activeProducts=products.filter(x=>x.status!=="Pasif").length;
-  const newMessages=messages.filter(x=>x.status==="Yeni").length;
-
-  document.getElementById("quickList").innerHTML=`
-    <div class="item"><strong>Üyeler</strong><span>${activeMembers} aktif üye bulunuyor.</span></div>
-    <div class="item"><strong>Ürünler</strong><span>${activeProducts} aktif ürün bulunuyor.</span></div>
-    <div class="item"><strong>Mesajlar</strong><span>${newMessages} yeni mesaj bekliyor.</span></div>
-    <div class="item"><strong>Teklifler</strong><span>${waitingOffers} bekleyen, ${approvedOffers} onaylı teklif bulunuyor.</span></div>
-    <div class="item"><strong>Admin Notları</strong><span>${notedOffers} teklifte yönetici notu var.</span></div>`;
+  document.getElementById("quickList").innerHTML = `
+    <div class="item"><strong>Bekleyen Teklif</strong><span>${offers.filter(x=>x.status==="Bekliyor").length} teklif bekliyor.</span></div>
+    <div class="item"><strong>Onaylı Teklif</strong><span>${offers.filter(x=>x.status==="Onaylandı").length} teklif onaylandı.</span></div>
+    <div class="item"><strong>Admin Notu</strong><span>${offers.filter(x=>(x.adminNote||"").trim()).length} teklifte not var.</span></div>
+    <div class="item"><strong>Aktif Üye</strong><span>${members.filter(x=>x.status!=="Pasif").length} aktif üye bulunuyor.</span></div>
+  `;
 
   if(!apps.length){
-    document.getElementById("appRows").innerHTML='<tr><td colspan="4">Henüz başvuru yok.</td></tr>';
+    document.getElementById("appRows").innerHTML = '<tr><td colspan="4">Henüz başvuru yok.</td></tr>';
   }else{
     const latest=[...apps].reverse().slice(0,5);
-    document.getElementById("appRows").innerHTML=latest.map(x=>`
+    document.getElementById("appRows").innerHTML = latest.map(x=>`
       <tr>
         <td>${x.company||"-"}</td>
         <td>${x.contact||"-"}</td>
         <td>${x.appType||"-"}</td>
         <td><span class="status">${x.status||"Bekliyor"}</span></td>
-      </tr>`).join('');
+      </tr>
+    `).join('');
   }
 }
 loadDashboard();
