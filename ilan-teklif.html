@@ -101,7 +101,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 
   <div class="note">
     <h2>Akış Notu</h2>
-    <p>Yük veren üyeler ilan açar. Nakliyeci üyeler açık ilanlara teklif verir. Standart üye de akışı görüntüler.</p>
+    <p>Yük veren üyeler ilan açar. Nakliyeci üyeler açık ilanlara teklif verir. Onaylanan teklifler üyede net görünür.</p>
   </div>
 </div>
 
@@ -142,7 +142,7 @@ function loadFlow(){
   } else if(auth.role === "carrier"){
     document.getElementById("leftTitle").textContent = "Açık İlanlar";
     document.getElementById("loadFormArea").innerHTML = "";
-    document.getElementById("rightTitle").textContent = "Teklif Ver";
+    document.getElementById("rightTitle").textContent = "Teklif Ver / Tekliflerim";
     const openLoads = loads.filter(x => x.status !== "Kapalı");
     const options = openLoads.map(x => `<option value="${x.id}">${x.title} / ${x.route}</option>`).join('');
     document.getElementById("offerFormArea").innerHTML = `
