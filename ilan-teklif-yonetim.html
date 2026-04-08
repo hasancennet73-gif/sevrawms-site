@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SEVRA | İlan & Teklif Yönetimi</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --line:rgba(255,255,255,.08);
+  --text:#eef4ff;
+  --muted:#aebcd3;
+  --yellow:#f1c84d;
+}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+    linear-gradient(180deg,#071425,#08111b 74%,#040912);
+}
+a{text-decoration:none;color:inherit}
+.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+.sidebar{
+  background:linear-gradient(180deg,#10274b,#0b1c37);
+  border-right:1px solid rgba(255,255,255,.08);
+  padding:24px 18px;
+}
+.side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.side-logo{
+  width:46px;height:46px;border-radius:14px;
+  background:linear-gradient(135deg,var(--yellow),#f7dc89);
+  display:flex;align-items:center;justify-content:center;
+  color:#0d1e3b;font-weight:900;font-size:18px;
+}
+.side-brand strong{display:block;font-size:20px}
+.side-brand span{display:block;color:#b8c5d8;font-size:12px}
+.side-menu{display:grid;gap:10px}
+.menu-item{
+  min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;
+  color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;
+}
+.menu-item.active{background:var(--yellow);color:#0c1a34}
+.main{padding:26px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.title h1{font-size:38px;margin-bottom:8px}
+.title p{color:var(--muted)}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;
+  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
+}
+.btn{
+  min-height:40px;padding:0 14px;border-radius:10px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:700;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none;
+}
+.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.card{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+}
+.card strong{display:block;font-size:28px;margin-bottom:6px}
+.card span{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.table-wrap,.note{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;overflow:auto;
+}
+.table-wrap h2,.note h2{font-size:24px;margin-bottom:10px}
+.note p{color:#c7d3e6}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+.status{
+  display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;
+  background:rgba(241,200,77,.14);color:#ffe08a;
+}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:1100px){.grid{grid-template-columns:1fr}}
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="side-brand">
+      <div class="side-logo">S</div>
+      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
+    </div>
+    <div class="side-menu">
+      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item" href="urunler.html">Ürünler</a>
+      <a class="menu-item" href="mesajlasma.html">Mesajlaşma</a>
+      <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
+      <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
+      <a class="menu-item active" href="ilan-teklif-yonetim.html">İlan & Teklif</a>
+      <a class="menu-item" href="index.html">Ana Sayfa</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top">
+      <div class="title">
+        <h1>İlan & Teklif Yönetimi</h1>
+        <p>Yük ilanlarını ve teklif akışını yönetici tarafında tek ekranda gör.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div id="adminUser" class="badge">Admin</div>
+        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
+      </div>
+    </div>
+
+    <div class="cards" id="summaryCards">
+      <div class="card"><strong>0</strong><span>Toplam ilan</span></div>
+      <div class="card"><strong>0</strong><span>Açık ilan</span></div>
+      <div class="card"><strong>0</strong><span>Toplam teklif</span></div>
+      <div class="card"><strong>0</strong><span>Onaylı teklif</span></div>
+    </div>
+
+    <div class="grid">
+      <div class="table-wrap">
+        <h2>İlanlar</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Başlık</th>
+              <th>Sahip</th>
+              <th>Güzergah</th>
+              <th>Ağırlık</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="loadRows"></tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <h2>Teklifler</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>İlan</th>
+              <th>Üye</th>
+              <th>Fiyat</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="offerRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:18px">
+      <h2>Yönetim Mantığı</h2>
+      <p>Bu adımda admin, üyelerin açtığı ilanları kapatabilir ve gelen teklifleri onaylayıp reddedebilir. Böylece üye akışı yönetici tarafında görünür hale gelir.</p>
+    </div>
+  </main>
+</div>
+
+<script src="kimlik-dogrulama.js"></script>
+<script>
+if (SEVRA_KIMLIK.requireAdmin()) {
+  const auth = SEVRA_KIMLIK.getAuth();
+  document.getElementById("adminUser").textContent = "Admin: " + auth.username;
+}
+if (typeof SEVRA_KIMLIK.trackVisit === "function") {
+  SEVRA_KIMLIK.trackVisit("ilan-teklif-yonetim");
+}
+
+function loadAdminFlow(){
+  const loads = (typeof SEVRA_KIMLIK.getLoads === "function") ? SEVRA_KIMLIK.getLoads() : [];
+  const offers = (typeof SEVRA_KIMLIK.getOffers === "function") ? SEVRA_KIMLIK.getOffers() : [];
+  const acikIlan = loads.filter(x => x.status !== "Kapalı").length;
+  const onayliTeklif = offers.filter(x => x.status === "Onaylandı").length;
+
+  document.getElementById("summaryCards").innerHTML = `
+    <div class="card"><strong>${loads.length}</strong><span>Toplam ilan</span></div>
+    <div class="card"><strong>${acikIlan}</strong><span>Açık ilan</span></div>
+    <div class="card"><strong>${offers.length}</strong><span>Toplam teklif</span></div>
+    <div class="card"><strong>${onayliTeklif}</strong><span>Onaylı teklif</span></div>
+  `;
+
+  if(!loads.length){
+    document.getElementById("loadRows").innerHTML = '<tr><td colspan="6">Henüz ilan yok.</td></tr>';
+  } else {
+    document.getElementById("loadRows").innerHTML = loads.map(x => `
+      <tr>
+        <td>${x.title || "-"}</td>
+        <td>${x.owner || "-"}</td>
+        <td>${x.route || "-"}</td>
+        <td>${x.weight || "-"}</td>
+        <td><span class="status">${x.status || "Açık"}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn" onclick="ilanDurum('${x.id}','Açık')">Açık</button>
+            <button class="btn primary" onclick="ilanDurum('${x.id}','Kapalı')">Kapat</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  if(!offers.length){
+    document.getElementById("offerRows").innerHTML = '<tr><td colspan="5">Henüz teklif yok.</td></tr>';
+  } else {
+    document.getElementById("offerRows").innerHTML = offers.map(x => {
+      const load = loads.find(l => String(l.id) === String(x.loadId));
+      return `
+        <tr>
+          <td>${load ? load.title : "-"}</td>
+          <td>${x.memberName || x.member || "-"}</td>
+          <td>${x.price || "-"}</td>
+          <td><span class="status">${x.status || "Bekliyor"}</span></td>
+          <td>
+            <div class="actions">
+              <button class="btn" onclick="teklifDurum('${x.id}','Bekliyor')">Beklet</button>
+              <button class="btn primary" onclick="teklifDurum('${x.id}','Onaylandı')">Onayla</button>
+              <button class="btn" onclick="teklifDurum('${x.id}','Reddedildi')">Reddet</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+}
+
+function ilanDurum(id,status){
+  try{
+    SEVRA_KIMLIK.setLoadStatus(id, status);
+    loadAdminFlow();
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+function teklifDurum(id,status){
+  try{
+    SEVRA_KIMLIK.setOfferStatus(id, status);
+    loadAdminFlow();
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+loadAdminFlow();
+</script>
+</body>
+</html>
