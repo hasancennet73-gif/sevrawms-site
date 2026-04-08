@@ -11,7 +11,6 @@
   --text:#eef4ff;
   --muted:#aebcd3;
   --yellow:#f1c84d;
-  --shadow:0 22px 60px rgba(0,0,0,.34);
 }
 body{
   font-family:Arial,Helvetica,sans-serif;
@@ -44,7 +43,9 @@ a{text-decoration:none;color:inherit}
 }
 .menu-item.active{background:var(--yellow);color:#0c1a34}
 .main{padding:26px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;
+}
 .title h1{font-size:38px;margin-bottom:8px}
 .title p{color:var(--muted)}
 .badge{
@@ -59,17 +60,22 @@ a{text-decoration:none;color:inherit}
 }
 .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.card{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+.card{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+}
 .card strong{display:block;font-size:28px;margin-bottom:6px}
 .card span{color:var(--muted);font-size:13px}
-.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.note h2{font-size:24px;margin-bottom:10px}
-.note p{color:#c7d3e6}
 .table-wrap{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;background:rgba(255,255,255,.03);padding:18px;margin-bottom:18px;
-  overflow:auto;
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;margin-bottom:18px;overflow:auto;
 }
+.form-grid{
+  display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:12px;align-items:end;margin-bottom:18px;
+}
+label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
+input,textarea{
+  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px;
+}
+textarea{min-height:84px;resize:vertical}
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
 .status{
@@ -77,48 +83,195 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
   background:rgba(241,200,77,.14);color:#ffe08a;
 }
 .actions{display:flex;gap:8px;flex-wrap:wrap}
+.note{
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
+}
+.note h2{font-size:24px;margin-bottom:10px}
+.note p{color:#c7d3e6}
+@media (max-width:1180px){
+  .form-grid{grid-template-columns:1fr 1fr}
+}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr 1fr}
 }
 @media (max-width:680px){
-  .cards{grid-template-columns:1fr}
+  .cards,.form-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <div class="side-brand"><div class="side-logo">S</div><div><strong>SEVRA</strong><span>Yönetici Paneli</span></div></div>
+    <div class="side-brand">
+      <div class="side-logo">S</div>
+      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
+    </div>
+
     <div class="side-menu">
-      <a class="menu-item " href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item " href="urunler.html">Ürünler</a>
+      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
+      <a class="menu-item" href="urunler.html">Ürünler</a>
       <a class="menu-item active" href="mesajlasma.html">Mesajlaşma</a>
-      <a class="menu-item " href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item " href="basvuru-yonetim.html">Başvuru Yönetimi</a>
+      <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
+      <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
       <a class="menu-item" href="index.html">Ana Sayfa</a>
     </div>
   </aside>
+
   <main class="main">
     <div class="top">
-      <div class="title"><h1>Mesajlaşma</h1><p>Bu alan sadece yönetici girişi ile açılır.</p></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><div id="adminUser" class="badge">Admin</div><button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button></div>
+      <div class="title">
+        <h1>Mesajlaşma</h1>
+        <p>Mesaj listesi artık canlı kayıt mantığı ile çalışır.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div id="adminUser" class="badge">Admin</div>
+        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
+      </div>
     </div>
-    <div class="cards">
-    <div class="card"><strong>26</strong><span>Aktif görüşme</span></div>
-    <div class="card"><strong>7</strong><span>Yeni mesaj</span></div>
-    <div class="card"><strong>4</strong><span>Yanıt bekliyor</span></div>
-    <div class="card"><strong>SEVRA</strong><span>Mesaj merkezi</span></div>
+
+    <div class="cards" id="summaryCards">
+      <div class="card"><strong>0</strong><span>Toplam mesaj</span></div>
+      <div class="card"><strong>0</strong><span>Yeni</span></div>
+      <div class="card"><strong>0</strong><span>Okundu</span></div>
+      <div class="card"><strong>0</strong><span>Gönderici</span></div>
     </div>
-    <div class="note"><h2>Mesaj Merkezi</h2><p>Bu alan adminin kullanıcı ve firma mesajlarını izlemesi için ayrılmıştır. Menü bağlantısı yeni yönetim dosyasına döner.</p></div>
+
+    <div class="table-wrap">
+      <div class="form-grid">
+        <div>
+          <label>Gönderen</label>
+          <input id="from" type="text" placeholder="Firma adı">
+        </div>
+        <div>
+          <label>Konu</label>
+          <input id="subject" type="text" placeholder="Mesaj konusu">
+        </div>
+        <div>
+          <label>Mesaj</label>
+          <textarea id="message" placeholder="Mesaj içeriği"></textarea>
+        </div>
+        <div>
+          <button class="btn primary" onclick="mesajEkle()">Mesaj Ekle</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Gönderen</th>
+            <th>Konu</th>
+            <th>Mesaj</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+          </tr>
+        </thead>
+        <tbody id="messageRows"></tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <h2>Mesaj Merkezi</h2>
+      <p>Bu adımda mesajlaşma ekranı canlı veri ile çalışır. Yönetici mesaj ekleyebilir, okundu yapabilir ve silebilir.</p>
+    </div>
   </main>
 </div>
+
 <script src="kimlik-dogrulama.js"></script>
 <script>
 if (SEVRA_KIMLIK.requireAdmin()) {
   const auth = SEVRA_KIMLIK.getAuth();
   document.getElementById("adminUser").textContent = "Admin: " + auth.username;
 }
+
+function loadMessages(){
+  const rows = (typeof SEVRA_KIMLIK.getMessages === "function") ? SEVRA_KIMLIK.getMessages() : [];
+  const total = rows.length;
+  const yeni = rows.filter(x => x.status === "Yeni").length;
+  const okundu = rows.filter(x => x.status === "Okundu").length;
+  const gonderici = new Set(rows.map(x => x.from || "-")).size;
+
+  document.getElementById("summaryCards").innerHTML = `
+    <div class="card"><strong>${total}</strong><span>Toplam mesaj</span></div>
+    <div class="card"><strong>${yeni}</strong><span>Yeni</span></div>
+    <div class="card"><strong>${okundu}</strong><span>Okundu</span></div>
+    <div class="card"><strong>${gonderici}</strong><span>Gönderici</span></div>
+  `;
+
+  if(!rows.length){
+    document.getElementById("messageRows").innerHTML = '<tr><td colspan="5">Henüz mesaj yok.</td></tr>';
+    return;
+  }
+
+  document.getElementById("messageRows").innerHTML = rows.map(x => `
+    <tr>
+      <td>${x.from || "-"}</td>
+      <td>${x.subject || "-"}</td>
+      <td>${x.message || "-"}</td>
+      <td><span class="status">${x.status || "Yeni"}</span></td>
+      <td>
+        <div class="actions">
+          <button class="btn" onclick="okunduYap('${x.id}')">Okundu Yap</button>
+          <button class="btn primary" onclick="yeniYap('${x.id}')">Yeni Yap</button>
+          <button class="btn" onclick="mesajSil('${x.id}')">Sil</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function mesajEkle(){
+  if(typeof SEVRA_KIMLIK.addMessage !== "function"){
+    alert("Mesaj sistemi yüklenmedi. kimlik-dogrulama.js dosyasını kontrol et.");
+    return;
+  }
+
+  const payload = {
+    from: document.getElementById("from").value.trim(),
+    subject: document.getElementById("subject").value.trim(),
+    message: document.getElementById("message").value.trim()
+  };
+
+  try{
+    SEVRA_KIMLIK.addMessage(payload);
+    document.getElementById("from").value = "";
+    document.getElementById("subject").value = "";
+    document.getElementById("message").value = "";
+    loadMessages();
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+function okunduYap(id){
+  try{
+    SEVRA_KIMLIK.setMessageStatus(id, "Okundu");
+    loadMessages();
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+function yeniYap(id){
+  try{
+    SEVRA_KIMLIK.setMessageStatus(id, "Yeni");
+    loadMessages();
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+function mesajSil(id){
+  if(!confirm("Mesaj silinsin mi?")) return;
+  try{
+    SEVRA_KIMLIK.removeMessage(id);
+    loadMessages();
+  }catch(err){
+    alert(err.message);
+  }
+}
+
+loadMessages();
 </script>
 </body>
 </html>
