@@ -68,15 +68,15 @@ a{text-decoration:none;color:inherit}
   border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
 }
 label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
-input,select{
+input,select,textarea{
   width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px;
 }
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.table-wrap,.note{
+.table-wrap,.note,.detail-box{
   border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;overflow:auto;
 }
-.table-wrap h2,.note h2{font-size:24px;margin-bottom:10px}
-.note p{color:#c7d3e6}
+.table-wrap h2,.note h2,.detail-box h2{font-size:24px;margin-bottom:10px}
+.note p,.detail-box p{color:#c7d3e6}
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
 .status{
@@ -85,7 +85,11 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 }
 .highlight{box-shadow:0 0 0 2px rgba(241,200,77,.45) inset;background:rgba(241,200,77,.08)!important}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
-@media (max-width:1100px){.grid,.filter{grid-template-columns:1fr}}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail-item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
+.detail-item strong{display:block;font-size:14px;margin-bottom:4px}
+.detail-item span{font-size:13px;color:#c7d3e6}
+@media (max-width:1100px){.grid,.filter,.detail-grid{grid-template-columns:1fr}}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr 1fr}
@@ -115,7 +119,7 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
     <div class="top">
       <div class="title">
         <h1>İlan & Teklif Yönetimi</h1>
-        <p>Bekleyen teklifleri filtreleyip hızlıca yönet.</p>
+        <p>Bekleyen teklifleri filtrele, detayını aç ve hızlıca karar ver.</p>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <div id="adminUser" class="badge">Admin</div>
@@ -148,6 +152,11 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
       <div>
         <button class="btn primary" onclick="loadAdminFlow()">Filtrele</button>
       </div>
+    </div>
+
+    <div class="detail-box" id="detailBox" style="display:none;margin-bottom:18px">
+      <h2>Teklif Detayı</h2>
+      <div id="detailGrid" class="detail-grid"></div>
     </div>
 
     <div class="grid">
@@ -187,19 +196,46 @@ th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left
 
     <div class="note" style="margin-top:18px">
       <h2>Yönetim Mantığı</h2>
-      <p>Bu adımda admin özellikle bekleyen teklifleri daha hızlı ayıklar. Filtre ile yoğun akışta karar verme kolaylaşır.</p>
+      <p>Bu adımda admin artık teklif notunu ve ilgili ilan bilgisini üst detay kutusunda görür. Özellikle bekleyen teklifler için karar verme daha net olur.</p>
     </div>
   </main>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
+let activeOfferId = "";
+
 if (SEVRA_KIMLIK.requireAdmin()) {
   const auth = SEVRA_KIMLIK.getAuth();
   document.getElementById("adminUser").textContent = "Admin: " + auth.username;
 }
 if (typeof SEVRA_KIMLIK.trackVisit === "function") {
   SEVRA_KIMLIK.trackVisit("ilan-teklif-yonetim");
+}
+
+function showOfferDetail(offerId){
+  const loads = (typeof SEVRA_KIMLIK.getLoads === "function") ? SEVRA_KIMLIK.getLoads() : [];
+  const offers = (typeof SEVRA_KIMLIK.getOffers === "function") ? SEVRA_KIMLIK.getOffers() : [];
+  const offer = offers.find(x => String(x.id) === String(offerId));
+  if(!offer){
+    document.getElementById("detailBox").style.display = "none";
+    activeOfferId = "";
+    return;
+  }
+  const load = loads.find(x => String(x.id) === String(offer.loadId));
+  activeOfferId = String(offerId);
+  document.getElementById("detailBox").style.display = "block";
+  document.getElementById("detailGrid").innerHTML = `
+    <div class="detail-item"><strong>İlan Başlığı</strong><span>${load ? load.title : "-"}</span></div>
+    <div class="detail-item"><strong>Firma / Sahip</strong><span>${load ? load.owner : "-"}</span></div>
+    <div class="detail-item"><strong>Güzergah</strong><span>${load ? load.route : "-"}</span></div>
+    <div class="detail-item"><strong>Ağırlık</strong><span>${load ? load.weight : "-"}</span></div>
+    <div class="detail-item"><strong>Teklif Veren</strong><span>${offer.memberName || offer.member || "-"}</span></div>
+    <div class="detail-item"><strong>Fiyat</strong><span>${offer.price || "-"}</span></div>
+    <div class="detail-item"><strong>Durum</strong><span>${offer.status || "Bekliyor"}</span></div>
+    <div class="detail-item"><strong>Not</strong><span>${offer.note || "-"}</span></div>
+  `;
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function loadAdminFlow(){
@@ -242,7 +278,7 @@ function loadAdminFlow(){
 
   const filteredOffers = offers.filter(x => {
     const load = loads.find(l => String(l.id) === String(x.loadId));
-    const full = ((load ? load.title : "") + " " + (x.memberName || x.member || "") + " " + (x.price || "")).toLowerCase();
+    const full = ((load ? load.title : "") + " " + (load ? load.owner : "") + " " + (x.memberName || x.member || "") + " " + (x.price || "") + " " + (x.note || "")).toLowerCase();
     const okQ = !q || full.includes(q);
     const okS = !statusFilter || String(x.status || "") === statusFilter;
     return okQ && okS;
@@ -253,7 +289,7 @@ function loadAdminFlow(){
   } else {
     document.getElementById("offerRows").innerHTML = filteredOffers.map(x => {
       const load = loads.find(l => String(l.id) === String(x.loadId));
-      const rowClass = x.status === "Bekliyor" ? "highlight" : "";
+      const rowClass = x.status === "Bekliyor" || String(x.id) === activeOfferId ? "highlight" : "";
       return `
         <tr class="${rowClass}">
           <td>${load ? load.title : "-"}</td>
@@ -262,6 +298,7 @@ function loadAdminFlow(){
           <td><span class="status">${x.status || "Bekliyor"}</span></td>
           <td>
             <div class="actions">
+              <button class="btn" onclick="showOfferDetail('${x.id}')">Detay</button>
               <button class="btn" onclick="teklifDurum('${x.id}','Bekliyor')">Beklet</button>
               <button class="btn primary" onclick="teklifDurum('${x.id}','Onaylandı')">Onayla</button>
               <button class="btn" onclick="teklifDurum('${x.id}','Reddedildi')">Reddet</button>
@@ -270,6 +307,10 @@ function loadAdminFlow(){
         </tr>
       `;
     }).join('');
+  }
+
+  if(activeOfferId){
+    showOfferDetail(activeOfferId);
   }
 }
 
@@ -285,6 +326,7 @@ function ilanDurum(id,status){
 function teklifDurum(id,status){
   try{
     SEVRA_KIMLIK.setOfferStatus(id, status);
+    activeOfferId = String(id);
     loadAdminFlow();
   }catch(err){
     alert(err.message);
