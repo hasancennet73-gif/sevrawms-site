@@ -3,58 +3,273 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Dijital Lojistik Platformu</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:26px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:36px;margin-bottom:8px}
-    .title p{color:var(--muted)}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}
-    .card span{color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-    label{font-size:13px;color:#dce6f5;font-weight:700}
-    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
-  </style>
+  <title>SEVRA | Nakliye ve Ürün Tedarik Platformu</title>
+  <meta name="description" content="SEVRA, yük verenleri, nakliyecileri ve ürün tedarik taleplerini tek çatı altında buluşturan kurumsal dijital operasyon platformudur." />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Nakliye + Satış Platformu</span>
+        </div>
+      </a>
 
-<div class="wrap">
-  <div class="top">
-    <div class="title"><h1>SEVRA</h1><p>Dijital lojistik platformu</p></div>
-    <div class="actions">
-      <a class="btn" href="yonetici-giris.html">Yonetici Girisi</a>
-      <a class="btn" href="yuk-ilanlari.html">Yuk Ilanlari</a>
-      <a class="btn primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Uye Ol / Giris</a>
+      <nav class="nav">
+        <a href="#hizmetler">Hizmetler</a>
+        <a href="#nakliye">Nakliye</a>
+        <a href="#urunler">Ürünler</a>
+        <a href="#neden-biz">Neden Biz</a>
+        <a href="#iletisim">İletişim</a>
+      </nav>
+
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="yonetici-giris.html">Yönetici Girişi</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
+        <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Üye Ol / Giriş</a>
+      </div>
     </div>
-  </div>
-  <div class="cards">
-    <div class="card"><strong>SEVRA</strong><span>Kurumsal vitrin</span></div>
-    <div class="card"><strong>Yuk</strong><span>Ilan ve teklif akisi</span></div>
-    <div class="card"><strong>Uye</strong><span>Kayit ve giris sistemi</span></div>
-    <div class="card"><strong>Admin</strong><span>Yonetim ekranlari</span></div>
-  </div>
-  <div class="grid">
-    <div class="panel"><h2>Public Alan</h2><p>Yuk ilanlarini incele, detay ac, sonra rolune gore kayit ol.</p></div>
-    <div class="panel"><h2>Hizli Gecis</h2><div class="actions"><a class="btn" href="yuk-ilanlari.html">Yuk Ilanlari</a><a class="btn primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Kayit / Giris</a></div></div>
-  </div>
-</div>
+  </header>
 
-<script src="kimlik-dogrulama.js"></script>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-left">
+        <div class="hero-badge">Kurumsal Dijital Operasyon Platformu</div>
+        <h1>Nakliye organizasyonu ile ürün satış vitrini aynı platformda</h1>
+        <p>
+          SEVRA; yük verenleri, nakliyecileri ve ticari ürün taleplerini tek merkezde buluşturarak
+          teklif, tedarik ve operasyon akışını daha kurumsal, daha hızlı ve daha güvenilir hale getirir.
+        </p>
 
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Hemen Başla</a>
+          <a class="btn btn-secondary" href="yuk-ilanlari.html">Açık Yükleri İncele</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <strong>7/24</strong>
+            <span>Operasyon takibi</span>
+          </div>
+          <div class="stat-card">
+            <strong>B2B</strong>
+            <span>Kurumsal yapı</span>
+          </div>
+          <div class="stat-card">
+            <strong>Tek Panel</strong>
+            <span>Nakliye + satış</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-visual">
+          <div class="visual-overlay">
+            <div class="mini-panel">
+              <span class="mini-label">Nakliye Operasyonu</span>
+              <strong>Teklif Al / Teklif Ver</strong>
+              <p>Yük veren ile nakliyeciyi tek akışta eşleştir.</p>
+            </div>
+
+            <div class="mini-panel">
+              <span class="mini-label">Ürün Vitrini</span>
+              <strong>Kurumsal Satış Alanı</strong>
+              <p>Ürünlerini sergile, teklif iste, satış kanalını büyüt.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hizmetler" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">SEVRA Platform Yapısı</div>
+          <h2>İki ana vitrin, tek kurumsal merkez</h2>
+        </div>
+        <p>Platform hem nakliye organizasyonunu hem de ürün satış tarafını aynı marka gücü altında toplar.</p>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <div class="service-icon">01</div>
+          <h3>Nakliye Vitrini</h3>
+          <p>Yük ilanı, teklif alma, teklif verme, taşıma organizasyonu ve kurumsal operasyon yönetimi.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">02</div>
+          <h3>Ürün Satış Vitrini</h3>
+          <p>Ürün sergileme, görselli katalog mantığı, fiyat ve talep toplama yapısı.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">03</div>
+          <h3>Tek Üyelik Sistemi</h3>
+          <p>Nakliyeci, yük veren veya standart üye olarak tek giriş yapısı ile sisteme dahil ol.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">04</div>
+          <h3>Yönetim Paneli</h3>
+          <p>Admin ekranları üzerinden üyeleri, başvuruları, ilanları ve teklifleri merkezi olarak yönet.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="nakliye" class="section dark-section">
+    <div class="container split-grid">
+      <div class="content-block">
+        <div class="section-kicker">Nakliye Tarafı</div>
+        <h2>Yük veren ve nakliyeciyi güven veren bir vitrinle buluştur</h2>
+        <p>
+          SEVRA’nın nakliye bölümü sadece ilan listesi değil; güçlü marka algısı, teklif toplama mantığı ve
+          kurumsal operasyon dili ile ciddi firmaların tercih edeceği bir yapı hedefler.
+        </p>
+
+        <ul class="feature-list">
+          <li>Açık yük ilanlarını görüntüleme</li>
+          <li>Seçili ilana göre kayıt / giriş yönlendirmesi</li>
+          <li>Teklif verme ve teklif alma akışı</li>
+          <li>Yük veren – nakliyeci eşleşme mantığı</li>
+        </ul>
+
+        <div class="actions-row">
+          <a class="btn btn-primary" href="yuk-ilanlari.html">Yük İlanlarına Git</a>
+          <a class="btn btn-secondary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Nakliye Üyeliği</a>
+        </div>
+      </div>
+
+      <div class="showcase-card">
+        <div class="showcase-top">
+          <span>Aktif Hat</span>
+          <strong>İstanbul → Ankara Parsiyel</strong>
+        </div>
+        <div class="showcase-body">
+          <div class="showcase-row">
+            <label>Taşıma Tipi</label>
+            <b>Parsiyel / Komple</b>
+          </div>
+          <div class="showcase-row">
+            <label>Operasyon</label>
+            <b>Teklif toplama</b>
+          </div>
+          <div class="showcase-row">
+            <label>Üyelik</label>
+            <b>Nakliyeci / Yük Veren</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="urunler" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Satış Tarafı</div>
+          <h2>Kurumsal ürün vitrini ile ticari satış alanı oluştur</h2>
+        </div>
+        <p>Platformun ikinci gücü, nakliye müşterisinin aynı zamanda ürün alıcısına dönüşebilmesidir.</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-image product-image-1"></div>
+          <div class="product-body">
+            <span class="product-tag">Yedek Parça</span>
+            <h3>Kapı Menteşesi</h3>
+            <p>Kurumsal katalog görünümünde ürün tanıtımı ve talep toplama alanı.</p>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image product-image-2"></div>
+          <div class="product-body">
+            <span class="product-tag">Kaporta</span>
+            <h3>Çamurluk</h3>
+            <p>Fotoğraflı ürün sergileme mantığına uygun satış vitrini altyapısı.</p>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-image product-image-3"></div>
+          <div class="product-body">
+            <span class="product-tag">Donanım</span>
+            <h3>Kilit Seti</h3>
+            <p>Fiyat, açıklama, detay ve satış talep yapısına uygun ürün alanı.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="neden-biz" class="section dark-section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Neden SEVRA</div>
+          <h2>Oyuncak değil, güven veren kurumsal yapı</h2>
+        </div>
+        <p>Bu vitrin, basit bir demo görünümü değil; ciddi bir firma hissi veren kurumsal temel olarak tasarlandı.</p>
+      </div>
+
+      <div class="reason-grid">
+        <div class="reason-card">
+          <strong>Kurumsal görünüm</strong>
+          <p>Güçlü renk paleti, düzenli tipografi ve ağır kurumsal yerleşim mantığı.</p>
+        </div>
+        <div class="reason-card">
+          <strong>Çift ticari model</strong>
+          <p>Nakliye hizmetleri ile ürün satış vitrini aynı marka altında birleşir.</p>
+        </div>
+        <div class="reason-card">
+          <strong>Genişlemeye hazır</strong>
+          <p>Üye paneli, teklif paneli, ürün yönetimi ve mesaj yapısı bu vitrine bağlanabilir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container cta-box">
+      <div>
+        <div class="section-kicker">Kurumsal Geçiş</div>
+        <h2>SEVRA ile nakliye ve satış operasyonunu tek markada büyüt</h2>
+        <p>Yük ilanı, üyelik ve ürün vitrini için kurumsal başlangıç hattına şimdi geç.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Üye Ol / Giriş</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yükleri İncele</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="iletisim" class="footer">
+    <div class="container footer-grid">
+      <div>
+        <strong class="footer-brand">SEVRA</strong>
+        <p>Nakliye organizasyonu ve ürün satış vitrini için kurumsal dijital platform.</p>
+      </div>
+      <div>
+        <h4>Hızlı Bağlantılar</h4>
+        <a href="yuk-ilanlari.html">Yük İlanları</a>
+        <a href="platform-kayit-secimi.html?redirect=ilan-teklif">Üyelik</a>
+        <a href="yonetici-giris.html">Yönetici Girişi</a>
+      </div>
+      <div>
+        <h4>Platform Yapısı</h4>
+        <a href="#nakliye">Nakliye Vitrini</a>
+        <a href="#urunler">Ürün Vitrini</a>
+        <a href="#neden-biz">Kurumsal Yapı</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
