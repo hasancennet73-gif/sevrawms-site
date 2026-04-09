@@ -1,118 +1,69 @@
-<!-- DOSYA: yonetici-giris.html -->
 <!doctype html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yönetici Girişi</title>
+  <title>SEVRA | Yonetici Girisi</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:Arial,Helvetica,sans-serif;
-      color:#eef4ff;
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-        linear-gradient(180deg,#071425,#08111b 74%,#040912);
-      display:flex;align-items:center;justify-content:center;padding:24px;
-    }
-    .card{
-      width:100%;max-width:520px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:28px;
-      background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));
-      padding:28px;
-    }
-    .logo{
-      width:64px;height:64px;border-radius:18px;
-      background:linear-gradient(135deg,#f1c84d,#f7dc89);
-      color:#0d1d38;font-weight:900;font-size:28px;
-      display:flex;align-items:center;justify-content:center;margin-bottom:18px;
-    }
-    h1{font-size:36px;margin-bottom:8px}
-    p{color:#c7d3e6;margin-bottom:22px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-    label{font-size:13px;font-weight:700;color:#dce6f5}
-    input{
-      width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);
-      color:#fff;border-radius:12px;padding:14px;font-size:15px;
-    }
-    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-    .btn{
-      min-height:48px;padding:0 18px;border-radius:12px;
-      display:inline-flex;align-items:center;justify-content:center;
-      font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none;
-    }
-    .btn-primary{background:#f1c84d;color:#0b1830}
-    .btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
-    .note,.error{
-      margin-top:14px;border-radius:14px;padding:12px;font-size:13px;
-    }
-    .note{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7}
-    .error{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22);color:#ffd2d2}
+    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:26px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    .title h1{font-size:36px;margin-bottom:8px}
+    .title p{color:var(--muted)}
+    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
+    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+    .card strong{display:block;font-size:28px;margin-bottom:6px}
+    .card span{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{font-size:13px;color:#dce6f5;font-weight:700}
+    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo">S</div>
-    <h1>Yönetici Girişi</h1>
-    <p>Bu ekran sadece yönetici paneli içindir.</p>
 
-    <div class="field">
-      <label>Kullanıcı Adı</label>
-      <input id="username" type="text" placeholder="admin" />
+<div class="wrap">
+  <div class="panel" style="max-width:560px;margin:40px auto">
+    <div class="title">
+      <h1>Yonetici Girisi</h1>
+      <p>Demo admin: admin / 123456</p>
     </div>
-
-    <div class="field">
-      <label>Şifre</label>
-      <input id="password" type="password" placeholder="••••••••" />
+    <div class="field"><label>Kullanici Adi</label><input id="username" type="text" placeholder="admin"></div>
+    <div class="field"><label>Sifre</label><input id="password" type="password" placeholder="123456"></div>
+    <div class="actions">
+      <button class="btn primary" onclick="adminGiris()">Giris Yap</button>
+      <a class="btn" href="index.html">Ana Sayfa</a>
     </div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="adminGiris()">Yönetici Olarak Giriş Yap</button>
-      <a class="btn btn-secondary" href="uye-login.html">Üye Girişine Git</a>
-    </div>
-
-    <div id="errorBox" class="error"></div>
-
-    <div class="note">
-      Demo yönetici bilgisi:<br>
-      Kullanıcı adı: <strong>admin</strong><br>
-      Şifre: <strong>123456</strong>
-    </div>
+    <div id="msg" class="note" style="margin-top:12px;display:none"></div>
   </div>
+</div>
 
-  <script src="kimlik-dogrulama.js"></script>
-  <script>
-    function showError(msg){
-      const box = document.getElementById("errorBox");
-      box.style.display = "block";
-      box.textContent = msg;
-    }
+<script src="kimlik-dogrulama.js"></script>
 
-    function adminGiris(){
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+<script>
+function showMsg(t){var m=document.getElementById('msg');m.style.display='block';m.textContent=t;}
+function adminGiris(){
+  var u=document.getElementById('username').value.trim();
+  var p=document.getElementById('password').value.trim();
+  if(u==='admin' && p==='123456'){
+    SEVRA_KIMLIK.setAuth({username:'admin',role:'admin',fullName:'SEVRA Admin'});
+    window.location.href='panel.html';
+    return;
+  }
+  showMsg('Yonetici bilgisi yanlis.');
+}
+</script>
 
-      if(username === "admin" && password === "123456"){
-        if(typeof SEVRA_KIMLIK === "undefined"){
-          showError("Kimlik dosyası yüklenmedi. kimlik-dogrulama.js dosyasını kontrol et.");
-          return;
-        }
-
-        SEVRA_KIMLIK.setAuth({
-          username: username,
-          role: "admin",
-          fullName: "SEVRA Admin"
-        });
-
-        window.location.href = "panel.html";
-        return;
-      }
-
-      showError("Yönetici bilgisi yanlış. Demo giriş için admin / 123456 kullan.");
-    }
-  </script>
 </body>
 </html>
