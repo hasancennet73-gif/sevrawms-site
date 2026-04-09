@@ -1,278 +1,149 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | İlan / Teklif Akışı</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
-radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-.wrap{max-width:1250px;margin:0 auto;padding:26px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.title h1{font-size:38px;margin-bottom:8px}.title p{color:#aebcd3}
-.badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-.btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.panel{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.panel h2{font-size:24px;margin-bottom:12px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;margin-bottom:16px}
-label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
-input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-.table-wrap{overflow:auto}
-table{width:100%;border-collapse:collapse}
-th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-.status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.highlight{box-shadow:0 0 0 2px rgba(241,200,77,.55) inset;background:rgba(241,200,77,.08)!important}
-.focus-box,.okbox,.errbox,.note{margin-bottom:18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.focus-box h2,.okbox h2,.errbox h2,.note h2{font-size:24px;margin-bottom:10px}
-.focus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.focus-item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
-.focus-item strong{display:block;font-size:14px;margin-bottom:4px}.focus-item span{font-size:13px;color:#c7d3e6}
-.okbox{display:none;background:rgba(50,180,120,.12);border:1px solid rgba(50,180,120,.22)}
-.errbox{display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.22)}
-.small-note{display:block;font-size:12px;color:#c7d3e6;margin-top:4px}
-@media (max-width:1100px){.grid{grid-template-columns:1fr}.form-grid,.focus-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:680px){.form-grid,.focus-grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Ilan Teklif Akisi</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:26px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    .title h1{font-size:36px;margin-bottom:8px}
+    .title p{color:var(--muted)}
+    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
+    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+    .card strong{display:block;font-size:28px;margin-bottom:6px}
+    .card span{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{font-size:13px;color:#dce6f5;font-weight:700}
+    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
+
 <div class="wrap">
   <div class="top">
-    <div class="title">
-      <h1>İlan / Teklif Akışı</h1>
-      <p id="flowText">Rolüne göre yük ilanı açabilir veya teklif verebilirsin.</p>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn" href="uye-panel.html">Üye Paneline Dön</a>
-      <div id="memberUser" class="badge">Üye</div>
+    <div class="title"><h1>Ilan / Teklif Akisi</h1><p id="sub"></p></div>
+    <div class="actions">
+      <div id="badge" class="badge">Uye</div>
+      <a class="btn" href="uye-panel.html">Panele Don</a>
     </div>
   </div>
 
-  <div id="okBox" class="okbox"><h2>İşlem Başarılı</h2><p id="okText">İşlem tamamlandı.</p></div>
-  <div id="errBox" class="errbox"><h2>Uyarı</h2><p id="errText">Bir hata oluştu.</p></div>
-
-  <div id="focusBox" class="focus-box" style="display:none">
-    <h2>Seçili İlan Odağı</h2>
-    <div id="focusGrid" class="focus-grid"></div>
-  </div>
+  <div id="formBox" class="panel" style="margin-bottom:18px"></div>
 
   <div class="grid">
     <div class="panel">
-      <h2 id="leftTitle">İlan Aç</h2>
-      <div id="loadFormArea"></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Başlık</th><th>Güzergah</th><th>Ağırlık</th><th>Durum</th><th>İşlem</th></tr></thead>
-          <tbody id="loadRows"></tbody>
-        </table>
-      </div>
+      <h2>Ilanlar</h2>
+      <table><thead><tr><th>Baslik</th><th>Guzergah</th><th>Agirlik</th><th>Durum</th><th>Islem</th></tr></thead><tbody id="loadRows"></tbody></table>
     </div>
-
     <div class="panel">
-      <h2 id="rightTitle">Teklifler</h2>
-      <div id="offerFormArea"></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>İlan</th><th>Üye</th><th>Fiyat</th><th>Durum</th><th>İşlem</th></tr></thead>
-          <tbody id="offerRows"></tbody>
-        </table>
-      </div>
+      <h2>Teklifler</h2>
+      <table><thead><tr><th>Ilan</th><th>Uye</th><th>Fiyat</th><th>Durum</th><th>Islem</th></tr></thead><tbody id="offerRows"></tbody></table>
     </div>
   </div>
 
-  <div class="note">
-    <h2>Durum</h2>
-    <p>Bu ekran stabil kayıt/giriş dosyalarıyla uyumlu şekilde hazırlandı.</p>
-  </div>
+  <div id="msg" class="note" style="margin-top:12px;display:none"></div>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
+
 <script>
-if (SEVRA_KIMLIK.requireMember()) {
-  const auth = SEVRA_KIMLIK.getAuth();
-  document.getElementById("memberUser").textContent = "Üye: " + auth.username + " / " + auth.role;
+if(SEVRA_KIMLIK.requireMember()){
+  var a=SEVRA_KIMLIK.getAuth();
+  document.getElementById('badge').textContent='Uye: '+a.username+' / '+a.role;
+  document.getElementById('sub').textContent='Rolune gore ilan acabilir veya teklif verebilirsin.';
 }
-if (typeof SEVRA_KIMLIK.trackVisit === "function") {
-  SEVRA_KIMLIK.trackVisit("ilan-teklif");
-}
+function q(n){return new URLSearchParams(location.search).get(n)||'';}
+function showMsg(t){var m=document.getElementById('msg');m.style.display='block';m.textContent=t;}
+function loadPage(){
+  var a=SEVRA_KIMLIK.getAuth()||{};
+  var loads=SEVRA_KIMLIK.getLoads(), offers=SEVRA_KIMLIK.getOffers();
+  var focus=q('load_id');
 
-function getParam(name){
-  const params = new URLSearchParams(window.location.search);
-  return params.get(name) || "";
-}
-
-function roleText(role){
-  if(role === "carrier") return "Nakliyeci";
-  if(role === "shipper") return "Yük Veren";
-  return "Standart Üye";
-}
-
-function showOk(msg){
-  document.getElementById("okText").textContent = msg;
-  document.getElementById("okBox").style.display = "block";
-  document.getElementById("errBox").style.display = "none";
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function showErr(msg){
-  document.getElementById("errText").textContent = msg;
-  document.getElementById("errBox").style.display = "block";
-  document.getElementById("okBox").style.display = "none";
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function loadFlow(){
-  const auth = SEVRA_KIMLIK.getAuth() || {};
-  const loads = SEVRA_KIMLIK.getLoads ? SEVRA_KIMLIK.getLoads() : [];
-  const offers = SEVRA_KIMLIK.getOffers ? SEVRA_KIMLIK.getOffers() : [];
-  const focusLoadId = getParam("load_id");
-  const focusLoad = loads.find(x => String(x.id) === String(focusLoadId));
-
-  document.getElementById("flowText").textContent = roleText(auth.role) + " akışı aktif.";
-
-  if (focusLoad) {
-    document.getElementById("focusBox").style.display = "block";
-    document.getElementById("focusGrid").innerHTML = `
-      <div class="focus-item"><strong>Başlık</strong><span>${focusLoad.title || "-"}</span></div>
-      <div class="focus-item"><strong>Firma</strong><span>${focusLoad.owner || "-"}</span></div>
-      <div class="focus-item"><strong>Güzergah</strong><span>${focusLoad.route || "-"}</span></div>
-      <div class="focus-item"><strong>Ağırlık</strong><span>${focusLoad.weight || "-"}</span></div>
-    `;
+  if(a.role==='shipper'){
+    document.getElementById('formBox').innerHTML =
+      '<div class="grid">'+
+      '<div class="field"><label>Ilan Basligi</label><input id="loadTitle" type="text"></div>'+
+      '<div class="field"><label>Guzergah</label><input id="loadRoute" type="text"></div>'+
+      '<div class="field"><label>Agirlik</label><input id="loadWeight" type="text"></div>'+
+      '<div class="actions"><button class="btn primary" onclick="ilanEkle()">Ilan Ac</button></div>'+
+      '</div>';
+    var myLoads=loads.filter(x=>x.createdBy===(a.username||''));
+    document.getElementById('loadRows').innerHTML = !myLoads.length ? '<tr><td colspan="5">Ilan yok.</td></tr>' :
+      myLoads.map(function(x){
+        return '<tr><td>'+x.title+'</td><td>'+x.route+'</td><td>'+x.weight+'</td><td><span class="status">'+x.status+'</span></td><td><button class="btn" onclick="ilanDurum('+x.id+',\'Kapalı\')">Kapat</button></td></tr>';
+      }).join('');
+    var myIds=myLoads.map(x=>String(x.id));
+    var related=offers.filter(x=>myIds.includes(String(x.loadId)));
+    document.getElementById('offerRows').innerHTML = !related.length ? '<tr><td colspan="5">Teklif yok.</td></tr>' :
+      related.map(function(x){
+        var load=loads.find(l=>String(l.id)===String(x.loadId));
+        return '<tr><td>'+(load?load.title:'-')+'</td><td>'+(x.memberName||x.member)+'</td><td>'+x.price+'</td><td><span class="status">'+x.status+'</span><br>'+(x.adminNote||'')+'</td><td><button class="btn primary" onclick="teklifDurum('+x.id+',\'Onaylandı\')">Onayla</button> <button class="btn" onclick="teklifDurum('+x.id+',\'Reddedildi\')">Reddet</button></td></tr>';
+      }).join('');
   } else {
-    document.getElementById("focusBox").style.display = "none";
+    var openLoads=loads.filter(x=>x.status!=='Kapalı');
+    document.getElementById('formBox').innerHTML =
+      '<div class="grid">'+
+      '<div class="field"><label>Ilan</label><select id="offerLoadId">'+openLoads.map(function(x){return '<option value="'+x.id+'" '+(String(x.id)===String(focus)?'selected':'')+'>'+x.title+' / '+x.route+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label>Fiyat</label><input id="offerPrice" type="text"></div>'+
+      '<div class="field"><label>Not</label><input id="offerNote" type="text"></div>'+
+      '<div class="actions"><button class="btn primary" onclick="teklifEkle()">Teklif Ver</button></div>'+
+      '</div>';
+    document.getElementById('loadRows').innerHTML = !openLoads.length ? '<tr><td colspan="5">Ilan yok.</td></tr>' :
+      openLoads.map(function(x){
+        return '<tr><td>'+x.title+'</td><td>'+x.route+'</td><td>'+x.weight+'</td><td><span class="status">'+x.status+'</span></td><td>-</td></tr>';
+      }).join('');
+    var myOffers=offers.filter(x=>x.member===(a.username||''));
+    document.getElementById('offerRows').innerHTML = !myOffers.length ? '<tr><td colspan="5">Teklif yok.</td></tr>' :
+      myOffers.map(function(x){
+        var load=loads.find(l=>String(l.id)===String(x.loadId));
+        return '<tr><td>'+(load?load.title:'-')+'</td><td>'+(x.memberName||x.member)+'</td><td>'+x.price+'</td><td><span class="status">'+x.status+'</span><br>'+(x.adminNote||'')+'</td><td>-</td></tr>';
+      }).join('');
   }
-
-  if (auth.role === "shipper") {
-    document.getElementById("loadFormArea").innerHTML = `
-      <div class="form-grid">
-        <div><label>İlan Başlığı</label><input id="loadTitle" type="text" placeholder="İstanbul → Adana Komple"></div>
-        <div><label>Güzergah</label><input id="loadRoute" type="text" placeholder="İstanbul / Adana"></div>
-        <div><label>Ağırlık</label><input id="loadWeight" type="text" placeholder="10 ton"></div>
-        <div><button class="btn primary" onclick="ilanEkle()">İlan Aç</button></div>
-      </div>
-    `;
-    document.getElementById("rightTitle").textContent = "Gelen Teklifler";
-    document.getElementById("offerFormArea").innerHTML = "";
-  } else if (auth.role === "carrier") {
-    document.getElementById("leftTitle").textContent = "Açık İlanlar";
-    const openLoads = loads.filter(x => x.status !== "Kapalı");
-    const options = openLoads.map(x =>
-      `<option value="${x.id}" ${String(x.id) === String(focusLoadId) ? "selected" : ""}>${x.title} / ${x.route}</option>`
-    ).join("");
-
-    document.getElementById("loadFormArea").innerHTML = "";
-    document.getElementById("rightTitle").textContent = "Teklif Ver / Tekliflerim";
-    document.getElementById("offerFormArea").innerHTML = `
-      <div class="form-grid">
-        <div><label>İlan</label><select id="offerLoadId">${options || '<option value="">Açık ilan yok</option>'}</select></div>
-        <div><label>Fiyat</label><input id="offerPrice" type="text" placeholder="25000"></div>
-        <div><label>Not</label><input id="offerNote" type="text" placeholder="Yarın yükleme yapabiliriz"></div>
-        <div><button class="btn primary" onclick="teklifEkle()">Teklif Ver</button></div>
-      </div>
-    `;
-  } else {
-    document.getElementById("loadFormArea").innerHTML = "";
-    document.getElementById("offerFormArea").innerHTML = "";
-  }
-
-  const visibleLoads = auth.role === "shipper"
-    ? loads.filter(x => x.createdBy === (auth.username || ""))
-    : loads;
-
-  document.getElementById("loadRows").innerHTML = !visibleLoads.length
-    ? '<tr><td colspan="5">Henüz ilan yok.</td></tr>'
-    : visibleLoads.map(x => `
-      <tr class="${String(x.id) === String(focusLoadId) ? "highlight" : ""}">
-        <td>${x.title || "-"}</td>
-        <td>${x.route || "-"}</td>
-        <td>${x.weight || "-"}</td>
-        <td><span class="status">${x.status || "Açık"}</span></td>
-        <td><div class="actions">${auth.role === "shipper" ? `<button class="btn" onclick="ilanKapat('${x.id}')">Kapat</button>` : ""}</div></td>
-      </tr>
-    `).join("");
-
-  let visibleOffers = offers;
-  if (auth.role === "carrier") {
-    visibleOffers = offers.filter(x => x.member === (auth.username || ""));
-  }
-  if (auth.role === "shipper") {
-    const myLoadIds = loads.filter(x => x.createdBy === (auth.username || "")).map(x => String(x.id));
-    visibleOffers = offers.filter(x => myLoadIds.includes(String(x.loadId)));
-  }
-
-  document.getElementById("offerRows").innerHTML = !visibleOffers.length
-    ? '<tr><td colspan="5">Henüz teklif yok.</td></tr>'
-    : visibleOffers.map(x => {
-      const load = loads.find(l => String(l.id) === String(x.loadId));
-      return `
-        <tr class="${String(x.loadId) === String(focusLoadId) ? "highlight" : ""}">
-          <td>${load ? load.title : "-"}</td>
-          <td>${x.memberName || x.member || "-"}${(x.adminNote || "").trim() ? `<span class="small-note">Admin notu var</span>` : ""}</td>
-          <td>${x.price || "-"}</td>
-          <td><span class="status">${x.status || "Bekliyor"}</span>${(x.adminNote || "").trim() ? `<span class="small-note">${x.adminNote}</span>` : ""}</td>
-          <td><div class="actions">${auth.role === "shipper" ? `<button class="btn primary" onclick="teklifDurum('${x.id}','Onaylandı')">Onayla</button><button class="btn" onclick="teklifDurum('${x.id}','Reddedildi')">Reddet</button>` : ""}</div></td>
-        </tr>
-      `;
-    }).join("");
 }
-
 function ilanEkle(){
   try{
     SEVRA_KIMLIK.addLoad({
-      title: document.getElementById("loadTitle").value.trim(),
-      route: document.getElementById("loadRoute").value.trim(),
-      weight: document.getElementById("loadWeight").value.trim()
+      title:document.getElementById('loadTitle').value.trim(),
+      route:document.getElementById('loadRoute').value.trim(),
+      weight:document.getElementById('loadWeight').value.trim()
     });
-    loadFlow();
-    showOk("Yeni ilan başarıyla oluşturuldu.");
-  }catch(err){
-    showErr(err.message);
-  }
+    showMsg('Ilan olustu.');
+    loadPage();
+  }catch(err){showMsg(err.message);}
 }
-
 function teklifEkle(){
   try{
     SEVRA_KIMLIK.addOffer({
-      loadId: document.getElementById("offerLoadId").value,
-      price: document.getElementById("offerPrice").value.trim(),
-      note: document.getElementById("offerNote").value.trim()
+      loadId:document.getElementById('offerLoadId').value,
+      price:document.getElementById('offerPrice').value.trim(),
+      note:document.getElementById('offerNote').value.trim()
     });
-    document.getElementById("offerPrice").value = "";
-    document.getElementById("offerNote").value = "";
-    loadFlow();
-    showOk("Teklif başarıyla kaydedildi.");
-  }catch(err){
-    showErr(err.message);
-  }
+    showMsg('Teklif kaydedildi.');
+    loadPage();
+  }catch(err){showMsg(err.message);}
 }
-
-function ilanKapat(id){
-  try{
-    SEVRA_KIMLIK.setLoadStatus(id,"Kapalı");
-    loadFlow();
-    showOk("İlan kapatıldı.");
-  }catch(err){
-    showErr(err.message);
-  }
-}
-
 function teklifDurum(id,status){
-  try{
-    SEVRA_KIMLIK.setOfferStatus(id,status);
-    loadFlow();
-    showOk("Teklif durumu güncellendi: " + status);
-  }catch(err){
-    showErr(err.message);
-  }
+  try{SEVRA_KIMLIK.setOfferStatus(id,status);showMsg('Teklif guncellendi.');loadPage();}catch(err){showMsg(err.message);}
 }
-
-loadFlow();
+function ilanDurum(id,status){
+  try{SEVRA_KIMLIK.setLoadStatus(id,status);showMsg('Ilan guncellendi.');loadPage();}catch(err){showMsg(err.message);}
+}
+loadPage();
 </script>
+
 </body>
 </html>
