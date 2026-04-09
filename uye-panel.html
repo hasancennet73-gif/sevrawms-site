@@ -1,148 +1,84 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Üye Paneli</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
-radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-.wrap{max-width:1200px;margin:0 auto;padding:26px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.title h1{font-size:38px;margin-bottom:8px}.title p{color:#aebcd3}
-.badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-.btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.card,.panel{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-.card strong{display:block;font-size:28px;margin-bottom:6px}.card span{color:#aebcd3;font-size:13px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.panel h2{font-size:24px;margin-bottom:10px}.panel p{color:#c7d3e6}
-.list{display:grid;gap:10px}
-.item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
-.item strong{display:block;font-size:15px;margin-bottom:4px}.item span{font-size:13px;color:#c7d3e6}
-.note{margin-top:18px}
-@media (max-width:1100px){.grid{grid-template-columns:1fr}}
-@media (max-width:900px){.cards{grid-template-columns:1fr 1fr}}
-@media (max-width:680px){.cards{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Uye Paneli</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:26px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    .title h1{font-size:36px;margin-bottom:8px}
+    .title p{color:var(--muted)}
+    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
+    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+    .card strong{display:block;font-size:28px;margin-bottom:6px}
+    .card span{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{font-size:13px;color:#dce6f5;font-weight:700}
+    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
+
 <div class="wrap">
   <div class="top">
-    <div class="title">
-      <h1>Üye Paneli</h1>
-      <p id="welcomeText">Üye tarafı özet ekranı.</p>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <div id="memberUser" class="badge">Üye</div>
-      <a class="btn primary" href="ilan-teklif.html">İlan / Teklif Akışı</a>
-      <button class="btn" onclick="SEVRA_KIMLIK.logout('uye-login.html')">Çıkış Yap</button>
+    <div class="title"><h1>Uye Paneli</h1><p id="welcome"></p></div>
+    <div class="actions">
+      <div id="badge" class="badge">Uye</div>
+      <a class="btn primary" href="ilan-teklif.html">Ilan / Teklif Akisi</a>
+      <button class="btn" onclick="SEVRA_KIMLIK.logout('uye-login.html')">Cikis Yap</button>
     </div>
   </div>
-
-  <div class="cards" id="summaryCards">
-    <div class="card"><strong>0</strong><span>Aktif ilan</span></div>
-    <div class="card"><strong>0</strong><span>Teklif</span></div>
-    <div class="card"><strong>0</strong><span>Onaylı</span></div>
-    <div class="card"><strong>0</strong><span>Admin notlu</span></div>
-  </div>
-
+  <div class="cards" id="cards"></div>
   <div class="grid">
-    <div class="panel">
-      <h2>Profil Özeti</h2>
-      <div class="list" id="profileList"></div>
-    </div>
-    <div class="panel">
-      <h2>Akış Özeti</h2>
-      <div class="list" id="flowList"></div>
-    </div>
-  </div>
-
-  <div class="panel note">
-    <h2>Durum</h2>
-    <p id="platformText">Veri yükleniyor...</p>
+    <div class="panel"><h2>Profil</h2><div id="profile"></div></div>
+    <div class="panel"><h2>Durum</h2><div id="summary"></div></div>
   </div>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
+
 <script>
-if (SEVRA_KIMLIK.requireMember()) {
-  const auth = SEVRA_KIMLIK.getAuth();
-  document.getElementById("memberUser").textContent = "Üye: " + auth.username + " / " + auth.role;
+if(SEVRA_KIMLIK.requireMember()){
+  var a=SEVRA_KIMLIK.getAuth();
+  document.getElementById('badge').textContent='Uye: '+a.username+' / '+a.role;
+  document.getElementById('welcome').textContent=(a.fullName||a.username)+' icin panel ozeti.';
 }
-if (typeof SEVRA_KIMLIK.trackVisit === "function") {
-  SEVRA_KIMLIK.trackVisit("uye-panel");
+function roleText(r){if(r==='carrier') return 'Nakliyeci'; if(r==='shipper') return 'Yuk Veren'; return 'Standart Uye';}
+function loadPanel(){
+  var a=SEVRA_KIMLIK.getAuth()||{};
+  var loads=SEVRA_KIMLIK.getLoads(), offers=SEVRA_KIMLIK.getOffers();
+  var myLoads=loads.filter(x=>x.createdBy===(a.username||''));
+  var myOffers=offers.filter(x=>x.member===(a.username||''));
+  var noted=myOffers.filter(x=>(x.adminNote||'').trim()).length;
+  document.getElementById('cards').innerHTML=
+    '<div class="card"><strong>'+myLoads.length+'</strong><span>Ilan</span></div>'+
+    '<div class="card"><strong>'+myOffers.length+'</strong><span>Teklif</span></div>'+
+    '<div class="card"><strong>'+myOffers.filter(x=>x.status==='Onaylandı').length+'</strong><span>Onayli</span></div>'+
+    '<div class="card"><strong>'+noted+'</strong><span>Admin Notlu</span></div>';
+  document.getElementById('profile').innerHTML=
+    '<p><b>Ad:</b> '+(a.fullName||'-')+'</p><br>'+
+    '<p><b>Kullanici:</b> '+(a.username||'-')+'</p><br>'+
+    '<p><b>Rol:</b> '+roleText(a.role)+'</p><br>'+
+    '<p><b>Firma:</b> '+(a.company||'-')+'</p>';
+  document.getElementById('summary').innerHTML=
+    '<p>Sistemde '+loads.length+' ilan ve '+offers.length+' teklif bulunuyor.</p>';
 }
-
-function roleText(role){
-  if(role === "carrier") return "Nakliyeci";
-  if(role === "shipper") return "Yük Veren";
-  return "Standart Üye";
-}
-
-function loadMemberPanel(){
-  const auth = SEVRA_KIMLIK.getAuth() || {};
-  const loads = SEVRA_KIMLIK.getLoads ? SEVRA_KIMLIK.getLoads() : [];
-  const offers = SEVRA_KIMLIK.getOffers ? SEVRA_KIMLIK.getOffers() : [];
-
-  const myLoads = loads.filter(x => x.createdBy === (auth.username || ""));
-  const myOffers = offers.filter(x => x.member === (auth.username || ""));
-  const receivedOffers = offers.filter(x => myLoads.some(l => String(l.id) === String(x.loadId)));
-
-  const approvedMyOffers = myOffers.filter(x => x.status === "Onaylandı").length;
-  const notedMyOffers = myOffers.filter(x => (x.adminNote || "").trim()).length;
-  const notedReceived = receivedOffers.filter(x => (x.adminNote || "").trim()).length;
-
-  document.getElementById("welcomeText").textContent =
-    (auth.fullName || auth.username || "Üye") + " için stabil panel görünümü.";
-
-  document.getElementById("summaryCards").innerHTML = `
-    <div class="card"><strong>${myLoads.length}</strong><span>Aktif ilan</span></div>
-    <div class="card"><strong>${myOffers.length}</strong><span>Teklif</span></div>
-    <div class="card"><strong>${approvedMyOffers}</strong><span>Onaylı</span></div>
-    <div class="card"><strong>${auth.role === "shipper" ? notedReceived : notedMyOffers}</strong><span>Admin notlu</span></div>
-  `;
-
-  document.getElementById("profileList").innerHTML = `
-    <div class="item"><strong>Ad Soyad</strong><span>${auth.fullName || "-"}</span></div>
-    <div class="item"><strong>Kullanıcı Adı</strong><span>${auth.username || "-"}</span></div>
-    <div class="item"><strong>Rol</strong><span>${roleText(auth.role)}</span></div>
-    <div class="item"><strong>Firma</strong><span>${auth.company || "-"}</span></div>
-  `;
-
-  let flowHtml = "";
-  if(auth.role === "carrier"){
-    flowHtml = `
-      <div class="item"><strong>Verilen Teklif</strong><span>${myOffers.length} teklif verdin.</span></div>
-      <div class="item"><strong>Bekleyen</strong><span>${myOffers.filter(x => x.status === "Bekliyor").length} teklif inceleniyor.</span></div>
-      <div class="item"><strong>Onaylı</strong><span>${approvedMyOffers} teklif onaylandı.</span></div>
-      <div class="item"><strong>Admin Notu</strong><span>${notedMyOffers} teklifte yönetici notu var.</span></div>
-    `;
-  } else if(auth.role === "shipper"){
-    flowHtml = `
-      <div class="item"><strong>Açılan İlan</strong><span>${myLoads.length} ilan açtın.</span></div>
-      <div class="item"><strong>Gelen Teklif</strong><span>${receivedOffers.length} teklif aldın.</span></div>
-      <div class="item"><strong>Bekleyen</strong><span>${receivedOffers.filter(x => x.status === "Bekliyor").length} teklif kararsız durumda.</span></div>
-      <div class="item"><strong>Admin Notu</strong><span>${notedReceived} teklifte yönetici notu bulunuyor.</span></div>
-    `;
-  } else {
-    flowHtml = `
-      <div class="item"><strong>Platform</strong><span>${loads.length} ilan ve ${offers.length} teklif sistemde bulunuyor.</span></div>
-      <div class="item"><strong>Yol</strong><span>İlan / teklif ekranından akışa girebilirsin.</span></div>
-    `;
-  }
-
-  document.getElementById("flowList").innerHTML = flowHtml;
-  document.getElementById("platformText").textContent =
-    "Sistemde " + loads.length + " ilan ve " + offers.length + " teklif bulunuyor.";
-}
-
-loadMemberPanel();
+loadPanel();
 </script>
+
 </body>
 </html>
