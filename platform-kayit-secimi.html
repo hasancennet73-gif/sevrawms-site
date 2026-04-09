@@ -3,99 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Kayıt Seçimi</title>
+  <title>SEVRA | Kayit Secimi</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:Arial,Helvetica,sans-serif;color:#eef4ff;min-height:100vh;
-      background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);
-      display:flex;align-items:center;justify-content:center;padding:24px;
-    }
-    .wrap{width:100%;max-width:1080px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
-    .card{border:1px solid rgba(255,255,255,.08);border-radius:28px;background:linear-gradient(180deg,rgba(13,32,67,.94),rgba(8,18,37,.96));padding:28px}
-    .logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#f1c84d,#f7dc89);color:#0d1d38;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-    h1{font-size:28px;margin-bottom:8px}
-    p{color:#c7d3e6;margin-bottom:18px}
-    ul{padding-left:18px;color:#dbe5f3;margin-bottom:18px}
-    li{margin-bottom:8px}
-    .btn-row{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{min-height:48px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none}
-    .btn-primary{background:#f1c84d;color:#0b1830}
-    .btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);color:#fff}
-    .note{margin-top:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#c9d5e7;border-radius:14px;padding:12px;font-size:13px}
-    @media(max-width:980px){.wrap{grid-template-columns:1fr}}
+    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:26px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+    .title h1{font-size:36px;margin-bottom:8px}
+    .title p{color:var(--muted)}
+    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
+    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+    .card strong{display:block;font-size:28px;margin-bottom:6px}
+    .card span{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{font-size:13px;color:#dce6f5;font-weight:700}
+    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div class="logo">N</div>
-      <h1>Nakliyeci Olarak Katıl</h1>
-      <p>Açık yükleri gör, teklif ver ve taşıma fırsatlarını takip et.</p>
-      <ul>
-        <li>Yük ilanlarını incele</li>
-        <li>Teklif oluştur</li>
-        <li>Onay / red durumunu takip et</li>
-      </ul>
-      <div class="btn-row">
-        <a id="carrierRegister" class="btn btn-primary" href="uye-ol.html?role=carrier">Nakliyeci Kayıt</a>
-        <a id="carrierLogin" class="btn btn-secondary" href="uye-login.html?role=carrier">Giriş Yap</a>
+
+<div class="wrap">
+  <div class="title" style="margin-bottom:18px"><h1>Kayit Secimi</h1><p>Rolunu sec, sonra kayit ol veya giris yap.</p></div>
+  <div class="grid">
+    <div class="panel">
+      <h2>Nakliyeci</h2>
+      <div class="actions">
+        <a id="carrierReg" class="btn primary" href="uye-ol.html?role=carrier">Kayit Ol</a>
+        <a id="carrierLog" class="btn" href="uye-login.html?role=carrier">Giris Yap</a>
       </div>
     </div>
-
-    <div class="card">
-      <div class="logo">Y</div>
-      <h1>Yük Veren Olarak Katıl</h1>
-      <p>Yük ilanı aç, gelen teklifleri değerlendir ve operasyonunu yönet.</p>
-      <ul>
-        <li>İlan aç</li>
-        <li>Teklif al</li>
-        <li>Taşıma sürecini yönet</li>
-      </ul>
-      <div class="btn-row">
-        <a id="shipperRegister" class="btn btn-primary" href="uye-ol.html?role=shipper">Yük Veren Kayıt</a>
-        <a id="shipperLogin" class="btn btn-secondary" href="uye-login.html?role=shipper">Giriş Yap</a>
+    <div class="panel">
+      <h2>Yuk Veren</h2>
+      <div class="actions">
+        <a id="shipperReg" class="btn primary" href="uye-ol.html?role=shipper">Kayit Ol</a>
+        <a id="shipperLog" class="btn" href="uye-login.html?role=shipper">Giris Yap</a>
       </div>
     </div>
-
-    <div class="card">
-      <div class="logo">S</div>
-      <h1>Standart Üye</h1>
-      <p>Sistemi keşfetmek ve sonra rolünü netleştirmek için giriş yap.</p>
-      <ul>
-        <li>Temel üyelik</li>
-        <li>Platform keşfi</li>
-        <li>Sonradan rol geçişine hazırlık</li>
-      </ul>
-      <div class="btn-row">
-        <a id="memberRegister" class="btn btn-primary" href="uye-ol.html?role=member">Standart Kayıt</a>
-        <a id="memberLogin" class="btn btn-secondary" href="uye-login.html?role=member">Giriş Yap</a>
+    <div class="panel">
+      <h2>Standart Uye</h2>
+      <div class="actions">
+        <a id="memberReg" class="btn primary" href="uye-ol.html?role=member">Kayit Ol</a>
+        <a id="memberLog" class="btn" href="uye-login.html?role=member">Giris Yap</a>
       </div>
-      <div class="note">Bu ekran vitrin ile üyelik arasındaki geçişi sadeleştirir.</div>
     </div>
   </div>
+</div>
 
-  <script>
-    function getParam(name){
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name) || "";
-    }
+<script src="kimlik-dogrulama.js"></script>
 
-    function buildHref(base, role){
-      const redirect = getParam("redirect");
-      const loadId = getParam("load_id");
-      let href = base + "?role=" + encodeURIComponent(role);
-      if (redirect) href += "&redirect=" + encodeURIComponent(redirect);
-      if (loadId) href += "&load_id=" + encodeURIComponent(loadId);
-      return href;
-    }
+<script>
+function q(n){return new URLSearchParams(location.search).get(n)||'';}
+function build(base,role){
+  var p=['role='+encodeURIComponent(role)];
+  if(q('redirect')) p.push('redirect='+encodeURIComponent(q('redirect')));
+  if(q('load_id')) p.push('load_id='+encodeURIComponent(q('load_id')));
+  return base+'?'+p.join('&');
+}
+document.getElementById('carrierReg').href=build('uye-ol.html','carrier');
+document.getElementById('carrierLog').href=build('uye-login.html','carrier');
+document.getElementById('shipperReg').href=build('uye-ol.html','shipper');
+document.getElementById('shipperLog').href=build('uye-login.html','shipper');
+document.getElementById('memberReg').href=build('uye-ol.html','member');
+document.getElementById('memberLog').href=build('uye-login.html','member');
+</script>
 
-    document.getElementById("carrierRegister").href = buildHref("uye-ol.html", "carrier");
-    document.getElementById("carrierLogin").href = buildHref("uye-login.html", "carrier");
-    document.getElementById("shipperRegister").href = buildHref("uye-ol.html", "shipper");
-    document.getElementById("shipperLogin").href = buildHref("uye-login.html", "shipper");
-    document.getElementById("memberRegister").href = buildHref("uye-ol.html", "member");
-    document.getElementById("memberLogin").href = buildHref("uye-login.html", "member");
-  </script>
 </body>
 </html>
