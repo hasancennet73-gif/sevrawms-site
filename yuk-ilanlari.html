@@ -3,130 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yük İlanları</title>
+  <title>SEVRA | Yuk Ilanlari</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
     body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-    .container{max-width:1280px;margin:0 auto;padding:26px}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:26px}
     .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:38px;margin-bottom:8px}.title p{color:var(--muted)}
+    .title h1{font-size:36px;margin-bottom:8px}
+    .title p{color:var(--muted)}
     .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
     .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
     .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}.card span{color:var(--muted);font-size:13px}
-    .filter{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-bottom:18px}
-    label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
-    input,select{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    .table-wrap{overflow:auto}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+    .card strong{display:block;font-size:28px;margin-bottom:6px}
+    .card span{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{font-size:13px;color:#dce6f5;font-weight:700}
+    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
     table{width:100%;border-collapse:collapse}
     th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
     .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .note h2{font-size:24px;margin-bottom:10px}.note p{color:#c7d3e6}
-    @media (max-width:1000px){.cards{grid-template-columns:1fr 1fr}.filter{grid-template-columns:1fr 1fr}}
-    @media (max-width:680px){.cards,.filter{grid-template-columns:1fr}}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="top">
-      <div class="title">
-        <h1>Yük İlanları</h1>
-        <p>Public vitrinde açık yükleri listeleyen ekran.</p>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <a class="btn" href="index.html">Ana Sayfa</a>
-        <a class="btn" href="uye-login.html?redirect=ilan-teklif">Üye Girişi</a>
-        <a class="btn primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Üye Ol / Giriş</a>
-      </div>
-    </div>
 
-    <div class="cards" id="summaryCards"></div>
-
-    <div class="panel">
-      <div class="filter">
-        <div>
-          <label>Anahtar Kelime</label>
-          <input id="searchBox" type="text" placeholder="İstanbul, Ankara, parsiyel..." />
-        </div>
-        <div>
-          <label>Durum</label>
-          <select id="statusBox">
-            <option value="">Tümü</option>
-            <option value="Açık">Açık</option>
-            <option value="Kapalı">Kapalı</option>
-          </select>
-        </div>
-        <div>
-          <button class="btn primary" onclick="loadLoads()">Filtrele</button>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Başlık</th>
-              <th>Firma</th>
-              <th>Güzergah</th>
-              <th>Ağırlık</th>
-              <th>Durum</th>
-              <th>İşlem</th>
-            </tr>
-          </thead>
-          <tbody id="loadRows"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="note">
-      <h2>Vitrin Akışı</h2>
-      <p>Detay ekranından kullanıcıyı doğru kayıt / giriş hattına ve seçili ilana yönlendirir.</p>
+<div class="wrap">
+  <div class="top">
+    <div class="title"><h1>Yuk Ilanlari</h1><p>Acik ilanlari listeleyen ekran.</p></div>
+    <div class="actions">
+      <a class="btn" href="index.html">Ana Sayfa</a>
+      <a class="btn primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Uye Ol / Giris</a>
     </div>
   </div>
+  <div class="cards" id="cards"></div>
+  <div class="panel">
+    <table><thead><tr><th>Baslik</th><th>Firma</th><th>Guzergah</th><th>Agirlik</th><th>Durum</th><th>Islem</th></tr></thead><tbody id="rows"></tbody></table>
+  </div>
+</div>
 
-  <script src="kimlik-dogrulama.js"></script>
-  <script>
-    function loadLoads() {
-      const rows = (typeof SEVRA_KIMLIK !== "undefined" && typeof SEVRA_KIMLIK.getLoads === "function")
-        ? SEVRA_KIMLIK.getLoads()
-        : [];
+<script src="kimlik-dogrulama.js"></script>
 
-      const q = document.getElementById("searchBox").value.trim().toLowerCase();
-      const status = document.getElementById("statusBox").value;
+<script>
+function loadRows(){
+  var rows=SEVRA_KIMLIK.getLoads();
+  document.getElementById('cards').innerHTML=
+    '<div class="card"><strong>'+rows.length+'</strong><span>Toplam Ilan</span></div>'+
+    '<div class="card"><strong>'+rows.filter(x=>x.status!=='Kapalı').length+'</strong><span>Acik Ilan</span></div>'+
+    '<div class="card"><strong>'+new Set(rows.map(x=>x.owner)).size+'</strong><span>Firma</span></div>'+
+    '<div class="card"><strong>'+new Set(rows.map(x=>x.route)).size+'</strong><span>Guzergah</span></div>';
+  var open=rows.filter(x=>x.status!=='Kapalı');
+  document.getElementById('rows').innerHTML=!open.length?'<tr><td colspan="6">Ilan yok.</td></tr>':
+    open.map(function(x){
+      return '<tr><td>'+x.title+'</td><td>'+x.owner+'</td><td>'+x.route+'</td><td>'+x.weight+'</td><td><span class="status">'+x.status+'</span></td><td><a class="btn primary" href="yuk-ilani-detay.html?id='+x.id+'">Detay</a></td></tr>';
+    }).join('');
+}
+loadRows();
+</script>
 
-      const filtered = rows.filter(x => {
-        const full = ((x.title || "") + " " + (x.owner || "") + " " + (x.route || "") + " " + (x.weight || "")).toLowerCase();
-        return (!q || full.includes(q)) && (!status || String(x.status || "") === status);
-      });
-
-      const total = rows.length;
-      const acik = rows.filter(x => x.status !== "Kapalı").length;
-      const firma = new Set(rows.map(x => x.owner || "-")).size;
-      const rota = new Set(rows.map(x => x.route || "-")).size;
-
-      document.getElementById("summaryCards").innerHTML = `
-        <div class="card"><strong>${total}</strong><span>Toplam ilan</span></div>
-        <div class="card"><strong>${acik}</strong><span>Açık ilan</span></div>
-        <div class="card"><strong>${firma}</strong><span>Firma</span></div>
-        <div class="card"><strong>${rota}</strong><span>Güzergah</span></div>
-      `;
-
-      document.getElementById("loadRows").innerHTML = !filtered.length
-        ? '<tr><td colspan="6">Uygun ilan bulunamadı.</td></tr>'
-        : filtered.map(x => `
-          <tr>
-            <td>${x.title || "-"}</td>
-            <td>${x.owner || "-"}</td>
-            <td>${x.route || "-"}</td>
-            <td>${x.weight || "-"}</td>
-            <td><span class="status">${x.status || "Açık"}</span></td>
-            <td><a class="btn primary" href="yuk-ilani-detay.html?id=${x.id}">Detay</a></td>
-          </tr>
-        `).join("");
-    }
-    loadLoads();
-  </script>
 </body>
 </html>
