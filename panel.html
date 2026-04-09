@@ -3,153 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yönetici Kontrol Paneli</title>
+  <title>SEVRA | Yonetici Paneli</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{
-      font-family:Arial,Helvetica,sans-serif;color:var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-        linear-gradient(180deg,#071425,#08111b 74%,#040912);
-    }
+    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
     a{text-decoration:none;color:inherit}
-    .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-    .sidebar{background:linear-gradient(180deg,#10274b,#0b1c37);border-right:1px solid rgba(255,255,255,.08);padding:24px 18px}
-    .side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
-    .side-logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--yellow),#f7dc89);display:flex;align-items:center;justify-content:center;color:#0d1e3b;font-weight:900;font-size:18px}
-    .side-brand strong{display:block;font-size:20px}
-    .side-brand span{display:block;color:#b8c5d8;font-size:12px}
-    .side-menu{display:grid;gap:10px}
-    .menu-item{min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700}
-    .menu-item.active{background:var(--yellow);color:#0c1a34}
-    .main{padding:26px}
+    .wrap{max-width:1200px;margin:0 auto;padding:26px}
     .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:38px;margin-bottom:8px}
+    .title h1{font-size:36px;margin-bottom:8px}
     .title p{color:var(--muted)}
+    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
     .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer}
-    .cards{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px}
-    .card,.panel{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
     .card strong{display:block;font-size:28px;margin-bottom:6px}
     .card span{color:var(--muted);font-size:13px}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .panel h2{font-size:24px;margin-bottom:10px}
-    .panel p{color:#c7d3e6}
-    .list{display:grid;gap:10px}
-    .item{border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02);padding:14px}
-    .item strong{display:block;font-size:15px;margin-bottom:4px}
-    .item span{font-size:13px;color:#c7d3e6}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    label{font-size:13px;color:#dce6f5;font-weight:700}
+    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
     table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
     .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    @media (max-width:1200px){.cards{grid-template-columns:1fr 1fr 1fr}.grid{grid-template-columns:1fr}}
-    @media (max-width:980px){.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}}
-    @media (max-width:680px){.cards{grid-template-columns:1fr}}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="side-brand">
-        <div class="side-logo">S</div>
-        <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
-      </div>
-      <div class="side-menu">
-        <a class="menu-item active" href="panel.html">Kontrol Paneli</a>
-        <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
-        <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
-        <a class="menu-item" href="ilan-teklif-yonetim.html">İlan & Teklif</a>
-        <a class="menu-item" href="index.html">Ana Sayfa</a>
-      </div>
-    </aside>
 
-    <main class="main">
-      <div class="top">
-        <div class="title">
-          <h1>Yönetici Kontrol Paneli</h1>
-          <p>Stabil admin özet ekranı.</p>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <div id="adminUser" class="badge">Admin</div>
-          <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
-        </div>
-      </div>
-
-      <div class="cards" id="summaryCards"></div>
-
-      <div class="grid">
-        <div class="panel">
-          <h2>Hızlı Özet</h2>
-          <div class="list" id="quickList"></div>
-        </div>
-
-        <div class="panel">
-          <h2>Son Başvurular</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Firma</th>
-                <th>Yetkili</th>
-                <th>Tip</th>
-                <th>Durum</th>
-              </tr>
-            </thead>
-            <tbody id="appRows"></tbody>
-          </table>
-        </div>
-      </div>
-    </main>
+<div class="wrap">
+  <div class="top">
+    <div class="title"><h1>Yonetici Kontrol Paneli</h1><p>Stabil admin ozet ekranı.</p></div>
+    <div class="actions">
+      <div id="badge" class="badge">Admin</div>
+      <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Cikis Yap</button>
+    </div>
   </div>
+  <div class="cards" id="cards"></div>
+  <div class="grid">
+    <div class="panel"><h2>Hizli Ozet</h2><div id="summary"></div></div>
+    <div class="panel"><h2>Yonlendirme</h2>
+      <div class="actions">
+        <a class="btn" href="uyeler-analytics.html">Uyeler</a>
+        <a class="btn" href="basvuru-yonetim.html">Basvurular</a>
+        <a class="btn primary" href="ilan-teklif-yonetim.html">Ilan / Teklif</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <script src="kimlik-dogrulama.js"></script>
-  <script>
-    if (SEVRA_KIMLIK.requireAdmin()) {
-      const auth = SEVRA_KIMLIK.getAuth();
-      document.getElementById("adminUser").textContent = "Admin: " + auth.username;
-    }
+<script src="kimlik-dogrulama.js"></script>
 
-    function loadDashboard() {
-      const products = SEVRA_KIMLIK.getProducts ? SEVRA_KIMLIK.getProducts() : [];
-      const messages = SEVRA_KIMLIK.getMessages ? SEVRA_KIMLIK.getMessages() : [];
-      const members = SEVRA_KIMLIK.getMembers ? SEVRA_KIMLIK.getMembers() : [];
-      const apps = SEVRA_KIMLIK.getApplications ? SEVRA_KIMLIK.getApplications() : [];
-      const loads = SEVRA_KIMLIK.getLoads ? SEVRA_KIMLIK.getLoads() : [];
-      const offers = SEVRA_KIMLIK.getOffers ? SEVRA_KIMLIK.getOffers() : [];
+<script>
+if(SEVRA_KIMLIK.requireAdmin()){
+  document.getElementById('badge').textContent='Admin: '+SEVRA_KIMLIK.getAuth().username;
+}
+function loadPanel(){
+  var members=SEVRA_KIMLIK.getMembers(), loads=SEVRA_KIMLIK.getLoads(), offers=SEVRA_KIMLIK.getOffers(), apps=SEVRA_KIMLIK.getApplications();
+  document.getElementById('cards').innerHTML=
+    '<div class="card"><strong>'+members.length+'</strong><span>Uye</span></div>'+
+    '<div class="card"><strong>'+loads.length+'</strong><span>Ilan</span></div>'+
+    '<div class="card"><strong>'+offers.length+'</strong><span>Teklif</span></div>'+
+    '<div class="card"><strong>'+apps.length+'</strong><span>Basvuru</span></div>';
+  document.getElementById('summary').innerHTML=
+    '<p>Bekleyen teklif: '+offers.filter(x=>x.status==='Bekliyor').length+'</p><br>'+
+    '<p>Onayli teklif: '+offers.filter(x=>x.status==='Onaylandı').length+'</p><br>'+
+    '<p>Notlu teklif: '+offers.filter(x=>(x.adminNote||'').trim()).length+'</p>';
+}
+loadPanel();
+</script>
 
-      document.getElementById("summaryCards").innerHTML = `
-        <div class="card"><strong>${products.length}</strong><span>Ürün</span></div>
-        <div class="card"><strong>${messages.length}</strong><span>Mesaj</span></div>
-        <div class="card"><strong>${members.length}</strong><span>Üye</span></div>
-        <div class="card"><strong>${apps.length}</strong><span>Başvuru</span></div>
-        <div class="card"><strong>${loads.length}</strong><span>İlan</span></div>
-        <div class="card"><strong>${offers.length}</strong><span>Teklif</span></div>
-      `;
-
-      document.getElementById("quickList").innerHTML = `
-        <div class="item"><strong>Bekleyen Teklif</strong><span>${offers.filter(x => x.status === "Bekliyor").length} teklif bekliyor.</span></div>
-        <div class="item"><strong>Onaylı Teklif</strong><span>${offers.filter(x => x.status === "Onaylandı").length} teklif onaylandı.</span></div>
-        <div class="item"><strong>Admin Notu</strong><span>${offers.filter(x => (x.adminNote || "").trim()).length} teklifte not var.</span></div>
-        <div class="item"><strong>Aktif Üye</strong><span>${members.filter(x => x.status !== "Pasif").length} aktif üye bulunuyor.</span></div>
-      `;
-
-      if (!apps.length) {
-        document.getElementById("appRows").innerHTML = '<tr><td colspan="4">Henüz başvuru yok.</td></tr>';
-      } else {
-        const latest = [...apps].reverse().slice(0, 5);
-        document.getElementById("appRows").innerHTML = latest.map(x => `
-          <tr>
-            <td>${x.company || "-"}</td>
-            <td>${x.contact || "-"}</td>
-            <td>${x.appType || "-"}</td>
-            <td><span class="status">${x.status || "Bekliyor"}</span></td>
-          </tr>
-        `).join("");
-      }
-    }
-
-    loadDashboard();
-  </script>
 </body>
 </html>
