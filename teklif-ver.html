@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Teklif Ver</title>
+  <meta name="description" content="SEVRA teklif verme ekranı. Yük ilanına fiyat, araç bilgisi ve not ile teklif gönderin." />
+  <link rel="stylesheet" href="teklif-ver.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="yuk-ilanlari.html">Yük İlanları</a>
+        <a href="ilan-detay.html">İlan Detayı</a>
+        <a href="yonetici-giris.html">Yönetici Girişi</a>
+      </nav>
+
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Listeye Dön</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="offer-hero">
+    <div class="container">
+      <div class="offer-hero-shell">
+        <div class="offer-left">
+          <div class="offer-badge">Kurumsal Teklif Akışı</div>
+          <h1>İlan için teklif oluştur</h1>
+          <p>Bu ekran, taşıyıcının fiyat, araç tipi, teslim süresi ve açıklama bilgisi ile düzenli teklif vermesi için hazırlanmıştır.</p>
+
+          <div class="offer-summary-strip">
+            <div class="mini-box">
+              <span>İlan No</span>
+              <strong>SVR-1001</strong>
+            </div>
+            <div class="mini-box">
+              <span>Güzergah</span>
+              <strong>İstanbul → Ankara</strong>
+            </div>
+            <div class="mini-box">
+              <span>Yük</span>
+              <strong>Ambalajlı ürün</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="offer-right">
+          <div class="side-card">
+            <div class="side-topline">İlan Özeti</div>
+            <h3>Hızlı kontrol</h3>
+            <ul>
+              <li>Araç: Kamyon</li>
+              <li>Ağırlık: 2.400 kg</li>
+              <li>Yükleme: 12.04.2026</li>
+              <li>Yük tipi: Parsiyel</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="offer-section">
+    <div class="container">
+      <div class="offer-grid">
+        <article class="form-card main-form-card">
+          <div class="section-kicker">Teklif Formu</div>
+          <h2>Teklif bilgilerini gir</h2>
+
+          <form id="offerForm" class="offer-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="companyName">Firma Adı</label>
+                <input id="companyName" type="text" placeholder="Firma adınızı girin" />
+              </div>
+
+              <div class="form-group">
+                <label for="contactName">Yetkili Adı</label>
+                <input id="contactName" type="text" placeholder="Yetkili ad soyad" />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Telefon</label>
+                <input id="phone" type="text" placeholder="05xx xxx xx xx" />
+              </div>
+
+              <div class="form-group">
+                <label for="vehicleType">Araç Tipi</label>
+                <select id="vehicleType">
+                  <option value="">Seçiniz</option>
+                  <option>Kamyon</option>
+                  <option>Tır</option>
+                  <option>Kamyonet</option>
+                  <option>Frigo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="price">Teklif Tutarı</label>
+                <input id="price" type="number" placeholder="Örn: 18500" />
+              </div>
+
+              <div class="form-group">
+                <label for="deliveryTime">Teslim Süresi</label>
+                <select id="deliveryTime">
+                  <option value="">Seçiniz</option>
+                  <option>Aynı gün</option>
+                  <option>1 gün</option>
+                  <option>2 gün</option>
+                  <option>3 gün</option>
+                </select>
+              </div>
+
+              <div class="form-group full">
+                <label for="note">Teklif Notu</label>
+                <textarea id="note" rows="5" placeholder="Yükleme saati, araç durumu, ek bilgi veya teklif notunuzu yazın"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <a class="btn btn-secondary" href="ilan-detay.html">İlan Detayına Dön</a>
+              <button type="submit" class="btn btn-primary">Teklifi Gönder</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="form-card info-card">
+          <div class="section-kicker">Teklif Kuralları</div>
+          <h2>Göndermeden önce kontrol et</h2>
+          <ul class="check-list">
+            <li>Telefon ve firma bilgisi eksiksiz olmalı</li>
+            <li>Araç tipi ilana uygun seçilmeli</li>
+            <li>Teklif tutarı net girilmeli</li>
+            <li>Gerekli ise ek açıklama yazılmalı</li>
+          </ul>
+        </article>
+
+        <article class="form-card accent-card">
+          <div class="section-kicker">Sistem Mesajı</div>
+          <h2>Teklif sonrası süreç</h2>
+          <p>Teklifiniz kayıt altına alınır. Yük veren veya yönetici değerlendirme sonrası sizinle sistem içi akış üzerinden devam eder.</p>
+          <div class="accent-actions">
+            <a class="btn btn-secondary" href="yuk-ilanlari.html">Başka İlanlara Bak</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div id="successModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="section-kicker">Başarılı</div>
+      <h3>Teklifiniz kaydedildi</h3>
+      <p>Bu ekran demodur. Sonraki aşamada teklifleri gerçek veri olarak yönetici paneline bağlayacağız.</p>
+      <div class="modal-actions">
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Listeye Dön</a>
+        <button id="closeModal" class="btn btn-primary">Tamam</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const offerForm = document.getElementById('offerForm');
+    const successModal = document.getElementById('successModal');
+    const closeModal = document.getElementById('closeModal');
+
+    offerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      successModal.classList.remove('hidden');
+    });
+
+    closeModal.addEventListener('click', function() {
+      successModal.classList.add('hidden');
+    });
+
+    successModal.addEventListener('click', function(event) {
+      if (event.target === successModal) {
+        successModal.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
