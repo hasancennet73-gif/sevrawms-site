@@ -69,12 +69,53 @@ a{text-decoration:none;color:inherit}
   position:relative;
   border-radius:34px;
   overflow:hidden;
-  background:
-    radial-gradient(circle at 85% 18%, rgba(241,200,77,.12), transparent 16%),
-    radial-gradient(circle at 18% 82%, rgba(64,116,221,.14), transparent 26%),
-    linear-gradient(135deg,#16345e,#0a1629 64%);
+  background:linear-gradient(135deg,#16345e,#0a1629 64%);
   border:1px solid rgba(255,255,255,.08);
   padding:22px;
+}
+.visual-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.00)),
+    radial-gradient(circle at 88% 18%, rgba(241,200,77,.18), transparent 14%),
+    radial-gradient(circle at 24% 76%, rgba(64,116,221,.16), transparent 24%);
+}
+.visual-road{
+  position:absolute;left:-8%;right:-8%;bottom:-8%;
+  height:38%;
+  background:linear-gradient(180deg, rgba(7,12,22,.00), rgba(7,12,22,.10) 30%, rgba(8,12,18,.80));
+  clip-path:polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+  opacity:.85;
+}
+.visual-truck{
+  position:absolute;
+  right:11%;bottom:14%;
+  width:42%;height:24%;
+  background:linear-gradient(180deg,#f6d56e,#c79c25);
+  border-radius:18px 18px 10px 10px;
+  box-shadow:0 20px 40px rgba(0,0,0,.30);
+  opacity:.18;
+}
+.visual-truck::before{
+  content:"";
+  position:absolute;
+  right:-18%;bottom:8%;
+  width:26%;height:54%;
+  background:linear-gradient(180deg,#f6d56e,#c79c25);
+  border-radius:10px 12px 10px 10px;
+}
+.visual-truck::after{
+  content:"";
+  position:absolute;
+  left:10%;bottom:-18%;
+  width:80%;height:20%;
+  background:
+    radial-gradient(circle at 18% 50%, #121a27 0 16px, transparent 17px),
+    radial-gradient(circle at 82% 50%, #121a27 0 16px, transparent 17px);
+}
+.visual-glow{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(6,14,28,.08), rgba(6,14,28,.34));
 }
 .hero-panel,
 .hero-panel-row .hero-panel{
