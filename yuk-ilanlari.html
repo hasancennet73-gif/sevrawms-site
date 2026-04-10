@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Yük İlanları</title>
-  <meta name="description" content="SEVRA kurumsal yük ilanları ekranı. Açık yükleri inceleyin, teklif verin ve uygun taşıyıcı eşleşmesini yönetin." />
   <link rel="stylesheet" href="yuk-ilanlari.css" />
 </head>
 <body>
@@ -26,7 +25,7 @@
       </nav>
 
       <div class="top-actions">
-        <a class="btn btn-secondary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver / Giriş</a>
+        <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışı</a>
       </div>
     </div>
   </header>
@@ -38,87 +37,16 @@
           <div class="hero-badge">Kurumsal Yük Akışı</div>
           <h1>Açık yük ilanlarını inceleyin, uygun işe kontrollü teklif verin</h1>
           <p>SEVRA yük ilanları ekranı; yük veren ve taşıyıcı tarafı daha düzenli, daha profesyonel ve daha okunur bir teklif akışında buluşturur.</p>
-
-          <div class="hero-stats">
-            <div class="stat-box">
-              <strong>Canlı İlan</strong>
-              <span>Aktif yük akışı</span>
-            </div>
-            <div class="stat-box">
-              <strong>Teklif</strong>
-              <span>Kontrollü değerlendirme</span>
-            </div>
-            <div class="stat-box">
-              <strong>Güven</strong>
-              <span>Kurumsal süreç dili</span>
-            </div>
-          </div>
         </div>
 
         <div class="hero-panel">
-          <div class="panel-topline">Filtre ve Listeleme</div>
-          <h3>Hızlı seçim yap</h3>
+          <div class="panel-topline">Sistem Mantığı</div>
+          <h3>İlanlar akış ekranına taşınır</h3>
           <ul>
-            <li>Çıkış ili ve varış iline göre filtrele</li>
-            <li>Yük tipi ve araç tipi ayrımı yap</li>
-            <li>Uygun ilana geçip teklif ekranına yönlen</li>
+            <li>Detay veya Teklif Ver tıklandığında seçilen ilan kaydedilir</li>
+            <li>İlan / Teklif Akışı ekranında otomatik görünür</li>
+            <li>Demo mantığı localStorage ile çalışır</li>
           </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="filters-section">
-    <div class="container">
-      <div class="filters-shell">
-        <div class="filter-group">
-          <label for="fromCity">Çıkış İli</label>
-          <select id="fromCity">
-            <option value="">Tümü</option>
-            <option>İstanbul</option>
-            <option>Ankara</option>
-            <option>İzmir</option>
-            <option>Bursa</option>
-            <option>Gaziantep</option>
-          </select>
-        </div>
-
-        <div class="filter-group">
-          <label for="toCity">Varış İli</label>
-          <select id="toCity">
-            <option value="">Tümü</option>
-            <option>İstanbul</option>
-            <option>Ankara</option>
-            <option>İzmir</option>
-            <option>Bursa</option>
-            <option>Adana</option>
-          </select>
-        </div>
-
-        <div class="filter-group">
-          <label for="loadType">Yük Tipi</label>
-          <select id="loadType">
-            <option value="">Tümü</option>
-            <option>Parsiyel</option>
-            <option>Komple</option>
-            <option>Paletli</option>
-            <option>Makine</option>
-          </select>
-        </div>
-
-        <div class="filter-group">
-          <label for="vehicleType">Araç Tipi</label>
-          <select id="vehicleType">
-            <option value="">Tümü</option>
-            <option>Tır</option>
-            <option>Kamyon</option>
-            <option>Kamyonet</option>
-            <option>Frigo</option>
-          </select>
-        </div>
-
-        <div class="filter-actions">
-          <button class="btn btn-primary" id="filterBtn">İlanları Filtrele</button>
         </div>
       </div>
     </div>
@@ -131,11 +59,20 @@
           <div class="section-kicker">Açık İlanlar</div>
           <h2>Kurumsal yük listesi</h2>
         </div>
-        <p>İlan kartları net bilgiler, düzenli başlıklar ve doğrudan teklif aksiyonu ile hazırlanmıştır.</p>
+        <p>Detay veya teklif aksiyonunda ilgili ilan akış ekranına taşınır.</p>
       </div>
 
       <div class="load-grid" id="loadGrid">
-        <article class="load-card" data-from="İstanbul" data-to="Ankara" data-load="Parsiyel" data-vehicle="Kamyon">
+        <article class="load-card"
+          data-id="SVR-1001"
+          data-title="İstanbul → Ankara"
+          data-route="İstanbul → Ankara"
+          data-weight="2.400 kg"
+          data-status="Açık"
+          data-type="Parsiyel"
+          data-vehicle="Kamyon"
+          data-date="12.04.2026"
+          data-load="Ambalajlı ürün">
           <div class="load-card-top">
             <span class="load-tag">Parsiyel</span>
             <span class="load-ref">REF: SVR-1001</span>
@@ -149,12 +86,21 @@
           </div>
           <p>Kurumsal sevkiyat akışına uygun, teklif toplanan açık ilan.</p>
           <div class="load-actions">
-            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
-            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+            <button class="btn btn-secondary js-detay">Detay</button>
+            <button class="btn btn-primary js-teklif">Teklif Ver</button>
           </div>
         </article>
 
-        <article class="load-card" data-from="Bursa" data-to="İzmir" data-load="Komple" data-vehicle="Tır">
+        <article class="load-card"
+          data-id="SVR-1002"
+          data-title="Bursa → İzmir"
+          data-route="Bursa → İzmir"
+          data-weight="14.000 kg"
+          data-status="Açık"
+          data-type="Komple"
+          data-vehicle="Tır"
+          data-date="13.04.2026"
+          data-load="Sanayi malzemesi">
           <div class="load-card-top">
             <span class="load-tag">Komple</span>
             <span class="load-ref">REF: SVR-1002</span>
@@ -168,12 +114,21 @@
           </div>
           <p>Tek seferde tam araç planlaması gerektiren yük ilanı.</p>
           <div class="load-actions">
-            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
-            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+            <button class="btn btn-secondary js-detay">Detay</button>
+            <button class="btn btn-primary js-teklif">Teklif Ver</button>
           </div>
         </article>
 
-        <article class="load-card" data-from="Gaziantep" data-to="Adana" data-load="Paletli" data-vehicle="Kamyonet">
+        <article class="load-card"
+          data-id="SVR-1003"
+          data-title="Gaziantep → Adana"
+          data-route="Gaziantep → Adana"
+          data-weight="850 kg"
+          data-status="Açık"
+          data-type="Paletli"
+          data-vehicle="Kamyonet"
+          data-date="14.04.2026"
+          data-load="Paletli gıda dışı ürün">
           <div class="load-card-top">
             <span class="load-tag">Paletli</span>
             <span class="load-ref">REF: SVR-1003</span>
@@ -187,12 +142,21 @@
           </div>
           <p>Kısa mesafe ve hızlı taşıma planı için uygun açık yük.</p>
           <div class="load-actions">
-            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
-            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+            <button class="btn btn-secondary js-detay">Detay</button>
+            <button class="btn btn-primary js-teklif">Teklif Ver</button>
           </div>
         </article>
 
-        <article class="load-card" data-from="Ankara" data-to="İstanbul" data-load="Makine" data-vehicle="Tır">
+        <article class="load-card"
+          data-id="SVR-1004"
+          data-title="Ankara → İstanbul"
+          data-route="Ankara → İstanbul"
+          data-weight="9.500 kg"
+          data-status="Açık"
+          data-type="Makine"
+          data-vehicle="Tır"
+          data-date="15.04.2026"
+          data-load="Endüstriyel ekipman">
           <div class="load-card-top">
             <span class="load-tag">Makine</span>
             <span class="load-ref">REF: SVR-1004</span>
@@ -206,8 +170,8 @@
           </div>
           <p>Dikkatli yükleme ve kurumsal süreç takibi isteyen ilan.</p>
           <div class="load-actions">
-            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
-            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+            <button class="btn btn-secondary js-detay">Detay</button>
+            <button class="btn btn-primary js-teklif">Teklif Ver</button>
           </div>
         </article>
       </div>
@@ -215,26 +179,55 @@
   </section>
 
   <script>
-    const filterBtn = document.getElementById('filterBtn');
-    const fromCity = document.getElementById('fromCity');
-    const toCity = document.getElementById('toCity');
-    const loadType = document.getElementById('loadType');
-    const vehicleType = document.getElementById('vehicleType');
-    const cards = [...document.querySelectorAll('.load-card')];
+    function readLoads() {
+      try {
+        return JSON.parse(localStorage.getItem('sevra_loads') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
 
-    filterBtn.addEventListener('click', () => {
-      const fromValue = fromCity.value.trim();
-      const toValue = toCity.value.trim();
-      const loadValue = loadType.value.trim();
-      const vehicleValue = vehicleType.value.trim();
+    function writeLoads(loads) {
+      localStorage.setItem('sevra_loads', JSON.stringify(loads));
+    }
 
-      cards.forEach(card => {
-        const okFrom = !fromValue || card.dataset.from === fromValue;
-        const okTo = !toValue || card.dataset.to === toValue;
-        const okLoad = !loadValue || card.dataset.load === loadValue;
-        const okVehicle = !vehicleValue || card.dataset.vehicle === vehicleValue;
+    function upsertLoad(load) {
+      const loads = readLoads();
+      const idx = loads.findIndex(x => x.id === load.id);
+      if (idx >= 0) {
+        loads[idx] = load;
+      } else {
+        loads.push(load);
+      }
+      writeLoads(loads);
+      localStorage.setItem('sevra_selected_load', JSON.stringify(load));
+    }
 
-        card.style.display = (okFrom && okTo && okLoad && okVehicle) ? '' : 'none';
+    function cardToLoad(card) {
+      return {
+        id: card.dataset.id,
+        title: card.dataset.title,
+        route: card.dataset.route,
+        weight: card.dataset.weight,
+        status: card.dataset.status,
+        type: card.dataset.type,
+        vehicle: card.dataset.vehicle,
+        date: card.dataset.date,
+        load: card.dataset.load
+      };
+    }
+
+    document.querySelectorAll('.load-card').forEach(card => {
+      const load = cardToLoad(card);
+
+      card.querySelector('.js-detay').addEventListener('click', function() {
+        upsertLoad(load);
+        window.location.href = 'ilan-detay.html?id=' + encodeURIComponent(load.id);
+      });
+
+      card.querySelector('.js-teklif').addEventListener('click', function() {
+        upsertLoad(load);
+        window.location.href = 'ilan-teklif.html?id=' + encodeURIComponent(load.id);
       });
     });
   </script>
