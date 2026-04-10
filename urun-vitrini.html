@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Ürün Vitrini</title>
+  <link rel="stylesheet" href="urunler.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <div class="section-kicker">Ürün Vitrini</div>
+          <h1>Kurumsal ürün alanı</h1>
+          <p>Yönetici tarafından eklenen ürünler burada ziyaretçilere gösterilir.</p>
+        </div>
+      </div>
+
+      <div id="emptyBox" class="card hidden">
+        <h2>Henüz ürün yok</h2>
+        <p>Yönetici panelinden ürün eklediğinde burada listelenecek.</p>
+      </div>
+
+      <div id="productGrid" class="product-grid"></div>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    const products = readJson('sevra_products', []);
+    const grid = document.getElementById('productGrid');
+    const emptyBox = document.getElementById('emptyBox');
+
+    if (!products.length) {
+      emptyBox.classList.remove('hidden');
+    } else {
+      products.forEach(product => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <div class="product-image-wrap">
+            <img src="${product.image}" alt="${product.name}" class="product-image"
+                 onerror="this.style.display='none'; this.parentNode.innerHTML += '<div class=img-fallback>Görsel Yok</div>';">
+          </div>
+          <div class="product-body">
+            <span class="product-tag">${product.category}</span>
+            <h3>${product.name}</h3>
+            <p>${product.desc || ''}</p>
+            <strong class="price">${product.price}</strong>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
