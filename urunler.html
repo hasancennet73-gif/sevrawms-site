@@ -27,64 +27,97 @@
       <div class="page-head">
         <div>
           <div class="section-kicker">Ürün Yönetimi</div>
-          <h1>Ürün ekleme ve vitrin yönetimi</h1>
-          <p>Yönetici buradan ürün ekler. Eklenen ürünler vitrin ekranında görünür.</p>
+          <h1>Kurumsal ürün ekleme alanı</h1>
+          <p>Yönetici; ürün adı, kategori, fiyat, açıklama ve görsel ile profesyonel ürün kartı oluşturur. Eklenen ürünler vitrine otomatik düşer.</p>
         </div>
       </div>
 
       <div id="statusBox" class="status-box hidden"></div>
 
-      <div class="grid">
-        <section class="card">
-          <div class="section-kicker">Yeni Ürün</div>
-          <h2>Ürün bilgilerini gir</h2>
+      <div class="management-shell">
+        <section class="card product-form-card">
+          <div class="card-top">
+            <div>
+              <div class="section-kicker">Yeni Ürün</div>
+              <h2>Ürün bilgilerini gir</h2>
+            </div>
+            <div class="card-badge">Dosya Yükleme + Önizleme</div>
+          </div>
 
-          <form id="productForm" class="form-grid">
-            <div class="form-group">
-              <label for="productName">Ürün Adı</label>
-              <input id="productName" type="text" placeholder="Örn: Kapı Menteşesi" required />
+          <form id="productForm" class="product-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="productName">Ürün Adı</label>
+                <input id="productName" type="text" placeholder="Örn: Kapı Menteşesi" required />
+              </div>
+
+              <div class="form-group">
+                <label for="productCategory">Kategori</label>
+                <input id="productCategory" type="text" placeholder="Örn: Yedek Parça" required />
+              </div>
+
+              <div class="form-group">
+                <label for="productPrice">Fiyat</label>
+                <input id="productPrice" type="text" placeholder="Örn: 2.450 TL" required />
+              </div>
+
+              <div class="form-group">
+                <label for="productStatus">Durum</label>
+                <select id="productStatus">
+                  <option>Aktif</option>
+                  <option>Pasif</option>
+                  <option>Yeni Ürün</option>
+                </select>
+              </div>
+
+              <div class="form-group full">
+                <label for="productDesc">Açıklama</label>
+                <textarea id="productDesc" rows="5" placeholder="Ürün açıklaması"></textarea>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label for="productCategory">Kategori</label>
-              <input id="productCategory" type="text" placeholder="Örn: Yedek Parça" required />
+            <div class="upload-shell">
+              <div class="upload-left">
+                <label class="upload-label" for="productImageFile">Ürün Görseli</label>
+                <input id="productImageFile" type="file" accept="image/*" />
+                <div class="upload-help">JPG, PNG veya WEBP seçebilirsin. Demo sürümde görsel tarayıcı içinde saklanır.</div>
+              </div>
+
+              <div class="upload-preview" id="uploadPreview">
+                <div class="preview-empty">Görsel seçilmedi</div>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label for="productPrice">Fiyat</label>
-              <input id="productPrice" type="text" placeholder="Örn: 2.450 TL" required />
-            </div>
-
-            <div class="form-group">
-              <label for="productImage">Görsel URL</label>
-              <input id="productImage" type="text" placeholder="https://..." required />
-            </div>
-
-            <div class="form-group full">
-              <label for="productDesc">Açıklama</label>
-              <textarea id="productDesc" rows="5" placeholder="Ürün açıklaması"></textarea>
-            </div>
-
-            <div class="form-actions full">
+            <div class="form-actions">
               <button type="submit" class="btn btn-primary">Ürün Ekle</button>
             </div>
           </form>
         </section>
 
-        <section class="card">
-          <div class="section-kicker">Kayıtlı Ürünler</div>
-          <h2>Ürün listesi</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Ad</th>
-                <th>Kategori</th>
-                <th>Fiyat</th>
-                <th>İşlem</th>
-              </tr>
-            </thead>
-            <tbody id="productsTbody"></tbody>
-          </table>
+        <section class="card product-list-card">
+          <div class="card-top">
+            <div>
+              <div class="section-kicker">Kayıtlı Ürünler</div>
+              <h2>Ürün listesi</h2>
+            </div>
+            <div class="card-badge" id="productsCountBadge">0 ürün</div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Görsel</th>
+                  <th>Ad</th>
+                  <th>Kategori</th>
+                  <th>Fiyat</th>
+                  <th>Durum</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="productsTbody"></tbody>
+            </table>
+          </div>
         </section>
       </div>
     </div>
@@ -112,6 +145,11 @@
     const form = document.getElementById('productForm');
     const tbody = document.getElementById('productsTbody');
     const statusBox = document.getElementById('statusBox');
+    const imageInput = document.getElementById('productImageFile');
+    const uploadPreview = document.getElementById('uploadPreview');
+    const productsCountBadge = document.getElementById('productsCountBadge');
+
+    let selectedImageData = '';
 
     function showStatus(message, isError = false) {
       statusBox.textContent = message;
@@ -128,21 +166,52 @@
       writeJson('sevra_products', products);
     }
 
+    function setPreview(src) {
+      if (!src) {
+        uploadPreview.innerHTML = '<div class="preview-empty">Görsel seçilmedi</div>';
+        return;
+      }
+      uploadPreview.innerHTML = '<img src="' + src + '" alt="Önizleme" class="preview-image">';
+    }
+
+    imageInput.addEventListener('change', function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) {
+        selectedImageData = '';
+        setPreview('');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        selectedImageData = e.target.result || '';
+        setPreview(selectedImageData);
+      };
+      reader.readAsDataURL(file);
+    });
+
     function renderProducts() {
       const products = getProducts();
+      productsCountBadge.textContent = products.length + ' ürün';
       tbody.innerHTML = '';
 
       if (!products.length) {
-        tbody.innerHTML = '<tr><td colspan="4">Ürün yok.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6">Ürün yok.</td></tr>';
         return;
       }
 
       products.forEach(product => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
+          <td>
+            <div class="mini-thumb-wrap">
+              ${product.image ? '<img src="' + product.image + '" alt="' + product.name + '" class="mini-thumb">' : '<div class="mini-thumb-fallback">Yok</div>'}
+            </div>
+          </td>
           <td>${product.name}</td>
           <td>${product.category}</td>
           <td>${product.price}</td>
+          <td>${product.status || 'Aktif'}</td>
           <td><button class="mini-btn" type="button" data-id="${product.id}">Sil</button></td>
         `;
         tr.querySelector('button').addEventListener('click', () => {
@@ -163,19 +232,28 @@
         name: document.getElementById('productName').value.trim(),
         category: document.getElementById('productCategory').value.trim(),
         price: document.getElementById('productPrice').value.trim(),
-        image: document.getElementById('productImage').value.trim(),
+        status: document.getElementById('productStatus').value.trim(),
+        image: selectedImageData,
         desc: document.getElementById('productDesc').value.trim()
       };
 
-      if (!product.name || !product.category || !product.price || !product.image) {
+      if (!product.name || !product.category || !product.price) {
         showStatus('Zorunlu alanları doldur.', true);
+        return;
+      }
+
+      if (!product.image) {
+        showStatus('Ürün görseli seç.', true);
         return;
       }
 
       const products = getProducts();
       products.push(product);
       setProducts(products);
+
       form.reset();
+      selectedImageData = '';
+      setPreview('');
       renderProducts();
       showStatus('Ürün eklendi. Vitrinde görünecek.');
     });
