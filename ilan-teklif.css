@@ -25,6 +25,15 @@ a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
 .flow-head h1{font-size:48px;line-height:1.05;margin-bottom:8px}
 .flow-head p{color:var(--muted)}
 .user-badge{padding:10px 14px;border-radius:999px;background:rgba(241,200,77,.12);color:#ffe08a;font-size:13px;font-weight:700}
+.status-box{
+  margin-bottom:18px;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.status-success{background:rgba(79,152,98,.14);color:#d9ffe2}
+.status-error{background:rgba(180,86,86,.14);color:#ffdada}
+.hidden{display:none}
 .flow-form-card,.table-card{
   border:1px solid rgba(255,255,255,.07);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));box-shadow:var(--shadow);padding:24px
 }
