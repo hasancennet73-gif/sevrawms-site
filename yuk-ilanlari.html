@@ -3,68 +3,240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yuk Ilanlari</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:26px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:36px;margin-bottom:8px}
-    .title p{color:var(--muted)}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}
-    .card span{color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-    label{font-size:13px;color:#dce6f5;font-weight:700}
-    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
-  </style>
+  <title>SEVRA | Yük İlanları</title>
+  <meta name="description" content="SEVRA kurumsal yük ilanları ekranı. Açık yükleri inceleyin, teklif verin ve uygun taşıyıcı eşleşmesini yönetin." />
+  <link rel="stylesheet" href="yuk-ilanlari.css" />
 </head>
 <body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
 
-<div class="wrap">
-  <div class="top">
-    <div class="title"><h1>Yuk Ilanlari</h1><p>Acik ilanlari listeleyen ekran.</p></div>
-    <div class="actions">
-      <a class="btn" href="index.html">Ana Sayfa</a>
-      <a class="btn primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Uye Ol / Giris</a>
+      <nav class="nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="index.html#hizmetler">Hizmetler</a>
+        <a href="index.html#neden-biz">Neden Biz</a>
+        <a href="yonetici-giris.html">Yönetici Girişi</a>
+      </nav>
+
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver / Giriş</a>
+      </div>
     </div>
-  </div>
-  <div class="cards" id="cards"></div>
-  <div class="panel">
-    <table><thead><tr><th>Baslik</th><th>Firma</th><th>Guzergah</th><th>Agirlik</th><th>Durum</th><th>Islem</th></tr></thead><tbody id="rows"></tbody></table>
-  </div>
-</div>
+  </header>
 
-<script src="kimlik-dogrulama.js"></script>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-shell">
+        <div class="hero-copy">
+          <div class="hero-badge">Kurumsal Yük Akışı</div>
+          <h1>Açık yük ilanlarını inceleyin, uygun işe kontrollü teklif verin</h1>
+          <p>SEVRA yük ilanları ekranı; yük veren ve taşıyıcı tarafı daha düzenli, daha profesyonel ve daha okunur bir teklif akışında buluşturur.</p>
 
-<script>
-function loadRows(){
-  var rows=SEVRA_KIMLIK.getLoads();
-  document.getElementById('cards').innerHTML=
-    '<div class="card"><strong>'+rows.length+'</strong><span>Toplam Ilan</span></div>'+
-    '<div class="card"><strong>'+rows.filter(x=>x.status!=='Kapalı').length+'</strong><span>Acik Ilan</span></div>'+
-    '<div class="card"><strong>'+new Set(rows.map(x=>x.owner)).size+'</strong><span>Firma</span></div>'+
-    '<div class="card"><strong>'+new Set(rows.map(x=>x.route)).size+'</strong><span>Guzergah</span></div>';
-  var open=rows.filter(x=>x.status!=='Kapalı');
-  document.getElementById('rows').innerHTML=!open.length?'<tr><td colspan="6">Ilan yok.</td></tr>':
-    open.map(function(x){
-      return '<tr><td>'+x.title+'</td><td>'+x.owner+'</td><td>'+x.route+'</td><td>'+x.weight+'</td><td><span class="status">'+x.status+'</span></td><td><a class="btn primary" href="yuk-ilani-detay.html?id='+x.id+'">Detay</a></td></tr>';
-    }).join('');
-}
-loadRows();
-</script>
+          <div class="hero-stats">
+            <div class="stat-box">
+              <strong>Canlı İlan</strong>
+              <span>Aktif yük akışı</span>
+            </div>
+            <div class="stat-box">
+              <strong>Teklif</strong>
+              <span>Kontrollü değerlendirme</span>
+            </div>
+            <div class="stat-box">
+              <strong>Güven</strong>
+              <span>Kurumsal süreç dili</span>
+            </div>
+          </div>
+        </div>
 
+        <div class="hero-panel">
+          <div class="panel-topline">Filtre ve Listeleme</div>
+          <h3>Hızlı seçim yap</h3>
+          <ul>
+            <li>Çıkış ili ve varış iline göre filtrele</li>
+            <li>Yük tipi ve araç tipi ayrımı yap</li>
+            <li>Uygun ilana geçip teklif ekranına yönlen</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="filters-section">
+    <div class="container">
+      <div class="filters-shell">
+        <div class="filter-group">
+          <label for="fromCity">Çıkış İli</label>
+          <select id="fromCity">
+            <option value="">Tümü</option>
+            <option>İstanbul</option>
+            <option>Ankara</option>
+            <option>İzmir</option>
+            <option>Bursa</option>
+            <option>Gaziantep</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="toCity">Varış İli</label>
+          <select id="toCity">
+            <option value="">Tümü</option>
+            <option>İstanbul</option>
+            <option>Ankara</option>
+            <option>İzmir</option>
+            <option>Bursa</option>
+            <option>Adana</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="loadType">Yük Tipi</label>
+          <select id="loadType">
+            <option value="">Tümü</option>
+            <option>Parsiyel</option>
+            <option>Komple</option>
+            <option>Paletli</option>
+            <option>Makine</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="vehicleType">Araç Tipi</label>
+          <select id="vehicleType">
+            <option value="">Tümü</option>
+            <option>Tır</option>
+            <option>Kamyon</option>
+            <option>Kamyonet</option>
+            <option>Frigo</option>
+          </select>
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn btn-primary" id="filterBtn">İlanları Filtrele</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="list-section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Açık İlanlar</div>
+          <h2>Kurumsal yük listesi</h2>
+        </div>
+        <p>İlan kartları net bilgiler, düzenli başlıklar ve doğrudan teklif aksiyonu ile hazırlanmıştır.</p>
+      </div>
+
+      <div class="load-grid" id="loadGrid">
+        <article class="load-card" data-from="İstanbul" data-to="Ankara" data-load="Parsiyel" data-vehicle="Kamyon">
+          <div class="load-card-top">
+            <span class="load-tag">Parsiyel</span>
+            <span class="load-ref">REF: SVR-1001</span>
+          </div>
+          <h3>İstanbul → Ankara</h3>
+          <div class="load-meta">
+            <span>Yük: Ambalajlı ürün</span>
+            <span>Araç: Kamyon</span>
+            <span>Ağırlık: 2.400 kg</span>
+            <span>Tarih: 12.04.2026</span>
+          </div>
+          <p>Kurumsal sevkiyat akışına uygun, teklif toplanan açık ilan.</p>
+          <div class="load-actions">
+            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
+            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+          </div>
+        </article>
+
+        <article class="load-card" data-from="Bursa" data-to="İzmir" data-load="Komple" data-vehicle="Tır">
+          <div class="load-card-top">
+            <span class="load-tag">Komple</span>
+            <span class="load-ref">REF: SVR-1002</span>
+          </div>
+          <h3>Bursa → İzmir</h3>
+          <div class="load-meta">
+            <span>Yük: Sanayi malzemesi</span>
+            <span>Araç: Tır</span>
+            <span>Ağırlık: 14.000 kg</span>
+            <span>Tarih: 13.04.2026</span>
+          </div>
+          <p>Tek seferde tam araç planlaması gerektiren yük ilanı.</p>
+          <div class="load-actions">
+            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
+            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+          </div>
+        </article>
+
+        <article class="load-card" data-from="Gaziantep" data-to="Adana" data-load="Paletli" data-vehicle="Kamyonet">
+          <div class="load-card-top">
+            <span class="load-tag">Paletli</span>
+            <span class="load-ref">REF: SVR-1003</span>
+          </div>
+          <h3>Gaziantep → Adana</h3>
+          <div class="load-meta">
+            <span>Yük: Paletli gıda dışı ürün</span>
+            <span>Araç: Kamyonet</span>
+            <span>Ağırlık: 850 kg</span>
+            <span>Tarih: 14.04.2026</span>
+          </div>
+          <p>Kısa mesafe ve hızlı taşıma planı için uygun açık yük.</p>
+          <div class="load-actions">
+            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
+            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+          </div>
+        </article>
+
+        <article class="load-card" data-from="Ankara" data-to="İstanbul" data-load="Makine" data-vehicle="Tır">
+          <div class="load-card-top">
+            <span class="load-tag">Makine</span>
+            <span class="load-ref">REF: SVR-1004</span>
+          </div>
+          <h3>Ankara → İstanbul</h3>
+          <div class="load-meta">
+            <span>Yük: Endüstriyel ekipman</span>
+            <span>Araç: Tır</span>
+            <span>Ağırlık: 9.500 kg</span>
+            <span>Tarih: 15.04.2026</span>
+          </div>
+          <p>Dikkatli yükleme ve kurumsal süreç takibi isteyen ilan.</p>
+          <div class="load-actions">
+            <a class="btn btn-secondary" href="ilan-detay.html">Detay</a>
+            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const filterBtn = document.getElementById('filterBtn');
+    const fromCity = document.getElementById('fromCity');
+    const toCity = document.getElementById('toCity');
+    const loadType = document.getElementById('loadType');
+    const vehicleType = document.getElementById('vehicleType');
+    const cards = [...document.querySelectorAll('.load-card')];
+
+    filterBtn.addEventListener('click', () => {
+      const fromValue = fromCity.value.trim();
+      const toValue = toCity.value.trim();
+      const loadValue = loadType.value.trim();
+      const vehicleValue = vehicleType.value.trim();
+
+      cards.forEach(card => {
+        const okFrom = !fromValue || card.dataset.from === fromValue;
+        const okTo = !toValue || card.dataset.to === toValue;
+        const okLoad = !loadValue || card.dataset.load === loadValue;
+        const okVehicle = !vehicleValue || card.dataset.vehicle === vehicleValue;
+
+        card.style.display = (okFrom && okTo && okLoad && okVehicle) ? '' : 'none';
+      });
+    });
+  </script>
 </body>
 </html>
