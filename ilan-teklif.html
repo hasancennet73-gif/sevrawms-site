@@ -18,6 +18,7 @@
       </a>
       <div class="top-actions">
         <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanlarına Dön</a>
+        <a class="btn btn-secondary" href="mesajlasma.html">Mesajlaşma</a>
       </div>
     </div>
   </header>
@@ -28,7 +29,7 @@
         <div>
           <div class="section-kicker">Kurumsal Akış</div>
           <h1>İlan / Teklif Akışı</h1>
-          <p>Seçilen ilanlar bu ekrana otomatik taşınır. Buradan teklif oluşturabilir ve teklifleri izleyebilirsin.</p>
+          <p>Seçilen ilanlar bu ekrana otomatik taşınır. Buradan teklif oluşturabilir, teklifleri izleyebilir ve pazarlık ekranına geçebilirsin.</p>
         </div>
         <div class="user-badge">Üye: hasanarslan / member</div>
       </div>
@@ -117,6 +118,11 @@
       return Array.isArray(offers) ? offers : [];
     }
 
+    function normalizeThreads() {
+      const threads = readJson('sevra_threads', []);
+      return Array.isArray(threads) ? threads : [];
+    }
+
     const offerForm = document.getElementById('offerForm');
     const offerLoadSelect = document.getElementById('offerLoadSelect');
     const loadsTbody = document.getElementById('loadsTbody');
@@ -127,6 +133,7 @@
 
     let loads = normalizeLoads();
     let offers = normalizeOffers();
+    let threads = normalizeThreads();
     const selectedLoad = readJson('sevra_selected_load', null);
 
     function showStatus(message, isError = false) {
@@ -198,14 +205,52 @@
           <td>${offer.member}</td>
           <td>${offer.price}</td>
           <td>${offer.status}</td>
-          <td><button class="mini-btn" type="button" data-id="${offer.id}">Sil</button></td>
+          <td>
+            <div class="action-stack">
+              <button class="mini-btn js-chat" type="button" data-id="${offer.id}">Pazarlık</button>
+              <button class="mini-btn js-delete" type="button" data-id="${offer.id}">Sil</button>
+            </div>
+          </td>
         `;
-        tr.querySelector('button').addEventListener('click', () => {
+        tr.querySelector('.js-delete').addEventListener('click', () => {
           offers = offers.filter(x => x.id !== offer.id);
           writeJson('sevra_offers', offers);
           renderOffers();
           showStatus('Teklif silindi.');
         });
+
+        tr.querySelector('.js-chat').addEventListener('click', () => {
+          const existing = threads.find(x => x.offerId === offer.id);
+          if (existing) {
+            localStorage.setItem('sevra_active_thread_id', existing.id);
+            window.location.href = 'mesajlasma.html';
+            return;
+          }
+
+          const thread = {
+            id: 'THR-' + Date.now(),
+            offerId: offer.id,
+            title: offer.loadTitle,
+            route: loads.find(x => x.id === offer.loadId)?.route || offer.loadTitle,
+            currentOffer: parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0,
+            offerHistory: [
+              { role: 'Tasiyici', value: parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0 }
+            ],
+            messages: [
+              {
+                role: 'Admin',
+                text: 'Teklif üzerinden pazarlık ekranı açıldı.',
+                time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
+              }
+            ]
+          };
+
+          threads.push(thread);
+          writeJson('sevra_threads', threads);
+          localStorage.setItem('sevra_active_thread_id', thread.id);
+          window.location.href = 'mesajlasma.html';
+        });
+
         offersTbody.appendChild(tr);
       });
     }
