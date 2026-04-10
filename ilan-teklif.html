@@ -33,24 +33,28 @@
         <div class="user-badge">Üye: hasanarslan / member</div>
       </div>
 
+      <div id="statusBox" class="status-box hidden"></div>
+
       <div class="flow-form-card">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="offerLoadSelect">İlan</label>
-            <select id="offerLoadSelect"></select>
+        <form id="offerForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="offerLoadSelect">İlan</label>
+              <select id="offerLoadSelect" required></select>
+            </div>
+            <div class="form-group">
+              <label for="offerPrice">Fiyat</label>
+              <input id="offerPrice" type="number" placeholder="Örn: 18500" required />
+            </div>
+            <div class="form-group full">
+              <label for="offerNote">Not</label>
+              <input id="offerNote" type="text" placeholder="Teklif notu gir" />
+            </div>
           </div>
-          <div class="form-group">
-            <label for="offerPrice">Fiyat</label>
-            <input id="offerPrice" type="number" placeholder="Örn: 18500" />
+          <div class="form-actions">
+            <button id="saveOfferBtn" type="submit" class="btn btn-primary">Teklif Ver</button>
           </div>
-          <div class="form-group full">
-            <label for="offerNote">Not</label>
-            <input id="offerNote" type="text" placeholder="Teklif notu gir" />
-          </div>
-        </div>
-        <div class="form-actions">
-          <button id="saveOfferBtn" class="btn btn-primary">Teklif Ver</button>
-        </div>
+        </form>
       </div>
 
       <div class="tables-grid">
@@ -92,7 +96,8 @@
   <script>
     function readJson(key, fallback) {
       try {
-        return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
       } catch (e) {
         return fallback;
       }
@@ -102,19 +107,37 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
-    const loads = readJson('sevra_loads', []);
-    const offers = readJson('sevra_offers', []);
-    const selectedLoad = readJson('sevra_selected_load', null);
+    function normalizeLoads() {
+      const loads = readJson('sevra_loads', []);
+      return Array.isArray(loads) ? loads : [];
+    }
 
+    function normalizeOffers() {
+      const offers = readJson('sevra_offers', []);
+      return Array.isArray(offers) ? offers : [];
+    }
+
+    const offerForm = document.getElementById('offerForm');
     const offerLoadSelect = document.getElementById('offerLoadSelect');
     const loadsTbody = document.getElementById('loadsTbody');
     const offersTbody = document.getElementById('offersTbody');
-    const saveOfferBtn = document.getElementById('saveOfferBtn');
     const offerPrice = document.getElementById('offerPrice');
     const offerNote = document.getElementById('offerNote');
+    const statusBox = document.getElementById('statusBox');
+
+    let loads = normalizeLoads();
+    let offers = normalizeOffers();
+    const selectedLoad = readJson('sevra_selected_load', null);
+
+    function showStatus(message, isError = false) {
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
 
     function renderSelect() {
       offerLoadSelect.innerHTML = '';
+
       if (!loads.length) {
         const op = document.createElement('option');
         op.value = '';
@@ -122,6 +145,7 @@
         offerLoadSelect.appendChild(op);
         return;
       }
+
       loads.forEach(load => {
         const op = document.createElement('option');
         op.value = load.id;
@@ -135,6 +159,7 @@
 
     function renderLoads() {
       loadsTbody.innerHTML = '';
+
       if (!loads.length) {
         loadsTbody.innerHTML = '<tr><td colspan="5">İlan yok.</td></tr>';
         return;
@@ -143,15 +168,16 @@
       loads.forEach(load => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${load.title}</td>
-          <td>${load.route}</td>
-          <td>${load.weight}</td>
-          <td>${load.status}</td>
-          <td><button class="mini-btn" data-id="${load.id}">Seç</button></td>
+          <td>${load.title || '-'}</td>
+          <td>${load.route || '-'}</td>
+          <td>${load.weight || '-'}</td>
+          <td>${load.status || 'Açık'}</td>
+          <td><button class="mini-btn" type="button" data-id="${load.id}">Seç</button></td>
         `;
         tr.querySelector('button').addEventListener('click', () => {
           localStorage.setItem('sevra_selected_load', JSON.stringify(load));
-          renderSelect();
+          offerLoadSelect.value = load.id;
+          showStatus('İlan seçildi.');
         });
         loadsTbody.appendChild(tr);
       });
@@ -159,6 +185,7 @@
 
     function renderOffers() {
       offersTbody.innerHTML = '';
+
       if (!offers.length) {
         offersTbody.innerHTML = '<tr><td colspan="5">Teklif yok.</td></tr>';
         return;
@@ -171,50 +198,69 @@
           <td>${offer.member}</td>
           <td>${offer.price}</td>
           <td>${offer.status}</td>
-          <td><button class="mini-btn" data-id="${offer.id}">Sil</button></td>
+          <td><button class="mini-btn" type="button" data-id="${offer.id}">Sil</button></td>
         `;
         tr.querySelector('button').addEventListener('click', () => {
-          const nextOffers = readJson('sevra_offers', []).filter(x => x.id !== offer.id);
-          writeJson('sevra_offers', nextOffers);
-          location.reload();
+          offers = offers.filter(x => x.id !== offer.id);
+          writeJson('sevra_offers', offers);
+          renderOffers();
+          showStatus('Teklif silindi.');
         });
         offersTbody.appendChild(tr);
       });
     }
 
-    saveOfferBtn.addEventListener('click', () => {
-      const loadId = offerLoadSelect.value;
-      const price = offerPrice.value.trim();
-      const note = offerNote.value.trim();
+    offerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const loadId = (offerLoadSelect.value || '').trim();
+      const price = (offerPrice.value || '').trim();
+      const note = (offerNote.value || '').trim();
 
       if (!loadId) {
-        alert('Önce ilan seç.');
+        showStatus('Önce ilan seç.', true);
         return;
       }
+
       if (!price) {
-        alert('Fiyat gir.');
+        showStatus('Fiyat gir.', true);
         return;
       }
 
       const load = loads.find(x => x.id === loadId);
-      const nextOffers = readJson('sevra_offers', []);
-      nextOffers.push({
+
+      if (!load) {
+        showStatus('Seçilen ilan bulunamadı.', true);
+        return;
+      }
+
+      const offer = {
         id: 'OFF-' + Date.now(),
         loadId: load.id,
         loadTitle: load.title,
         member: 'hasanarslan',
         price: price + ' TL',
-        note,
+        note: note,
         status: 'Beklemede'
-      });
-      writeJson('sevra_offers', nextOffers);
-      alert('Teklif kaydedildi.');
-      location.reload();
+      };
+
+      offers.push(offer);
+      writeJson('sevra_offers', offers);
+
+      offerPrice.value = '';
+      offerNote.value = '';
+
+      renderOffers();
+      showStatus('Teklif kaydedildi.');
     });
 
     renderSelect();
     renderLoads();
     renderOffers();
+
+    if (!loads.length) {
+      showStatus('Henüz taşınmış ilan yok. Önce Yük İlanları ekranından bir ilana tıkla.', true);
+    }
   </script>
 </body>
 </html>
