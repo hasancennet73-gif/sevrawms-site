@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Yönetici Paneli</title>
+  <link rel="stylesheet" href="yonetici.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
+        <button id="logoutBtn" class="btn btn-primary" type="button">Çıkış Yap</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="panel-page">
+    <div class="container">
+      <div class="panel-head">
+        <div>
+          <div class="section-kicker">Yönetim Merkezi</div>
+          <h1>SEVRA yönetici paneli</h1>
+          <p>Üyeler, ilanlar ve teklifler tek merkezden izlenir.</p>
+        </div>
+        <div id="adminBadge" class="admin-badge">SUPER_ADMIN</div>
+      </div>
+
+      <div class="summary-grid">
+        <article class="summary-card">
+          <span>Toplam Üye</span>
+          <strong id="usersCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Toplam İlan</span>
+          <strong id="loadsCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Toplam Teklif</span>
+          <strong id="offersCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Bekleyen Teklif</span>
+          <strong id="pendingOffersCount">0</strong>
+        </article>
+      </div>
+
+      <div class="panel-grid">
+        <section class="panel-card">
+          <div class="card-head">
+            <h2>Üyeler</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Firma</th>
+                <th>Yetkili</th>
+                <th>Rol</th>
+                <th>Kullanıcı</th>
+              </tr>
+            </thead>
+            <tbody id="usersTbody"></tbody>
+          </table>
+        </section>
+
+        <section class="panel-card">
+          <div class="card-head">
+            <h2>İlanlar</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Ref</th>
+                <th>Başlık</th>
+                <th>Güzergah</th>
+                <th>Durum</th>
+              </tr>
+            </thead>
+            <tbody id="loadsTbody"></tbody>
+          </table>
+        </section>
+
+        <section class="panel-card full">
+          <div class="card-head">
+            <h2>Teklifler</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>İlan</th>
+                <th>Üye</th>
+                <th>Fiyat</th>
+                <th>Not</th>
+                <th>Durum</th>
+              </tr>
+            </thead>
+            <tbody id="offersTbody"></tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    const session = readJson('sevra_admin_session', null);
+    if (!session) {
+      window.location.href = 'yonetici-giris.html';
+    }
+
+    const users = readJson('sevra_users', []);
+    const loads = readJson('sevra_loads', []);
+    const offers = readJson('sevra_offers', []);
+
+    document.getElementById('adminBadge').textContent = session ? session.role : 'YETKİ YOK';
+    document.getElementById('usersCount').textContent = users.length;
+    document.getElementById('loadsCount').textContent = loads.length;
+    document.getElementById('offersCount').textContent = offers.length;
+    document.getElementById('pendingOffersCount').textContent = offers.filter(x => x.status === 'Beklemede').length;
+
+    const usersTbody = document.getElementById('usersTbody');
+    const loadsTbody = document.getElementById('loadsTbody');
+    const offersTbody = document.getElementById('offersTbody');
+
+    if (users.length) {
+      users.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${user.companyName || '-'}</td>
+          <td>${user.contactName || '-'}</td>
+          <td>${user.role || '-'}</td>
+          <td>${user.username || '-'}</td>
+        `;
+        usersTbody.appendChild(tr);
+      });
+    } else {
+      usersTbody.innerHTML = '<tr><td colspan="4">Üye yok.</td></tr>';
+    }
+
+    if (loads.length) {
+      loads.forEach(load => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${load.id || '-'}</td>
+          <td>${load.title || '-'}</td>
+          <td>${load.route || '-'}</td>
+          <td>${load.status || 'Açık'}</td>
+        `;
+        loadsTbody.appendChild(tr);
+      });
+    } else {
+      loadsTbody.innerHTML = '<tr><td colspan="4">İlan yok.</td></tr>';
+    }
+
+    if (offers.length) {
+      offers.forEach(offer => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${offer.loadTitle || '-'}</td>
+          <td>${offer.member || '-'}</td>
+          <td>${offer.price || '-'}</td>
+          <td>${offer.note || '-'}</td>
+          <td>${offer.status || '-'}</td>
+        `;
+        offersTbody.appendChild(tr);
+      });
+    } else {
+      offersTbody.innerHTML = '<tr><td colspan="5">Teklif yok.</td></tr>';
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('sevra_admin_session');
+      window.location.href = 'yonetici-giris.html';
+    });
+  </script>
+</body>
+</html>
