@@ -3,71 +3,240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Basvuru Yonetimi</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:26px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:36px;margin-bottom:8px}
-    .title p{color:var(--muted)}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}
-    .card span{color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-    label{font-size:13px;color:#dce6f5;font-weight:700}
-    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
-  </style>
+  <title>SEVRA | Başvuru Yönetimi</title>
+  <link rel="stylesheet" href="basvuru-yonetim.css" />
 </head>
 <body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
 
-<div class="wrap">
-  <div class="top">
-    <div class="title"><h1>Basvuru Yonetimi</h1><p>Basvurulari durumlandir.</p></div>
-    <div class="actions">
-      <div id="badge" class="badge">Admin</div>
-      <a class="btn" href="panel.html">Panele Don</a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="yonetici-panel.html">Panele Dön</a>
+      </div>
     </div>
-  </div>
-  <div class="cards" id="cards"></div>
-  <div class="panel">
-    <table><thead><tr><th>Firma</th><th>Yetkili</th><th>Telefon</th><th>Tip</th><th>Durum</th><th>Islem</th></tr></thead><tbody id="rows"></tbody></table>
-  </div>
-</div>
+  </header>
 
-<script src="kimlik-dogrulama.js"></script>
+  <section class="page-shell">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <div class="section-kicker">Başvuru ve Onay</div>
+          <h1>Üye başvurularını yönet</h1>
+          <p>Yeni kayıtlar burada incelenir, onaylanır veya reddedilir.</p>
+        </div>
+        <div class="head-actions">
+          <button id="seedDemoBtn" class="btn btn-secondary" type="button">Demo Başvuru Yükle</button>
+        </div>
+      </div>
 
-<script>
-if(SEVRA_KIMLIK.requireAdmin()){
-  document.getElementById('badge').textContent='Admin: '+SEVRA_KIMLIK.getAuth().username;
-}
-function loadApps(){
-  var rows=SEVRA_KIMLIK.getApplications();
-  document.getElementById('cards').innerHTML=
-    '<div class="card"><strong>'+rows.length+'</strong><span>Toplam</span></div>'+
-    '<div class="card"><strong>'+rows.filter(x=>x.status==='Bekliyor').length+'</strong><span>Bekliyor</span></div>'+
-    '<div class="card"><strong>'+rows.filter(x=>x.status==='Onaylandı').length+'</strong><span>Onayli</span></div>'+
-    '<div class="card"><strong>'+rows.filter(x=>x.status==='Reddedildi').length+'</strong><span>Reddedildi</span></div>';
-  document.getElementById('rows').innerHTML=!rows.length?'<tr><td colspan="6">Basvuru yok.</td></tr>':
-    rows.map(function(x){
-      return '<tr><td>'+x.company+'</td><td>'+x.contact+'</td><td>'+x.phone+'</td><td>'+x.appType+'</td><td><span class="status">'+x.status+'</span></td><td><button class="btn" onclick="durum('+x.id+',\'Bekliyor\')">Beklet</button> <button class="btn primary" onclick="durum('+x.id+',\'Onaylandı\')">Onayla</button> <button class="btn" onclick="durum('+x.id+',\'Reddedildi\')">Reddet</button></td></tr>';
-    }).join('');
-}
-function durum(id,s){try{SEVRA_KIMLIK.setApplicationStatus(id,s);loadApps();}catch(err){alert(err.message);}}
-loadApps();
-</script>
+      <div id="statusBox" class="status-box hidden"></div>
 
+      <div class="summary-grid">
+        <article class="summary-card">
+          <span>Toplam Başvuru</span>
+          <strong id="totalCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Bekleyen</span>
+          <strong id="pendingCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Onaylı</span>
+          <strong id="approvedCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Reddedilen</span>
+          <strong id="rejectedCount">0</strong>
+        </article>
+      </div>
+
+      <section class="table-card">
+        <div class="card-head">
+          <h2>Başvuru Listesi</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Firma</th>
+              <th>Yetkili</th>
+              <th>Rol</th>
+              <th>Telefon</th>
+              <th>Kullanıcı</th>
+              <th>Durum</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="applicationsTbody"></tbody>
+        </table>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function writeJson(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    const session = readJson('sevra_admin_session', null);
+    if (!session) {
+      window.location.href = 'yonetici-giris.html';
+    }
+
+    const tbody = document.getElementById('applicationsTbody');
+    const statusBox = document.getElementById('statusBox');
+
+    function showStatus(message, isError = false) {
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    function getApplications() {
+      const apps = readJson('sevra_applications', []);
+      return Array.isArray(apps) ? apps : [];
+    }
+
+    function setApplications(apps) {
+      writeJson('sevra_applications', apps);
+    }
+
+    function getUsers() {
+      const users = readJson('sevra_users', []);
+      return Array.isArray(users) ? users : [];
+    }
+
+    function setUsers(users) {
+      writeJson('sevra_users', users);
+    }
+
+    function refreshSummary(apps) {
+      document.getElementById('totalCount').textContent = apps.length;
+      document.getElementById('pendingCount').textContent = apps.filter(x => x.status === 'Beklemede').length;
+      document.getElementById('approvedCount').textContent = apps.filter(x => x.status === 'Onaylandı').length;
+      document.getElementById('rejectedCount').textContent = apps.filter(x => x.status === 'Reddedildi').length;
+    }
+
+    function approveApplication(id) {
+      const apps = getApplications();
+      const users = getUsers();
+      const app = apps.find(x => x.id === id);
+
+      if (!app) {
+        showStatus('Başvuru bulunamadı.', true);
+        return;
+      }
+
+      app.status = 'Onaylandı';
+
+      const exists = users.some(x => x.username === app.username);
+      if (!exists) {
+        users.push({
+          id: 'USR-' + Date.now(),
+          companyName: app.companyName,
+          contactName: app.contactName,
+          phone: app.phone,
+          role: app.role,
+          username: app.username,
+          password: app.password
+        });
+      }
+
+      setUsers(users);
+      setApplications(apps);
+      renderApplications();
+      showStatus('Başvuru onaylandı ve üyelere aktarıldı.');
+    }
+
+    function rejectApplication(id) {
+      const apps = getApplications();
+      const app = apps.find(x => x.id === id);
+
+      if (!app) {
+        showStatus('Başvuru bulunamadı.', true);
+        return;
+      }
+
+      app.status = 'Reddedildi';
+      setApplications(apps);
+      renderApplications();
+      showStatus('Başvuru reddedildi.');
+    }
+
+    function renderApplications() {
+      const apps = getApplications();
+      refreshSummary(apps);
+      tbody.innerHTML = '';
+
+      if (!apps.length) {
+        tbody.innerHTML = '<tr><td colspan="7">Başvuru yok.</td></tr>';
+        return;
+      }
+
+      apps.forEach(app => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${app.companyName || '-'}</td>
+          <td>${app.contactName || '-'}</td>
+          <td>${app.role || '-'}</td>
+          <td>${app.phone || '-'}</td>
+          <td>${app.username || '-'}</td>
+          <td>${app.status || 'Beklemede'}</td>
+          <td class="actions-cell">
+            <button class="mini-btn approve-btn" type="button" data-id="${app.id}">Onayla</button>
+            <button class="mini-btn reject-btn" type="button" data-id="${app.id}">Reddet</button>
+          </td>
+        `;
+        tr.querySelector('.approve-btn').addEventListener('click', () => approveApplication(app.id));
+        tr.querySelector('.reject-btn').addEventListener('click', () => rejectApplication(app.id));
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('seedDemoBtn').addEventListener('click', function() {
+      const demoApps = [
+        {
+          id: 'APP-1001',
+          companyName: 'Marmara Lojistik',
+          contactName: 'Ahmet Kaya',
+          phone: '0555 111 22 33',
+          role: 'Taşıyıcı',
+          username: 'marmaralojistik',
+          password: '123456',
+          status: 'Beklemede'
+        },
+        {
+          id: 'APP-1002',
+          companyName: 'Anadolu Tedarik',
+          contactName: 'Mehmet Demir',
+          phone: '0555 444 55 66',
+          role: 'Tedarikçi',
+          username: 'anadolutedarik',
+          password: '123456',
+          status: 'Beklemede'
+        }
+      ];
+      setApplications(demoApps);
+      renderApplications();
+      showStatus('Demo başvurular yüklendi.');
+    });
+
+    renderApplications();
+  </script>
 </body>
 </html>
