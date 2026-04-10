@@ -18,7 +18,8 @@
       </a>
 
       <div class="top-actions">
-        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
+        <a class="btn btn-secondary" href="urunler.html">Ürün Yönetimi</a>
+        <a class="btn btn-secondary" href="basvuru-yonetim.html">Başvurular</a>
         <button id="logoutBtn" class="btn btn-primary" type="button">Çıkış Yap</button>
       </div>
     </div>
@@ -30,9 +31,24 @@
         <div>
           <div class="section-kicker">Yönetim Merkezi</div>
           <h1>SEVRA yönetici paneli</h1>
-          <p>Üyeler, ilanlar ve teklifler tek merkezden izlenir.</p>
+          <p>Üyeler, ilanlar, teklifler ve ürün yönetimi tek merkezden izlenir.</p>
         </div>
         <div id="adminBadge" class="admin-badge">SUPER_ADMIN</div>
+      </div>
+
+      <div class="quick-links">
+        <a class="quick-link-card" href="urunler.html">
+          <span>Ürün Yönetimi</span>
+          <strong>Ürün ekle / sil</strong>
+        </a>
+        <a class="quick-link-card" href="urun-vitrini.html">
+          <span>Ürün Vitrini</span>
+          <strong>Canlı vitrini aç</strong>
+        </a>
+        <a class="quick-link-card" href="basvuru-yonetim.html">
+          <span>Başvurular</span>
+          <strong>Onay / red yönet</strong>
+        </a>
       </div>
 
       <div class="summary-grid">
@@ -49,8 +65,8 @@
           <strong id="offersCount">0</strong>
         </article>
         <article class="summary-card">
-          <span>Bekleyen Teklif</span>
-          <strong id="pendingOffersCount">0</strong>
+          <span>Toplam Ürün</span>
+          <strong id="productsCount">0</strong>
         </article>
       </div>
 
@@ -128,12 +144,13 @@
     const users = readJson('sevra_users', []);
     const loads = readJson('sevra_loads', []);
     const offers = readJson('sevra_offers', []);
+    const products = readJson('sevra_products', []);
 
     document.getElementById('adminBadge').textContent = session ? session.role : 'YETKİ YOK';
     document.getElementById('usersCount').textContent = users.length;
     document.getElementById('loadsCount').textContent = loads.length;
     document.getElementById('offersCount').textContent = offers.length;
-    document.getElementById('pendingOffersCount').textContent = offers.filter(x => x.status === 'Beklemede').length;
+    document.getElementById('productsCount').textContent = products.length;
 
     const usersTbody = document.getElementById('usersTbody');
     const loadsTbody = document.getElementById('loadsTbody');
@@ -142,12 +159,7 @@
     if (users.length) {
       users.forEach(user => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${user.companyName || '-'}</td>
-          <td>${user.contactName || '-'}</td>
-          <td>${user.role || '-'}</td>
-          <td>${user.username || '-'}</td>
-        `;
+        tr.innerHTML = `<td>${user.companyName || '-'}</td><td>${user.contactName || '-'}</td><td>${user.role || '-'}</td><td>${user.username || '-'}</td>`;
         usersTbody.appendChild(tr);
       });
     } else {
@@ -157,12 +169,7 @@
     if (loads.length) {
       loads.forEach(load => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${load.id || '-'}</td>
-          <td>${load.title || '-'}</td>
-          <td>${load.route || '-'}</td>
-          <td>${load.status || 'Açık'}</td>
-        `;
+        tr.innerHTML = `<td>${load.id || '-'}</td><td>${load.title || '-'}</td><td>${load.route || '-'}</td><td>${load.status || 'Açık'}</td>`;
         loadsTbody.appendChild(tr);
       });
     } else {
@@ -172,13 +179,7 @@
     if (offers.length) {
       offers.forEach(offer => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${offer.loadTitle || '-'}</td>
-          <td>${offer.member || '-'}</td>
-          <td>${offer.price || '-'}</td>
-          <td>${offer.note || '-'}</td>
-          <td>${offer.status || '-'}</td>
-        `;
+        tr.innerHTML = `<td>${offer.loadTitle || '-'}</td><td>${offer.member || '-'}</td><td>${offer.price || '-'}</td><td>${offer.note || '-'}</td><td>${offer.status || '-'}</td>`;
         offersTbody.appendChild(tr);
       });
     } else {
