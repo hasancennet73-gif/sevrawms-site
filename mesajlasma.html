@@ -1,277 +1,321 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SEVRA | Mesajlaşma</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --line:rgba(255,255,255,.08);
-  --text:#eef4ff;
-  --muted:#aebcd3;
-  --yellow:#f1c84d;
-}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-    radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-    linear-gradient(180deg,#071425,#08111b 74%,#040912);
-}
-a{text-decoration:none;color:inherit}
-.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-.sidebar{
-  background:linear-gradient(180deg,#10274b,#0b1c37);
-  border-right:1px solid rgba(255,255,255,.08);
-  padding:24px 18px;
-}
-.side-brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
-.side-logo{
-  width:46px;height:46px;border-radius:14px;
-  background:linear-gradient(135deg,var(--yellow),#f7dc89);
-  display:flex;align-items:center;justify-content:center;
-  color:#0d1e3b;font-weight:900;font-size:18px;
-}
-.side-brand strong{display:block;font-size:20px}
-.side-brand span{display:block;color:#b8c5d8;font-size:12px}
-.side-menu{display:grid;gap:10px}
-.menu-item{
-  min-height:46px;display:flex;align-items:center;padding:0 14px;border-radius:14px;
-  color:#d7dfec;background:rgba(255,255,255,.02);font-size:14px;font-weight:700;
-}
-.menu-item.active{background:var(--yellow);color:#0c1a34}
-.main{padding:26px}
-.top{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;
-}
-.title h1{font-size:38px;margin-bottom:8px}
-.title p{color:var(--muted)}
-.badge{
-  display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;
-  background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;
-}
-.btn{
-  min-height:40px;padding:0 14px;border-radius:10px;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-weight:700;border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none;
-}
-.btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.card{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
-}
-.card strong{display:block;font-size:28px;margin-bottom:6px}
-.card span{color:var(--muted);font-size:13px}
-.table-wrap{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;margin-bottom:18px;overflow:auto;
-}
-.form-grid{
-  display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:12px;align-items:end;margin-bottom:18px;
-}
-label{display:block;margin-bottom:6px;font-size:13px;color:#dce6f5;font-weight:700}
-input,textarea{
-  width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px;
-}
-textarea{min-height:84px;resize:vertical}
-table{width:100%;border-collapse:collapse}
-th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-.status{
-  display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;
-  background:rgba(241,200,77,.14);color:#ffe08a;
-}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.note{
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px;
-}
-.note h2{font-size:24px;margin-bottom:10px}
-.note p{color:#c7d3e6}
-@media (max-width:1180px){
-  .form-grid{grid-template-columns:1fr 1fr}
-}
-@media (max-width:980px){
-  .layout{grid-template-columns:1fr}
-  .cards{grid-template-columns:1fr 1fr}
-}
-@media (max-width:680px){
-  .cards,.form-grid{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Mesajlaşma ve Pazarlık</title>
+  <link rel="stylesheet" href="mesajlasma.css" />
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar">
-    <div class="side-brand">
-      <div class="side-logo">S</div>
-      <div><strong>SEVRA</strong><span>Yönetici Paneli</span></div>
-    </div>
-
-    <div class="side-menu">
-      <a class="menu-item" href="panel.html">Kontrol Paneli</a>
-      <a class="menu-item" href="urunler.html">Ürünler</a>
-      <a class="menu-item active" href="mesajlasma.html">Mesajlaşma</a>
-      <a class="menu-item" href="uyeler-analytics.html">Üyeler & Analitik</a>
-      <a class="menu-item" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
-      <a class="menu-item" href="index.html">Ana Sayfa</a>
-    </div>
-  </aside>
-
-  <main class="main">
-    <div class="top">
-      <div class="title">
-        <h1>Mesajlaşma</h1>
-        <p>Mesaj listesi artık canlı kayıt mantığı ile çalışır.</p>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <div id="adminUser" class="badge">Admin</div>
-        <button class="btn" onclick="SEVRA_KIMLIK.logout('yonetici-giris.html')">Çıkış Yap</button>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışına Dön</a>
       </div>
     </div>
+  </header>
 
-    <div class="cards" id="summaryCards">
-      <div class="card"><strong>0</strong><span>Toplam mesaj</span></div>
-      <div class="card"><strong>0</strong><span>Yeni</span></div>
-      <div class="card"><strong>0</strong><span>Okundu</span></div>
-      <div class="card"><strong>0</strong><span>Gönderici</span></div>
-    </div>
-
-    <div class="table-wrap">
-      <div class="form-grid">
+  <section class="page">
+    <div class="container">
+      <div class="page-head">
         <div>
-          <label>Gönderen</label>
-          <input id="from" type="text" placeholder="Firma adı">
+          <div class="section-kicker">Mesajlaşma ve Pazarlık</div>
+          <h1>Teklif sonrası kontrollü görüşme alanı</h1>
+          <p>Yük veren ve taşıyıcı, teklif sonrası burada sistem içinden mesajlaşır. Telefon ve doğrudan iletişim bilgileri ilk aşamada açık gösterilmez.</p>
         </div>
-        <div>
-          <label>Konu</label>
-          <input id="subject" type="text" placeholder="Mesaj konusu">
-        </div>
-        <div>
-          <label>Mesaj</label>
-          <textarea id="message" placeholder="Mesaj içeriği"></textarea>
-        </div>
-        <div>
-          <button class="btn primary" onclick="mesajEkle()">Mesaj Ekle</button>
-        </div>
+        <div class="head-badge">İç sistem görüşmesi</div>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Gönderen</th>
-            <th>Konu</th>
-            <th>Mesaj</th>
-            <th>Durum</th>
-            <th>İşlem</th>
-          </tr>
-        </thead>
-        <tbody id="messageRows"></tbody>
-      </table>
+      <div id="statusBox" class="status-box hidden"></div>
+
+      <div class="shell">
+        <aside class="thread-list-card">
+          <div class="card-top">
+            <div>
+              <div class="section-kicker">Görüşmeler</div>
+              <h2>Açık pazarlıklar</h2>
+            </div>
+            <button id="seedDemoBtn" class="btn btn-secondary" type="button">Demo Görüşme Yükle</button>
+          </div>
+
+          <div id="threadList" class="thread-list"></div>
+        </aside>
+
+        <main class="chat-card">
+          <div class="chat-top">
+            <div>
+              <div class="section-kicker">Aktif Konu</div>
+              <h2 id="chatTitle">Görüşme seç</h2>
+            </div>
+            <div id="chatMeta" class="chat-meta">İlan ve teklif bağlantısı burada görünür</div>
+          </div>
+
+          <div id="messageArea" class="message-area empty-state">
+            Sol taraftan bir görüşme seç.
+          </div>
+
+          <form id="messageForm" class="message-form">
+            <div class="message-grid">
+              <div class="form-group">
+                <label for="senderRole">Gönderen</label>
+                <select id="senderRole">
+                  <option value="Tasiyici">Taşıyıcı</option>
+                  <option value="Yuk Veren">Yük Veren</option>
+                  <option value="Admin">Admin</option>
+                </select>
+              </div>
+
+              <div class="form-group full">
+                <label for="messageInput">Mesaj</label>
+                <textarea id="messageInput" rows="4" placeholder="Mesajını yaz"></textarea>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <button type="button" id="offerRaiseBtn" class="btn btn-secondary">Teklifi Yükselt</button>
+              <button type="button" id="offerLowerBtn" class="btn btn-secondary">Teklifi Düşür</button>
+              <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
+            </div>
+          </form>
+        </main>
+      </div>
     </div>
+  </section>
 
-    <div class="note">
-      <h2>Mesaj Merkezi</h2>
-      <p>Bu adımda mesajlaşma ekranı canlı veri ile çalışır. Yönetici mesaj ekleyebilir, okundu yapabilir ve silebilir.</p>
-    </div>
-  </main>
-</div>
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
 
-<script src="kimlik-dogrulama.js"></script>
-<script>
-if (SEVRA_KIMLIK.requireAdmin()) {
-  const auth = SEVRA_KIMLIK.getAuth();
-  document.getElementById("adminUser").textContent = "Admin: " + auth.username;
-}
+    function writeJson(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
 
-function loadMessages(){
-  const rows = (typeof SEVRA_KIMLIK.getMessages === "function") ? SEVRA_KIMLIK.getMessages() : [];
-  const total = rows.length;
-  const yeni = rows.filter(x => x.status === "Yeni").length;
-  const okundu = rows.filter(x => x.status === "Okundu").length;
-  const gonderici = new Set(rows.map(x => x.from || "-")).size;
+    const statusBox = document.getElementById('statusBox');
+    const threadList = document.getElementById('threadList');
+    const messageArea = document.getElementById('messageArea');
+    const chatTitle = document.getElementById('chatTitle');
+    const chatMeta = document.getElementById('chatMeta');
+    const messageForm = document.getElementById('messageForm');
+    const senderRole = document.getElementById('senderRole');
+    const messageInput = document.getElementById('messageInput');
+    const offerRaiseBtn = document.getElementById('offerRaiseBtn');
+    const offerLowerBtn = document.getElementById('offerLowerBtn');
+    const seedDemoBtn = document.getElementById('seedDemoBtn');
 
-  document.getElementById("summaryCards").innerHTML = `
-    <div class="card"><strong>${total}</strong><span>Toplam mesaj</span></div>
-    <div class="card"><strong>${yeni}</strong><span>Yeni</span></div>
-    <div class="card"><strong>${okundu}</strong><span>Okundu</span></div>
-    <div class="card"><strong>${gonderici}</strong><span>Gönderici</span></div>
-  `;
+    let threads = readJson('sevra_threads', []);
+    let activeThreadId = '';
 
-  if(!rows.length){
-    document.getElementById("messageRows").innerHTML = '<tr><td colspan="5">Henüz mesaj yok.</td></tr>';
-    return;
-  }
+    function showStatus(message, isError = false) {
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
 
-  document.getElementById("messageRows").innerHTML = rows.map(x => `
-    <tr>
-      <td>${x.from || "-"}</td>
-      <td>${x.subject || "-"}</td>
-      <td>${x.message || "-"}</td>
-      <td><span class="status">${x.status || "Yeni"}</span></td>
-      <td>
-        <div class="actions">
-          <button class="btn" onclick="okunduYap('${x.id}')">Okundu Yap</button>
-          <button class="btn primary" onclick="yeniYap('${x.id}')">Yeni Yap</button>
-          <button class="btn" onclick="mesajSil('${x.id}')">Sil</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
+    function saveThreads() {
+      writeJson('sevra_threads', threads);
+    }
 
-function mesajEkle(){
-  if(typeof SEVRA_KIMLIK.addMessage !== "function"){
-    alert("Mesaj sistemi yüklenmedi. kimlik-dogrulama.js dosyasını kontrol et.");
-    return;
-  }
+    function fmtMoney(value) {
+      return new Intl.NumberFormat('tr-TR').format(Number(value || 0)) + ' TL';
+    }
 
-  const payload = {
-    from: document.getElementById("from").value.trim(),
-    subject: document.getElementById("subject").value.trim(),
-    message: document.getElementById("message").value.trim()
-  };
+    function ensureThreadDefaults(thread) {
+      if (!thread.messages) thread.messages = [];
+      if (!thread.offerHistory) thread.offerHistory = [];
+      if (!thread.currentOffer) thread.currentOffer = 0;
+      return thread;
+    }
 
-  try{
-    SEVRA_KIMLIK.addMessage(payload);
-    document.getElementById("from").value = "";
-    document.getElementById("subject").value = "";
-    document.getElementById("message").value = "";
-    loadMessages();
-  }catch(err){
-    alert(err.message);
-  }
-}
+    function renderThreads() {
+      threadList.innerHTML = '';
+      if (!threads.length) {
+        threadList.innerHTML = '<div class="thread-empty">Henüz görüşme yok.</div>';
+        return;
+      }
 
-function okunduYap(id){
-  try{
-    SEVRA_KIMLIK.setMessageStatus(id, "Okundu");
-    loadMessages();
-  }catch(err){
-    alert(err.message);
-  }
-}
+      threads.forEach(thread => {
+        ensureThreadDefaults(thread);
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'thread-item' + (thread.id === activeThreadId ? ' active' : '');
+        item.innerHTML = `
+          <span class="thread-title">${thread.title}</span>
+          <span class="thread-sub">${thread.route}</span>
+          <span class="thread-offer">Teklif: ${fmtMoney(thread.currentOffer)}</span>
+        `;
+        item.addEventListener('click', () => {
+          activeThreadId = thread.id;
+          renderThreads();
+          renderActiveThread();
+        });
+        threadList.appendChild(item);
+      });
+    }
 
-function yeniYap(id){
-  try{
-    SEVRA_KIMLIK.setMessageStatus(id, "Yeni");
-    loadMessages();
-  }catch(err){
-    alert(err.message);
-  }
-}
+    function renderActiveThread() {
+      const thread = threads.find(x => x.id === activeThreadId);
+      if (!thread) {
+        chatTitle.textContent = 'Görüşme seç';
+        chatMeta.textContent = 'İlan ve teklif bağlantısı burada görünür';
+        messageArea.className = 'message-area empty-state';
+        messageArea.innerHTML = 'Sol taraftan bir görüşme seç.';
+        return;
+      }
 
-function mesajSil(id){
-  if(!confirm("Mesaj silinsin mi?")) return;
-  try{
-    SEVRA_KIMLIK.removeMessage(id);
-    loadMessages();
-  }catch(err){
-    alert(err.message);
-  }
-}
+      ensureThreadDefaults(thread);
+      chatTitle.textContent = thread.title;
+      chatMeta.textContent = thread.route + ' • Son teklif: ' + fmtMoney(thread.currentOffer);
 
-loadMessages();
-</script>
+      messageArea.className = 'message-area';
+      messageArea.innerHTML = '';
+
+      const offerBox = document.createElement('div');
+      offerBox.className = 'offer-history-box';
+      offerBox.innerHTML = `
+        <div class="offer-head">Pazarlık Özeti</div>
+        <div class="offer-line">Anlık teklif: <strong>${fmtMoney(thread.currentOffer)}</strong></div>
+        <div class="offer-mini">${thread.offerHistory.map(x => x.role + ': ' + fmtMoney(x.value)).join(' • ') || 'Henüz teklif hareketi yok'}</div>
+      `;
+      messageArea.appendChild(offerBox);
+
+      thread.messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'msg ' + (msg.role === 'Tasiyici' ? 'msg-right' : msg.role === 'Admin' ? 'msg-admin' : 'msg-left');
+        div.innerHTML = `
+          <div class="msg-role">${msg.role}</div>
+          <div class="msg-text">${msg.text}</div>
+          <div class="msg-time">${msg.time}</div>
+        `;
+        messageArea.appendChild(div);
+      });
+
+      messageArea.scrollTop = messageArea.scrollHeight;
+    }
+
+    function addSystemMessage(thread, text) {
+      thread.messages.push({
+        role: 'Admin',
+        text,
+        time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
+      });
+    }
+
+    messageForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const thread = threads.find(x => x.id === activeThreadId);
+      if (!thread) {
+        showStatus('Önce görüşme seç.', true);
+        return;
+      }
+
+      const text = messageInput.value.trim();
+      if (!text) {
+        showStatus('Mesaj yaz.', true);
+        return;
+      }
+
+      thread.messages.push({
+        role: senderRole.value,
+        text,
+        time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
+      });
+
+      saveThreads();
+      messageInput.value = '';
+      renderActiveThread();
+      showStatus('Mesaj gönderildi.');
+    });
+
+    offerRaiseBtn.addEventListener('click', function() {
+      const thread = threads.find(x => x.id === activeThreadId);
+      if (!thread) {
+        showStatus('Önce görüşme seç.', true);
+        return;
+      }
+      thread.currentOffer = Number(thread.currentOffer || 0) + 1000;
+      thread.offerHistory.push({ role: senderRole.value, value: thread.currentOffer });
+      addSystemMessage(thread, 'Teklif güncellendi: ' + fmtMoney(thread.currentOffer));
+      saveThreads();
+      renderThreads();
+      renderActiveThread();
+      showStatus('Teklif yükseltildi.');
+    });
+
+    offerLowerBtn.addEventListener('click', function() {
+      const thread = threads.find(x => x.id === activeThreadId);
+      if (!thread) {
+        showStatus('Önce görüşme seç.', true);
+        return;
+      }
+      const next = Math.max(0, Number(thread.currentOffer || 0) - 1000);
+      thread.currentOffer = next;
+      thread.offerHistory.push({ role: senderRole.value, value: thread.currentOffer });
+      addSystemMessage(thread, 'Teklif güncellendi: ' + fmtMoney(thread.currentOffer));
+      saveThreads();
+      renderThreads();
+      renderActiveThread();
+      showStatus('Teklif düşürüldü.');
+    });
+
+    seedDemoBtn.addEventListener('click', function() {
+      threads = [
+        {
+          id: 'THR-1001',
+          title: 'SVR-1002 • Bursa → İzmir',
+          route: 'Bursa → İzmir',
+          currentOffer: 17500,
+          offerHistory: [
+            { role: 'Tasiyici', value: 18000 },
+            { role: 'Yuk Veren', value: 17500 }
+          ],
+          messages: [
+            { role: 'Tasiyici', text: 'Bu yük için 18.000 TL teklif veriyorum.', time: '10:15' },
+            { role: 'Yuk Veren', text: '17.500 TL seviyesinde ilerleyebilirsek değerlendirebiliriz.', time: '10:18' },
+            { role: 'Admin', text: 'Görüşme sistem içinden devam etmektedir.', time: '10:19' }
+          ]
+        },
+        {
+          id: 'THR-1002',
+          title: 'SVR-1004 • Ankara → İstanbul',
+          route: 'Ankara → İstanbul',
+          currentOffer: 16250,
+          offerHistory: [
+            { role: 'Tasiyici', value: 17000 },
+            { role: 'Yuk Veren', value: 16500 },
+            { role: 'Tasiyici', value: 16250 }
+          ],
+          messages: [
+            { role: 'Yuk Veren', text: 'Teslim süresi kritik. Hızlı dönüş bekliyoruz.', time: '11:05' },
+            { role: 'Tasiyici', text: 'Araç hazır, 16.250 TL ile bağlayabiliriz.', time: '11:08' }
+          ]
+        }
+      ];
+      saveThreads();
+      activeThreadId = threads[0].id;
+      renderThreads();
+      renderActiveThread();
+      showStatus('Demo mesajlaşma ve pazarlık verileri yüklendi.');
+    });
+
+    if (threads.length) {
+      activeThreadId = threads[0].id;
+    }
+
+    renderThreads();
+    renderActiveThread();
+  </script>
 </body>
 </html>
