@@ -116,7 +116,7 @@
     const seedDemoBtn = document.getElementById('seedDemoBtn');
 
     let threads = readJson('sevra_threads', []);
-    let activeThreadId = '';
+    let activeThreadId = localStorage.getItem('sevra_active_thread_id') || '';
 
     function showStatus(message, isError = false) {
       statusBox.textContent = message;
@@ -158,6 +158,7 @@
         `;
         item.addEventListener('click', () => {
           activeThreadId = thread.id;
+          localStorage.setItem('sevra_active_thread_id', activeThreadId);
           renderThreads();
           renderActiveThread();
         });
@@ -274,6 +275,7 @@
       threads = [
         {
           id: 'THR-1001',
+          offerId: 'OFF-SEED-1',
           title: 'SVR-1002 • Bursa → İzmir',
           route: 'Bursa → İzmir',
           currentOffer: 17500,
@@ -286,32 +288,19 @@
             { role: 'Yuk Veren', text: '17.500 TL seviyesinde ilerleyebilirsek değerlendirebiliriz.', time: '10:18' },
             { role: 'Admin', text: 'Görüşme sistem içinden devam etmektedir.', time: '10:19' }
           ]
-        },
-        {
-          id: 'THR-1002',
-          title: 'SVR-1004 • Ankara → İstanbul',
-          route: 'Ankara → İstanbul',
-          currentOffer: 16250,
-          offerHistory: [
-            { role: 'Tasiyici', value: 17000 },
-            { role: 'Yuk Veren', value: 16500 },
-            { role: 'Tasiyici', value: 16250 }
-          ],
-          messages: [
-            { role: 'Yuk Veren', text: 'Teslim süresi kritik. Hızlı dönüş bekliyoruz.', time: '11:05' },
-            { role: 'Tasiyici', text: 'Araç hazır, 16.250 TL ile bağlayabiliriz.', time: '11:08' }
-          ]
         }
       ];
       saveThreads();
       activeThreadId = threads[0].id;
+      localStorage.setItem('sevra_active_thread_id', activeThreadId);
       renderThreads();
       renderActiveThread();
       showStatus('Demo mesajlaşma ve pazarlık verileri yüklendi.');
     });
 
-    if (threads.length) {
+    if (!activeThreadId && threads.length) {
       activeThreadId = threads[0].id;
+      localStorage.setItem('sevra_active_thread_id', activeThreadId);
     }
 
     renderThreads();
