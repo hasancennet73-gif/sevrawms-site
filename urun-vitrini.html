@@ -28,7 +28,7 @@
         <div>
           <div class="section-kicker">Ürün Vitrini</div>
           <h1>Kurumsal ürün alanı</h1>
-          <p>Yönetici tarafından eklenen ürünler burada ziyaretçilere gösterilir.</p>
+          <p>Yönetici tarafından eklenen ürünler ziyaretçilere bu sayfada profesyonel kart yapısıyla sunulur.</p>
         </div>
       </div>
 
@@ -63,11 +63,13 @@
         card.className = 'product-card';
         card.innerHTML = `
           <div class="product-image-wrap">
-            <img src="${product.image}" alt="${product.name}" class="product-image"
-                 onerror="this.style.display='none'; this.parentNode.innerHTML += '<div class=img-fallback>Görsel Yok</div>';">
+            ${product.image ? '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' : '<div class="img-fallback">Görsel Yok</div>'}
           </div>
           <div class="product-body">
-            <span class="product-tag">${product.category}</span>
+            <div class="product-meta-row">
+              <span class="product-tag">${product.category || '-'}</span>
+              <span class="product-status">${product.status || 'Aktif'}</span>
+            </div>
             <h3>${product.name}</h3>
             <p>${product.desc || ''}</p>
             <strong class="price">${product.price}</strong>
