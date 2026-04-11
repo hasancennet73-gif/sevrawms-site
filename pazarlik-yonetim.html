@@ -9,7 +9,7 @@
 <body>
   <header class="topbar">
     <div class="container topbar-inner">
-      <a class="brand" href="admin-dashboard.html">
+      <a class="brand" href="pazarlik-yonetim.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
@@ -17,7 +17,8 @@
         </div>
       </a>
       <div class="top-actions">
-        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
+        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard'a Dön</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
         <a class="btn btn-secondary" href="teklif-yonetimi.html">Teklif Yönetimi</a>
       </div>
     </div>
@@ -25,18 +26,61 @@
 
   <main class="page">
     <div class="container">
-      <div class="page-head">
+      <section class="hero-mini">
         <div>
-          <div class="section-kicker">Final Review</div>
-          <h1>Pazarlık yönetimi son geçiş ekranı</h1>
-          <p>Bu sürümde üst geçişler ve dosya bağlantıları son yapıya göre netleştirildi.</p>
+          <div class="section-kicker">Pazarlık Akışı</div>
+          <h1>Pazarlık yönetimi</h1>
+          <p>Bu ekran artık boş değil. Pazarlık kaydı, komisyon ve iletişim açılma kuralı burada takip edilir.</p>
         </div>
-      </div>
-      <article class="content-card">
-        <div class="card-head"><h2>İşlem</h2></div>
-        <a class="btn btn-primary" href="admin-dashboard.html">Dashboard'a Dön</a>
-      </article>
+      </section>
+
+      <section class="content-card wide-card">
+        <div class="card-head"><h2>Pazarlık Listesi</h2><span class="pill" id="pazarlikSayisi">2 kayıt</span></div>
+        <div id="pazarlikListesi" class="table-stack"></div>
+      </section>
     </div>
   </main>
+
+  <script>
+    const pazarliklar = [
+      {id:'P-2001', ilan:'Gaziantep → Adana', son_teklif:'14.800 TL', durum:'Aktif', komisyon_odendi:false, iletisim_acik:false},
+      {id:'P-2002', ilan:'Ankara → İstanbul', son_teklif:'19.000 TL', durum:'Anlaşmaya yakın', komisyon_odendi:false, iletisim_acik:false}
+    ];
+
+    function kaydetPazarlik(){
+      localStorage.setItem('sevra_pazarliklar', JSON.stringify(pazarliklar));
+    }
+
+    function komisyonAc(id){
+      const item = pazarliklar.find(x => x.id === id);
+      if(!item) return;
+      item.komisyon_odendi = true;
+      item.iletisim_acik = true;
+      item.durum = 'İletişim açıldı';
+      kaydetPazarlik();
+      renderPazarlik();
+    }
+
+    function renderPazarlik(){
+      const box = document.getElementById('pazarlikListesi');
+      box.innerHTML = pazarliklar.map(item => `
+        <div class="table-row">
+          <div><span>ID</span><strong>${item.id}</strong></div>
+          <div><span>İlan</span><strong>${item.ilan}</strong></div>
+          <div><span>Son Teklif</span><strong>${item.son_teklif}</strong></div>
+          <div><span>Durum</span><strong>${item.durum}</strong></div>
+          <div><span>Komisyon</span><strong>${item.komisyon_odendi ? 'Ödendi' : 'Bekliyor'}</strong></div>
+          <div><span>İletişim</span><strong>${item.iletisim_acik ? 'Açık' : 'Kapalı'}</strong></div>
+          <div class="row-actions">
+            <button class="btn btn-primary small-btn" onclick="komisyonAc('${item.id}')">İletişimi Aç</button>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('pazarlikSayisi').textContent = pazarliklar.length + ' kayıt';
+    }
+
+    kaydetPazarlik();
+    renderPazarlik();
+  </script>
 </body>
 </html>
