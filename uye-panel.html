@@ -1,196 +1,64 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEVRA | Üye Paneli</title>
-  <link rel="stylesheet" href="kurumsal-ui.css" />
+  <link rel="stylesheet" href="kurumsal-ui.css">
 </head>
-<body class="dashboard-body">
-  <script>
-    function readJson(key, fallback){
-      try{
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      }catch(e){ return fallback; }
-    }
-    const session = readJson('sevra_member_session', null);
-    if(!session){ window.location.href = 'uye-giris.html'; }
-  </script>
-
-  <div class="dashboard-shell member-shell">
-    <aside class="sidebar">
-      <div class="brand-box">
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="uye-panel.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
           <span>Üye Paneli</span>
         </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
+        <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışı</a>
+        <a class="btn btn-secondary" href="mesajlasma.html">Mesajlaşma</a>
       </div>
+    </div>
+  </header>
 
-      <div class="sidebar-title">Üye Menüsü</div>
-
-      <nav class="side-nav">
-        <a class="side-link active" href="uye-panel.html">Genel Durum</a>
-        <a class="side-link" href="yuk-ilanlari.html">Yük İlanları</a>
-        <a class="side-link" href="ilan-teklif.html">Teklif Akışı</a>
-        <a class="side-link" href="mesajlasma.html">Mesajlaşma</a>
-        <a class="side-link" href="index.html">Kurumsal Site</a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div class="identity-box">
-          <span>Kullanıcı</span>
-          <strong id="memberName">-</strong>
-          <small id="memberRole">-</small>
-        </div>
-        <button id="logoutBtn" class="btn btn-primary btn-block" type="button">Çıkış Yap</button>
-      </div>
-    </aside>
-
-    <main class="main-panel">
+  <main class="page">
+    <div class="container">
       <section class="hero-block">
         <div class="hero-text">
-          <div class="section-kicker">Kurumsal Üye Alanı</div>
-          <h1>SEVRA üye paneli</h1>
-          <p>İlanları inceleyebilir, tekliflerini takip edebilir ve pazarlık süreçlerine aynı kurumsal görünüm içinde devam edebilirsin.</p>
+          <div class="section-kicker">Final Review</div>
+          <h1>Üye paneli son görünüm</h1>
+          <p>Teklif, pazarlık ve yük akışlarına ortak kurumsal görünümle devam edebilirsin.</p>
         </div>
         <div class="hero-side-card">
           <span class="hero-side-label">Üye Özeti</span>
-          <h3>İşlemler tek yerde</h3>
+          <h3>Hızlı geçiş hazır</h3>
           <ul>
-            <li>Tekliflerim alanı</li>
-            <li>Pazarlık kaydı görünümü</li>
-            <li>Hızlı geçiş kartları</li>
-            <li>Standart panel dili</li>
+            <li>Yük ilanları</li>
+            <li>Teklif akışı</li>
+            <li>Mesajlaşma</li>
+            <li>Kurumsal görünüm</li>
           </ul>
         </div>
       </section>
 
-      <section class="stats-grid three">
-        <article class="stat-card">
-          <span>Verilen Teklif</span>
-          <strong id="offersCount">0</strong>
+      <section class="panel-grid">
+        <article class="content-card">
+          <div class="card-head"><h2>Yük İlanları</h2></div>
+          <a class="btn btn-primary" href="yuk-ilanlari.html">Aç</a>
         </article>
-        <article class="stat-card">
-          <span>Açık Pazarlık</span>
-          <strong id="threadsCount">0</strong>
+        <article class="content-card">
+          <div class="card-head"><h2>Tekliflerim</h2></div>
+          <a class="btn btn-primary" href="ilan-teklif.html">Aç</a>
         </article>
-        <article class="stat-card">
-          <span>Aktif İlan</span>
-          <strong id="loadsCount">0</strong>
+        <article class="content-card">
+          <div class="card-head"><h2>Pazarlıklarım</h2></div>
+          <a class="btn btn-primary" href="mesajlasma.html">Aç</a>
         </article>
       </section>
-
-      <section class="panel-grid member-grid">
-        <article class="content-card wide">
-          <div class="card-head">
-            <h2>Tekliflerim</h2>
-            <a href="ilan-teklif.html">Teklif Akışını Aç</a>
-          </div>
-          <div id="offersDetail" class="detail-stack"></div>
-        </article>
-
-        <article class="content-card">
-          <div class="card-head">
-            <h2>Pazarlıklarım</h2>
-            <a href="mesajlasma.html">Aç</a>
-          </div>
-          <div id="threadsPreview" class="list-stack"></div>
-        </article>
-
-        <article class="content-card">
-          <div class="card-head">
-            <h2>Hızlı Geçişler</h2>
-          </div>
-          <div class="action-grid">
-            <a class="action-card" href="yuk-ilanlari.html"><span>İlan</span><strong>Yükleri incele</strong></a>
-            <a class="action-card" href="ilan-teklif.html"><span>Teklif</span><strong>Yeni teklif ver</strong></a>
-            <a class="action-card" href="mesajlasma.html"><span>Pazarlık</span><strong>Görüşmeleri aç</strong></a>
-          </div>
-        </article>
-      </section>
-    </main>
-  </div>
-
-  <script>
-    function readJson(key, fallback){
-      try{
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      }catch(e){ return fallback; }
-    }
-    const session = readJson('sevra_member_session', null) || {};
-    const offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
-    const threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
-    const loads = Array.isArray(readJson('sevra_loads', [])) ? readJson('sevra_loads', []) : [];
-
-    const myOffers = offers.filter(x => x.member === (session.username || ''));
-    const myThreads = threads.filter(x => myOffers.some(o => o.id === x.offerId));
-
-    document.getElementById('memberName').textContent = session.companyName || session.username || '-';
-    document.getElementById('memberRole').textContent = session.role || '-';
-    document.getElementById('offersCount').textContent = myOffers.length;
-    document.getElementById('threadsCount').textContent = myThreads.length;
-    document.getElementById('loadsCount').textContent = loads.length;
-
-    function money(v){
-      return new Intl.NumberFormat('tr-TR').format(Number(v || 0)) + ' TL';
-    }
-
-    function renderList(el, rows, emptyText){
-      el.innerHTML = '';
-      if(!rows.length){
-        el.innerHTML = '<div class="empty-row">' + emptyText + '</div>';
-        return;
-      }
-      rows.forEach(r => {
-        const row = document.createElement('div');
-        row.className = 'list-row';
-        row.innerHTML = '<strong>' + r.left + '</strong><span>' + r.right + '</span>';
-        el.appendChild(row);
-      });
-    }
-
-    const offersDetail = document.getElementById('offersDetail');
-    offersDetail.innerHTML = '';
-    if(!myOffers.length){
-      offersDetail.innerHTML = '<div class="empty-row">Henüz teklif kaydı bulunmuyor.</div>';
-    }else{
-      myOffers.forEach(offer => {
-        const thread = myThreads.find(t => t.offerId === offer.id);
-        const load = loads.find(l => l.id === offer.loadId);
-        const card = document.createElement('div');
-        card.className = 'detail-card';
-        card.innerHTML = `
-          <div class="detail-head">
-            <div>
-              <span class="detail-kicker">Teklif Kaydı</span>
-              <h3>${offer.loadTitle || '-'}</h3>
-            </div>
-            <span class="status-pill">${offer.status || 'Beklemede'}</span>
-          </div>
-          <div class="detail-grid">
-            <div class="mini-info-box"><span>Güzergah</span><strong>${load?.route || '-'}</strong></div>
-            <div class="mini-info-box"><span>Verilen Fiyat</span><strong>${offer.price || '-'}</strong></div>
-            <div class="mini-info-box"><span>Son Pazarlık</span><strong>${thread ? money(thread.currentOffer || 0) : (offer.price || '-')}</strong></div>
-            <div class="mini-info-box"><span>Teklif Notu</span><strong>${offer.note || '-'}</strong></div>
-          </div>
-        `;
-        offersDetail.appendChild(card);
-      });
-    }
-
-    renderList(
-      document.getElementById('threadsPreview'),
-      myThreads.slice(0,4).map(x => ({left: x.title || '-', right: money(x.currentOffer || 0)})),
-      'Henüz pazarlık kaydı bulunmuyor.'
-    );
-
-    document.getElementById('logoutBtn').addEventListener('click', function(){
-      localStorage.removeItem('sevra_member_session');
-      window.location.href = 'uye-giris.html';
-    });
-  </script>
+    </div>
+  </main>
 </body>
 </html>
