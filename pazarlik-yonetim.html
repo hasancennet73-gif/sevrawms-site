@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Pazarlık Yönetimi</title>
+  <link rel="stylesheet" href="pazarlik-yonetim.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="yonetici-panel.html">Panele Dön</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <div class="section-kicker">Pazarlık Yönetimi</div>
+          <h1>Görüşmeleri ve son teklifleri izle</h1>
+          <p>Yönetici tarafı, tüm açık pazarlıkları tek ekranda görür. Son teklif, mesaj sayısı ve aktif konu net görünür.</p>
+        </div>
+        <div class="head-badge">Admin izleme ekranı</div>
+      </div>
+
+      <div class="summary-grid">
+        <article class="summary-card">
+          <span>Toplam Görüşme</span>
+          <strong id="threadsCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Toplam Mesaj</span>
+          <strong id="messagesCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>En Son Teklif</span>
+          <strong id="lastOfferBox">0 TL</strong>
+        </article>
+      </div>
+
+      <div class="shell">
+        <aside class="thread-list-card">
+          <div class="card-head">
+            <h2>Açık Pazarlıklar</h2>
+          </div>
+          <div id="threadList" class="thread-list"></div>
+        </aside>
+
+        <main class="chat-card">
+          <div class="chat-top">
+            <div>
+              <div class="section-kicker">Aktif Kayıt</div>
+              <h2 id="chatTitle">Görüşme seç</h2>
+            </div>
+            <div id="chatMeta" class="chat-meta">Detay burada görünür</div>
+          </div>
+
+          <div id="messageArea" class="message-area empty-state">
+            Sol taraftan bir pazarlık kaydı seç.
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    const session = readJson('sevra_admin_session', null);
+    if (!session) {
+      window.location.href = 'yonetici-giris.html';
+    }
+
+    const threadList = document.getElementById('threadList');
+    const messageArea = document.getElementById('messageArea');
+    const chatTitle = document.getElementById('chatTitle');
+    const chatMeta = document.getElementById('chatMeta');
+
+    const threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
+    let activeThreadId = threads.length ? threads[0].id : '';
+
+    function fmtMoney(value) {
+      return new Intl.NumberFormat('tr-TR').format(Number(value || 0)) + ' TL';
+    }
+
+    document.getElementById('threadsCount').textContent = threads.length;
+    document.getElementById('messagesCount').textContent = threads.reduce((sum, t) => sum + (t.messages ? t.messages.length : 0), 0);
+    document.getElementById('lastOfferBox').textContent = threads.length ? fmtMoney(threads[0].currentOffer || 0) : '0 TL';
+
+    function renderThreads() {
+      threadList.innerHTML = '';
+      if (!threads.length) {
+        threadList.innerHTML = '<div class="thread-empty">Henüz pazarlık kaydı yok.</div>';
+        return;
+      }
+
+      threads.forEach(thread => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'thread-item' + (thread.id === activeThreadId ? ' active' : '');
+        btn.innerHTML = `
+          <span class="thread-title">${thread.title || '-'}</span>
+          <span class="thread-sub">${thread.route || '-'}</span>
+          <span class="thread-offer">Son teklif: ${fmtMoney(thread.currentOffer || 0)}</span>
+        `;
+        btn.addEventListener('click', () => {
+          activeThreadId = thread.id;
+          renderThreads();
+          renderActive();
+        });
+        threadList.appendChild(btn);
+      });
+    }
+
+    function renderActive() {
+      const thread = threads.find(x => x.id === activeThreadId);
+      if (!thread) {
+        chatTitle.textContent = 'Görüşme seç';
+        chatMeta.textContent = 'Detay burada görünür';
+        messageArea.className = 'message-area empty-state';
+        messageArea.innerHTML = 'Sol taraftan bir pazarlık kaydı seç.';
+        return;
+      }
+
+      chatTitle.textContent = thread.title || '-';
+      chatMeta.textContent = (thread.route || '-') + ' • Son teklif: ' + fmtMoney(thread.currentOffer || 0);
+      document.getElementById('lastOfferBox').textContent = fmtMoney(thread.currentOffer || 0);
+
+      messageArea.className = 'message-area';
+      messageArea.innerHTML = '';
+
+      const offerBox = document.createElement('div');
+      offerBox.className = 'offer-history-box';
+      offerBox.innerHTML = `
+        <div class="offer-head">Pazarlık Özeti</div>
+        <div class="offer-line">Aktif teklif: <strong>${fmtMoney(thread.currentOffer || 0)}</strong></div>
+        <div class="offer-mini">${(thread.offerHistory || []).map(x => x.role + ': ' + fmtMoney(x.value)).join(' • ') || 'Teklif hareketi yok'}</div>
+      `;
+      messageArea.appendChild(offerBox);
+
+      (thread.messages || []).forEach(msg => {
+        const row = document.createElement('div');
+        row.className = 'msg ' + (msg.role === 'Tasiyici' ? 'msg-right' : msg.role === 'Admin' ? 'msg-admin' : 'msg-left');
+        row.innerHTML = `
+          <div class="msg-role">${msg.role || '-'}</div>
+          <div class="msg-text">${msg.text || ''}</div>
+          <div class="msg-time">${msg.time || ''}</div>
+        `;
+        messageArea.appendChild(row);
+      });
+
+      messageArea.scrollTop = messageArea.scrollHeight;
+    }
+
+    renderThreads();
+    renderActive();
+  </script>
+</body>
+</html>
