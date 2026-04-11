@@ -1,0 +1,7 @@
+SEVRA GUVENLIK KURALI
+
+1. Telefon, e-posta ve WhatsApp numarası public alanda açık paylaşılmaz.
+2. Teklif ve pazarlık platform içinde yürür.
+3. Gerçek iletişim bilgileri ancak komisyon tamamlandıktan sonra açılır.
+4. release_mode = after_commission olduğu sürece ana sayfada gerçek iletişim görünmez.
+5. Public gösterim sadece yönetici açıkça izin verirse kullanılmalıdır.
