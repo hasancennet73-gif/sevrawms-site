@@ -7,17 +7,34 @@
   <link rel="stylesheet" href="pazarlik-yonetim.css" />
 </head>
 <body>
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    const session = readJson('sevra_admin_session', null);
+    if (!session) {
+      window.location.href = 'yonetici-giris.html';
+    }
+  </script>
+
   <header class="topbar">
     <div class="container topbar-inner">
-      <a class="brand" href="index.html">
+      <a class="brand" href="admin-dashboard.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Dijital Lojistik ve Tedarik Platformu</span>
+          <span>Pazarlık Yönetim Merkezi</span>
         </div>
       </a>
+
       <div class="top-actions">
-        <a class="btn btn-secondary" href="yonetici-panel.html">Panele Dön</a>
+        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
+        <a class="btn btn-secondary" href="teklif-yonetimi.html">Teklif Yönetimi</a>
       </div>
     </div>
   </header>
@@ -26,32 +43,38 @@
     <div class="container">
       <div class="page-head">
         <div>
-          <div class="section-kicker">Pazarlık Yönetimi</div>
-          <h1>Görüşmeleri ve son teklifleri izle</h1>
-          <p>Yönetici tarafı, tüm açık pazarlıkları tek ekranda görür. Son teklif, mesaj sayısı ve aktif konu net görünür.</p>
+          <div class="section-kicker">Pazarlık Finalizasyonu V2</div>
+          <h1>Pazarlık sürecini yönet ve sonucu kapat</h1>
+          <p>Yönetici; aktif pazarlıkları izler, anlaşma durumunu belirler, süreci kapatır veya iptal eder. Son fiyat ve mesaj geçmişi aynı ekranda görünür.</p>
         </div>
-        <div class="head-badge">Admin izleme ekranı</div>
+        <div class="head-badge">Admin kapanış ekranı</div>
       </div>
 
-      <div class="summary-grid">
+      <div id="statusBox" class="status-box hidden"></div>
+
+      <section class="summary-grid">
         <article class="summary-card">
-          <span>Toplam Görüşme</span>
+          <span>Toplam Pazarlık</span>
           <strong id="threadsCount">0</strong>
         </article>
         <article class="summary-card">
-          <span>Toplam Mesaj</span>
-          <strong id="messagesCount">0</strong>
+          <span>Aktif</span>
+          <strong id="activeCount">0</strong>
         </article>
         <article class="summary-card">
-          <span>En Son Teklif</span>
-          <strong id="lastOfferBox">0 TL</strong>
+          <span>Anlaşma Sağlandı</span>
+          <strong id="agreedCount">0</strong>
         </article>
-      </div>
+        <article class="summary-card">
+          <span>İptal / Kapandı</span>
+          <strong id="closedCount">0</strong>
+        </article>
+      </section>
 
       <div class="shell">
         <aside class="thread-list-card">
           <div class="card-head">
-            <h2>Açık Pazarlıklar</h2>
+            <h2>Pazarlık Kayıtları</h2>
           </div>
           <div id="threadList" class="thread-list"></div>
         </aside>
@@ -60,9 +83,21 @@
           <div class="chat-top">
             <div>
               <div class="section-kicker">Aktif Kayıt</div>
-              <h2 id="chatTitle">Görüşme seç</h2>
+              <h2 id="chatTitle">Pazarlık seç</h2>
             </div>
             <div id="chatMeta" class="chat-meta">Detay burada görünür</div>
+          </div>
+
+          <div id="decisionBar" class="decision-bar hidden">
+            <div class="decision-info">
+              <span>Son durum</span>
+              <strong id="decisionStatus">Aktif</strong>
+            </div>
+            <div class="decision-actions">
+              <button id="agreeBtn" class="mini-btn btn-agree" type="button">Anlaşma Sağlandı</button>
+              <button id="closeBtn" class="mini-btn btn-close" type="button">Kapatıldı</button>
+              <button id="cancelBtn" class="mini-btn btn-cancel" type="button">İptal Edildi</button>
+            </div>
           </div>
 
           <div id="messageArea" class="message-area empty-state">
@@ -82,58 +117,120 @@
         return fallback;
       }
     }
-
-    const session = readJson('sevra_admin_session', null);
-    if (!session) {
-      window.location.href = 'yonetici-giris.html';
+    function writeJson(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
     }
-
-    const threadList = document.getElementById('threadList');
-    const messageArea = document.getElementById('messageArea');
-    const chatTitle = document.getElementById('chatTitle');
-    const chatMeta = document.getElementById('chatMeta');
-
-    const threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
-    let activeThreadId = threads.length ? threads[0].id : '';
-
     function fmtMoney(value) {
       return new Intl.NumberFormat('tr-TR').format(Number(value || 0)) + ' TL';
     }
 
-    document.getElementById('threadsCount').textContent = threads.length;
-    document.getElementById('messagesCount').textContent = threads.reduce((sum, t) => sum + (t.messages ? t.messages.length : 0), 0);
-    document.getElementById('lastOfferBox').textContent = threads.length ? fmtMoney(threads[0].currentOffer || 0) : '0 TL';
+    let threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
+    let offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
+
+    const statusBox = document.getElementById('statusBox');
+    const threadList = document.getElementById('threadList');
+    const messageArea = document.getElementById('messageArea');
+    const chatTitle = document.getElementById('chatTitle');
+    const chatMeta = document.getElementById('chatMeta');
+    const decisionBar = document.getElementById('decisionBar');
+    const decisionStatus = document.getElementById('decisionStatus');
+    const agreeBtn = document.getElementById('agreeBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    let activeThreadId = threads.length ? threads[0].id : '';
+
+    function showStatus(message, isError = false) {
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    function saveThreads() {
+      writeJson('sevra_threads', threads);
+    }
+
+    function saveOffers() {
+      writeJson('sevra_offers', offers);
+    }
+
+    function threadStatusText(status) {
+      if (status === 'Agreed') return 'Anlaşma Sağlandı';
+      if (status === 'Closed') return 'Kapatıldı';
+      if (status === 'Cancelled') return 'İptal Edildi';
+      return 'Aktif';
+    }
+
+    function refreshSummary() {
+      document.getElementById('threadsCount').textContent = threads.length;
+      document.getElementById('activeCount').textContent = threads.filter(x => !x.finalStatus || x.finalStatus === 'Active').length;
+      document.getElementById('agreedCount').textContent = threads.filter(x => x.finalStatus === 'Agreed').length;
+      document.getElementById('closedCount').textContent = threads.filter(x => x.finalStatus === 'Closed' || x.finalStatus === 'Cancelled').length;
+    }
 
     function renderThreads() {
+      refreshSummary();
       threadList.innerHTML = '';
+
       if (!threads.length) {
         threadList.innerHTML = '<div class="thread-empty">Henüz pazarlık kaydı yok.</div>';
         return;
       }
 
       threads.forEach(thread => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'thread-item' + (thread.id === activeThreadId ? ' active' : '');
-        btn.innerHTML = `
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'thread-item' + (thread.id === activeThreadId ? ' active' : '');
+        item.innerHTML = `
           <span class="thread-title">${thread.title || '-'}</span>
           <span class="thread-sub">${thread.route || '-'}</span>
           <span class="thread-offer">Son teklif: ${fmtMoney(thread.currentOffer || 0)}</span>
+          <span class="thread-status">${threadStatusText(thread.finalStatus)}</span>
         `;
-        btn.addEventListener('click', () => {
+        item.addEventListener('click', () => {
           activeThreadId = thread.id;
           renderThreads();
           renderActive();
         });
-        threadList.appendChild(btn);
+        threadList.appendChild(item);
       });
+    }
+
+    function setThreadStatus(nextStatus) {
+      const thread = threads.find(x => x.id === activeThreadId);
+      if (!thread) {
+        showStatus('Önce pazarlık seç.', true);
+        return;
+      }
+
+      thread.finalStatus = nextStatus;
+      if (!Array.isArray(thread.messages)) thread.messages = [];
+      thread.messages.push({
+        role: 'Admin',
+        text: 'Pazarlık durumu güncellendi: ' + threadStatusText(nextStatus),
+        time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
+      });
+
+      const offer = offers.find(x => x.id === thread.offerId);
+      if (offer) {
+        if (nextStatus === 'Agreed') offer.status = 'Onaylandı';
+        else if (nextStatus === 'Cancelled') offer.status = 'Reddedildi';
+        else if (nextStatus === 'Closed') offer.status = 'Kapandı';
+      }
+
+      saveThreads();
+      saveOffers();
+      renderThreads();
+      renderActive();
+      showStatus('Pazarlık sonucu kaydedildi: ' + threadStatusText(nextStatus));
     }
 
     function renderActive() {
       const thread = threads.find(x => x.id === activeThreadId);
       if (!thread) {
-        chatTitle.textContent = 'Görüşme seç';
+        chatTitle.textContent = 'Pazarlık seç';
         chatMeta.textContent = 'Detay burada görünür';
+        decisionBar.classList.add('hidden');
         messageArea.className = 'message-area empty-state';
         messageArea.innerHTML = 'Sol taraftan bir pazarlık kaydı seç.';
         return;
@@ -141,7 +238,8 @@
 
       chatTitle.textContent = thread.title || '-';
       chatMeta.textContent = (thread.route || '-') + ' • Son teklif: ' + fmtMoney(thread.currentOffer || 0);
-      document.getElementById('lastOfferBox').textContent = fmtMoney(thread.currentOffer || 0);
+      decisionBar.classList.remove('hidden');
+      decisionStatus.textContent = threadStatusText(thread.finalStatus);
 
       messageArea.className = 'message-area';
       messageArea.innerHTML = '';
@@ -168,6 +266,10 @@
 
       messageArea.scrollTop = messageArea.scrollHeight;
     }
+
+    agreeBtn.addEventListener('click', () => setThreadStatus('Agreed'));
+    closeBtn.addEventListener('click', () => setThreadStatus('Closed'));
+    cancelBtn.addEventListener('click', () => setThreadStatus('Cancelled'));
 
     renderThreads();
     renderActive();
