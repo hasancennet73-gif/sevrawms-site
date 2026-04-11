@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yönetici Girişi</title>
+  <title>SEVRA | Yönetim Paneli Girişi</title>
   <link rel="stylesheet" href="yonetici-giris.css" />
 </head>
 <body>
@@ -27,48 +27,48 @@
     <div class="container">
       <div class="admin-login-shell">
         <div class="login-left">
-          <div class="section-kicker">Yönetim Erişimi</div>
-          <h1>Kurumsal yönetici girişi</h1>
-          <p>Başvurular, üyeler, ilanlar, teklifler, pazarlıklar ve ürün yönetimi için tek merkezli admin dashboard'a buradan giriş yapılır.</p>
+          <div class="section-kicker">Yönetim Paneli Erişimi</div>
+          <h1>Kurumsal yönetim paneli girişi</h1>
+          <p>Başvurular, üyeler, ilanlar, teklifler, pazarlık süreçleri ve ürün yönetimi tek merkezli yönetim paneli üzerinden kontrol edilir.</p>
 
           <div class="mini-info-grid">
             <div class="mini-info">
               <strong>Başvuru</strong>
-              <span>Kontrollü inceleme</span>
+              <span>Kontrollü değerlendirme</span>
             </div>
             <div class="mini-info">
               <strong>Teklif</strong>
               <span>Merkezi takip</span>
             </div>
             <div class="mini-info">
-              <strong>Dashboard</strong>
-              <span>Sol menülü yönetim</span>
+              <strong>Yönetim</strong>
+              <span>Sol menülü panel yapısı</span>
             </div>
           </div>
         </div>
 
         <div class="login-card">
-          <div class="section-kicker">Demo Yönetici</div>
-          <h2>Admin dashboard'a giriş yap</h2>
+          <div class="section-kicker">Yetkili Erişim</div>
+          <h2>Yönetim paneline giriş yap</h2>
 
           <form id="adminLoginForm" class="admin-form">
             <div class="form-group">
               <label for="adminUsername">Kullanıcı Adı</label>
-              <input id="adminUsername" type="text" placeholder="admin" required />
+              <input id="adminUsername" type="text" placeholder="Kullanıcı adı" required />
             </div>
 
             <div class="form-group">
               <label for="adminPassword">Şifre</label>
-              <input id="adminPassword" type="password" placeholder="123456" required />
+              <input id="adminPassword" type="password" placeholder="Şifre" required />
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Dashboard'a Gir</button>
+              <button type="submit" class="btn btn-primary">Yönetim Paneline Gir</button>
             </div>
           </form>
 
-          <div class="demo-box">
-            <span>Demo yönetici bilgisi</span>
+          <div class="access-box">
+            <span>Test erişim bilgisi</span>
             <strong>Kullanıcı adı: admin</strong>
             <strong>Şifre: 123456</strong>
           </div>
@@ -101,7 +101,7 @@
           role: 'SUPER_ADMIN',
           loginAt: new Date().toISOString()
         }));
-        showStatus('Giriş başarılı. Admin dashboard açılıyor.');
+        showStatus('Giriş başarılı. Yönetim paneli açılıyor.');
         setTimeout(() => {
           window.location.href = 'admin-dashboard.html';
         }, 400);
