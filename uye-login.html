@@ -3,56 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Uye Girisi</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:26px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:36px;margin-bottom:8px}
-    .title p{color:var(--muted)}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}
-    .card span{color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-    label{font-size:13px;color:#dce6f5;font-weight:700}
-    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
-  </style>
+  <title>SEVRA | Kurumsal Üye Girişi</title>
+  <link rel="stylesheet" href="uye-auth.css" />
 </head>
 <body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Kurumsal Üye Girişi</span>
+        </div>
+      </a>
+      <div class="actions">
+        <a class="btn" href="index.html">Ana Sayfa</a>
+        <a class="btn" href="yuk-ilanlari.html">Yük İlanları</a>
+      </div>
+    </header>
 
-<div class="wrap">
-  <div class="panel" style="max-width:700px;margin:20px auto">
-    <div class="title">
-      <h1>Uye Girisi</h1>
-      <p>Demo uye: uye1 / 123456</p>
-    </div>
-    <div class="grid">
-      <div class="field"><label>Kullanici Adi</label><input id="username" type="text" placeholder="uye1"></div>
-      <div class="field"><label>Sifre</label><input id="password" type="password" placeholder="123456"></div>
-    </div>
-    <div class="actions">
-      <button class="btn primary" onclick="uyeGiris()">Giris Yap</button>
-      <a id="registerBtn" class="btn" href="uye-ol.html">Uye Ol</a>
-      <a class="btn" href="index.html">Ana Sayfa</a>
-    </div>
-    <div id="msg" class="note" style="margin-top:12px;display:none"></div>
+    <main class="auth-grid">
+      <section class="panel intro">
+        <div class="kicker">Kurumsal Erişim</div>
+        <h1>E-posta ile güvenli üye girişi</h1>
+        <p>SEVRA’da üyelik akışı e-posta doğrulama mantığına göre kurgulanır. Demo kullanıcı mantığı bu sürümde kaldırılmıştır.</p>
+
+        <div class="info-box">
+          <h3>Üyelik akışı</h3>
+          <ul>
+            <li>E-posta ile kayıt oluşturulur</li>
+            <li>Doğrulama kodu / şifre gönderim altyapısı hazırlanır</li>
+            <li>Doğrulama sonrası üyelik aktifleşir</li>
+            <li>Aktif üyeler teklif ve pazarlık ekranına geçer</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="kicker">Üye Girişi</div>
+        <h2>Hesabınla giriş yap</h2>
+        <p>Kayıtlı ve doğrulanmış e-posta adresinle giriş yap.</p>
+
+        <form id="loginForm" class="form-grid">
+          <div class="field full">
+            <label>E-Posta</label>
+            <input id="email" type="email" placeholder="ornek@firma.com" autocomplete="off" />
+          </div>
+          <div class="field full">
+            <label>Şifre</label>
+            <input id="password" type="password" placeholder="Şifre" autocomplete="off" />
+          </div>
+          <div class="actions-row full">
+            <button type="submit" class="btn primary">Giriş Yap</button>
+            <a class="btn" href="uye-ol.html">Üyelik Oluştur</a>
+          </div>
+        </form>
+
+        <div id="msg" class="note hidden"></div>
+      </section>
+    </main>
   </div>
-</div>
-
-<script src="kimlik-dogrulama.js"></script>
 
 <script>
 function q(n){return new URLSearchParams(location.search).get(n)||'';}
@@ -65,24 +75,46 @@ function nextUrl(){
   }
   return 'uye-panel.html';
 }
-function syncRegister(){
-  var p=[];
-  if(q('role')) p.push('role='+encodeURIComponent(q('role')));
-  if(q('redirect')) p.push('redirect='+encodeURIComponent(q('redirect')));
-  if(q('load_id')) p.push('load_id='+encodeURIComponent(q('load_id')));
-  document.getElementById('registerBtn').href='uye-ol.html'+(p.length?'?'+p.join('&'):'');
+function readJson(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){
+    return fallback;
+  }
 }
-function showMsg(t){var m=document.getElementById('msg');m.style.display='block';m.textContent=t;}
-function uyeGiris(){
-  var u=document.getElementById('username').value.trim();
-  var p=document.getElementById('password').value.trim();
-  var row=SEVRA_KIMLIK.findMember(u,p);
-  if(!row){showMsg('Uye bilgisi yanlis.');return;}
-  SEVRA_KIMLIK.setAuth(row);
-  window.location.href=nextUrl();
+function writeJson(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
 }
-syncRegister();
+function showMsg(t, ok){
+  var m=document.getElementById('msg');
+  m.className='note ' + (ok ? 'ok' : 'err');
+  m.textContent=t;
+}
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var email=document.getElementById('email').value.trim().toLowerCase();
+  var password=document.getElementById('password').value.trim();
+  var members=readJson('sevra_members', []);
+  var row=members.find(function(x){ return x.email===email && x.password===password; });
+  if(!row){
+    showMsg('E-posta veya şifre hatalı.', false);
+    return;
+  }
+  if(row.status!=='Aktif'){
+    showMsg('Üyelik henüz doğrulanmamış. Önce e-posta doğrulamasını tamamla.', false);
+    return;
+  }
+  writeJson('sevra_member_session', {
+    email: row.email,
+    companyName: row.companyName || '',
+    contactName: row.contactName || '',
+    role: row.role || '',
+    loginAt: new Date().toISOString()
+  });
+  showMsg('Giriş başarılı. Yönlendiriliyorsun.', true);
+  setTimeout(function(){ window.location.href=nextUrl(); }, 500);
+});
 </script>
-
 </body>
 </html>
