@@ -133,10 +133,7 @@
     document.getElementById('memberRole').textContent = session.role || '-';
 
     const myOffers = offers.filter(x => x.member === (session.username || ''));
-    const myThreads = threads.filter(x => {
-      const offer = myOffers.find(o => o.id === x.offerId);
-      return !!offer;
-    });
+    const myThreads = threads.filter(x => myOffers.some(o => o.id === x.offerId));
 
     document.getElementById('offersCount').textContent = myOffers.length;
     document.getElementById('threadsCount').textContent = myThreads.length;
@@ -149,11 +146,33 @@
       el.innerHTML = '<div class="empty-row">' + text + '</div>';
     }
 
+    function openOffer(offerId) {
+      const offer = myOffers.find(x => x.id === offerId);
+      if (!offer) return;
+      const load = loads.find(x => x.id === offer.loadId);
+      if (load) {
+        localStorage.setItem('sevra_selected_load', JSON.stringify(load));
+      }
+      window.location.href = 'ilan-teklif.html';
+    }
+
+    function openThread(threadId) {
+      localStorage.setItem('sevra_active_thread_id', threadId);
+      window.location.href = 'mesajlasma.html';
+    }
+
     if (myOffers.length) {
       myOffers.slice(0, 4).forEach(offer => {
         const row = document.createElement('div');
-        row.className = 'preview-row';
-        row.innerHTML = '<strong>' + (offer.loadTitle || '-') + '</strong><span>' + (offer.price || '-') + '</span>';
+        row.className = 'preview-row action-row';
+        row.innerHTML = `
+          <div class="preview-main">
+            <strong>${offer.loadTitle || '-'}</strong>
+            <span>${offer.price || '-'}</span>
+          </div>
+          <button class="mini-btn" type="button">Aç</button>
+        `;
+        row.querySelector('button').addEventListener('click', () => openOffer(offer.id));
         offersPreview.appendChild(row);
       });
     } else {
@@ -163,8 +182,15 @@
     if (myThreads.length) {
       myThreads.slice(0, 4).forEach(thread => {
         const row = document.createElement('div');
-        row.className = 'preview-row';
-        row.innerHTML = '<strong>' + (thread.title || '-') + '</strong><span>' + new Intl.NumberFormat('tr-TR').format(Number(thread.currentOffer || 0)) + ' TL</span>';
+        row.className = 'preview-row action-row';
+        row.innerHTML = `
+          <div class="preview-main">
+            <strong>${thread.title || '-'}</strong>
+            <span>${new Intl.NumberFormat('tr-TR').format(Number(thread.currentOffer || 0))} TL</span>
+          </div>
+          <button class="mini-btn mini-btn-yellow" type="button">Pazarlığa Git</button>
+        `;
+        row.querySelector('button').addEventListener('click', () => openThread(thread.id));
         threadsPreview.appendChild(row);
       });
     } else {
