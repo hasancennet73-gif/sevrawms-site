@@ -34,7 +34,7 @@
               <li>Geçici e-posta ve iletişim metinleri</li>
               <li>WhatsApp hattının açılıp kapanması</li>
               <li>Public alanda açık bilgi gösterim izni</li>
-              <li>Ana sayfa iletişim kartlarının metinleri</li>
+              <li>Komisyon sonrası açılma kuralı</li>
             </ul>
           </div>
         </div>
@@ -57,11 +57,19 @@
             </label>
 
             <label>Politika Başlığı
-              <input id="policyLabel" type="text" placeholder="Kontrollü görünürlük">
+              <input id="policyLabel" type="text" placeholder="Önce platform içi süreç">
             </label>
 
             <label>Politika Açıklaması
               <input id="policyText" type="text" placeholder="Politika açıklaması">
+            </label>
+
+            <label>İletişim Açılma Kuralı
+              <select id="releaseMode">
+                <option value="after_commission">Komisyon sonrası aç</option>
+                <option value="public">Public göster</option>
+                <option value="hidden">Tam gizli tut</option>
+              </select>
             </label>
 
             <label style="display:flex;align-items:center;gap:10px;">
@@ -95,13 +103,13 @@
 
     const defaults = {
       contact_email: 'hasancennet73@gmail.com',
-      contact_phone: '',
       whatsapp_number: '',
       whatsapp_enabled: false,
       allow_public_contact: false,
-      contact_intro: 'Platform içi teklif ve pazarlık mantığı gereği iletişim bilgileri public alanda açık gösterilmez. İletişim akışı kontrollü yürütülür.',
-      policy_label: 'Kontrollü görünürlük',
-      policy_text: 'Gerçek iletişim bilgileri platform mantığına göre kontrollü açılacak şekilde yapılandırılmıştır.'
+      contact_intro: 'İletişim bilgileri platform güvenliği ve komisyon koruması nedeniyle kontrollü açılır.',
+      policy_label: 'Önce platform içi süreç',
+      policy_text: 'Teklif, pazarlık ve anlaşma sistem içinde yürür; gerçek iletişim komisyon tamamlanınca açılır.',
+      release_mode: 'after_commission'
     };
 
     const current = Object.assign({}, defaults, readJson('sevra_site_settings', {}));
@@ -111,6 +119,7 @@
     document.getElementById('contactIntro').value = current.contact_intro || '';
     document.getElementById('policyLabel').value = current.policy_label || '';
     document.getElementById('policyText').value = current.policy_text || '';
+    document.getElementById('releaseMode').value = current.release_mode || 'after_commission';
     document.getElementById('whatsappEnabled').checked = !!current.whatsapp_enabled;
     document.getElementById('allowPublicContact').checked = !!current.allow_public_contact;
 
@@ -132,6 +141,7 @@
         contact_intro: document.getElementById('contactIntro').value.trim(),
         policy_label: document.getElementById('policyLabel').value.trim(),
         policy_text: document.getElementById('policyText').value.trim(),
+        release_mode: document.getElementById('releaseMode').value,
         whatsapp_enabled: document.getElementById('whatsappEnabled').checked,
         allow_public_contact: document.getElementById('allowPublicContact').checked
       };
