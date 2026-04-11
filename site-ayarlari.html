@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEVRA | Site Ayarları</title>
+  <link rel="stylesheet" href="kurumsal-ui.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="admin-dashboard.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Site Ayarları ve İletişim Yönetimi</span>
+        </div>
+      </a>
+      <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
+    </div>
+  </header>
+
+  <section class="entry-shell-wrap">
+    <div class="container">
+      <div class="entry-shell">
+        <div class="entry-info">
+          <div class="section-kicker">Site Ayarları</div>
+          <h1>İletişim ve WhatsApp yönetimi</h1>
+          <p>Bu ekranla kurumsal iletişim metinlerini, e-posta bilgisini, WhatsApp hattını ve public görünürlük mantığını yönetebilirsin.</p>
+
+          <div class="entry-note-card">
+            <h3>Bu ekranda ne kontrol edilir?</h3>
+            <ul>
+              <li>Geçici e-posta ve iletişim metinleri</li>
+              <li>WhatsApp hattının açılıp kapanması</li>
+              <li>Public alanda açık bilgi gösterim izni</li>
+              <li>Ana sayfa iletişim kartlarının metinleri</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="entry-card">
+          <div class="section-kicker">Ayar Formu</div>
+          <h2>Site ayarlarını kaydet</h2>
+
+          <form id="settingsForm" class="entry-form">
+            <label>Kurumsal E-Posta
+              <input id="contactEmail" type="text" placeholder="hasancennet73@gmail.com">
+            </label>
+
+            <label>WhatsApp Numarası
+              <input id="whatsappNumber" type="text" placeholder="905551234567">
+            </label>
+
+            <label>İletişim Giriş Metni
+              <input id="contactIntro" type="text" placeholder="İletişim politikası giriş metni">
+            </label>
+
+            <label>Politika Başlığı
+              <input id="policyLabel" type="text" placeholder="Kontrollü görünürlük">
+            </label>
+
+            <label>Politika Açıklaması
+              <input id="policyText" type="text" placeholder="Politika açıklaması">
+            </label>
+
+            <label style="display:flex;align-items:center;gap:10px;">
+              <input id="whatsappEnabled" type="checkbox" style="width:auto;">
+              WhatsApp butonunu aktif et
+            </label>
+
+            <label style="display:flex;align-items:center;gap:10px;">
+              <input id="allowPublicContact" type="checkbox" style="width:auto;">
+              E-posta bilgisini public alanda göster
+            </label>
+
+            <button type="submit" class="btn btn-primary btn-block">Ayarları Kaydet</button>
+          </form>
+
+          <div id="statusBox" class="status-box hidden"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+
+    const defaults = {
+      contact_email: 'hasancennet73@gmail.com',
+      contact_phone: '',
+      whatsapp_number: '',
+      whatsapp_enabled: false,
+      allow_public_contact: false,
+      contact_intro: 'Platform içi teklif ve pazarlık mantığı gereği iletişim bilgileri public alanda açık gösterilmez. İletişim akışı kontrollü yürütülür.',
+      policy_label: 'Kontrollü görünürlük',
+      policy_text: 'Gerçek iletişim bilgileri platform mantığına göre kontrollü açılacak şekilde yapılandırılmıştır.'
+    };
+
+    const current = Object.assign({}, defaults, readJson('sevra_site_settings', {}));
+
+    document.getElementById('contactEmail').value = current.contact_email || '';
+    document.getElementById('whatsappNumber').value = current.whatsapp_number || '';
+    document.getElementById('contactIntro').value = current.contact_intro || '';
+    document.getElementById('policyLabel').value = current.policy_label || '';
+    document.getElementById('policyText').value = current.policy_text || '';
+    document.getElementById('whatsappEnabled').checked = !!current.whatsapp_enabled;
+    document.getElementById('allowPublicContact').checked = !!current.allow_public_contact;
+
+    const form = document.getElementById('settingsForm');
+    const statusBox = document.getElementById('statusBox');
+
+    function showStatus(message, isError){
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden','status-success','status-error');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    form.addEventListener('submit', function(event){
+      event.preventDefault();
+
+      const payload = {
+        contact_email: document.getElementById('contactEmail').value.trim(),
+        whatsapp_number: document.getElementById('whatsappNumber').value.trim(),
+        contact_intro: document.getElementById('contactIntro').value.trim(),
+        policy_label: document.getElementById('policyLabel').value.trim(),
+        policy_text: document.getElementById('policyText').value.trim(),
+        whatsapp_enabled: document.getElementById('whatsappEnabled').checked,
+        allow_public_contact: document.getElementById('allowPublicContact').checked
+      };
+
+      localStorage.setItem('sevra_site_settings', JSON.stringify(payload));
+      showStatus('Site ayarları kaydedildi. Ana sayfayı yenileyince yeni alanlar görünür.', false);
+    });
+  </script>
+</body>
+</html>
