@@ -3,101 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Uye Ol</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:26px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:36px;margin-bottom:8px}
-    .title p{color:var(--muted)}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}
-    .card span{color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-    label{font-size:13px;color:#dce6f5;font-weight:700}
-    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
-  </style>
+  <title>SEVRA | Kurumsal Üyelik Oluştur</title>
+  <link rel="stylesheet" href="uye-auth.css" />
 </head>
 <body>
-
-<div class="wrap">
-  <div class="panel" style="max-width:760px;margin:20px auto">
-    <div class="title">
-      <h1>Uye Ol</h1>
-      <p>Kayit olustur, sonra giris ekranina gec.</p>
-    </div>
-    <div class="grid">
-      <div class="field"><label>Ad Soyad</label><input id="fullName" type="text"></div>
-      <div class="field"><label>Firma</label><input id="company" type="text"></div>
-    </div>
-    <div class="grid">
-      <div class="field"><label>Kullanici Adi</label><input id="username" type="text"></div>
-      <div class="field"><label>Sifre</label><input id="password" type="password"></div>
-    </div>
-    <div class="grid">
-      <div class="field"><label>Telefon</label><input id="phone" type="text"></div>
-      <div class="field"><label>Rol</label>
-        <select id="role">
-          <option value="member">Standart Uye</option>
-          <option value="shipper">Yuk Veren</option>
-          <option value="carrier">Nakliyeci</option>
-        </select>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Kurumsal Üyelik Oluştur</span>
+        </div>
+      </a>
+      <div class="actions">
+        <a class="btn" href="uye-login.html">Üye Girişi</a>
+        <a class="btn" href="index.html">Ana Sayfa</a>
       </div>
-    </div>
-    <div class="actions">
-      <button class="btn primary" onclick="kayitOl()">Kayit Olustur</button>
-      <a id="loginBtn" class="btn" href="uye-login.html">Uye Girisine Git</a>
-    </div>
-    <div id="msg" class="note" style="margin-top:12px;display:none"></div>
-  </div>
-</div>
+    </header>
 
-<script src="kimlik-dogrulama.js"></script>
+    <main class="stack">
+      <section class="panel">
+        <div class="kicker">E-Posta ile Kayıt</div>
+        <h1>Kurumsal üyelik başvurusu</h1>
+        <p>Vatandaş / firma e-posta ile üyelik oluşturur. Gerçek mail gönderimi için backend entegrasyonu gereklidir; bu paket doğrulama akışının ön yüzünü ve veri yapısını hazırlar.</p>
+
+        <form id="registerForm" class="form-grid">
+          <div class="field">
+            <label>Firma Adı</label>
+            <input id="companyName" type="text" placeholder="Firma adı" />
+          </div>
+          <div class="field">
+            <label>Yetkili Kişi</label>
+            <input id="contactName" type="text" placeholder="Yetkili kişi" />
+          </div>
+          <div class="field">
+            <label>E-Posta</label>
+            <input id="email" type="email" placeholder="ornek@firma.com" />
+          </div>
+          <div class="field">
+            <label>Telefon</label>
+            <input id="phone" type="text" placeholder="Telefon" />
+          </div>
+          <div class="field">
+            <label>Rol</label>
+            <select id="role">
+              <option>Taşıyıcı</option>
+              <option>Yük Veren</option>
+              <option>Tedarikçi</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Şifre</label>
+            <input id="password" type="password" placeholder="Şifre" />
+          </div>
+          <div class="actions-row full">
+            <button type="submit" class="btn primary">Üyelik Oluştur</button>
+          </div>
+        </form>
+
+        <div id="registerMsg" class="note hidden"></div>
+      </section>
+
+      <section class="panel">
+        <div class="kicker">Doğrulama</div>
+        <h2>E-posta doğrulama kodu</h2>
+        <p>Kullanıcı normalde mailine gelen kodu bu alana girer. Bu sürümde mail altyapısı hazırlık aşamasındadır; gerçek gönderim için backend / mail servisi bağlanmalıdır.</p>
+
+        <form id="verifyForm" class="form-grid">
+          <div class="field">
+            <label>E-Posta</label>
+            <input id="verifyEmail" type="email" placeholder="ornek@firma.com" />
+          </div>
+          <div class="field">
+            <label>Doğrulama Kodu</label>
+            <input id="verifyCode" type="text" placeholder="Doğrulama kodu" />
+          </div>
+          <div class="actions-row full">
+            <button type="submit" class="btn primary">Üyeliği Onayla</button>
+          </div>
+        </form>
+
+        <div id="verifyMsg" class="note hidden"></div>
+      </section>
+    </main>
+  </div>
 
 <script>
-function q(n){return new URLSearchParams(location.search).get(n)||'';}
-function loginHref(){
-  var p=[];
-  if(q('role')) p.push('role='+encodeURIComponent(q('role')));
-  if(q('redirect')) p.push('redirect='+encodeURIComponent(q('redirect')));
-  if(q('load_id')) p.push('load_id='+encodeURIComponent(q('load_id')));
-  return 'uye-login.html'+(p.length?'?'+p.join('&'):'');
-}
-function showMsg(t){var m=document.getElementById('msg');m.style.display='block';m.textContent=t;}
-function initRole(){
-  document.getElementById('loginBtn').href=loginHref();
-  if(q('role')) document.getElementById('role').value=q('role');
-}
-function kayitOl(){
+function readJson(key, fallback){
   try{
-    SEVRA_KIMLIK.registerMember({
-      fullName:document.getElementById('fullName').value.trim(),
-      company:document.getElementById('company').value.trim(),
-      username:document.getElementById('username').value.trim(),
-      password:document.getElementById('password').value.trim(),
-      phone:document.getElementById('phone').value.trim(),
-      role:document.getElementById('role').value,
-      provider:'manual'
-    });
-    showMsg('Kayit olustu. Giris ekranina gidiyorsun.');
-    setTimeout(function(){window.location.href=loginHref();},1200);
-  }catch(err){showMsg(err.message);}
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){
+    return fallback;
+  }
 }
-initRole();
-</script>
+function writeJson(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
+}
+function show(el, text, ok){
+  el.className = 'note ' + (ok ? 'ok' : 'err');
+  el.textContent = text;
+}
+function generateCode(){
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
 
+document.getElementById('registerForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const companyName=document.getElementById('companyName').value.trim();
+  const contactName=document.getElementById('contactName').value.trim();
+  const email=document.getElementById('email').value.trim().toLowerCase();
+  const phone=document.getElementById('phone').value.trim();
+  const role=document.getElementById('role').value;
+  const password=document.getElementById('password').value.trim();
+  const msg=document.getElementById('registerMsg');
+
+  if(!companyName || !contactName || !email || !phone || !password){
+    show(msg, 'Lütfen tüm alanları doldur.', false);
+    return;
+  }
+
+  const members=readJson('sevra_members', []);
+  if(members.some(x => x.email===email)){
+    show(msg, 'Bu e-posta ile daha önce kayıt oluşturulmuş.', false);
+    return;
+  }
+
+  const code=generateCode();
+  members.push({
+    companyName, contactName, email, phone, role, password,
+    verifyCode: code,
+    status: 'Dogrulama Bekliyor',
+    createdAt: new Date().toISOString()
+  });
+  writeJson('sevra_members', members);
+
+  show(msg, 'Kayıt oluşturuldu. Gerçek mail gönderimi için backend gerekir. Şimdilik doğrulama kodu sistemde üretildi: ' + code, true);
+  document.getElementById('verifyEmail').value = email;
+});
+
+document.getElementById('verifyForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email=document.getElementById('verifyEmail').value.trim().toLowerCase();
+  const code=document.getElementById('verifyCode').value.trim();
+  const msg=document.getElementById('verifyMsg');
+  const members=readJson('sevra_members', []);
+  const row=members.find(x => x.email===email);
+
+  if(!row){
+    show(msg, 'Bu e-posta ile bekleyen kayıt bulunamadı.', false);
+    return;
+  }
+  if(row.verifyCode !== code){
+    show(msg, 'Doğrulama kodu hatalı.', false);
+    return;
+  }
+
+  row.status = 'Aktif';
+  row.verifiedAt = new Date().toISOString();
+  writeJson('sevra_members', members);
+  show(msg, 'Üyelik doğrulandı. Artık giriş yapabilirsin.', true);
+});
+</script>
 </body>
 </html>
