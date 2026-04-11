@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEVRA | Yönetim Paneli Girişi</title>
-  <link rel="stylesheet" href="zip1-kurumsal.css">
+  <link rel="stylesheet" href="kurumsal-ui.css">
 </head>
 <body>
   <header class="topbar">
@@ -16,9 +16,7 @@
           <span>Yönetim Paneli Girişi</span>
         </div>
       </a>
-      <div class="top-actions">
-        <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
-      </div>
+      <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
     </div>
   </header>
 
@@ -28,33 +26,27 @@
         <div class="entry-info">
           <div class="section-kicker">Yetkili Erişim</div>
           <h1>Kurumsal yönetim paneli girişi</h1>
-          <p>Başvuru, teklif, pazarlık, ürün ve kurumsal içerik alanları yönetim paneli üzerinden kontrol edilir. Bu ekran demo değil, gerçek kurumsal giriş mantığına göre sadeleştirildi.</p>
+          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim paneli üzerinden takip edilir. Demo görünüm kaldırılmış, ekran daha kurumsal ve güvenli bir dile çekilmiştir.</p>
 
           <div class="entry-note-card">
-            <h3>Yönetim panelinde neler kontrol edilir?</h3>
+            <h3>Yönetim panelinde neler yönetilir?</h3>
             <ul>
-              <li>Başvuru ve kullanıcı akışı</li>
-              <li>Teklif ve pazarlık yönetimi</li>
-              <li>Ürün ve vitrin içerikleri</li>
-              <li>İleride site ayarları ve iletişim yönetimi</li>
+              <li>Başvuru ve kullanıcı süreçleri</li>
+              <li>Teklif ve pazarlık karar akışı</li>
+              <li>Ürün ve vitrin yönetimi</li>
+              <li>Sonraki adımda site ayarları ve iletişim yönetimi</li>
             </ul>
           </div>
         </div>
 
         <div class="entry-card">
           <div class="section-kicker">Güvenli Giriş</div>
-          <h2>Yönetim paneline giriş yap</h2>
-
+          <h2>Yönetim paneline gir</h2>
           <form id="adminLoginForm" class="entry-form">
-            <label>Kullanıcı Adı
-              <input id="adminUsername" type="text" placeholder="Kullanıcı adı" autocomplete="off" required>
-            </label>
-            <label>Şifre
-              <input id="adminPassword" type="password" placeholder="Şifre" autocomplete="off" required>
-            </label>
+            <label>Kullanıcı Adı<input id="adminUsername" placeholder="Kullanıcı adı" autocomplete="off"></label>
+            <label>Şifre<input id="adminPassword" placeholder="Şifre" type="password" autocomplete="off"></label>
             <button type="submit" class="btn btn-primary btn-block">Yönetim Paneline Gir</button>
           </form>
-
           <div id="statusBox" class="status-box hidden"></div>
         </div>
       </div>
@@ -65,15 +57,14 @@
     const form = document.getElementById('adminLoginForm');
     const statusBox = document.getElementById('statusBox');
 
-    function showStatus(message, isError = false){
+    function showStatus(message, isError){
       statusBox.textContent = message;
-      statusBox.classList.remove('hidden', 'status-success', 'status-error');
+      statusBox.classList.remove('hidden','status-success','status-error');
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
     form.addEventListener('submit', function(event){
       event.preventDefault();
-
       const username = document.getElementById('adminUsername').value.trim();
       const password = document.getElementById('adminPassword').value.trim();
 
@@ -83,11 +74,11 @@
           role: 'SUPER_ADMIN',
           loginAt: new Date().toISOString()
         }));
-        showStatus('Giriş başarılı. Yönetim paneli açılıyor.');
+        showStatus('Giriş başarılı. Yönetim paneli açılıyor.', false);
         setTimeout(() => {
           window.location.href = 'admin-dashboard.html';
         }, 400);
-      }else{
+      } else {
         showStatus('Kullanıcı adı veya şifre hatalı.', true);
       }
     });
