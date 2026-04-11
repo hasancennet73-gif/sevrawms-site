@@ -16,7 +16,9 @@
           <span>Yönetim Paneli Girişi</span>
         </div>
       </a>
-      <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+      </div>
     </div>
   </header>
 
@@ -26,7 +28,7 @@
         <div class="entry-info">
           <div class="section-kicker">Yetkili Erişim</div>
           <h1>Kurumsal yönetim paneli girişi</h1>
-          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim paneli üzerinden takip edilir. Demo görünüm kaldırılmış, ekran daha kurumsal ve güvenli bir dile çekilmiştir.</p>
+          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim paneli üzerinden takip edilir. Bu sürümde giriş ekranına beni hatırla mantığı eklendi.</p>
 
           <div class="entry-note-card">
             <h3>Yönetim panelinde neler yönetilir?</h3>
@@ -34,7 +36,7 @@
               <li>Başvuru ve kullanıcı süreçleri</li>
               <li>Teklif ve pazarlık karar akışı</li>
               <li>Ürün ve vitrin yönetimi</li>
-              <li>Sonraki adımda site ayarları ve iletişim yönetimi</li>
+              <li>Site ayarları ve iletişim yönetimi</li>
             </ul>
           </div>
         </div>
@@ -43,8 +45,18 @@
           <div class="section-kicker">Güvenli Giriş</div>
           <h2>Yönetim paneline gir</h2>
           <form id="adminLoginForm" class="entry-form">
-            <label>Kullanıcı Adı<input id="adminUsername" placeholder="Kullanıcı adı" autocomplete="off"></label>
-            <label>Şifre<input id="adminPassword" placeholder="Şifre" type="password" autocomplete="off"></label>
+            <label>Kullanıcı Adı
+              <input id="adminUsername" placeholder="Kullanıcı adı" autocomplete="off">
+            </label>
+            <label>Şifre
+              <input id="adminPassword" placeholder="Şifre" type="password" autocomplete="off">
+            </label>
+
+            <label class="remember-row">
+              <input id="rememberMe" type="checkbox">
+              <span>Beni Hatırla</span>
+            </label>
+
             <button type="submit" class="btn btn-primary btn-block">Yönetim Paneline Gir</button>
           </form>
           <div id="statusBox" class="status-box hidden"></div>
@@ -56,6 +68,9 @@
   <script>
     const form = document.getElementById('adminLoginForm');
     const statusBox = document.getElementById('statusBox');
+    const usernameInput = document.getElementById('adminUsername');
+    const passwordInput = document.getElementById('adminPassword');
+    const rememberMe = document.getElementById('rememberMe');
 
     function showStatus(message, isError){
       statusBox.textContent = message;
@@ -63,10 +78,23 @@
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
+    function loadRemembered(){
+      try{
+        const raw = localStorage.getItem('sevra_admin_remember');
+        if(!raw) return;
+        const data = JSON.parse(raw);
+        usernameInput.value = data.username || '';
+        passwordInput.value = data.password || '';
+        rememberMe.checked = true;
+      }catch(e){}
+    }
+
+    loadRemembered();
+
     form.addEventListener('submit', function(event){
       event.preventDefault();
-      const username = document.getElementById('adminUsername').value.trim();
-      const password = document.getElementById('adminPassword').value.trim();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
 
       if(username === 'Hasan Arslan' && password === 'a11571683H'){
         localStorage.setItem('sevra_admin_session', JSON.stringify({
@@ -74,6 +102,16 @@
           role: 'SUPER_ADMIN',
           loginAt: new Date().toISOString()
         }));
+
+        if(rememberMe.checked){
+          localStorage.setItem('sevra_admin_remember', JSON.stringify({
+            username: username,
+            password: password
+          }));
+        }else{
+          localStorage.removeItem('sevra_admin_remember');
+        }
+
         showStatus('Giriş başarılı. Yönetim paneli açılıyor.', false);
         setTimeout(() => {
           window.location.href = 'admin-dashboard.html';
