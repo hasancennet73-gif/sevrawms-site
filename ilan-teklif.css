@@ -1,7 +1,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#07111c;--bg2:#040913;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.06);
-  --text:#eef4ff;--muted:#b9c7d9;--yellow:#f1c84d;--shadow:0 18px 38px rgba(0,0,0,.22);--max:1380px;
+  --text:#eef4ff;--muted:#b9c7d9;--yellow:#f1c84d;--green:#1f9f62;--green-dark:#188552;--shadow:0 18px 38px rgba(0,0,0,.22);--max:1380px;
 }
 body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:
 radial-gradient(circle at top right, rgba(241,200,77,.05), transparent 18%),
@@ -48,9 +48,16 @@ th,td{text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255
 th{color:#dce6f3}
 td{color:#c9d5e8;vertical-align:top}
 .mini-btn{
-  min-height:34px;padding:0 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
+  min-height:36px;padding:0 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
   background:rgba(255,255,255,.04);color:#fff;font-weight:700
 }
 .action-stack{display:grid;gap:8px}
+.pazarlik-btn{
+  background:linear-gradient(180deg,var(--green),var(--green-dark));
+  color:#fff;
+  border-color:rgba(31,159,98,.55);
+  box-shadow:0 10px 18px rgba(31,159,98,.22);
+}
+.pazarlik-btn:hover{filter:brightness(1.05)}
 @media (max-width:1000px){.tables-grid,.form-grid{grid-template-columns:1fr}}
 @media (max-width:760px){.flow-head h1{font-size:34px}.brand-text strong{font-size:30px}}
