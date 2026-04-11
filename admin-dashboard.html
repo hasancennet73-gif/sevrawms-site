@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-dashboard.css" />
+</head>
+<body>
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    const session = readJson('sevra_admin_session', null);
+    if (!session) {
+      window.location.href = 'yonetici-giris.html';
+    }
+  </script>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <div class="brand-box">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Admin Control Center</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a class="side-link active" href="admin-dashboard.html">Dashboard</a>
+        <a class="side-link" href="basvuru-yonetim.html">Başvurular</a>
+        <a class="side-link" href="ilan-teklif.html">Teklifler</a>
+        <a class="side-link" href="pazarlik-yonetim.html">Pazarlık Yönetimi</a>
+        <a class="side-link" href="urunler.html">Ürün Yönetimi</a>
+        <a class="side-link" href="urun-vitrini.html">Ürün Vitrini</a>
+        <a class="side-link" href="index.html">Siteye Dön</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mini-user">
+          <span>Rol</span>
+          <strong>SUPER_ADMIN</strong>
+        </div>
+        <button id="logoutBtn" class="logout-btn" type="button">Çıkış Yap</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="section-kicker">Tek Merkez Yönetim</div>
+          <h1>SEVRA gerçek admin dashboard</h1>
+          <p>Başvuru, teklif, pazarlık ve ürün tarafı sol menülü tek panelde toplandı.</p>
+        </div>
+        <div class="top-badge">Kurumsal Admin Panel</div>
+      </header>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <span>Toplam Başvuru</span>
+          <strong id="applicationsCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Toplam Teklif</span>
+          <strong id="offersCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Toplam Pazarlık</span>
+          <strong id="threadsCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Toplam Ürün</span>
+          <strong id="productsCount">0</strong>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Başvuru Özeti</h2>
+            <a href="basvuru-yonetim.html">Tümünü Aç</a>
+          </div>
+          <div class="metric-row">
+            <div class="metric-box">
+              <span>Beklemede</span>
+              <strong id="pendingApplications">0</strong>
+            </div>
+            <div class="metric-box">
+              <span>Onaylı</span>
+              <strong id="approvedApplications">0</strong>
+            </div>
+            <div class="metric-box">
+              <span>Reddedilen</span>
+              <strong id="rejectedApplications">0</strong>
+            </div>
+          </div>
+          <div id="applicationsPreview" class="preview-list"></div>
+        </article>
+
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Teklif ve Pazarlık</h2>
+            <a href="pazarlik-yonetim.html">Yönet</a>
+          </div>
+          <div class="metric-row two">
+            <div class="metric-box">
+              <span>Bekleyen Teklif</span>
+              <strong id="pendingOffers">0</strong>
+            </div>
+            <div class="metric-box">
+              <span>Toplam Mesaj</span>
+              <strong id="messagesCount">0</strong>
+            </div>
+          </div>
+          <div id="offersPreview" class="preview-list"></div>
+        </article>
+
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Ürün Alanı</h2>
+            <a href="urunler.html">Ürün Ekle</a>
+          </div>
+          <div class="metric-row two">
+            <div class="metric-box">
+              <span>Aktif Ürün</span>
+              <strong id="activeProducts">0</strong>
+            </div>
+            <div class="metric-box">
+              <span>Pasif Ürün</span>
+              <strong id="passiveProducts">0</strong>
+            </div>
+          </div>
+          <div id="productsPreview" class="preview-list product-preview"></div>
+        </article>
+
+        <article class="panel-card wide">
+          <div class="card-head">
+            <h2>Hızlı Yönetim</h2>
+          </div>
+          <div class="quick-grid">
+            <a class="quick-action" href="basvuru-yonetim.html">
+              <span>Başvurular</span>
+              <strong>Onay / Red</strong>
+            </a>
+            <a class="quick-action" href="ilan-teklif.html">
+              <span>Teklifler</span>
+              <strong>Teklif Akışı</strong>
+            </a>
+            <a class="quick-action" href="pazarlik-yonetim.html">
+              <span>Pazarlık</span>
+              <strong>Mesajları İzle</strong>
+            </a>
+            <a class="quick-action" href="urunler.html">
+              <span>Ürün Yönetimi</span>
+              <strong>Yeni Ürün Ekle</strong>
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    const applications = Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
+    const offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
+    const threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
+    const products = Array.isArray(readJson('sevra_products', [])) ? readJson('sevra_products', []) : [];
+
+    document.getElementById('applicationsCount').textContent = applications.length;
+    document.getElementById('offersCount').textContent = offers.length;
+    document.getElementById('threadsCount').textContent = threads.length;
+    document.getElementById('productsCount').textContent = products.length;
+
+    document.getElementById('pendingApplications').textContent = applications.filter(x => x.status === 'Beklemede').length;
+    document.getElementById('approvedApplications').textContent = applications.filter(x => x.status === 'Onaylandı').length;
+    document.getElementById('rejectedApplications').textContent = applications.filter(x => x.status === 'Reddedildi').length;
+
+    document.getElementById('pendingOffers').textContent = offers.filter(x => x.status === 'Beklemede').length;
+    document.getElementById('messagesCount').textContent = threads.reduce((sum, t) => sum + ((t.messages || []).length), 0);
+
+    document.getElementById('activeProducts').textContent = products.filter(x => (x.status || 'Aktif') !== 'Pasif').length;
+    document.getElementById('passiveProducts').textContent = products.filter(x => (x.status || '') === 'Pasif').length;
+
+    const applicationsPreview = document.getElementById('applicationsPreview');
+    const offersPreview = document.getElementById('offersPreview');
+    const productsPreview = document.getElementById('productsPreview');
+
+    function addEmpty(el, text) {
+      el.innerHTML = '<div class="empty-row">' + text + '</div>';
+    }
+
+    if (applications.length) {
+      applications.slice(0, 4).forEach(app => {
+        const row = document.createElement('div');
+        row.className = 'preview-row';
+        row.innerHTML = '<strong>' + (app.companyName || '-') + '</strong><span>' + (app.status || '-') + '</span>';
+        applicationsPreview.appendChild(row);
+      });
+    } else {
+      addEmpty(applicationsPreview, 'Başvuru yok.');
+    }
+
+    if (offers.length) {
+      offers.slice(0, 4).forEach(offer => {
+        const row = document.createElement('div');
+        row.className = 'preview-row';
+        row.innerHTML = '<strong>' + (offer.loadTitle || '-') + '</strong><span>' + (offer.price || '-') + '</span>';
+        offersPreview.appendChild(row);
+      });
+    } else {
+      addEmpty(offersPreview, 'Teklif yok.');
+    }
+
+    if (products.length) {
+      products.slice(0, 4).forEach(product => {
+        const row = document.createElement('div');
+        row.className = 'preview-row';
+        row.innerHTML = '<strong>' + (product.name || '-') + '</strong><span>' + (product.price || '-') + '</span>';
+        productsPreview.appendChild(row);
+      });
+    } else {
+      addEmpty(productsPreview, 'Ürün yok.');
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('sevra_admin_session');
+      window.location.href = 'yonetici-giris.html';
+    });
+  </script>
+</body>
+</html>
