@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Ürün Yönetimi V2</title>
+  <link rel="stylesheet" href="urunler-v2.css" />
+</head>
+<body>
+  <script>
+    function readJson(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+    const session = readJson('sevra_admin_session', null);
+    if(!session){
+      window.location.href = 'yonetici-giris.html';
+    }
+  </script>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="admin-dashboard.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Ürün Yönetim Merkezi</span>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
+        <a class="btn btn-secondary" href="urun-vitrini.html">Ürün Vitrini</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <div class="section-kicker">Ürün Yönetimi V2</div>
+          <h1>Ürün ekle, düzenle, aktif/pasif yönet</h1>
+          <p>Yönetici; ürünleri kurumsal kart yapısında oluşturur, düzenler, aktif/pasif durumunu değiştirir ve vitrin görünümünü tek merkezden yönetir.</p>
+        </div>
+        <div class="head-badge">Kurumsal ürün akışı</div>
+      </div>
+
+      <div id="statusBox" class="status-box hidden"></div>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <span>Toplam Ürün</span>
+          <strong id="productsCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Aktif</span>
+          <strong id="activeCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Pasif</span>
+          <strong id="passiveCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Yeni Ürün</span>
+          <strong id="newCount">0</strong>
+        </article>
+      </section>
+
+      <div class="content-grid">
+        <section class="panel-card">
+          <div class="card-head">
+            <h2 id="formTitle">Yeni Ürün Ekle</h2>
+            <span class="head-mini">Görsel + açıklama + durum</span>
+          </div>
+
+          <form id="productForm" class="form-grid">
+            <input type="hidden" id="productId" />
+
+            <div class="form-group">
+              <label for="productName">Ürün Adı</label>
+              <input id="productName" type="text" placeholder="Örn: Kapı Menteşesi" required />
+            </div>
+
+            <div class="form-group">
+              <label for="productCategory">Kategori</label>
+              <input id="productCategory" type="text" placeholder="Örn: Yedek Parça" required />
+            </div>
+
+            <div class="form-group">
+              <label for="productPrice">Fiyat</label>
+              <input id="productPrice" type="text" placeholder="Örn: 2.450 TL" required />
+            </div>
+
+            <div class="form-group">
+              <label for="productStatus">Durum</label>
+              <select id="productStatus">
+                <option>Aktif</option>
+                <option>Pasif</option>
+                <option>Yeni Ürün</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="productDesc">Açıklama</label>
+              <textarea id="productDesc" rows="5" placeholder="Ürün açıklaması"></textarea>
+            </div>
+
+            <div class="form-group full">
+              <label for="productImageFile">Ürün Görseli</label>
+              <input id="productImageFile" type="file" accept="image/*" />
+            </div>
+
+            <div class="preview-wrap full" id="imagePreviewWrap">
+              <div class="preview-empty">Görsel seçilmedi</div>
+            </div>
+
+            <div class="form-actions full">
+              <button type="submit" class="btn btn-primary" id="saveBtn">Ürünü Kaydet</button>
+              <button type="button" class="btn btn-secondary" id="clearBtn">Formu Temizle</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel-card">
+          <div class="card-head">
+            <h2>Ürün Listesi</h2>
+            <span class="head-mini">Düzenle / durum değiştir / sil</span>
+          </div>
+          <div id="productsList" class="products-list"></div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+    function writeJson(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    let products = Array.isArray(readJson('sevra_products', [])) ? readJson('sevra_products', []) : [];
+    let selectedImageData = '';
+
+    const statusBox = document.getElementById('statusBox');
+    const productsList = document.getElementById('productsList');
+    const productForm = document.getElementById('productForm');
+    const imageInput = document.getElementById('productImageFile');
+    const imagePreviewWrap = document.getElementById('imagePreviewWrap');
+    const clearBtn = document.getElementById('clearBtn');
+    const formTitle = document.getElementById('formTitle');
+    const saveBtn = document.getElementById('saveBtn');
+
+    function showStatus(message, isError=false){
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden','status-error','status-success');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    function refreshSummary(){
+      document.getElementById('productsCount').textContent = products.length;
+      document.getElementById('activeCount').textContent = products.filter(x => (x.status || 'Aktif') === 'Aktif').length;
+      document.getElementById('passiveCount').textContent = products.filter(x => x.status === 'Pasif').length;
+      document.getElementById('newCount').textContent = products.filter(x => x.status === 'Yeni Ürün').length;
+    }
+
+    function setPreview(src){
+      if(!src){
+        imagePreviewWrap.innerHTML = '<div class="preview-empty">Görsel seçilmedi</div>';
+        return;
+      }
+      imagePreviewWrap.innerHTML = '<img class="preview-image" src="' + src + '" alt="Önizleme">';
+    }
+
+    imageInput.addEventListener('change', function(e){
+      const file = e.target.files && e.target.files[0];
+      if(!file){
+        selectedImageData = '';
+        setPreview('');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        selectedImageData = ev.target.result || '';
+        setPreview(selectedImageData);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function resetForm(){
+      document.getElementById('productId').value = '';
+      document.getElementById('productName').value = '';
+      document.getElementById('productCategory').value = '';
+      document.getElementById('productPrice').value = '';
+      document.getElementById('productStatus').value = 'Aktif';
+      document.getElementById('productDesc').value = '';
+      document.getElementById('productImageFile').value = '';
+      selectedImageData = '';
+      setPreview('');
+      formTitle.textContent = 'Yeni Ürün Ekle';
+      saveBtn.textContent = 'Ürünü Kaydet';
+    }
+
+    function saveProducts(){
+      writeJson('sevra_products', products);
+    }
+
+    function editProduct(id){
+      const product = products.find(x => x.id === id);
+      if(!product) return;
+      document.getElementById('productId').value = product.id;
+      document.getElementById('productName').value = product.name || '';
+      document.getElementById('productCategory').value = product.category || '';
+      document.getElementById('productPrice').value = product.price || '';
+      document.getElementById('productStatus').value = product.status || 'Aktif';
+      document.getElementById('productDesc').value = product.desc || '';
+      selectedImageData = product.image || '';
+      setPreview(selectedImageData);
+      formTitle.textContent = 'Ürünü Düzenle';
+      saveBtn.textContent = 'Değişiklikleri Kaydet';
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function toggleStatus(id){
+      const product = products.find(x => x.id === id);
+      if(!product) return;
+      if((product.status || 'Aktif') === 'Aktif') product.status = 'Pasif';
+      else product.status = 'Aktif';
+      saveProducts();
+      renderProducts();
+      showStatus('Ürün durumu güncellendi.');
+    }
+
+    function removeProduct(id){
+      products = products.filter(x => x.id !== id);
+      saveProducts();
+      renderProducts();
+      showStatus('Ürün silindi.');
+      if(document.getElementById('productId').value === id){
+        resetForm();
+      }
+    }
+
+    function renderProducts(){
+      refreshSummary();
+      productsList.innerHTML = '';
+
+      if(!products.length){
+        productsList.innerHTML = '<div class="empty-row">Ürün kaydı bulunmuyor.</div>';
+        return;
+      }
+
+      products.forEach(product => {
+        const item = document.createElement('article');
+        item.className = 'product-card';
+        item.innerHTML = `
+          <div class="product-top">
+            <div class="thumb-wrap">
+              ${product.image ? '<img class="thumb" src="' + product.image + '" alt="' + (product.name || '-') + '">' : '<div class="thumb-empty">Görsel</div>'}
+            </div>
+            <div class="product-head">
+              <span class="product-kicker">${product.category || '-'}</span>
+              <h3>${product.name || '-'}</h3>
+              <div class="product-meta">
+                <span class="status-pill">${product.status || 'Aktif'}</span>
+                <strong>${product.price || '-'}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-desc">${product.desc || '-'}</div>
+
+          <div class="product-actions">
+            <button class="mini-btn btn-edit" type="button">Düzenle</button>
+            <button class="mini-btn btn-toggle" type="button">${(product.status || 'Aktif') === 'Aktif' ? 'Pasife Al' : 'Aktife Al'}</button>
+            <button class="mini-btn btn-remove" type="button">Sil</button>
+          </div>
+        `;
+        item.querySelector('.btn-edit').addEventListener('click', () => editProduct(product.id));
+        item.querySelector('.btn-toggle').addEventListener('click', () => toggleStatus(product.id));
+        item.querySelector('.btn-remove').addEventListener('click', () => removeProduct(product.id));
+        productsList.appendChild(item);
+      });
+    }
+
+    productForm.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      const id = document.getElementById('productId').value.trim();
+      const payload = {
+        id: id || ('PRD-' + Date.now()),
+        name: document.getElementById('productName').value.trim(),
+        category: document.getElementById('productCategory').value.trim(),
+        price: document.getElementById('productPrice').value.trim(),
+        status: document.getElementById('productStatus').value.trim(),
+        desc: document.getElementById('productDesc').value.trim(),
+        image: selectedImageData
+      };
+
+      if(!payload.name || !payload.category || !payload.price){
+        showStatus('Zorunlu alanları doldur.', true);
+        return;
+      }
+
+      if(id){
+        const idx = products.findIndex(x => x.id === id);
+        if(idx >= 0){
+          products[idx] = payload;
+          showStatus('Ürün güncellendi.');
+        }
+      }else{
+        products.push(payload);
+        showStatus('Ürün eklendi.');
+      }
+
+      saveProducts();
+      renderProducts();
+      resetForm();
+    });
+
+    clearBtn.addEventListener('click', resetForm);
+
+    renderProducts();
+  </script>
+</body>
+</html>
