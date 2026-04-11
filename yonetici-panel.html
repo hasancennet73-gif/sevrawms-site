@@ -31,7 +31,7 @@
         <div>
           <div class="section-kicker">Yönetim Merkezi</div>
           <h1>SEVRA yönetici paneli</h1>
-          <p>Üyeler, ilanlar, teklifler ve ürün yönetimi tek merkezden izlenir.</p>
+          <p>Üyeler, ilanlar, teklifler, ürünler ve pazarlık akışı tek merkezden izlenir.</p>
         </div>
         <div id="adminBadge" class="admin-badge">SUPER_ADMIN</div>
       </div>
@@ -49,6 +49,10 @@
           <span>Başvurular</span>
           <strong>Onay / red yönet</strong>
         </a>
+        <a class="quick-link-card quick-link-card-accent" href="pazarlik-yonetim.html">
+          <span>Pazarlık Yönetimi</span>
+          <strong>Mesajları ve teklifleri izle</strong>
+        </a>
       </div>
 
       <div class="summary-grid">
@@ -65,8 +69,8 @@
           <strong id="offersCount">0</strong>
         </article>
         <article class="summary-card">
-          <span>Toplam Ürün</span>
-          <strong id="productsCount">0</strong>
+          <span>Toplam Pazarlık</span>
+          <strong id="threadsCount">0</strong>
         </article>
       </div>
 
@@ -144,13 +148,13 @@
     const users = readJson('sevra_users', []);
     const loads = readJson('sevra_loads', []);
     const offers = readJson('sevra_offers', []);
-    const products = readJson('sevra_products', []);
+    const threads = readJson('sevra_threads', []);
 
     document.getElementById('adminBadge').textContent = session ? session.role : 'YETKİ YOK';
     document.getElementById('usersCount').textContent = users.length;
     document.getElementById('loadsCount').textContent = loads.length;
     document.getElementById('offersCount').textContent = offers.length;
-    document.getElementById('productsCount').textContent = products.length;
+    document.getElementById('threadsCount').textContent = threads.length;
 
     const usersTbody = document.getElementById('usersTbody');
     const loadsTbody = document.getElementById('loadsTbody');
