@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Üyelik ve Giriş</title>
-  <link rel="stylesheet" href="uye-giris.css" />
+  <link rel="stylesheet" href="kurumsal-ui.css" />
 </head>
-<body>
-  <header class="topbar">
-    <div class="container topbar-inner">
+<body class="entry-body">
+  <header class="entry-topbar">
+    <div class="container entry-topbar-inner">
       <a class="brand" href="index.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
@@ -16,122 +16,77 @@
           <span>Dijital Lojistik ve Tedarik Platformu</span>
         </div>
       </a>
-
-      <nav class="nav">
-        <a href="index.html">Ana Sayfa</a>
-        <a href="yuk-ilanlari.html">Yük İlanları</a>
-        <a href="ilan-teklif.html">Teklif Akışı</a>
-        <a href="yonetici-giris.html">Yönetici Girişi</a>
-      </nav>
+      <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
     </div>
   </header>
 
-  <section class="member-shell">
+  <section class="entry-shell-wrap">
     <div class="container">
-      <div class="member-grid">
-        <section class="panel-card">
+      <div class="dual-shell">
+        <div class="entry-card">
           <div class="section-kicker">Üye Girişi</div>
-          <h1>Mevcut hesapla giriş yap</h1>
-          <p>Kayıtlı kullanıcılar, teklif ve pazarlık süreçlerine kendi kullanıcı paneli üzerinden devam eder.</p>
-
-          <form id="loginForm" class="form-grid">
-            <div class="form-group full">
-              <label for="loginUsername">Kullanıcı Adı</label>
-              <input id="loginUsername" type="text" placeholder="Kullanıcı adı" required />
-            </div>
-            <div class="form-group full">
-              <label for="loginPassword">Şifre</label>
-              <input id="loginPassword" type="password" placeholder="Şifre" required />
-            </div>
-            <div class="form-actions full">
-              <button type="submit" class="btn btn-primary">Giriş Yap</button>
-            </div>
+          <h2>Mevcut hesapla giriş yap</h2>
+          <form id="loginForm" class="entry-form">
+            <label>Kullanıcı Adı<input id="loginUsername" type="text" placeholder="Kullanıcı adı" required></label>
+            <label>Şifre<input id="loginPassword" type="password" placeholder="Şifre" required></label>
+            <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
           </form>
-
           <div id="loginStatus" class="status-box hidden"></div>
-        </section>
+        </div>
 
-        <section class="panel-card">
+        <div class="entry-card">
           <div class="section-kicker">Yeni Üyelik</div>
           <h2>Kurumsal kayıt oluştur</h2>
-          <p>Yeni kayıtlar önce başvuru listesine düşer, ardından yönetici onayı ile aktif üyeye dönüşür.</p>
-
-          <form id="registerForm" class="form-grid">
-            <div class="form-group">
-              <label for="companyName">Firma Adı</label>
-              <input id="companyName" type="text" placeholder="Firma adı" required />
-            </div>
-            <div class="form-group">
-              <label for="contactName">Yetkili Kişi</label>
-              <input id="contactName" type="text" placeholder="Yetkili kişi" required />
-            </div>
-            <div class="form-group">
-              <label for="phone">Telefon</label>
-              <input id="phone" type="text" placeholder="Telefon" required />
-            </div>
-            <div class="form-group">
-              <label for="role">Rol</label>
+          <form id="registerForm" class="entry-form two">
+            <label>Firma Adı<input id="companyName" type="text" placeholder="Firma adı" required></label>
+            <label>Yetkili Kişi<input id="contactName" type="text" placeholder="Yetkili kişi" required></label>
+            <label>Telefon<input id="phone" type="text" placeholder="Telefon" required></label>
+            <label>Rol
               <select id="role">
                 <option>Taşıyıcı</option>
                 <option>Yük Veren</option>
                 <option>Tedarikçi</option>
               </select>
-            </div>
-            <div class="form-group">
-              <label for="username">Kullanıcı Adı</label>
-              <input id="username" type="text" placeholder="Kullanıcı adı" required />
-            </div>
-            <div class="form-group">
-              <label for="password">Şifre</label>
-              <input id="password" type="password" placeholder="Şifre" required />
-            </div>
-            <div class="form-actions full">
-              <button type="submit" class="btn btn-primary">Kayıt Oluştur</button>
-            </div>
+            </label>
+            <label>Kullanıcı Adı<input id="username" type="text" placeholder="Kullanıcı adı" required></label>
+            <label>Şifre<input id="password" type="password" placeholder="Şifre" required></label>
+            <button type="submit" class="btn btn-primary btn-block full">Kayıt Oluştur</button>
           </form>
-
           <div id="registerStatus" class="status-box hidden"></div>
-        </section>
+        </div>
       </div>
     </div>
   </section>
 
   <script src="basvuru-kayit-hook.js"></script>
   <script>
-    function readJson(key, fallback) {
-      try {
+    function readJson(key, fallback){
+      try{
         const raw = localStorage.getItem(key);
         return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
-        return fallback;
-      }
+      }catch(e){ return fallback; }
     }
-
-    function showStatus(el, message, isError = false) {
+    function showStatus(el, message, isError=false){
       el.textContent = message;
-      el.classList.remove('hidden', 'status-error', 'status-success');
+      el.classList.remove('hidden','status-error','status-success');
       el.classList.add(isError ? 'status-error' : 'status-success');
     }
 
     const loginForm = document.getElementById('loginForm');
-    const loginStatus = document.getElementById('loginStatus');
     const registerForm = document.getElementById('registerForm');
+    const loginStatus = document.getElementById('loginStatus');
     const registerStatus = document.getElementById('registerStatus');
 
-    loginForm.addEventListener('submit', function(event) {
+    loginForm.addEventListener('submit', function(event){
       event.preventDefault();
-
       const username = document.getElementById('loginUsername').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
-
       const users = readJson('sevra_users', []);
       const user = users.find(x => x.username === username && x.password === password);
-
-      if (!user) {
+      if(!user){
         showStatus(loginStatus, 'Kullanıcı adı veya şifre hatalı.', true);
         return;
       }
-
       localStorage.setItem('sevra_member_session', JSON.stringify({
         username: user.username,
         companyName: user.companyName || '',
@@ -139,14 +94,11 @@
         role: user.role || '',
         loginAt: new Date().toISOString()
       }));
-
       showStatus(loginStatus, 'Giriş başarılı. Üye paneli açılıyor.');
-      setTimeout(() => {
-        window.location.href = 'uye-panel.html';
-      }, 400);
+      setTimeout(() => { window.location.href = 'uye-panel.html'; }, 350);
     });
 
-    registerForm.addEventListener('submit', function() {
+    registerForm.addEventListener('submit', function(){
       showStatus(registerStatus, 'Başvuru kaydedildi. Yönetici onayı sonrası giriş yapabilirsin.');
     });
   </script>
