@@ -3,82 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Uye Paneli</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:26px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:36px;margin-bottom:8px}
-    .title p{color:var(--muted)}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
-    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}
-    .card span{color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-    label{font-size:13px;color:#dce6f5;font-weight:700}
-    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
-  </style>
+  <title>SEVRA | Üye Paneli</title>
+  <link rel="stylesheet" href="uye-panel.css" />
 </head>
 <body>
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    const session = readJson('sevra_member_session', null);
+    if (!session) {
+      window.location.href = 'uye-giris.html';
+    }
+  </script>
 
-<div class="wrap">
-  <div class="top">
-    <div class="title"><h1>Uye Paneli</h1><p id="welcome"></p></div>
-    <div class="actions">
-      <div id="badge" class="badge">Uye</div>
-      <a class="btn primary" href="ilan-teklif.html">Ilan / Teklif Akisi</a>
-      <button class="btn" onclick="SEVRA_KIMLIK.logout('uye-login.html')">Cikis Yap</button>
-    </div>
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <div class="brand-box">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Üye Paneli</span>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a class="side-link active" href="uye-panel.html">Genel Durum</a>
+        <a class="side-link" href="yuk-ilanlari.html">Yük İlanları</a>
+        <a class="side-link" href="ilan-teklif.html">Teklif Akışı</a>
+        <a class="side-link" href="mesajlasma.html">Mesajlaşma</a>
+        <a class="side-link" href="index.html">Siteye Dön</a>
+      </nav>
+
+      <div class="side-user">
+        <span>Kullanıcı</span>
+        <strong id="memberName">-</strong>
+        <small id="memberRole">-</small>
+      </div>
+
+      <button id="logoutBtn" class="logout-btn" type="button">Çıkış Yap</button>
+    </aside>
+
+    <main class="main">
+      <header class="hero-panel">
+        <div>
+          <div class="section-kicker">Kurumsal Üye Alanı</div>
+          <h1>SEVRA üye paneli</h1>
+          <p>İlanlara bakabilir, tekliflerini izleyebilir ve pazarlık süreçlerine tek panelden devam edebilirsin.</p>
+        </div>
+        <div class="hero-badge">Aktif Üye Oturumu</div>
+      </header>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <span>Verilen Teklif</span>
+          <strong id="offersCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Açık Pazarlık</span>
+          <strong id="threadsCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Aktif İlan</span>
+          <strong id="loadsCount">0</strong>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Tekliflerim</h2>
+            <a href="ilan-teklif.html">Aç</a>
+          </div>
+          <div id="offersPreview" class="preview-list"></div>
+        </article>
+
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Pazarlıklarım</h2>
+            <a href="mesajlasma.html">Aç</a>
+          </div>
+          <div id="threadsPreview" class="preview-list"></div>
+        </article>
+
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Hızlı İşlemler</h2>
+          </div>
+          <div class="quick-grid">
+            <a class="quick-action" href="yuk-ilanlari.html">
+              <span>İlan</span>
+              <strong>Yükleri incele</strong>
+            </a>
+            <a class="quick-action" href="ilan-teklif.html">
+              <span>Teklif</span>
+              <strong>Yeni teklif ver</strong>
+            </a>
+            <a class="quick-action" href="mesajlasma.html">
+              <span>Pazarlık</span>
+              <strong>Görüşmeleri aç</strong>
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
   </div>
-  <div class="cards" id="cards"></div>
-  <div class="grid">
-    <div class="panel"><h2>Profil</h2><div id="profile"></div></div>
-    <div class="panel"><h2>Durum</h2><div id="summary"></div></div>
-  </div>
-</div>
 
-<script src="kimlik-dogrulama.js"></script>
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
 
-<script>
-if(SEVRA_KIMLIK.requireMember()){
-  var a=SEVRA_KIMLIK.getAuth();
-  document.getElementById('badge').textContent='Uye: '+a.username+' / '+a.role;
-  document.getElementById('welcome').textContent=(a.fullName||a.username)+' icin panel ozeti.';
-}
-function roleText(r){if(r==='carrier') return 'Nakliyeci'; if(r==='shipper') return 'Yuk Veren'; return 'Standart Uye';}
-function loadPanel(){
-  var a=SEVRA_KIMLIK.getAuth()||{};
-  var loads=SEVRA_KIMLIK.getLoads(), offers=SEVRA_KIMLIK.getOffers();
-  var myLoads=loads.filter(x=>x.createdBy===(a.username||''));
-  var myOffers=offers.filter(x=>x.member===(a.username||''));
-  var noted=myOffers.filter(x=>(x.adminNote||'').trim()).length;
-  document.getElementById('cards').innerHTML=
-    '<div class="card"><strong>'+myLoads.length+'</strong><span>Ilan</span></div>'+
-    '<div class="card"><strong>'+myOffers.length+'</strong><span>Teklif</span></div>'+
-    '<div class="card"><strong>'+myOffers.filter(x=>x.status==='Onaylandı').length+'</strong><span>Onayli</span></div>'+
-    '<div class="card"><strong>'+noted+'</strong><span>Admin Notlu</span></div>';
-  document.getElementById('profile').innerHTML=
-    '<p><b>Ad:</b> '+(a.fullName||'-')+'</p><br>'+
-    '<p><b>Kullanici:</b> '+(a.username||'-')+'</p><br>'+
-    '<p><b>Rol:</b> '+roleText(a.role)+'</p><br>'+
-    '<p><b>Firma:</b> '+(a.company||'-')+'</p>';
-  document.getElementById('summary').innerHTML=
-    '<p>Sistemde '+loads.length+' ilan ve '+offers.length+' teklif bulunuyor.</p>';
-}
-loadPanel();
-</script>
+    const session = readJson('sevra_member_session', null) || {};
+    const offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
+    const threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
+    const loads = Array.isArray(readJson('sevra_loads', [])) ? readJson('sevra_loads', []) : [];
 
+    document.getElementById('memberName').textContent = session.companyName || session.username || '-';
+    document.getElementById('memberRole').textContent = session.role || '-';
+
+    const myOffers = offers.filter(x => x.member === (session.username || ''));
+    const myThreads = threads.filter(x => {
+      const offer = myOffers.find(o => o.id === x.offerId);
+      return !!offer;
+    });
+
+    document.getElementById('offersCount').textContent = myOffers.length;
+    document.getElementById('threadsCount').textContent = myThreads.length;
+    document.getElementById('loadsCount').textContent = loads.length;
+
+    const offersPreview = document.getElementById('offersPreview');
+    const threadsPreview = document.getElementById('threadsPreview');
+
+    function addEmpty(el, text) {
+      el.innerHTML = '<div class="empty-row">' + text + '</div>';
+    }
+
+    if (myOffers.length) {
+      myOffers.slice(0, 4).forEach(offer => {
+        const row = document.createElement('div');
+        row.className = 'preview-row';
+        row.innerHTML = '<strong>' + (offer.loadTitle || '-') + '</strong><span>' + (offer.price || '-') + '</span>';
+        offersPreview.appendChild(row);
+      });
+    } else {
+      addEmpty(offersPreview, 'Henüz teklif bulunmuyor.');
+    }
+
+    if (myThreads.length) {
+      myThreads.slice(0, 4).forEach(thread => {
+        const row = document.createElement('div');
+        row.className = 'preview-row';
+        row.innerHTML = '<strong>' + (thread.title || '-') + '</strong><span>' + new Intl.NumberFormat('tr-TR').format(Number(thread.currentOffer || 0)) + ' TL</span>';
+        threadsPreview.appendChild(row);
+      });
+    } else {
+      addEmpty(threadsPreview, 'Henüz pazarlık kaydı bulunmuyor.');
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('sevra_member_session');
+      window.location.href = 'uye-giris.html';
+    });
+  </script>
 </body>
 </html>
