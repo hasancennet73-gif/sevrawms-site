@@ -26,7 +26,7 @@
       <section class="panel">
         <div class="kicker">Kurumsal Kayıt</div>
         <h1>Yeni üyelik oluştur</h1>
-        <p>Kurumsal kullanıcılar aşağıdaki bilgilerle başvuru oluşturur. Başvuru kaydı oluşturulduktan sonra üyelik onay sürecine alınır.</p>
+        <p>Kurumsal kullanıcılar aşağıdaki bilgilerle başvuru oluşturur. Kayıt sonrası onay akışı başlatılır ve üyelik aktivasyon sürecine alınır.</p>
 
         <form id="registerForm" class="form-grid">
           <div class="field">
@@ -65,22 +65,6 @@
 
         <div id="registerMsg" class="note hidden"></div>
       </section>
-
-      <section class="panel">
-        <div class="kicker">Kurumsal Bilgi</div>
-        <h2>Başvuru sonrası süreç</h2>
-        <p>Başvurun kayıt altına alınır ve üyelik değerlendirme sürecine alınır. Onaylanan hesaplar daha sonra giriş ekranı üzerinden platforma erişebilir.</p>
-
-        <div class="info-box">
-          <h3>Başvuru adımları</h3>
-          <ul>
-            <li>Kurumsal bilgilerle kayıt oluşturulur</li>
-            <li>Üyelik kaydı sistemde açılır</li>
-            <li>Onay süreci tamamlanır</li>
-            <li>Onaylı hesap ile giriş yapılır</li>
-          </ul>
-        </div>
-      </section>
     </main>
   </div>
 
@@ -100,9 +84,13 @@ function show(el, text, ok){
   el.className = 'note ' + (ok ? 'ok' : 'err');
   el.textContent = text;
 }
+function createToken(){
+  return 'SEVRA-' + Math.random().toString(36).slice(2,10) + '-' + Date.now();
+}
 
 document.getElementById('registerForm').addEventListener('submit', function(e){
   e.preventDefault();
+
   const companyName=document.getElementById('companyName').value.trim();
   const contactName=document.getElementById('contactName').value.trim();
   const email=document.getElementById('email').value.trim().toLowerCase();
@@ -116,26 +104,46 @@ document.getElementById('registerForm').addEventListener('submit', function(e){
     return;
   }
 
-  const members=readJson('sevra_members', []);
-  if(members.some(x => x.email===email)){
+  const members=Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
+  if(members.some(x => x.email === email)){
     show(msg, 'Bu e-posta ile daha önce kayıt oluşturulmuş.', false);
     return;
   }
 
-  members.push({
+  const token = createToken();
+  const member = {
     companyName,
     contactName,
     email,
     phone,
     role,
     password,
-    status: 'Onay Bekliyor',
+    status: 'Mail Onayı Bekliyor',
+    activationToken: token,
+    activationLink: 'uye-onay.html?token=' + encodeURIComponent(token),
     createdAt: new Date().toISOString()
-  });
+  };
 
+  members.push(member);
   writeJson('sevra_members', members);
-  show(msg, 'Başvuru kaydedildi. Üyelik değerlendirme sürecine alındı.', true);
-  document.getElementById('registerForm').reset();
+
+  const apps=Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
+  apps.push({
+    id: 'APP-' + Date.now(),
+    companyName,
+    contactName,
+    email,
+    phone,
+    role,
+    password,
+    status: 'Mail Onayı Bekliyor',
+    activationToken: token,
+    activationLink: member.activationLink
+  });
+  writeJson('sevra_applications', apps);
+
+  sessionStorage.setItem('sevra_last_register_email', email);
+  window.location.href = 'uye-mail-bekleniyor.html';
 });
 </script>
 </body>
