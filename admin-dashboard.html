@@ -17,67 +17,83 @@
         </div>
       </a>
       <div class="top-actions">
-        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
         <a class="btn btn-secondary" href="site-ayarlari.html">Site Ayarları</a>
+        <a class="btn btn-secondary" href="yonetici-giris.html">Güvenli Çıkış</a>
       </div>
     </div>
   </header>
 
   <main class="page">
     <div class="container">
-      <section class="hero-block">
-        <div class="hero-text">
-          <div class="section-kicker">Yönetim Merkezi</div>
-          <h1>SEVRA yönetim paneli</h1>
-          <p>Başvuru, teklif, pazarlık, ürün ve site ayarları aynı yönetim hattında toplanır. Bu ekran artık boş şablon değil; modül kartları, hızlı geçişler ve geri dönüş butonları ile toparlanmıştır.</p>
-          <div class="quick-actions">
-            <a class="btn btn-primary" href="teklif-yonetimi.html">Teklif Yönetimine Git</a>
-            <a class="btn btn-secondary" href="pazarlik-yonetim.html">Pazarlık Yönetimine Git</a>
-          </div>
-        </div>
-        <div class="hero-side-card">
-          <span class="hero-side-label">Kontrol Alanları</span>
-          <h3>Aktif yönetim başlıkları</h3>
-          <ul>
-            <li>Başvuru ve kullanıcı akışı</li>
-            <li>Teklif değerlendirme ve karar süreci</li>
-            <li>Pazarlık finalizasyonu</li>
-            <li>Komisyon sonrası iletişim açma mantığı</li>
-            <li>Site ayarları ve WhatsApp yönetimi</li>
-          </ul>
-        </div>
+      <section class="hero-mini">
+        <div class="section-kicker">Yönetim Merkezi</div>
+        <h1>SEVRA yönetim paneli</h1>
+        <p>Panel yapısı toparlandı. Modüller artık daha net kartlar halinde görünür, geçişler daha belirgin ve geri dönüş yolları daha görünür durumdadır.</p>
       </section>
 
-      <section class="panel-grid">
+      <section class="dashboard-grid">
         <article class="content-card">
-          <div class="card-head"><h2>Teklif Yönetimi</h2><span class="pill">Aktif</span></div>
-          <p class="card-text">Gelen teklifleri gör, karar ver, komisyon ve iletişim durumunu takip et.</p>
-          <div class="stat-line"><strong>Durum:</strong> Teklif ekranı bağlı</div>
+          <div class="card-head">
+            <h2>Başvuru ve Kullanıcı</h2>
+            <span class="pill">Kontrol</span>
+          </div>
+          <p class="card-text">Yeni üyelik başvurularını, kullanıcı kayıt akışını ve onay sürecini takip et.</p>
+          <div class="card-actions">
+            <a class="btn btn-primary" href="basvuru-kullanici-yonetimi.html">Aç</a>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-head">
+            <h2>Teklif Yönetimi</h2>
+            <span class="pill">Aktif</span>
+          </div>
+          <p class="card-text">Teklif kayıtlarını, fiyat akışını ve komisyon durumu bilgisini takip et.</p>
           <div class="card-actions">
             <a class="btn btn-primary" href="teklif-yonetimi.html">Aç</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head"><h2>Pazarlık Yönetimi</h2><span class="pill">Aktif</span></div>
-          <p class="card-text">Pazarlık kayıtlarını, komisyon durumunu ve iletişim açılma koşulunu yönet.</p>
-          <div class="stat-line"><strong>Durum:</strong> Pazarlık ekranı bağlı</div>
+          <div class="card-head">
+            <h2>Pazarlık Yönetimi</h2>
+            <span class="pill">Aktif</span>
+          </div>
+          <p class="card-text">Pazarlık kayıtlarını, iletişim açılma mantığını ve karar sürecini yönet.</p>
           <div class="card-actions">
             <a class="btn btn-primary" href="pazarlik-yonetim.html">Aç</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head"><h2>Site Ayarları</h2><span class="pill">Hazır</span></div>
-          <p class="card-text">Kurumsal e-posta, WhatsApp hattı ve görünürlük kuralları bu ekrandan yönetilir.</p>
+          <div class="card-head">
+            <h2>Mesajlaşma Kontrolü</h2>
+            <span class="pill">Koruma</span>
+          </div>
+          <p class="card-text">Telefon, e-posta ve WhatsApp bilgisini otomatik engelleyen pazarlık mesajlaşma ekranına geç.</p>
+          <div class="card-actions">
+            <a class="btn btn-primary" href="mesajlasma.html">Aç</a>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-head">
+            <h2>Site Ayarları</h2>
+            <span class="pill">Yönetim</span>
+          </div>
+          <p class="card-text">İletişim metinleri, WhatsApp butonu ve görünürlük ayarlarını yönet.</p>
           <div class="card-actions">
             <a class="btn btn-primary" href="site-ayarlari.html">Aç</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head"><h2>Ana Sayfa</h2><span class="pill">Canlı</span></div>
-          <p class="card-text">Kurumsal vitrini ve menü akışlarını kontrol etmek için ana sayfaya dön.</p>
+          <div class="card-head">
+            <h2>Kurumsal Site</h2>
+            <span class="pill">Vitrin</span>
+          </div>
+          <p class="card-text">Ana sayfaya dönerek vitrindeki kurumsal görünümü ve menü geçişlerini kontrol et.</p>
           <div class="card-actions">
             <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
           </div>
