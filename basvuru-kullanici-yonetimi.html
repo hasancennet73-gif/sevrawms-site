@@ -46,72 +46,47 @@
       <div class="page-head">
         <div>
           <div class="section-kicker">Admin Üyelik Kontrolü</div>
-          <h1>Başvuruları yönet, üyeleri aktif et</h1>
-          <p>Bu ekran yeni başvuruları listeler. Yönetici başvuruyu onaylayabilir, beklemeye alabilir, reddedebilir veya silebilir. Onaylanan kayıtlar üye giriş ekranında aktif hale gelir.</p>
+          <h1>Başvuruları yönet, aktivasyon linkini kontrol et</h1>
+          <p>Bu ekran başvuru kayıtlarını listeler. Yönetici başvuruyu onaylayabilir, bekletebilir, reddedebilir veya aktivasyon bağlantısını görüntüleyebilir.</p>
         </div>
-        <div class="head-badge">Statik onay ekranı</div>
+        <div class="head-badge">Mail onay hazırlığı</div>
       </div>
 
       <div id="statusBox" class="status-box hidden"></div>
 
       <section class="summary-grid">
-        <article class="summary-card">
-          <span>Toplam Başvuru</span>
-          <strong id="allCount">0</strong>
-        </article>
-        <article class="summary-card">
-          <span>Beklemede</span>
-          <strong id="pendingCount">0</strong>
-        </article>
-        <article class="summary-card">
-          <span>Aktif</span>
-          <strong id="activeCount">0</strong>
-        </article>
-        <article class="summary-card">
-          <span>Reddedildi</span>
-          <strong id="rejectedCount">0</strong>
-        </article>
+        <article class="summary-card"><span>Toplam Başvuru</span><strong id="allCount">0</strong></article>
+        <article class="summary-card"><span>Mail Onayı Bekliyor</span><strong id="pendingCount">0</strong></article>
+        <article class="summary-card"><span>Aktif</span><strong id="activeCount">0</strong></article>
+        <article class="summary-card"><span>Reddedildi</span><strong id="rejectedCount">0</strong></article>
       </section>
 
       <section class="content-grid">
         <article class="panel-card">
           <div class="card-head">
             <h2>Başvuru Kayıtları</h2>
-            <span class="head-mini">Onay / Red / Beklet / Sil</span>
+            <span class="head-mini">Onay / Red / Link Göster</span>
           </div>
           <div id="recordList" class="record-list"></div>
         </article>
 
         <article class="panel-card">
           <div class="card-head">
-            <h2>Sistem Notu</h2>
+            <h2>Süreç Notu</h2>
           </div>
           <div class="record-card">
             <div class="record-top">
               <div>
-                <span class="record-kicker">Aktivasyon Mantığı</span>
-                <h3>Üye girişi ile bağlı çalışır</h3>
+                <span class="record-kicker">Onay Akışı</span>
+                <h3>Aktivasyon bağlantısı yapısı hazır</h3>
               </div>
               <span class="status-pill status-pill-green">Hazır</span>
             </div>
-
             <div class="record-grid">
-              <div class="record-box">
-                <span>Beklemede</span>
-                <strong>Üye giriş yapamaz</strong>
-              </div>
-              <div class="record-box">
-                <span>Aktif</span>
-                <strong>Üye giriş yapabilir</strong>
-              </div>
-              <div class="record-box">
-                <span>Reddedildi</span>
-                <strong>Üye giriş yapamaz</strong>
-              </div>
-              <div class="record-box">
-                <span>Veri Kaydı</span>
-                <strong>localStorage ile tutulur</strong>
-              </div>
+              <div class="record-box"><span>Kayıt</span><strong>Mail Onayı Bekliyor</strong></div>
+              <div class="record-box"><span>Onay Sayfası</span><strong>uye-onay.html</strong></div>
+              <div class="record-box"><span>Aktif Kullanıcı</span><strong>Üye girişi yapabilir</strong></div>
+              <div class="record-box"><span>Sonraki Adım</span><strong>Gerçek mail gönderimi</strong></div>
             </div>
           </div>
         </article>
@@ -132,37 +107,8 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
-    function normalizeApplications(){
-      const apps = Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
-      const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
-
-      members.forEach(function(m){
-        const existing = apps.find(x =>
-          (m.email && x.email === m.email) ||
-          (m.username && x.username === m.username)
-        );
-        if(!existing){
-          apps.push({
-            id: 'APP-' + Date.now() + '-' + Math.floor(Math.random()*1000),
-            companyName: m.companyName || '',
-            contactName: m.contactName || '',
-            phone: m.phone || '',
-            role: m.role || '',
-            username: m.username || '',
-            email: m.email || '',
-            password: m.password || '',
-            status: m.status || 'Beklemede'
-          });
-        } else if (m.status) {
-          existing.status = m.status;
-        }
-      });
-
-      writeJson('sevra_applications', apps);
-      return apps;
-    }
-
-    let applications = normalizeApplications();
+    let applications = Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
+    let members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
 
     const statusBox = document.getElementById('statusBox');
     const recordList = document.getElementById('recordList');
@@ -173,78 +119,59 @@
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
-    function saveApplications(){
+    function saveAll(){
       writeJson('sevra_applications', applications);
+      writeJson('sevra_members', members);
     }
 
-    function syncMembersFromApplications(){
-      let members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
+    function refreshSummary(){
+      document.getElementById('allCount').textContent = applications.length;
+      document.getElementById('pendingCount').textContent = applications.filter(x => !x.status || x.status === 'Mail Onayı Bekliyor' || x.status === 'Beklemede').length;
+      document.getElementById('activeCount').textContent = applications.filter(x => x.status === 'Aktif').length;
+      document.getElementById('rejectedCount').textContent = applications.filter(x => x.status === 'Reddedildi').length;
+    }
 
-      applications.forEach(function(app){
-        let member = members.find(x =>
-          (app.email && x.email === app.email) ||
-          (app.username && x.username === app.username)
-        );
+    function updateStatus(id, nextStatus){
+      const app = applications.find(x => x.id === id);
+      if(!app){
+        showStatus('Başvuru bulunamadı.', true);
+        return;
+      }
+      app.status = nextStatus;
 
-        if(!member){
-          members.push({
-            companyName: app.companyName || '',
-            contactName: app.contactName || '',
-            phone: app.phone || '',
-            role: app.role || '',
-            username: app.username || '',
-            email: app.email || '',
-            password: app.password || '',
-            status: app.status || 'Beklemede',
-            createdAt: new Date().toISOString()
-          });
-        } else {
-          member.companyName = app.companyName || member.companyName || '';
-          member.contactName = app.contactName || member.contactName || '';
-          member.phone = app.phone || member.phone || '';
-          member.role = app.role || member.role || '';
-          member.username = app.username || member.username || '';
-          member.email = app.email || member.email || '';
-          member.password = app.password || member.password || '';
-          member.status = app.status || member.status || 'Beklemede';
-        }
+      const member = members.find(x => (app.email && x.email === app.email));
+      if(member){
+        member.status = nextStatus;
+      }
+
+      saveAll();
+      renderApplications();
+      showStatus('Başvuru durumu güncellendi: ' + nextStatus);
+    }
+
+    function copyActivationLink(link){
+      navigator.clipboard.writeText(location.origin + location.pathname.replace(/[^/]+$/, '') + link).then(function(){
+        showStatus('Aktivasyon bağlantısı kopyalandı.');
+      }).catch(function(){
+        showStatus('Bağlantı kopyalanamadı. Elle kopyalayın.', true);
       });
+    }
 
-      writeJson('sevra_members', members);
+    function removeApplication(id){
+      const app = applications.find(x => x.id === id);
+      applications = applications.filter(x => x.id !== id);
+      if(app && app.email){
+        members = members.filter(x => x.email !== app.email);
+      }
+      saveAll();
+      renderApplications();
+      showStatus('Başvuru silindi.');
     }
 
     function badgeClass(status){
       if(status === 'Aktif') return 'status-pill status-pill-green';
       if(status === 'Reddedildi') return 'status-pill status-pill-red';
       return 'status-pill';
-    }
-
-    function refreshSummary(){
-      document.getElementById('allCount').textContent = applications.length;
-      document.getElementById('pendingCount').textContent = applications.filter(x => !x.status || x.status === 'Beklemede' || x.status === 'Onay Bekliyor').length;
-      document.getElementById('activeCount').textContent = applications.filter(x => x.status === 'Aktif').length;
-      document.getElementById('rejectedCount').textContent = applications.filter(x => x.status === 'Reddedildi').length;
-    }
-
-    function updateStatus(id, nextStatus){
-      const row = applications.find(x => x.id === id);
-      if(!row){
-        showStatus('Başvuru bulunamadı.', true);
-        return;
-      }
-      row.status = nextStatus;
-      saveApplications();
-      syncMembersFromApplications();
-      renderApplications();
-      showStatus('Başvuru durumu güncellendi: ' + nextStatus);
-    }
-
-    function removeApplication(id){
-      applications = applications.filter(x => x.id !== id);
-      saveApplications();
-      syncMembersFromApplications();
-      renderApplications();
-      showStatus('Başvuru silindi.');
     }
 
     function renderApplications(){
@@ -265,41 +192,24 @@
               <span class="record-kicker">Başvuru Kaydı</span>
               <h3>${app.companyName || 'Firma adı yok'}</h3>
             </div>
-            <span class="${badgeClass(app.status || 'Beklemede')}">${app.status || 'Beklemede'}</span>
+            <span class="${badgeClass(app.status || 'Mail Onayı Bekliyor')}">${app.status || 'Mail Onayı Bekliyor'}</span>
           </div>
 
           <div class="record-grid">
-            <div class="record-box">
-              <span>Yetkili</span>
-              <strong>${app.contactName || '-'}</strong>
-            </div>
-            <div class="record-box">
-              <span>Rol</span>
-              <strong>${app.role || '-'}</strong>
-            </div>
-            <div class="record-box">
-              <span>E-Posta</span>
-              <strong>${app.email || '-'}</strong>
-            </div>
-            <div class="record-box">
-              <span>Kullanıcı Adı</span>
-              <strong>${app.username || '-'}</strong>
-            </div>
-            <div class="record-box">
-              <span>Telefon</span>
-              <strong>${app.phone || '-'}</strong>
-            </div>
-            <div class="record-box">
-              <span>Şifre</span>
-              <strong>${app.password || '-'}</strong>
-            </div>
+            <div class="record-box"><span>Yetkili</span><strong>${app.contactName || '-'}</strong></div>
+            <div class="record-box"><span>Rol</span><strong>${app.role || '-'}</strong></div>
+            <div class="record-box"><span>E-Posta</span><strong>${app.email || '-'}</strong></div>
+            <div class="record-box"><span>Telefon</span><strong>${app.phone || '-'}</strong></div>
+            <div class="record-box"><span>Durum</span><strong>${app.status || '-'}</strong></div>
+            <div class="record-box"><span>Aktivasyon</span><strong>${app.activationLink || '-'}</strong></div>
           </div>
 
           <div class="record-actions">
-            <button class="mini-btn btn-approve" data-id="${app.id}" data-action="approve">Onayla</button>
+            <button class="mini-btn btn-approve" data-id="${app.id}" data-action="approve">Aktif Yap</button>
             <button class="mini-btn btn-pending" data-id="${app.id}" data-action="pending">Beklet</button>
             <button class="mini-btn btn-reject" data-id="${app.id}" data-action="reject">Reddet</button>
             <button class="mini-btn btn-remove" data-id="${app.id}" data-action="remove">Sil</button>
+            <button class="mini-btn btn-pending" data-link="${app.activationLink || ''}" data-action="copy">Link Kopyala</button>
           </div>
         `;
         recordList.appendChild(card);
@@ -307,18 +217,19 @@
 
       recordList.querySelectorAll('button[data-action]').forEach(function(btn){
         btn.addEventListener('click', function(){
-          const id = btn.getAttribute('data-id');
           const action = btn.getAttribute('data-action');
+          const id = btn.getAttribute('data-id');
+          const link = btn.getAttribute('data-link') || '';
 
           if(action === 'approve') updateStatus(id, 'Aktif');
-          if(action === 'pending') updateStatus(id, 'Beklemede');
+          if(action === 'pending') updateStatus(id, 'Mail Onayı Bekliyor');
           if(action === 'reject') updateStatus(id, 'Reddedildi');
           if(action === 'remove') removeApplication(id);
+          if(action === 'copy' && link) copyActivationLink(link);
         });
       });
     }
 
-    syncMembersFromApplications();
     renderApplications();
   </script>
 </body>
