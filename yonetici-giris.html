@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Yönetici Girişi</title>
-  <link rel="stylesheet" href="yonetici.css" />
+  <link rel="stylesheet" href="yonetici-giris.css" />
 </head>
 <body>
   <header class="topbar">
@@ -29,7 +29,7 @@
         <div class="login-left">
           <div class="section-kicker">Yönetim Erişimi</div>
           <h1>Kurumsal yönetici girişi</h1>
-          <p>Başvurular, üyeler, ilanlar ve teklifler için merkezi yönetim alanına buradan giriş yapılır.</p>
+          <p>Başvurular, üyeler, ilanlar, teklifler, pazarlıklar ve ürün yönetimi için tek merkezli admin dashboard'a buradan giriş yapılır.</p>
 
           <div class="mini-info-grid">
             <div class="mini-info">
@@ -37,19 +37,19 @@
               <span>Kontrollü inceleme</span>
             </div>
             <div class="mini-info">
-              <strong>İlan</strong>
+              <strong>Teklif</strong>
               <span>Merkezi takip</span>
             </div>
             <div class="mini-info">
-              <strong>Teklif</strong>
-              <span>Kurumsal akış</span>
+              <strong>Dashboard</strong>
+              <span>Sol menülü yönetim</span>
             </div>
           </div>
         </div>
 
         <div class="login-card">
           <div class="section-kicker">Demo Yönetici</div>
-          <h2>Panele giriş yap</h2>
+          <h2>Admin dashboard'a giriş yap</h2>
 
           <form id="adminLoginForm" class="admin-form">
             <div class="form-group">
@@ -63,7 +63,7 @@
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Yönetici Girişi Yap</button>
+              <button type="submit" class="btn btn-primary">Dashboard'a Gir</button>
             </div>
           </form>
 
@@ -101,10 +101,10 @@
           role: 'SUPER_ADMIN',
           loginAt: new Date().toISOString()
         }));
-        showStatus('Giriş başarılı. Yönetici paneline yönlendiriliyorsun.');
+        showStatus('Giriş başarılı. Admin dashboard açılıyor.');
         setTimeout(() => {
-          window.location.href = 'yonetici-panel.html';
-        }, 500);
+          window.location.href = 'admin-dashboard.html';
+        }, 400);
       } else {
         showStatus('Kullanıcı adı veya şifre hatalı.', true);
       }
