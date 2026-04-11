@@ -3,32 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Pazarlık Yönetimi</title>
-  <link rel="stylesheet" href="pazarlik-yonetim.css" />
+  <title>SEVRA | Başvuru ve Kullanıcı Yönetimi</title>
+  <link rel="stylesheet" href="basvuru-kullanici.css" />
 </head>
 <body>
   <script>
-    function readJson(key, fallback) {
-      try {<!doctype html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Pazarlık Yönetimi</title>
-  <link rel="stylesheet" href="pazarlik-yonetim.css" />
-</head>
-<body>
-  <script>
-    function readJson(key, fallback) {
-      try {
+    function readJson(key, fallback){
+      try{
         const raw = localStorage.getItem(key);
         return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
+      }catch(e){
         return fallback;
       }
     }
-    const session = readJson('sevra_admin_session', null);
-    if (!session) {
+    const session = readJson('sevra_admin_session', null) || readJson('sevra_live_auth', null);
+    const isAdmin = !!(session && ((session.role && String(session.role).toLowerCase() === 'admin') || session.role === 'SUPER_ADMIN'));
+    if(!isAdmin){
       window.location.href = 'yonetici-giris.html';
     }
   </script>
@@ -39,13 +29,14 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Pazarlık Yönetim Merkezi</span>
+          <span>Başvuru ve Kullanıcı Yönetimi</span>
         </div>
       </a>
 
       <div class="top-actions">
         <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
-        <a class="btn btn-secondary" href="teklif-yonetimi.html">Teklif Yönetimi</a>
+        <a class="btn btn-secondary" href="uye-login.html">Üye Girişi</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
       </div>
     </div>
   </header>
@@ -54,503 +45,281 @@
     <div class="container">
       <div class="page-head">
         <div>
-          <div class="section-kicker">Pazarlık Finalizasyonu V2</div>
-          <h1>Pazarlık sürecini yönet ve sonucu kapat</h1>
-          <p>Yönetici; aktif pazarlıkları izler, anlaşma durumunu belirler, süreci kapatır veya iptal eder. Son fiyat ve mesaj geçmişi aynı ekranda görünür.</p>
+          <div class="section-kicker">Admin Üyelik Kontrolü</div>
+          <h1>Başvuruları yönet, üyeleri aktif et</h1>
+          <p>Bu ekran yeni başvuruları listeler. Yönetici başvuruyu onaylayabilir, beklemeye alabilir, reddedebilir veya silebilir. Onaylanan kayıtlar üye giriş ekranında aktif hale gelir.</p>
         </div>
-        <div class="head-badge">Admin kapanış ekranı</div>
+        <div class="head-badge">Statik onay ekranı</div>
       </div>
 
       <div id="statusBox" class="status-box hidden"></div>
 
       <section class="summary-grid">
         <article class="summary-card">
-          <span>Toplam Pazarlık</span>
-          <strong id="threadsCount">0</strong>
+          <span>Toplam Başvuru</span>
+          <strong id="allCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Beklemede</span>
+          <strong id="pendingCount">0</strong>
         </article>
         <article class="summary-card">
           <span>Aktif</span>
           <strong id="activeCount">0</strong>
         </article>
         <article class="summary-card">
-          <span>Anlaşma Sağlandı</span>
-          <strong id="agreedCount">0</strong>
-        </article>
-        <article class="summary-card">
-          <span>İptal / Kapandı</span>
-          <strong id="closedCount">0</strong>
+          <span>Reddedildi</span>
+          <strong id="rejectedCount">0</strong>
         </article>
       </section>
 
-      <div class="shell">
-        <aside class="thread-list-card">
+      <section class="content-grid">
+        <article class="panel-card">
           <div class="card-head">
-            <h2>Pazarlık Kayıtları</h2>
+            <h2>Başvuru Kayıtları</h2>
+            <span class="head-mini">Onay / Red / Beklet / Sil</span>
           </div>
-          <div id="threadList" class="thread-list"></div>
-        </aside>
+          <div id="recordList" class="record-list"></div>
+        </article>
 
-        <main class="chat-card">
-          <div class="chat-top">
-            <div>
-              <div class="section-kicker">Aktif Kayıt</div>
-              <h2 id="chatTitle">Pazarlık seç</h2>
-            </div>
-            <div id="chatMeta" class="chat-meta">Detay burada görünür</div>
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Sistem Notu</h2>
           </div>
+          <div class="record-card">
+            <div class="record-top">
+              <div>
+                <span class="record-kicker">Aktivasyon Mantığı</span>
+                <h3>Üye girişi ile bağlı çalışır</h3>
+              </div>
+              <span class="status-pill status-pill-green">Hazır</span>
+            </div>
 
-          <div id="decisionBar" class="decision-bar hidden">
-            <div class="decision-info">
-              <span>Son durum</span>
-              <strong id="decisionStatus">Aktif</strong>
-            </div>
-            <div class="decision-actions">
-              <button id="agreeBtn" class="mini-btn btn-agree" type="button">Anlaşma Sağlandı</button>
-              <button id="closeBtn" class="mini-btn btn-close" type="button">Kapatıldı</button>
-              <button id="cancelBtn" class="mini-btn btn-cancel" type="button">İptal Edildi</button>
+            <div class="record-grid">
+              <div class="record-box">
+                <span>Beklemede</span>
+                <strong>Üye giriş yapamaz</strong>
+              </div>
+              <div class="record-box">
+                <span>Aktif</span>
+                <strong>Üye giriş yapabilir</strong>
+              </div>
+              <div class="record-box">
+                <span>Reddedildi</span>
+                <strong>Üye giriş yapamaz</strong>
+              </div>
+              <div class="record-box">
+                <span>Veri Kaydı</span>
+                <strong>localStorage ile tutulur</strong>
+              </div>
             </div>
           </div>
-
-          <div id="messageArea" class="message-area empty-state">
-            Sol taraftan bir pazarlık kaydı seç.
-          </div>
-        </main>
-      </div>
+        </article>
+      </section>
     </div>
   </section>
 
   <script>
-    function readJson(key, fallback) {
-      try {
+    function readJson(key, fallback){
+      try{
         const raw = localStorage.getItem(key);
         return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
+      }catch(e){
         return fallback;
       }
     }
-    function writeJson(key, value) {
+    function writeJson(key, value){
       localStorage.setItem(key, JSON.stringify(value));
     }
-    function fmtMoney(value) {
-      return new Intl.NumberFormat('tr-TR').format(Number(value || 0)) + ' TL';
+
+    function normalizeApplications(){
+      const apps = Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
+      const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
+
+      members.forEach(function(m){
+        const existing = apps.find(x =>
+          (m.email && x.email === m.email) ||
+          (m.username && x.username === m.username)
+        );
+        if(!existing){
+          apps.push({
+            id: 'APP-' + Date.now() + '-' + Math.floor(Math.random()*1000),
+            companyName: m.companyName || '',
+            contactName: m.contactName || '',
+            phone: m.phone || '',
+            role: m.role || '',
+            username: m.username || '',
+            email: m.email || '',
+            password: m.password || '',
+            status: m.status || 'Beklemede'
+          });
+        } else if (m.status) {
+          existing.status = m.status;
+        }
+      });
+
+      writeJson('sevra_applications', apps);
+      return apps;
     }
 
-    let threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
-    let offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
+    let applications = normalizeApplications();
 
     const statusBox = document.getElementById('statusBox');
-    const threadList = document.getElementById('threadList');
-    const messageArea = document.getElementById('messageArea');
-    const chatTitle = document.getElementById('chatTitle');
-    const chatMeta = document.getElementById('chatMeta');
-    const decisionBar = document.getElementById('decisionBar');
-    const decisionStatus = document.getElementById('decisionStatus');
-    const agreeBtn = document.getElementById('agreeBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
+    const recordList = document.getElementById('recordList');
 
-    let activeThreadId = threads.length ? threads[0].id : '';
-
-    function showStatus(message, isError = false) {
+    function showStatus(message, isError=false){
       statusBox.textContent = message;
-      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.remove('hidden','status-success','status-error');
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
-    function saveThreads() {
-      writeJson('sevra_threads', threads);
+    function saveApplications(){
+      writeJson('sevra_applications', applications);
     }
 
-    function saveOffers() {
-      writeJson('sevra_offers', offers);
+    function syncMembersFromApplications(){
+      let members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
+
+      applications.forEach(function(app){
+        let member = members.find(x =>
+          (app.email && x.email === app.email) ||
+          (app.username && x.username === app.username)
+        );
+
+        if(!member){
+          members.push({
+            companyName: app.companyName || '',
+            contactName: app.contactName || '',
+            phone: app.phone || '',
+            role: app.role || '',
+            username: app.username || '',
+            email: app.email || '',
+            password: app.password || '',
+            status: app.status || 'Beklemede',
+            createdAt: new Date().toISOString()
+          });
+        } else {
+          member.companyName = app.companyName || member.companyName || '';
+          member.contactName = app.contactName || member.contactName || '';
+          member.phone = app.phone || member.phone || '';
+          member.role = app.role || member.role || '';
+          member.username = app.username || member.username || '';
+          member.email = app.email || member.email || '';
+          member.password = app.password || member.password || '';
+          member.status = app.status || member.status || 'Beklemede';
+        }
+      });
+
+      writeJson('sevra_members', members);
     }
 
-    function threadStatusText(status) {
-      if (status === 'Agreed') return 'Anlaşma Sağlandı';
-      if (status === 'Closed') return 'Kapatıldı';
-      if (status === 'Cancelled') return 'İptal Edildi';
-      return 'Aktif';
+    function badgeClass(status){
+      if(status === 'Aktif') return 'status-pill status-pill-green';
+      if(status === 'Reddedildi') return 'status-pill status-pill-red';
+      return 'status-pill';
     }
 
-    function refreshSummary() {
-      document.getElementById('threadsCount').textContent = threads.length;
-      document.getElementById('activeCount').textContent = threads.filter(x => !x.finalStatus || x.finalStatus === 'Active').length;
-      document.getElementById('agreedCount').textContent = threads.filter(x => x.finalStatus === 'Agreed').length;
-      document.getElementById('closedCount').textContent = threads.filter(x => x.finalStatus === 'Closed' || x.finalStatus === 'Cancelled').length;
+    function refreshSummary(){
+      document.getElementById('allCount').textContent = applications.length;
+      document.getElementById('pendingCount').textContent = applications.filter(x => !x.status || x.status === 'Beklemede' || x.status === 'Onay Bekliyor').length;
+      document.getElementById('activeCount').textContent = applications.filter(x => x.status === 'Aktif').length;
+      document.getElementById('rejectedCount').textContent = applications.filter(x => x.status === 'Reddedildi').length;
     }
 
-    function renderThreads() {
+    function updateStatus(id, nextStatus){
+      const row = applications.find(x => x.id === id);
+      if(!row){
+        showStatus('Başvuru bulunamadı.', true);
+        return;
+      }
+      row.status = nextStatus;
+      saveApplications();
+      syncMembersFromApplications();
+      renderApplications();
+      showStatus('Başvuru durumu güncellendi: ' + nextStatus);
+    }
+
+    function removeApplication(id){
+      applications = applications.filter(x => x.id !== id);
+      saveApplications();
+      syncMembersFromApplications();
+      renderApplications();
+      showStatus('Başvuru silindi.');
+    }
+
+    function renderApplications(){
       refreshSummary();
-      threadList.innerHTML = '';
+      recordList.innerHTML = '';
 
-      if (!threads.length) {
-        threadList.innerHTML = '<div class="thread-empty">Henüz pazarlık kaydı yok.</div>';
+      if(!applications.length){
+        recordList.innerHTML = '<div class="empty-row">Henüz başvuru kaydı yok.</div>';
         return;
       }
 
-      threads.forEach(thread => {
-        const item = document.createElement('button');
-        item.type = 'button';
-        item.className = 'thread-item' + (thread.id === activeThreadId ? ' active' : '');
-        item.innerHTML = `
-          <span class="thread-title">${thread.title || '-'}</span>
-          <span class="thread-sub">${thread.route || '-'}</span>
-          <span class="thread-offer">Son teklif: ${fmtMoney(thread.currentOffer || 0)}</span>
-          <span class="thread-status">${threadStatusText(thread.finalStatus)}</span>
-        `;
-        item.addEventListener('click', () => {
-          activeThreadId = thread.id;
-          renderThreads();
-          renderActive();
-        });
-        threadList.appendChild(item);
-      });
-    }
-
-    function setThreadStatus(nextStatus) {
-      const thread = threads.find(x => x.id === activeThreadId);
-      if (!thread) {
-        showStatus('Önce pazarlık seç.', true);
-        return;
-      }
-
-      thread.finalStatus = nextStatus;
-      if (!Array.isArray(thread.messages)) thread.messages = [];
-      thread.messages.push({
-        role: 'Admin',
-        text: 'Pazarlık durumu güncellendi: ' + threadStatusText(nextStatus),
-        time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
-      });
-
-      const offer = offers.find(x => x.id === thread.offerId);
-      if (offer) {
-        if (nextStatus === 'Agreed') offer.status = 'Onaylandı';
-        else if (nextStatus === 'Cancelled') offer.status = 'Reddedildi';
-        else if (nextStatus === 'Closed') offer.status = 'Kapandı';
-      }
-
-      saveThreads();
-      saveOffers();
-      renderThreads();
-      renderActive();
-      showStatus('Pazarlık sonucu kaydedildi: ' + threadStatusText(nextStatus));
-    }
-
-    function renderActive() {
-      const thread = threads.find(x => x.id === activeThreadId);
-      if (!thread) {
-        chatTitle.textContent = 'Pazarlık seç';
-        chatMeta.textContent = 'Detay burada görünür';
-        decisionBar.classList.add('hidden');
-        messageArea.className = 'message-area empty-state';
-        messageArea.innerHTML = 'Sol taraftan bir pazarlık kaydı seç.';
-        return;
-      }
-
-      chatTitle.textContent = thread.title || '-';
-      chatMeta.textContent = (thread.route || '-') + ' • Son teklif: ' + fmtMoney(thread.currentOffer || 0);
-      decisionBar.classList.remove('hidden');
-      decisionStatus.textContent = threadStatusText(thread.finalStatus);
-
-      messageArea.className = 'message-area';
-      messageArea.innerHTML = '';
-
-      const offerBox = document.createElement('div');
-      offerBox.className = 'offer-history-box';
-      offerBox.innerHTML = `
-        <div class="offer-head">Pazarlık Özeti</div>
-        <div class="offer-line">Aktif teklif: <strong>${fmtMoney(thread.currentOffer || 0)}</strong></div>
-        <div class="offer-mini">${(thread.offerHistory || []).map(x => x.role + ': ' + fmtMoney(x.value)).join(' • ') || 'Teklif hareketi yok'}</div>
-      `;
-      messageArea.appendChild(offerBox);
-
-      (thread.messages || []).forEach(msg => {
-        const row = document.createElement('div');
-        row.className = 'msg ' + (msg.role === 'Tasiyici' ? 'msg-right' : msg.role === 'Admin' ? 'msg-admin' : 'msg-left');
-        row.innerHTML = `
-          <div class="msg-role">${msg.role || '-'}</div>
-          <div class="msg-text">${msg.text || ''}</div>
-          <div class="msg-time">${msg.time || ''}</div>
-        `;
-        messageArea.appendChild(row);
-      });
-
-      messageArea.scrollTop = messageArea.scrollHeight;
-    }
-
-    agreeBtn.addEventListener('click', () => setThreadStatus('Agreed'));
-    closeBtn.addEventListener('click', () => setThreadStatus('Closed'));
-    cancelBtn.addEventListener('click', () => setThreadStatus('Cancelled'));
-
-    renderThreads();
-    renderActive();
-  </script>
-</body>
-</html>
-
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
-    const session = readJson('sevra_admin_session', null);
-    if (!session) {
-      window.location.href = 'yonetici-giris.html';
-    }
-  </script>
-
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="admin-dashboard.html">
-        <div class="brand-mark">S</div>
-        <div class="brand-text">
-          <strong>SEVRA</strong>
-          <span>Pazarlık Yönetim Merkezi</span>
-        </div>
-      </a>
-
-      <div class="top-actions">
-        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
-        <a class="btn btn-secondary" href="teklif-yonetimi.html">Teklif Yönetimi</a>
-      </div>
-    </div>
-  </header>
-
-  <section class="page">
-    <div class="container">
-      <div class="page-head">
-        <div>
-          <div class="section-kicker">Pazarlık Finalizasyonu V2</div>
-          <h1>Pazarlık sürecini yönet ve sonucu kapat</h1>
-          <p>Yönetici; aktif pazarlıkları izler, anlaşma durumunu belirler, süreci kapatır veya iptal eder. Son fiyat ve mesaj geçmişi aynı ekranda görünür.</p>
-        </div>
-        <div class="head-badge">Admin kapanış ekranı</div>
-      </div>
-
-      <div id="statusBox" class="status-box hidden"></div>
-
-      <section class="summary-grid">
-        <article class="summary-card">
-          <span>Toplam Pazarlık</span>
-          <strong id="threadsCount">0</strong>
-        </article>
-        <article class="summary-card">
-          <span>Aktif</span>
-          <strong id="activeCount">0</strong>
-        </article>
-        <article class="summary-card">
-          <span>Anlaşma Sağlandı</span>
-          <strong id="agreedCount">0</strong>
-        </article>
-        <article class="summary-card">
-          <span>İptal / Kapandı</span>
-          <strong id="closedCount">0</strong>
-        </article>
-      </section>
-
-      <div class="shell">
-        <aside class="thread-list-card">
-          <div class="card-head">
-            <h2>Pazarlık Kayıtları</h2>
-          </div>
-          <div id="threadList" class="thread-list"></div>
-        </aside>
-
-        <main class="chat-card">
-          <div class="chat-top">
+      applications.forEach(function(app){
+        const card = document.createElement('div');
+        card.className = 'record-card';
+        card.innerHTML = `
+          <div class="record-top">
             <div>
-              <div class="section-kicker">Aktif Kayıt</div>
-              <h2 id="chatTitle">Pazarlık seç</h2>
+              <span class="record-kicker">Başvuru Kaydı</span>
+              <h3>${app.companyName || 'Firma adı yok'}</h3>
             </div>
-            <div id="chatMeta" class="chat-meta">Detay burada görünür</div>
+            <span class="${badgeClass(app.status || 'Beklemede')}">${app.status || 'Beklemede'}</span>
           </div>
 
-          <div id="decisionBar" class="decision-bar hidden">
-            <div class="decision-info">
-              <span>Son durum</span>
-              <strong id="decisionStatus">Aktif</strong>
+          <div class="record-grid">
+            <div class="record-box">
+              <span>Yetkili</span>
+              <strong>${app.contactName || '-'}</strong>
             </div>
-            <div class="decision-actions">
-              <button id="agreeBtn" class="mini-btn btn-agree" type="button">Anlaşma Sağlandı</button>
-              <button id="closeBtn" class="mini-btn btn-close" type="button">Kapatıldı</button>
-              <button id="cancelBtn" class="mini-btn btn-cancel" type="button">İptal Edildi</button>
+            <div class="record-box">
+              <span>Rol</span>
+              <strong>${app.role || '-'}</strong>
+            </div>
+            <div class="record-box">
+              <span>E-Posta</span>
+              <strong>${app.email || '-'}</strong>
+            </div>
+            <div class="record-box">
+              <span>Kullanıcı Adı</span>
+              <strong>${app.username || '-'}</strong>
+            </div>
+            <div class="record-box">
+              <span>Telefon</span>
+              <strong>${app.phone || '-'}</strong>
+            </div>
+            <div class="record-box">
+              <span>Şifre</span>
+              <strong>${app.password || '-'}</strong>
             </div>
           </div>
 
-          <div id="messageArea" class="message-area empty-state">
-            Sol taraftan bir pazarlık kaydı seç.
+          <div class="record-actions">
+            <button class="mini-btn btn-approve" data-id="${app.id}" data-action="approve">Onayla</button>
+            <button class="mini-btn btn-pending" data-id="${app.id}" data-action="pending">Beklet</button>
+            <button class="mini-btn btn-reject" data-id="${app.id}" data-action="reject">Reddet</button>
+            <button class="mini-btn btn-remove" data-id="${app.id}" data-action="remove">Sil</button>
           </div>
-        </main>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    function readJson(key, fallback) {
-      try {
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
-    function writeJson(key, value) {
-      localStorage.setItem(key, JSON.stringify(value));
-    }
-    function fmtMoney(value) {
-      return new Intl.NumberFormat('tr-TR').format(Number(value || 0)) + ' TL';
-    }
-
-    let threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
-    let offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
-
-    const statusBox = document.getElementById('statusBox');
-    const threadList = document.getElementById('threadList');
-    const messageArea = document.getElementById('messageArea');
-    const chatTitle = document.getElementById('chatTitle');
-    const chatMeta = document.getElementById('chatMeta');
-    const decisionBar = document.getElementById('decisionBar');
-    const decisionStatus = document.getElementById('decisionStatus');
-    const agreeBtn = document.getElementById('agreeBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-
-    let activeThreadId = threads.length ? threads[0].id : '';
-
-    function showStatus(message, isError = false) {
-      statusBox.textContent = message;
-      statusBox.classList.remove('hidden', 'status-error', 'status-success');
-      statusBox.classList.add(isError ? 'status-error' : 'status-success');
-    }
-
-    function saveThreads() {
-      writeJson('sevra_threads', threads);
-    }
-
-    function saveOffers() {
-      writeJson('sevra_offers', offers);
-    }
-
-    function threadStatusText(status) {
-      if (status === 'Agreed') return 'Anlaşma Sağlandı';
-      if (status === 'Closed') return 'Kapatıldı';
-      if (status === 'Cancelled') return 'İptal Edildi';
-      return 'Aktif';
-    }
-
-    function refreshSummary() {
-      document.getElementById('threadsCount').textContent = threads.length;
-      document.getElementById('activeCount').textContent = threads.filter(x => !x.finalStatus || x.finalStatus === 'Active').length;
-      document.getElementById('agreedCount').textContent = threads.filter(x => x.finalStatus === 'Agreed').length;
-      document.getElementById('closedCount').textContent = threads.filter(x => x.finalStatus === 'Closed' || x.finalStatus === 'Cancelled').length;
-    }
-
-    function renderThreads() {
-      refreshSummary();
-      threadList.innerHTML = '';
-
-      if (!threads.length) {
-        threadList.innerHTML = '<div class="thread-empty">Henüz pazarlık kaydı yok.</div>';
-        return;
-      }
-
-      threads.forEach(thread => {
-        const item = document.createElement('button');
-        item.type = 'button';
-        item.className = 'thread-item' + (thread.id === activeThreadId ? ' active' : '');
-        item.innerHTML = `
-          <span class="thread-title">${thread.title || '-'}</span>
-          <span class="thread-sub">${thread.route || '-'}</span>
-          <span class="thread-offer">Son teklif: ${fmtMoney(thread.currentOffer || 0)}</span>
-          <span class="thread-status">${threadStatusText(thread.finalStatus)}</span>
         `;
-        item.addEventListener('click', () => {
-          activeThreadId = thread.id;
-          renderThreads();
-          renderActive();
+        recordList.appendChild(card);
+      });
+
+      recordList.querySelectorAll('button[data-action]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          const id = btn.getAttribute('data-id');
+          const action = btn.getAttribute('data-action');
+
+          if(action === 'approve') updateStatus(id, 'Aktif');
+          if(action === 'pending') updateStatus(id, 'Beklemede');
+          if(action === 'reject') updateStatus(id, 'Reddedildi');
+          if(action === 'remove') removeApplication(id);
         });
-        threadList.appendChild(item);
       });
     }
 
-    function setThreadStatus(nextStatus) {
-      const thread = threads.find(x => x.id === activeThreadId);
-      if (!thread) {
-        showStatus('Önce pazarlık seç.', true);
-        return;
-      }
-
-      thread.finalStatus = nextStatus;
-      if (!Array.isArray(thread.messages)) thread.messages = [];
-      thread.messages.push({
-        role: 'Admin',
-        text: 'Pazarlık durumu güncellendi: ' + threadStatusText(nextStatus),
-        time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
-      });
-
-      const offer = offers.find(x => x.id === thread.offerId);
-      if (offer) {
-        if (nextStatus === 'Agreed') offer.status = 'Onaylandı';
-        else if (nextStatus === 'Cancelled') offer.status = 'Reddedildi';
-        else if (nextStatus === 'Closed') offer.status = 'Kapandı';
-      }
-
-      saveThreads();
-      saveOffers();
-      renderThreads();
-      renderActive();
-      showStatus('Pazarlık sonucu kaydedildi: ' + threadStatusText(nextStatus));
-    }
-
-    function renderActive() {
-      const thread = threads.find(x => x.id === activeThreadId);
-      if (!thread) {
-        chatTitle.textContent = 'Pazarlık seç';
-        chatMeta.textContent = 'Detay burada görünür';
-        decisionBar.classList.add('hidden');
-        messageArea.className = 'message-area empty-state';
-        messageArea.innerHTML = 'Sol taraftan bir pazarlık kaydı seç.';
-        return;
-      }
-
-      chatTitle.textContent = thread.title || '-';
-      chatMeta.textContent = (thread.route || '-') + ' • Son teklif: ' + fmtMoney(thread.currentOffer || 0);
-      decisionBar.classList.remove('hidden');
-      decisionStatus.textContent = threadStatusText(thread.finalStatus);
-
-      messageArea.className = 'message-area';
-      messageArea.innerHTML = '';
-
-      const offerBox = document.createElement('div');
-      offerBox.className = 'offer-history-box';
-      offerBox.innerHTML = `
-        <div class="offer-head">Pazarlık Özeti</div>
-        <div class="offer-line">Aktif teklif: <strong>${fmtMoney(thread.currentOffer || 0)}</strong></div>
-        <div class="offer-mini">${(thread.offerHistory || []).map(x => x.role + ': ' + fmtMoney(x.value)).join(' • ') || 'Teklif hareketi yok'}</div>
-      `;
-      messageArea.appendChild(offerBox);
-
-      (thread.messages || []).forEach(msg => {
-        const row = document.createElement('div');
-        row.className = 'msg ' + (msg.role === 'Tasiyici' ? 'msg-right' : msg.role === 'Admin' ? 'msg-admin' : 'msg-left');
-        row.innerHTML = `
-          <div class="msg-role">${msg.role || '-'}</div>
-          <div class="msg-text">${msg.text || ''}</div>
-          <div class="msg-time">${msg.time || ''}</div>
-        `;
-        messageArea.appendChild(row);
-      });
-
-      messageArea.scrollTop = messageArea.scrollHeight;
-    }
-
-    agreeBtn.addEventListener('click', () => setThreadStatus('Agreed'));
-    closeBtn.addEventListener('click', () => setThreadStatus('Closed'));
-    cancelBtn.addEventListener('click', () => setThreadStatus('Cancelled'));
-
-    renderThreads();
-    renderActive();
+    syncMembersFromApplications();
+    renderApplications();
   </script>
 </body>
 </html>
