@@ -75,12 +75,12 @@
       </section>
 
       <section class="content-grid">
-        <article class="panel-card">
+        <article class="panel-card wide">
           <div class="card-head">
             <h2>Tekliflerim</h2>
-            <a href="ilan-teklif.html">Aç</a>
+            <a href="ilan-teklif.html">Teklif Akışını Aç</a>
           </div>
-          <div id="offersPreview" class="preview-list"></div>
+          <div id="offersDetailList" class="detail-list"></div>
         </article>
 
         <article class="panel-card">
@@ -147,12 +147,20 @@
     document.getElementById('threadsCount').textContent = myThreads.length;
     document.getElementById('loadsCount').textContent = loads.length;
 
-    const offersPreview = document.getElementById('offersPreview');
+    const offersDetailList = document.getElementById('offersDetailList');
     const threadsPreview = document.getElementById('threadsPreview');
     const activityFeed = document.getElementById('activityFeed');
 
     function addEmpty(el, text) {
       el.innerHTML = '<div class="empty-row">' + text + '</div>';
+    }
+
+    function money(v) {
+      return new Intl.NumberFormat('tr-TR').format(Number(v || 0)) + ' TL';
+    }
+
+    function offerNumericPrice(offer) {
+      return parseInt(String(offer.price || '').replace(/[^0-9]/g, ''), 10) || 0;
     }
 
     function openOffer(offerId) {
@@ -171,21 +179,69 @@
     }
 
     if (myOffers.length) {
-      myOffers.slice(0, 4).forEach(offer => {
+      myOffers.forEach(offer => {
+        const thread = myThreads.find(t => t.offerId === offer.id);
+        const load = loads.find(x => x.id === offer.loadId);
         const row = document.createElement('div');
-        row.className = 'preview-row action-row';
+        row.className = 'detail-card';
         row.innerHTML = `
-          <div class="preview-main">
-            <strong>${offer.loadTitle || '-'}</strong>
-            <span>${offer.price || '-'}</span>
+          <div class="detail-top">
+            <div>
+              <span class="detail-kicker">Teklif Kaydı</span>
+              <h3>${offer.loadTitle || '-'}</h3>
+            </div>
+            <span class="status-pill">${offer.status || 'Beklemede'}</span>
           </div>
-          <button class="mini-btn" type="button">Aç</button>
+
+          <div class="detail-grid">
+            <div class="detail-box">
+              <span>İlgili İlan</span>
+              <strong>${offer.loadTitle || '-'}</strong>
+            </div>
+            <div class="detail-box">
+              <span>Güzergah</span>
+              <strong>${load?.route || '-'}</strong>
+            </div>
+            <div class="detail-box">
+              <span>Verilen Fiyat</span>
+              <strong>${offer.price || '-'}</strong>
+            </div>
+            <div class="detail-box">
+              <span>Son Pazarlık Fiyatı</span>
+              <strong>${thread ? money(thread.currentOffer || 0) : offer.price || '-'}</strong>
+            </div>
+            <div class="detail-box">
+              <span>Teklif Notu</span>
+              <strong>${offer.note || '-'}</strong>
+            </div>
+            <div class="detail-box">
+              <span>Pazarlık Durumu</span>
+              <strong>${thread ? 'Aktif görüşme var' : 'Henüz açılmadı'}</strong>
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <button class="mini-btn" type="button" data-offer="${offer.id}">Teklifi Aç</button>
+            <button class="mini-btn mini-btn-yellow" type="button" data-thread="${thread ? thread.id : ''}">
+              ${thread ? 'Pazarlığa Git' : 'Pazarlık Bekleniyor'}
+            </button>
+          </div>
         `;
-        row.querySelector('button').addEventListener('click', () => openOffer(offer.id));
-        offersPreview.appendChild(row);
+
+        row.querySelector('[data-offer]').addEventListener('click', () => openOffer(offer.id));
+
+        const threadBtn = row.querySelector('[data-thread]');
+        if (thread) {
+          threadBtn.addEventListener('click', () => openThread(thread.id));
+        } else {
+          threadBtn.disabled = true;
+          threadBtn.classList.add('disabled-btn');
+        }
+
+        offersDetailList.appendChild(row);
       });
     } else {
-      addEmpty(offersPreview, 'Henüz teklif bulunmuyor.');
+      addEmpty(offersDetailList, 'Henüz teklif kaydı bulunmuyor.');
     }
 
     if (myThreads.length) {
@@ -195,7 +251,7 @@
         row.innerHTML = `
           <div class="preview-main">
             <strong>${thread.title || '-'}</strong>
-            <span>${new Intl.NumberFormat('tr-TR').format(Number(thread.currentOffer || 0))} TL</span>
+            <span>${money(thread.currentOffer || 0)}</span>
           </div>
           <button class="mini-btn mini-btn-yellow" type="button">Pazarlığa Git</button>
         `;
@@ -220,7 +276,7 @@
       activities.push({
         tag: 'Pazarlık',
         title: thread.title || '-',
-        text: new Intl.NumberFormat('tr-TR').format(Number(thread.currentOffer || 0)) + ' TL aktif teklif'
+        text: money(thread.currentOffer || 0) + ' aktif teklif'
       });
     });
 
