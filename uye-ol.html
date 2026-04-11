@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Kurumsal Üyelik Oluştur</title>
+  <title>SEVRA | Kurumsal Üyelik Başvurusu</title>
   <link rel="stylesheet" href="uye-auth.css" />
 </head>
 <body>
@@ -13,7 +13,7 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Kurumsal Üyelik Oluştur</span>
+          <span>Kurumsal Üyelik Başvurusu</span>
         </div>
       </a>
       <div class="actions">
@@ -24,9 +24,9 @@
 
     <main class="stack">
       <section class="panel">
-        <div class="kicker">E-Posta ile Kayıt</div>
-        <h1>Kurumsal üyelik başvurusu</h1>
-        <p>Vatandaş / firma e-posta ile üyelik oluşturur. Gerçek mail gönderimi için backend entegrasyonu gereklidir; bu paket doğrulama akışının ön yüzünü ve veri yapısını hazırlar.</p>
+        <div class="kicker">Kurumsal Kayıt</div>
+        <h1>Yeni üyelik oluştur</h1>
+        <p>Kurumsal kullanıcılar aşağıdaki bilgilerle başvuru oluşturur. Üyelik onay süreci tamamlandığında giriş ekranından hesabına erişebilirsin.</p>
 
         <form id="registerForm" class="form-grid">
           <div class="field">
@@ -58,7 +58,8 @@
             <input id="password" type="password" placeholder="Şifre" />
           </div>
           <div class="actions-row full">
-            <button type="submit" class="btn primary">Üyelik Oluştur</button>
+            <button type="submit" class="btn primary">Başvuru Oluştur</button>
+            <a class="btn" href="uye-login.html">Giriş Ekranına Dön</a>
           </div>
         </form>
 
@@ -66,25 +67,19 @@
       </section>
 
       <section class="panel">
-        <div class="kicker">Doğrulama</div>
-        <h2>E-posta doğrulama kodu</h2>
-        <p>Kullanıcı normalde mailine gelen kodu bu alana girer. Bu sürümde mail altyapısı hazırlık aşamasındadır; gerçek gönderim için backend / mail servisi bağlanmalıdır.</p>
+        <div class="kicker">Onay Durumu</div>
+        <h2>Üyelik aktivasyonu</h2>
+        <p>Bu arayüz yalnızca kurumsal kayıt ekranını düzenler. Gerçek e-posta gönderimi ve otomatik hesap aktivasyonu backend tarafında ayrıca bağlanmalıdır.</p>
 
-        <form id="verifyForm" class="form-grid">
-          <div class="field">
-            <label>E-Posta</label>
-            <input id="verifyEmail" type="email" placeholder="ornek@firma.com" />
-          </div>
-          <div class="field">
-            <label>Doğrulama Kodu</label>
-            <input id="verifyCode" type="text" placeholder="Doğrulama kodu" />
-          </div>
-          <div class="actions-row full">
-            <button type="submit" class="btn primary">Üyeliği Onayla</button>
-          </div>
-        </form>
-
-        <div id="verifyMsg" class="note hidden"></div>
+        <div class="info-box">
+          <h3>Sonraki teknik adım</h3>
+          <ul>
+            <li>Mail servisi entegrasyonu</li>
+            <li>E-posta doğrulama bağlantısı gönderimi</li>
+            <li>Onay sonrası otomatik aktif hesap oluşturma</li>
+            <li>Şifre sıfırlama ve güvenlik akışı</li>
+          </ul>
+        </div>
       </section>
     </main>
   </div>
@@ -104,9 +99,6 @@ function writeJson(key, value){
 function show(el, text, ok){
   el.className = 'note ' + (ok ? 'ok' : 'err');
   el.textContent = text;
-}
-function generateCode(){
-  return String(Math.floor(100000 + Math.random() * 900000));
 }
 
 document.getElementById('registerForm').addEventListener('submit', function(e){
@@ -130,40 +122,20 @@ document.getElementById('registerForm').addEventListener('submit', function(e){
     return;
   }
 
-  const code=generateCode();
   members.push({
-    companyName, contactName, email, phone, role, password,
-    verifyCode: code,
-    status: 'Dogrulama Bekliyor',
+    companyName,
+    contactName,
+    email,
+    phone,
+    role,
+    password,
+    status: 'Onay Bekliyor',
     createdAt: new Date().toISOString()
   });
+
   writeJson('sevra_members', members);
-
-  show(msg, 'Kayıt oluşturuldu. Gerçek mail gönderimi için backend gerekir. Şimdilik doğrulama kodu sistemde üretildi: ' + code, true);
-  document.getElementById('verifyEmail').value = email;
-});
-
-document.getElementById('verifyForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const email=document.getElementById('verifyEmail').value.trim().toLowerCase();
-  const code=document.getElementById('verifyCode').value.trim();
-  const msg=document.getElementById('verifyMsg');
-  const members=readJson('sevra_members', []);
-  const row=members.find(x => x.email===email);
-
-  if(!row){
-    show(msg, 'Bu e-posta ile bekleyen kayıt bulunamadı.', false);
-    return;
-  }
-  if(row.verifyCode !== code){
-    show(msg, 'Doğrulama kodu hatalı.', false);
-    return;
-  }
-
-  row.status = 'Aktif';
-  row.verifiedAt = new Date().toISOString();
-  writeJson('sevra_members', members);
-  show(msg, 'Üyelik doğrulandı. Artık giriş yapabilirsin.', true);
+  show(msg, 'Başvuru kaydedildi. Onay ve gerçek e-posta gönderim akışı sonraki backend adımında bağlanacaktır.', true);
+  document.getElementById('registerForm').reset();
 });
 </script>
 </body>
