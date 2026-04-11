@@ -45,8 +45,10 @@ a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
 .status-pill-green{background:rgba(31,159,98,.18);color:#d9ffe2}
 .mail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .mail-box{border:1px solid var(--line2);border-radius:14px;padding:14px;background:rgba(255,255,255,.015)}
+.mail-box.full{grid-column:1 / -1}
 .mail-box span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
 .mail-box strong{display:block;font-size:16px;line-height:1.35;word-break:break-word}
+.mail-pre{white-space:pre-wrap;word-break:break-word;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#eef4ff}
 .mail-actions{display:flex;gap:10px;flex-wrap:wrap}
 .mini-btn{min-height:38px;padding:0 14px;border-radius:12px;border:none;color:#fff;font-weight:700}
 .btn-copy{background:linear-gradient(135deg,var(--blue),var(--blue2))}
