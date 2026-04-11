@@ -9,7 +9,7 @@
 <body>
   <header class="topbar">
     <div class="container topbar-inner">
-      <a class="brand" href="admin-dashboard.html">
+      <a class="brand" href="teklif-yonetimi.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
@@ -17,7 +17,8 @@
         </div>
       </a>
       <div class="top-actions">
-        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
+        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard'a Dön</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
         <a class="btn btn-secondary" href="pazarlik-yonetim.html">Pazarlık Yönetimi</a>
       </div>
     </div>
@@ -25,18 +26,62 @@
 
   <main class="page">
     <div class="container">
-      <div class="page-head">
+      <section class="hero-mini">
         <div>
-          <div class="section-kicker">Final Review</div>
-          <h1>Teklif yönetimi son geçiş ekranı</h1>
-          <p>Bu sürümde üst geçişler ve dosya bağlantıları son yapıya göre netleştirildi.</p>
+          <div class="section-kicker">Teklif Akışı</div>
+          <h1>Teklif yönetimi</h1>
+          <p>Bu ekran artık boş değil. Teklif, komisyon ve iletişim açılma mantığı aynı tabloda takip edilir.</p>
         </div>
-      </div>
-      <article class="content-card">
-        <div class="card-head"><h2>İşlem</h2></div>
-        <a class="btn btn-primary" href="admin-dashboard.html">Dashboard'a Dön</a>
-      </article>
+      </section>
+
+      <section class="content-card wide-card">
+        <div class="card-head"><h2>Teklif Listesi</h2><span class="pill" id="teklifSayisi">2 teklif</span></div>
+        <div id="teklifListesi" class="table-stack"></div>
+      </section>
     </div>
   </main>
+
+  <script>
+    const teklifler = [
+      {id:'T-1001', ilan:'İstanbul → Ankara', uye:'hasanarslan', fiyat:'17.500 TL', durum:'Beklemede', komisyon_odendi:false, iletisim_acik:false},
+      {id:'T-1002', ilan:'Bursa → İzmir', uye:'hasanarslan', fiyat:'23.000 TL', durum:'Onaylandı', komisyon_odendi:false, iletisim_acik:false}
+    ];
+
+    function kaydet(){
+      localStorage.setItem('sevra_teklifler', JSON.stringify(teklifler));
+    }
+
+    function odemeTamamla(id){
+      const item = teklifler.find(x => x.id === id);
+      if(!item) return;
+      item.komisyon_odendi = true;
+      item.iletisim_acik = true;
+      item.durum = 'Komisyon ödendi';
+      kaydet();
+      render();
+    }
+
+    function render(){
+      const box = document.getElementById('teklifListesi');
+      box.innerHTML = teklifler.map(item => `
+        <div class="table-row">
+          <div><span>ID</span><strong>${item.id}</strong></div>
+          <div><span>İlan</span><strong>${item.ilan}</strong></div>
+          <div><span>Üye</span><strong>${item.uye}</strong></div>
+          <div><span>Fiyat</span><strong>${item.fiyat}</strong></div>
+          <div><span>Durum</span><strong>${item.durum}</strong></div>
+          <div><span>Komisyon</span><strong>${item.komisyon_odendi ? 'Ödendi' : 'Bekliyor'}</strong></div>
+          <div><span>İletişim</span><strong>${item.iletisim_acik ? 'Açık' : 'Kapalı'}</strong></div>
+          <div class="row-actions">
+            <button class="btn btn-primary small-btn" onclick="odemeTamamla('${item.id}')">Komisyon Ödendi</button>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('teklifSayisi').textContent = teklifler.length + ' teklif';
+    }
+
+    kaydet();
+    render();
+  </script>
 </body>
 </html>
