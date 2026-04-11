@@ -14,7 +14,7 @@
 
   function upsertApplication(app) {
     const apps = readJson('sevra_applications', []);
-    const idx = apps.findIndex(x => x.username === app.username);
+    const idx = apps.findIndex(x => x.username === app.username || (app.email && x.email === app.email));
     if (idx >= 0) apps[idx] = app;
     else apps.push(app);
     writeJson('sevra_applications', apps);
@@ -31,10 +31,11 @@
       phone: document.getElementById('phone')?.value?.trim() || '',
       role: document.getElementById('role')?.value?.trim() || '',
       username: document.getElementById('username')?.value?.trim() || '',
+      email: document.getElementById('email')?.value?.trim().toLowerCase() || '',
       password: document.getElementById('password')?.value?.trim() || '',
       status: 'Beklemede'
     };
-    if (app.companyName && app.contactName && app.phone && app.role && app.username && app.password) {
+    if (app.companyName && app.contactName && app.phone && app.role && (app.username || app.email) && app.password) {
       upsertApplication(app);
     }
   });
