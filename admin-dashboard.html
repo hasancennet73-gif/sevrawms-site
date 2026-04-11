@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Admin Dashboard</title>
+  <title>SEVRA | Yönetim Kontrol Merkezi</title>
   <link rel="stylesheet" href="admin-dashboard.css" />
 </head>
 <body>
@@ -28,37 +28,66 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Admin Control Center</span>
+          <span>Yönetim Kontrol Merkezi</span>
         </div>
       </div>
 
+      <div class="sidebar-section-title">Yönetim Menüsü</div>
+
       <nav class="side-nav">
-        <a class="side-link active" href="admin-dashboard.html">Dashboard</a>
-        <a class="side-link" href="basvuru-yonetim.html">Başvurular</a>
-        <a class="side-link" href="ilan-teklif.html">Teklifler</a>
+        <a class="side-link active" href="admin-dashboard.html">Genel Durum</a>
+        <a class="side-link" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
+        <a class="side-link" href="ilan-teklif.html">Teklif Yönetimi</a>
         <a class="side-link" href="pazarlik-yonetim.html">Pazarlık Yönetimi</a>
         <a class="side-link" href="urunler.html">Ürün Yönetimi</a>
         <a class="side-link" href="urun-vitrini.html">Ürün Vitrini</a>
-        <a class="side-link" href="index.html">Siteye Dön</a>
+        <a class="side-link" href="index.html">Kurumsal Siteye Dön</a>
       </nav>
 
       <div class="sidebar-footer">
-        <div class="mini-user">
-          <span>Rol</span>
-          <strong>SUPER_ADMIN</strong>
+        <div class="authority-box">
+          <span>Yetki Seviyesi</span>
+          <strong>SUPER ADMIN</strong>
         </div>
-        <button id="logoutBtn" class="logout-btn" type="button">Çıkış Yap</button>
+        <button id="logoutBtn" class="logout-btn" type="button">Oturumu Kapat</button>
       </div>
     </aside>
 
     <main class="main">
-      <header class="topbar">
-        <div>
-          <div class="section-kicker">Tek Merkez Yönetim</div>
-          <h1>SEVRA gerçek admin dashboard</h1>
-          <p>Başvuru, teklif, pazarlık ve ürün tarafı sol menülü tek panelde toplandı.</p>
+      <header class="hero-panel">
+        <div class="hero-left">
+          <div class="section-kicker">Kurumsal Yönetim Alanı</div>
+          <h1>SEVRA yönetim kontrol merkezi</h1>
+          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli kurumsal kontrol paneli üzerinden izlenir. Yönetim tarafı burada daha ağır, net ve profesyonel bir yapıda toplanır.</p>
+
+          <div class="hero-mini-grid">
+            <div class="hero-mini-card">
+              <strong>Tek Merkez</strong>
+              <span>Kontrollü süreç yönetimi</span>
+            </div>
+            <div class="hero-mini-card">
+              <strong>Kurumsal İz</strong>
+              <span>Güçlü panel dili</span>
+            </div>
+            <div class="hero-mini-card">
+              <strong>Net Akış</strong>
+              <span>Yönetim görünürlüğü</span>
+            </div>
+          </div>
         </div>
-        <div class="top-badge">Kurumsal Admin Panel</div>
+
+        <div class="hero-right">
+          <div class="hero-right-card">
+            <span class="hero-right-label">Panel Özeti</span>
+            <h3>Yönetim tarafı hazır</h3>
+            <ul>
+              <li>Başvuru kontrol alanı</li>
+              <li>Teklif ve pazarlık izleme</li>
+              <li>Ürün ve vitrin yönetimi</li>
+              <li>Sol menülü profesyonel panel yapısı</li>
+            </ul>
+          </div>
+        </div>
       </header>
 
       <section class="summary-grid">
@@ -83,8 +112,8 @@
       <section class="content-grid">
         <article class="panel-card">
           <div class="card-head">
-            <h2>Başvuru Özeti</h2>
-            <a href="basvuru-yonetim.html">Tümünü Aç</a>
+            <h2>Başvuru Görünümü</h2>
+            <a href="basvuru-yonetim.html">Ayrıntıyı Aç</a>
           </div>
           <div class="metric-row">
             <div class="metric-box">
@@ -92,11 +121,11 @@
               <strong id="pendingApplications">0</strong>
             </div>
             <div class="metric-box">
-              <span>Onaylı</span>
+              <span>Onaylandı</span>
               <strong id="approvedApplications">0</strong>
             </div>
             <div class="metric-box">
-              <span>Reddedilen</span>
+              <span>Reddedildi</span>
               <strong id="rejectedApplications">0</strong>
             </div>
           </div>
@@ -106,7 +135,7 @@
         <article class="panel-card">
           <div class="card-head">
             <h2>Teklif ve Pazarlık</h2>
-            <a href="pazarlik-yonetim.html">Yönet</a>
+            <a href="pazarlik-yonetim.html">Süreci İzle</a>
           </div>
           <div class="metric-row two">
             <div class="metric-box">
@@ -123,8 +152,8 @@
 
         <article class="panel-card">
           <div class="card-head">
-            <h2>Ürün Alanı</h2>
-            <a href="urunler.html">Ürün Ekle</a>
+            <h2>Ürün ve Vitrin</h2>
+            <a href="urunler.html">Yönetimi Aç</a>
           </div>
           <div class="metric-row two">
             <div class="metric-box">
@@ -136,29 +165,29 @@
               <strong id="passiveProducts">0</strong>
             </div>
           </div>
-          <div id="productsPreview" class="preview-list product-preview"></div>
+          <div id="productsPreview" class="preview-list"></div>
         </article>
 
         <article class="panel-card wide">
           <div class="card-head">
-            <h2>Hızlı Yönetim</h2>
+            <h2>Hızlı Yönetim Geçişleri</h2>
           </div>
           <div class="quick-grid">
             <a class="quick-action" href="basvuru-yonetim.html">
-              <span>Başvurular</span>
-              <strong>Onay / Red</strong>
+              <span>Başvuru</span>
+              <strong>Onay ve red işlemleri</strong>
             </a>
             <a class="quick-action" href="ilan-teklif.html">
-              <span>Teklifler</span>
-              <strong>Teklif Akışı</strong>
+              <span>Teklif</span>
+              <strong>Teklif akışını aç</strong>
             </a>
             <a class="quick-action" href="pazarlik-yonetim.html">
               <span>Pazarlık</span>
-              <strong>Mesajları İzle</strong>
+              <strong>Mesajlaşmaları izle</strong>
             </a>
             <a class="quick-action" href="urunler.html">
-              <span>Ürün Yönetimi</span>
-              <strong>Yeni Ürün Ekle</strong>
+              <span>Ürün</span>
+              <strong>Yeni ürün ekle</strong>
             </a>
           </div>
         </article>
@@ -212,7 +241,7 @@
         applicationsPreview.appendChild(row);
       });
     } else {
-      addEmpty(applicationsPreview, 'Başvuru yok.');
+      addEmpty(applicationsPreview, 'Başvuru kaydı bulunmuyor.');
     }
 
     if (offers.length) {
@@ -223,7 +252,7 @@
         offersPreview.appendChild(row);
       });
     } else {
-      addEmpty(offersPreview, 'Teklif yok.');
+      addEmpty(offersPreview, 'Teklif kaydı bulunmuyor.');
     }
 
     if (products.length) {
@@ -234,7 +263,7 @@
         productsPreview.appendChild(row);
       });
     } else {
-      addEmpty(productsPreview, 'Ürün yok.');
+      addEmpty(productsPreview, 'Ürün kaydı bulunmuyor.');
     }
 
     document.getElementById('logoutBtn').addEventListener('click', function() {
