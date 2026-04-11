@@ -190,6 +190,37 @@
       });
     }
 
+    function openOrCreateThread(offer) {
+      const existing = threads.find(x => x.offerId === offer.id);
+      if (existing) {
+        localStorage.setItem('sevra_active_thread_id', existing.id);
+        window.location.href = 'mesajlasma.html';
+        return;
+      }
+
+      const load = loads.find(x => x.id === offer.loadId);
+      const numericPrice = parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0;
+
+      const thread = {
+        id: 'THR-' + Date.now(),
+        offerId: offer.id,
+        title: offer.loadTitle,
+        route: load?.route || offer.loadTitle,
+        currentOffer: numericPrice,
+        offerHistory: [{ role: 'Tasiyici', value: numericPrice }],
+        messages: [{
+          role: 'Admin',
+          text: 'Teklif üzerinden pazarlık ekranı açıldı.',
+          time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
+        }]
+      };
+
+      threads.push(thread);
+      writeJson('sevra_threads', threads);
+      localStorage.setItem('sevra_active_thread_id', thread.id);
+      window.location.href = 'mesajlasma.html';
+    }
+
     function renderOffers() {
       offersTbody.innerHTML = '';
 
@@ -207,7 +238,7 @@
           <td>${offer.status}</td>
           <td>
             <div class="action-stack">
-              <button class="mini-btn js-chat" type="button" data-id="${offer.id}">Pazarlık</button>
+              <button class="mini-btn pazarlik-btn js-chat" type="button" data-id="${offer.id}">Pazarlık Yap</button>
               <button class="mini-btn js-delete" type="button" data-id="${offer.id}">Sil</button>
             </div>
           </td>
@@ -219,37 +250,7 @@
           showStatus('Teklif silindi.');
         });
 
-        tr.querySelector('.js-chat').addEventListener('click', () => {
-          const existing = threads.find(x => x.offerId === offer.id);
-          if (existing) {
-            localStorage.setItem('sevra_active_thread_id', existing.id);
-            window.location.href = 'mesajlasma.html';
-            return;
-          }
-
-          const thread = {
-            id: 'THR-' + Date.now(),
-            offerId: offer.id,
-            title: offer.loadTitle,
-            route: loads.find(x => x.id === offer.loadId)?.route || offer.loadTitle,
-            currentOffer: parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0,
-            offerHistory: [
-              { role: 'Tasiyici', value: parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0 }
-            ],
-            messages: [
-              {
-                role: 'Admin',
-                text: 'Teklif üzerinden pazarlık ekranı açıldı.',
-                time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
-              }
-            ]
-          };
-
-          threads.push(thread);
-          writeJson('sevra_threads', threads);
-          localStorage.setItem('sevra_active_thread_id', thread.id);
-          window.location.href = 'mesajlasma.html';
-        });
+        tr.querySelector('.js-chat').addEventListener('click', () => openOrCreateThread(offer));
 
         offersTbody.appendChild(tr);
       });
@@ -296,7 +297,7 @@
       offerNote.value = '';
 
       renderOffers();
-      showStatus('Teklif kaydedildi.');
+      showStatus('Teklif kaydedildi. Sağdaki yeşil Pazarlık Yap butonundan devam edebilirsin.');
     });
 
     renderSelect();
