@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEVRA | Yönetim Paneli Girişi</title>
-  <link rel="stylesheet" href="kurumsal-ui.css" />
+  <link rel="stylesheet" href="kurumsal-ui.css">
 </head>
-<body class="entry-body">
-  <header class="entry-topbar">
-    <div class="container entry-topbar-inner">
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
       <a class="brand" href="index.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Dijital Lojistik ve Tedarik Platformu</span>
+          <span>Yönetim Paneli Girişi</span>
         </div>
       </a>
       <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
@@ -24,54 +24,26 @@
     <div class="container">
       <div class="entry-shell">
         <div class="entry-info">
-          <div class="section-kicker">Yönetim Paneli Erişimi</div>
-          <h1>Kurumsal yönetim paneli girişi</h1>
-          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim kontrol paneli üzerinden takip edilir.</p>
-        </div>
-
-        <div class="entry-card">
           <div class="section-kicker">Yetkili Erişim</div>
-          <h2>Yönetim paneline giriş yap</h2>
-          <form id="adminLoginForm" class="entry-form">
-            <label>Kullanıcı Adı<input id="adminUsername" type="text" placeholder="Kullanıcı adı" required></label>
-            <label>Şifre<input id="adminPassword" type="password" placeholder="Şifre" required></label>
-            <button type="submit" class="btn btn-primary btn-block">Yönetim Paneline Gir</button>
+          <h1>Kurumsal yönetim paneli girişi</h1>
+          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim paneli üzerinden takip edilir.</p>
+        </div>
+        <div class="entry-card">
+          <div class="section-kicker">Giriş</div>
+          <h2>Yönetim paneline gir</h2>
+          <form class="entry-form">
+            <label>Kullanıcı Adı<input placeholder="admin"></label>
+            <label>Şifre<input placeholder="123456" type="password"></label>
+            <a class="btn btn-primary btn-block" href="admin-dashboard.html">Yönetim Paneline Gir</a>
           </form>
           <div class="credential-box">
             <span>Test erişim bilgisi</span>
             <strong>Kullanıcı adı: admin</strong>
             <strong>Şifre: 123456</strong>
           </div>
-          <div id="statusBox" class="status-box hidden"></div>
         </div>
       </div>
     </div>
   </section>
-
-  <script>
-    const form = document.getElementById('adminLoginForm');
-    const statusBox = document.getElementById('statusBox');
-    function showStatus(message, isError = false){
-      statusBox.textContent = message;
-      statusBox.classList.remove('hidden','status-error','status-success');
-      statusBox.classList.add(isError ? 'status-error' : 'status-success');
-    }
-    form.addEventListener('submit', function(event){
-      event.preventDefault();
-      const username = document.getElementById('adminUsername').value.trim();
-      const password = document.getElementById('adminPassword').value.trim();
-      if(username === 'admin' && password === '123456'){
-        localStorage.setItem('sevra_admin_session', JSON.stringify({
-          username: 'admin',
-          role: 'SUPER_ADMIN',
-          loginAt: new Date().toISOString()
-        }));
-        showStatus('Giriş başarılı. Yönetim paneli açılıyor.');
-        setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 350);
-      }else{
-        showStatus('Kullanıcı adı veya şifre hatalı.', true);
-      }
-    });
-  </script>
 </body>
 </html>
