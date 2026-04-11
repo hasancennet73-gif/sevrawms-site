@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Ürün Vitrini V2</title>
+  <link rel="stylesheet" href="urun-vitrini-v2.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="yuk-ilanlari.html">Yük İlanları</a>
+        <a href="uye-giris.html">Üye Girişi</a>
+        <a href="yonetici-giris.html">Yönetici Girişi</a>
+      </nav>
+
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-shell">
+        <div class="hero-left">
+          <div class="section-kicker">Kurumsal Ürün Vitrini</div>
+          <h1>SEVRA ürün ve ekipman vitrini</h1>
+          <p>Yönetim tarafından eklenen ürünler burada daha profesyonel kart yapısı ile sergilenir. Ziyaretçiler ürünleri inceleyebilir, teklif veya bilgi talebine geçebilir.</p>
+        </div>
+        <div class="hero-right">
+          <div class="hero-stat">
+            <span>Toplam Ürün</span>
+            <strong id="productsCount">0</strong>
+          </div>
+          <div class="hero-stat">
+            <span>Aktif Ürün</span>
+            <strong id="activeCount">0</strong>
+          </div>
+          <div class="hero-stat">
+            <span>Yeni Ürün</span>
+            <strong id="newCount">0</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="catalog">
+    <div class="container">
+      <div class="catalog-head">
+        <div>
+          <div class="section-kicker">Vitrin Görünümü</div>
+          <h2>Ürün kataloğu</h2>
+        </div>
+        <div class="filter-badges">
+          <button class="filter-btn active" type="button" data-filter="all">Tümü</button>
+          <button class="filter-btn" type="button" data-filter="Aktif">Aktif</button>
+          <button class="filter-btn" type="button" data-filter="Yeni Ürün">Yeni Ürün</button>
+        </div>
+      </div>
+
+      <div id="emptyBox" class="empty-box hidden">
+        Henüz vitrine açık ürün bulunmuyor.
+      </div>
+
+      <div id="productGrid" class="product-grid"></div>
+    </div>
+  </section>
+
+  <div id="detailModal" class="modal hidden">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card">
+      <button id="closeModalBtn" class="modal-close" type="button">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    function readJson(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+
+    const allProducts = Array.isArray(readJson('sevra_products', [])) ? readJson('sevra_products', []) : [];
+    const visibleProducts = allProducts.filter(x => (x.status || 'Aktif') !== 'Pasif');
+
+    const productGrid = document.getElementById('productGrid');
+    const emptyBox = document.getElementById('emptyBox');
+    const modal = document.getElementById('detailModal');
+    const modalContent = document.getElementById('modalContent');
+
+    document.getElementById('productsCount').textContent = allProducts.length;
+    document.getElementById('activeCount').textContent = allProducts.filter(x => (x.status || 'Aktif') === 'Aktif').length;
+    document.getElementById('newCount').textContent = allProducts.filter(x => x.status === 'Yeni Ürün').length;
+
+    let activeFilter = 'all';
+
+    function renderProducts(){
+      const filtered = visibleProducts.filter(p => {
+        if(activeFilter === 'all') return true;
+        return (p.status || 'Aktif') === activeFilter;
+      });
+
+      productGrid.innerHTML = '';
+
+      if(!filtered.length){
+        emptyBox.classList.remove('hidden');
+        return;
+      }
+
+      emptyBox.classList.add('hidden');
+
+      filtered.forEach(product => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <div class="product-image-wrap">
+            ${product.image ? '<img class="product-image" src="' + product.image + '" alt="' + (product.name || '-') + '">' : '<div class="img-fallback">Görsel Yok</div>'}
+          </div>
+          <div class="product-body">
+            <div class="product-meta-row">
+              <span class="product-tag">${product.category || '-'}</span>
+              <span class="product-status">${product.status || 'Aktif'}</span>
+            </div>
+            <h3>${product.name || '-'}</h3>
+            <p>${product.desc || '-'}</p>
+            <strong class="price">${product.price || '-'}</strong>
+            <div class="card-actions">
+              <button class="btn btn-secondary js-detail" type="button">İncele</button>
+              <a class="btn btn-primary" href="uye-giris.html">Bilgi / Teklif Al</a>
+            </div>
+          </div>
+        `;
+        card.querySelector('.js-detail').addEventListener('click', () => openDetail(product));
+        productGrid.appendChild(card);
+      });
+    }
+
+    function openDetail(product){
+      modalContent.innerHTML = `
+        <div class="modal-grid">
+          <div class="modal-image-wrap">
+            ${product.image ? '<img class="modal-image" src="' + product.image + '" alt="' + (product.name || '-') + '">' : '<div class="img-fallback">Görsel Yok</div>'}
+          </div>
+          <div class="modal-body">
+            <div class="product-meta-row">
+              <span class="product-tag">${product.category || '-'}</span>
+              <span class="product-status">${product.status || 'Aktif'}</span>
+            </div>
+            <h3>${product.name || '-'}</h3>
+            <div class="modal-price">${product.price || '-'}</div>
+            <p>${product.desc || '-'}</p>
+            <div class="detail-boxes">
+              <div class="detail-box">
+                <span>Ürün Durumu</span>
+                <strong>${product.status || 'Aktif'}</strong>
+              </div>
+              <div class="detail-box">
+                <span>Kategori</span>
+                <strong>${product.category || '-'}</strong>
+              </div>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-primary" href="uye-giris.html">Bilgi / Teklif Talebi</a>
+              <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+            </div>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    function closeDetail(){
+      modal.classList.add('hidden');
+    }
+
+    document.getElementById('closeModalBtn').addEventListener('click', closeDetail);
+    document.getElementById('modalBackdrop').addEventListener('click', closeDetail);
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.getAttribute('data-filter');
+        renderProducts();
+      });
+    });
+
+    renderProducts();
+  </script>
+</body>
+</html>
