@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SEVRA | Üyelik ve Giriş</title>
-  <link rel="stylesheet" href="kurumsal-ui.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Kurumsal Üye Girişi</title>
+  <link rel="stylesheet" href="uye-giris.css" />
 </head>
 <body>
   <header class="topbar">
@@ -13,47 +13,218 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Üyelik ve Giriş</span>
+          <span>Kurumsal Üye Girişi</span>
         </div>
       </a>
-      <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
+      <nav class="nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="yuk-ilanlari.html">Yük İlanları</a>
+        <a href="yonetici-giris.html">Yönetici Girişi</a>
+      </nav>
     </div>
   </header>
 
-  <section class="entry-shell-wrap">
+  <main class="member-shell">
     <div class="container">
-      <div class="dual-shell">
-        <div class="entry-card">
-          <div class="section-kicker">Üye Girişi</div>
-          <h2>Mevcut hesapla giriş yap</h2>
-          <form class="entry-form">
-            <label>Kullanıcı Adı<input placeholder="Kullanıcı adı"></label>
-            <label>Şifre<input placeholder="Şifre" type="password"></label>
-            <a class="btn btn-primary btn-block" href="uye-panel.html">Giriş Yap</a>
-          </form>
-        </div>
+      <div class="member-grid">
+        <section class="panel-card intro-card">
+          <div class="section-kicker">Kurumsal Erişim</div>
+          <h1>SEVRA üye girişi</h1>
+          <p>
+            Taşıyıcı, yük veren ve tedarik tarafı için oluşturulan kurumsal üyelik akışı bu ekran üzerinden yönetilir.
+            Demo mantığı kaldırılmış, daha ciddi ve profesyonel bir görünüm hedeflenmiştir.
+          </p>
 
-        <div class="entry-card">
-          <div class="section-kicker">Yeni Üyelik</div>
-          <h2>Kurumsal kayıt oluştur</h2>
-          <form class="entry-form two">
-            <label>Firma Adı<input placeholder="Firma adı"></label>
-            <label>Yetkili Kişi<input placeholder="Yetkili kişi"></label>
-            <label>Telefon<input placeholder="Telefon"></label>
-            <label>Rol
-              <select>
+          <div class="info-box">
+            <h3>Bu ekran ne için kullanılır?</h3>
+            <ul>
+              <li>Mevcut üye hesabı ile giriş</li>
+              <li>Kurumsal yeni başvuru oluşturma</li>
+              <li>Teklif ve pazarlık akışına kontrollü erişim</li>
+              <li>Platform içi ticari sürece geçiş</li>
+            </ul>
+          </div>
+
+          <div class="info-strip">
+            <div class="strip-item">
+              <strong>Kontrollü Erişim</strong>
+              <span>Üyelikten sonra teklif ve pazarlık akışına geçiş sağlanır.</span>
+            </div>
+            <div class="strip-item">
+              <strong>Kurumsal Kayıt</strong>
+              <span>Demo giriş yerine gerçek kayıt ve giriş mantığı kullanılır.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <div class="section-kicker">Üye Girişi</div>
+          <h2>Hesabınla giriş yap</h2>
+          <p>Mevcut üye hesabınla sisteme giriş yaparak teklif ve pazarlık ekranlarına devam edebilirsin.</p>
+
+          <form id="loginForm" class="form-grid">
+            <div class="form-group full">
+              <label>Kullanıcı Adı</label>
+              <input id="loginUsername" type="text" placeholder="Kullanıcı adı" autocomplete="off" />
+            </div>
+
+            <div class="form-group full">
+              <label>Şifre</label>
+              <input id="loginPassword" type="password" placeholder="Şifre" autocomplete="off" />
+            </div>
+
+            <div class="form-actions full">
+              <button type="submit" class="btn btn-primary">Üye Girişi Yap</button>
+              <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+            </div>
+          </form>
+
+          <div id="loginStatus" class="status-box hidden"></div>
+        </section>
+
+        <section class="panel-card full-row">
+          <div class="section-kicker">Yeni Başvuru</div>
+          <h2>Kurumsal üyelik başvurusu</h2>
+          <p>
+            Henüz üye değilsen aşağıdaki formdan başvuru oluşturabilirsin. Başvurular yönetim panelinden değerlendirilir.
+          </p>
+
+          <form id="registerForm" class="form-grid">
+            <div class="form-group">
+              <label>Firma Adı</label>
+              <input id="companyName" type="text" placeholder="Firma adı" />
+            </div>
+
+            <div class="form-group">
+              <label>Yetkili Kişi</label>
+              <input id="contactName" type="text" placeholder="Yetkili kişi" />
+            </div>
+
+            <div class="form-group">
+              <label>Telefon</label>
+              <input id="phone" type="text" placeholder="Telefon" />
+            </div>
+
+            <div class="form-group">
+              <label>Rol</label>
+              <select id="role">
                 <option>Taşıyıcı</option>
                 <option>Yük Veren</option>
                 <option>Tedarikçi</option>
               </select>
-            </label>
-            <div class="full">
-              <a class="btn btn-primary btn-block" href="#">Kayıt Oluştur</a>
+            </div>
+
+            <div class="form-group">
+              <label>Kullanıcı Adı</label>
+              <input id="username" type="text" placeholder="Kullanıcı adı" />
+            </div>
+
+            <div class="form-group">
+              <label>Şifre</label>
+              <input id="password" type="password" placeholder="Şifre" />
+            </div>
+
+            <div class="form-actions full">
+              <button type="submit" class="btn btn-primary">Başvuru Oluştur</button>
             </div>
           </form>
-        </div>
+
+          <div id="registerStatus" class="status-box hidden"></div>
+        </section>
       </div>
     </div>
-  </section>
+  </main>
+
+  <script>
+    function readJson(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+
+    function writeJson(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function showStatus(el, message, isError){
+      el.textContent = message;
+      el.classList.remove('hidden', 'status-success', 'status-error');
+      el.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginStatus = document.getElementById('loginStatus');
+    const registerStatus = document.getElementById('registerStatus');
+
+    loginForm.addEventListener('submit', function(event){
+      event.preventDefault();
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      const users = readJson('sevra_users', []);
+      const user = users.find(x => x.username === username && x.password === password);
+
+      if(!user){
+        showStatus(loginStatus, 'Kullanıcı adı veya şifre hatalı.', true);
+        return;
+      }
+
+      writeJson('sevra_member_session', {
+        username: user.username,
+        companyName: user.companyName || '',
+        contactName: user.contactName || '',
+        role: user.role || '',
+        loginAt: new Date().toISOString()
+      });
+
+      showStatus(loginStatus, 'Giriş başarılı. Üye paneli açılıyor.', false);
+      setTimeout(() => {
+        window.location.href = 'uye-panel.html';
+      }, 400);
+    });
+
+    registerForm.addEventListener('submit', function(event){
+      event.preventDefault();
+
+      const companyName = document.getElementById('companyName').value.trim();
+      const contactName = document.getElementById('contactName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const role = document.getElementById('role').value;
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if(!companyName || !contactName || !phone || !username || !password){
+        showStatus(registerStatus, 'Lütfen tüm alanları doldur.', true);
+        return;
+      }
+
+      const users = readJson('sevra_users', []);
+      const exists = users.some(x => x.username === username);
+
+      if(exists){
+        showStatus(registerStatus, 'Bu kullanıcı adı zaten kayıtlı.', true);
+        return;
+      }
+
+      users.push({
+        companyName,
+        contactName,
+        phone,
+        role,
+        username,
+        password,
+        createdAt: new Date().toISOString(),
+        status: 'Beklemede'
+      });
+
+      writeJson('sevra_users', users);
+      showStatus(registerStatus, 'Kurumsal başvuru kaydedildi. Yönetim onayı sonrası giriş yapabilirsin.', false);
+      registerForm.reset();
+    });
+  </script>
 </body>
 </html>
