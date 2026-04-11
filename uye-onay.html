@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Üyelik Onayı</title>
+  <link rel="stylesheet" href="uye-auth.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Üyelik Onayı</span>
+        </div>
+      </a>
+      <div class="actions">
+        <a class="btn" href="index.html">Ana Sayfa</a>
+      </div>
+    </header>
+
+    <main class="stack">
+      <section class="panel center-panel">
+        <div class="kicker">Aktivasyon</div>
+        <h1>Hesap onay ekranı</h1>
+        <p id="activateText">Aktivasyon bilgisi kontrol ediliyor.</p>
+
+        <div class="actions-row top-gap">
+          <a class="btn primary" href="uye-login.html">Üye Girişi</a>
+          <a class="btn" href="index.html">Ana Sayfa</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>
+function readJson(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){
+    return fallback;
+  }
+}
+function writeJson(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+const params = new URLSearchParams(location.search);
+const token = params.get('token') || '';
+const text = document.getElementById('activateText');
+
+const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
+const apps = Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
+
+const member = members.find(x => x.activationToken === token);
+const app = apps.find(x => x.activationToken === token);
+
+if(!token || !member){
+  text.textContent = 'Aktivasyon bağlantısı geçersiz veya süresi dolmuş.';
+} else {
+  member.status = 'Aktif';
+  member.verifiedAt = new Date().toISOString();
+  if(app){
+    app.status = 'Aktif';
+  }
+  writeJson('sevra_members', members);
+  writeJson('sevra_applications', apps);
+  text.textContent = 'Hesabınız başarıyla onaylandı. Artık üye girişi yapabilirsiniz.';
+}
+</script>
+</body>
+</html>

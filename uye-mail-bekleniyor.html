@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | E-Posta Kontrolü</title>
+  <link rel="stylesheet" href="uye-auth.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>E-Posta Kontrolü</span>
+        </div>
+      </a>
+      <div class="actions">
+        <a class="btn" href="index.html">Ana Sayfa</a>
+      </div>
+    </header>
+
+    <main class="stack">
+      <section class="panel center-panel">
+        <div class="kicker">Onay Süreci</div>
+        <h1>E-posta adresinizi kontrol edin</h1>
+        <p id="mailText">Başvurunuz alındı. Aktivasyon bağlantısı e-posta adresinize gönderildiğinde hesabınızı onaylayabilirsiniz.</p>
+
+        <div class="info-box">
+          <h3>Sonraki adım</h3>
+          <ul>
+            <li>Gelen kutunuzu kontrol edin</li>
+            <li>Aktivasyon bağlantısını açın</li>
+            <li>Hesabınızı onaylayın</li>
+            <li>Ardından üye girişi yapın</li>
+          </ul>
+        </div>
+
+        <div class="actions-row top-gap">
+          <a class="btn primary" href="uye-login.html">Üye Girişine Dön</a>
+          <a class="btn" href="index.html">Ana Sayfa</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>
+const email = sessionStorage.getItem('sevra_last_register_email') || '';
+if(email){
+  document.getElementById('mailText').textContent = email + ' adresi için aktivasyon süreci başlatıldı. Lütfen e-posta kutunuzu kontrol edin.';
+}
+</script>
+</body>
+</html>
