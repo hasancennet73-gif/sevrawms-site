@@ -249,7 +249,7 @@ button{font:inherit;cursor:pointer}
 }
 .content-grid{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr 1fr;
   gap:18px;
 }
 .panel-card.wide{
@@ -266,7 +266,7 @@ button{font:inherit;cursor:pointer}
   font-size:30px;
   line-height:1.08;
 }
-.card-head a{
+.card-head a,.head-mini{
   color:#ffe08a;
   font-size:14px;
 }
@@ -295,11 +295,11 @@ button{font:inherit;cursor:pointer}
   display:block;
   font-size:28px;
 }
-.preview-list{
+.preview-list,.activity-feed{
   display:grid;
   gap:10px;
 }
-.preview-row{
+.preview-row,.activity-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -313,6 +313,34 @@ button{font:inherit;cursor:pointer}
   font-size:15px;
 }
 .preview-row span{
+  font-size:13px;
+  color:#d6e0ef;
+}
+.activity-row{
+  justify-content:flex-start;
+  align-items:flex-start;
+}
+.activity-tag{
+  min-width:72px;
+  min-height:28px;
+  padding:0 10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:rgba(241,200,77,.14);
+  color:#ffe08a;
+  font-size:12px;
+  font-weight:700;
+}
+.activity-body{
+  display:grid;
+  gap:2px;
+}
+.activity-body strong{
+  font-size:15px;
+}
+.activity-body span{
   font-size:13px;
   color:#d6e0ef;
 }
@@ -345,7 +373,7 @@ button{font:inherit;cursor:pointer}
   font-size:22px;
   line-height:1.08;
 }
-@media (max-width:1380px){
+@media (max-width:1500px){
   .content-grid{
     grid-template-columns:1fr 1fr;
   }

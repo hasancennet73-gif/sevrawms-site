@@ -84,7 +84,7 @@
               <li>Başvuru kontrol alanı</li>
               <li>Teklif ve pazarlık izleme</li>
               <li>Ürün ve vitrin yönetimi</li>
-              <li>Sol menülü profesyonel panel yapısı</li>
+              <li>Son işlemler zaman akışı</li>
             </ul>
           </div>
         </div>
@@ -168,6 +168,14 @@
           <div id="productsPreview" class="preview-list"></div>
         </article>
 
+        <article class="panel-card">
+          <div class="card-head">
+            <h2>Son İşlemler</h2>
+            <span class="head-mini">Yönetim zaman akışı</span>
+          </div>
+          <div id="activityFeed" class="activity-feed"></div>
+        </article>
+
         <article class="panel-card wide">
           <div class="card-head">
             <h2>Hızlı Yönetim Geçişleri</h2>
@@ -228,6 +236,7 @@
     const applicationsPreview = document.getElementById('applicationsPreview');
     const offersPreview = document.getElementById('offersPreview');
     const productsPreview = document.getElementById('productsPreview');
+    const activityFeed = document.getElementById('activityFeed');
 
     function addEmpty(el, text) {
       el.innerHTML = '<div class="empty-row">' + text + '</div>';
@@ -264,6 +273,51 @@
       });
     } else {
       addEmpty(productsPreview, 'Ürün kaydı bulunmuyor.');
+    }
+
+    const activities = [];
+
+    applications.slice(-3).reverse().forEach(app => {
+      activities.push({
+        title: (app.companyName || 'Firma') + ' başvurusu',
+        text: 'Durum: ' + (app.status || 'Beklemede'),
+        tag: 'Başvuru'
+      });
+    });
+
+    offers.slice(-3).reverse().forEach(offer => {
+      activities.push({
+        title: offer.loadTitle || 'Teklif',
+        text: 'Son fiyat: ' + (offer.price || '-'),
+        tag: 'Teklif'
+      });
+    });
+
+    threads.slice(-3).reverse().forEach(thread => {
+      activities.push({
+        title: thread.title || 'Pazarlık',
+        text: 'Aktif teklif: ' + new Intl.NumberFormat('tr-TR').format(Number(thread.currentOffer || 0)) + ' TL',
+        tag: 'Pazarlık'
+      });
+    });
+
+    products.slice(-3).reverse().forEach(product => {
+      activities.push({
+        title: product.name || 'Ürün',
+        text: 'Vitrin fiyatı: ' + (product.price || '-'),
+        tag: 'Ürün'
+      });
+    });
+
+    if (activities.length) {
+      activities.slice(0, 8).forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'activity-row';
+        row.innerHTML = '<span class="activity-tag">' + item.tag + '</span><div class="activity-body"><strong>' + item.title + '</strong><span>' + item.text + '</span></div>';
+        activityFeed.appendChild(row);
+      });
+    } else {
+      addEmpty(activityFeed, 'Henüz yönetim hareketi bulunmuyor.');
     }
 
     document.getElementById('logoutBtn').addEventListener('click', function() {
