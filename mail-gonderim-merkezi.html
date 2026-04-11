@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Mail Gönderim Merkezi</title>
+  <link rel="stylesheet" href="mail-gonderim-merkezi.css" />
+</head>
+<body>
+  <script>
+    function readJson(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+    const session = readJson('sevra_admin_session', null) || readJson('sevra_live_auth', null);
+    const isAdmin = !!(session && ((session.role && String(session.role).toLowerCase() === 'admin') || session.role === 'SUPER_ADMIN'));
+    if(!isAdmin){
+      window.location.href = 'yonetici-giris.html';
+    }
+  </script>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="admin-dashboard.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Mail Gönderim Merkezi</span>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
+        <a class="btn btn-secondary" href="basvuru-kullanici-yonetimi.html">Başvurular</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <div class="section-kicker">Mail Akışı V1</div>
+          <h1>Aktivasyon ve şifre yenileme linklerini yönet</h1>
+          <p>Bu ekran statik yapıda oluşturulan aktivasyon ve şifre sıfırlama bağlantılarını toplar. Gerçek mail servisi bağlanana kadar admin bu merkezden linkleri kontrol eder, kopyalar ve gönderildi olarak işaretler.</p>
+        </div>
+        <div class="head-badge">Statik hazırlık merkezi</div>
+      </div>
+
+      <div id="statusBox" class="status-box hidden"></div>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <span>Toplam Mail Kaydı</span>
+          <strong id="allCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Aktivasyon</span>
+          <strong id="activationCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Şifre Yenileme</span>
+          <strong id="resetCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Gönderildi İşaretli</span>
+          <strong id="sentCount">0</strong>
+        </article>
+      </section>
+
+      <section class="panel-card">
+        <div class="card-head">
+          <h2>Mail Çıkış Listesi</h2>
+          <span class="head-mini">Kopyala / Gönderildi / Temizle</span>
+        </div>
+        <div id="mailList" class="mail-list"></div>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+    function writeJson(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+    function showStatus(message, isError=false){
+      const box = document.getElementById('statusBox');
+      box.textContent = message;
+      box.classList.remove('hidden','status-success','status-error');
+      box.classList.add(isError ? 'status-error' : 'status-success');
+    }
+    function getBaseUrl(){
+      const p = location.pathname.split('/');
+      p.pop();
+      return location.origin + p.join('/') + '/';
+    }
+
+    function collectMailQueue(){
+      const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
+      const current = Array.isArray(readJson('sevra_mail_queue', [])) ? readJson('sevra_mail_queue', []) : [];
+      const byKey = new Map(current.map(x => [x.queueKey, x]));
+
+      const fresh = [];
+
+      members.forEach(member => {
+        if(member.activationLink && member.status !== 'Aktif'){
+          const key = 'activation:' + (member.email || '') + ':' + (member.activationToken || '');
+          fresh.push({
+            queueKey: key,
+            type: 'Aktivasyon',
+            email: member.email || '-',
+            title: 'Üyelik aktivasyon bağlantısı',
+            link: member.activationLink,
+            status: (byKey.get(key) || {}).status || 'Bekliyor',
+            createdAt: member.createdAt || new Date().toISOString()
+          });
+        }
+        if(member.resetToken){
+          const key = 'reset:' + (member.email || '') + ':' + member.resetToken;
+          fresh.push({
+            queueKey: key,
+            type: 'Şifre Yenileme',
+            email: member.email || '-',
+            title: 'Şifre sıfırlama bağlantısı',
+            link: 'sifre-sifirla.html?token=' + encodeURIComponent(member.resetToken),
+            status: (byKey.get(key) || {}).status || 'Bekliyor',
+            createdAt: member.resetRequestedAt || new Date().toISOString()
+          });
+        }
+      });
+
+      writeJson('sevra_mail_queue', fresh);
+      return fresh;
+    }
+
+    let queue = collectMailQueue();
+
+    function refreshSummary(){
+      document.getElementById('allCount').textContent = queue.length;
+      document.getElementById('activationCount').textContent = queue.filter(x => x.type === 'Aktivasyon').length;
+      document.getElementById('resetCount').textContent = queue.filter(x => x.type === 'Şifre Yenileme').length;
+      document.getElementById('sentCount').textContent = queue.filter(x => x.status === 'Gönderildi').length;
+    }
+
+    function saveQueue(){
+      writeJson('sevra_mail_queue', queue);
+    }
+
+    function markSent(key){
+      const row = queue.find(x => x.queueKey === key);
+      if(!row){
+        showStatus('Mail kaydı bulunamadı.', true);
+        return;
+      }
+      row.status = 'Gönderildi';
+      saveQueue();
+      renderQueue();
+      showStatus('Mail kaydı gönderildi olarak işaretlendi.');
+    }
+
+    function clearRow(key){
+      queue = queue.filter(x => x.queueKey !== key);
+      saveQueue();
+      renderQueue();
+      showStatus('Mail kaydı listeden kaldırıldı.');
+    }
+
+    function copyLink(relativeLink){
+      const full = getBaseUrl() + relativeLink;
+      navigator.clipboard.writeText(full).then(function(){
+        showStatus('Bağlantı kopyalandı.');
+      }).catch(function(){
+        showStatus('Bağlantı kopyalanamadı.', true);
+      });
+    }
+
+    function badgeClass(status){
+      return status === 'Gönderildi' ? 'status-pill status-pill-green' : 'status-pill';
+    }
+
+    function renderQueue(){
+      refreshSummary();
+      const list = document.getElementById('mailList');
+      list.innerHTML = '';
+
+      if(!queue.length){
+        list.innerHTML = '<div class="empty-row">Bekleyen mail kaydı yok.</div>';
+        return;
+      }
+
+      queue.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'mail-card';
+        row.innerHTML = `
+          <div class="mail-top">
+            <div>
+              <span class="mail-kicker">${item.type}</span>
+              <h3>${item.title}</h3>
+            </div>
+            <span class="${badgeClass(item.status)}">${item.status}</span>
+          </div>
+
+          <div class="mail-grid">
+            <div class="mail-box">
+              <span>E-Posta</span>
+              <strong>${item.email}</strong>
+            </div>
+            <div class="mail-box">
+              <span>Bağlantı</span>
+              <strong>${item.link}</strong>
+            </div>
+          </div>
+
+          <div class="mail-actions">
+            <button class="mini-btn btn-copy" data-link="${item.link}">Link Kopyala</button>
+            <button class="mini-btn btn-send" data-key="${item.queueKey}">Gönderildi</button>
+            <button class="mini-btn btn-clear" data-clear="${item.queueKey}">Listeden Temizle</button>
+          </div>
+        `;
+        list.appendChild(row);
+      });
+
+      list.querySelectorAll('button[data-link]').forEach(btn => {
+        btn.addEventListener('click', function(){
+          copyLink(btn.getAttribute('data-link'));
+        });
+      });
+      list.querySelectorAll('button[data-key]').forEach(btn => {
+        btn.addEventListener('click', function(){
+          markSent(btn.getAttribute('data-key'));
+        });
+      });
+      list.querySelectorAll('button[data-clear]').forEach(btn => {
+        btn.addEventListener('click', function(){
+          clearRow(btn.getAttribute('data-clear'));
+        });
+      });
+    }
+
+    renderQueue();
+  </script>
+</body>
+</html>
