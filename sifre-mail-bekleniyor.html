@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Şifre Yenileme Bekleniyor</title>
+  <link rel="stylesheet" href="uye-auth.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Şifre Yenileme Süreci</span>
+        </div>
+      </a>
+      <div class="actions">
+        <a class="btn" href="uye-login.html">Üye Girişi</a>
+      </div>
+    </header>
+
+    <main class="stack">
+      <section class="panel center-panel">
+        <div class="kicker">Mail Süreci</div>
+        <h1>Şifre yenileme bağlantınızı kontrol edin</h1>
+        <p id="waitText">Şifre yenileme bağlantısı e-posta adresiniz için oluşturuldu.</p>
+
+        <div class="info-box">
+          <h3>Sonraki adım</h3>
+          <ul>
+            <li>Gelen kutunuzu kontrol edin</li>
+            <li>Şifre yenileme bağlantısını açın</li>
+            <li>Yeni şifre belirleyin</li>
+            <li>Ardından tekrar giriş yapın</li>
+          </ul>
+        </div>
+
+        <div class="actions-row top-gap">
+          <a class="btn primary" id="resetLinkBtn" href="uye-login.html">Şifre Sıfırlama Sayfasına Git</a>
+          <a class="btn" href="uye-login.html">Üye Girişine Dön</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>
+const email = sessionStorage.getItem('sevra_last_reset_email') || '';
+const link = sessionStorage.getItem('sevra_last_reset_link') || 'sifre-sifirla.html';
+if(email){
+  document.getElementById('waitText').textContent = email + ' adresi için şifre yenileme bağlantısı oluşturuldu.';
+}
+document.getElementById('resetLinkBtn').href = link;
+</script>
+</body>
+</html>

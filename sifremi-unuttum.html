@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Şifremi Unuttum</title>
+  <link rel="stylesheet" href="uye-auth.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Şifre Yenileme</span>
+        </div>
+      </a>
+      <div class="actions">
+        <a class="btn" href="uye-login.html">Üye Girişi</a>
+        <a class="btn" href="index.html">Ana Sayfa</a>
+      </div>
+    </header>
+
+    <main class="stack">
+      <section class="panel">
+        <div class="kicker">Şifre Yenileme</div>
+        <h1>Şifrenizi yenileyin</h1>
+        <p>Kayıtlı e-posta adresinizi girin. Şifre yenileme bağlantısı oluşturularak sıfırlama adımına yönlendirilirsiniz.</p>
+
+        <form id="forgotForm" class="form-grid">
+          <div class="field full">
+            <label>E-Posta</label>
+            <input id="email" type="email" placeholder="ornek@firma.com" />
+          </div>
+          <div class="actions-row full">
+            <button type="submit" class="btn primary">Yenileme Bağlantısı Oluştur</button>
+            <a class="btn" href="uye-login.html">Girişe Dön</a>
+          </div>
+        </form>
+
+        <div id="forgotMsg" class="note hidden"></div>
+      </section>
+    </main>
+  </div>
+
+<script>
+function readJson(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch(e){
+    return fallback;
+  }
+}
+function writeJson(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
+}
+function show(el, text, ok){
+  el.className='note ' + (ok ? 'ok' : 'err');
+  el.textContent=text;
+}
+function createToken(){
+  return 'RESET-' + Math.random().toString(36).slice(2,10) + '-' + Date.now();
+}
+
+document.getElementById('forgotForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const msg = document.getElementById('forgotMsg');
+
+  const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
+  const row = members.find(x => x.email === email);
+
+  if(!row){
+    show(msg, 'Bu e-posta ile kayıt bulunamadı.', false);
+    return;
+  }
+
+  const token = createToken();
+  row.resetToken = token;
+  row.resetRequestedAt = new Date().toISOString();
+  writeJson('sevra_members', members);
+
+  sessionStorage.setItem('sevra_last_reset_email', email);
+  sessionStorage.setItem('sevra_last_reset_link', 'sifre-sifirla.html?token=' + encodeURIComponent(token));
+
+  show(msg, 'Şifre yenileme süreci başlatıldı. Devam sayfasına yönlendiriliyorsunuz.', true);
+  setTimeout(function(){
+    window.location.href = 'sifre-mail-bekleniyor.html';
+  }, 500);
+});
+</script>
+</body>
+</html>
