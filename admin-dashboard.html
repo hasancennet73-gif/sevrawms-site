@@ -4,22 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Yönetim Kontrol Merkezi</title>
-  <link rel="stylesheet" href="admin-dashboard.css" />
+  <link rel="stylesheet" href="kurumsal-ui.css" />
 </head>
-<body>
+<body class="dashboard-body">
   <script>
-    function readJson(key, fallback) {
-      try {
+    function readJson(key, fallback){
+      try{
         const raw = localStorage.getItem(key);
         return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
-        return fallback;
-      }
+      }catch(e){ return fallback; }
     }
     const session = readJson('sevra_admin_session', null);
-    if (!session) {
-      window.location.href = 'yonetici-giris.html';
-    }
+    if(!session){ window.location.href = 'yonetici-giris.html'; }
   </script>
 
   <div class="dashboard-shell">
@@ -32,171 +28,99 @@
         </div>
       </div>
 
-      <div class="sidebar-section-title">Yönetim Menüsü</div>
+      <div class="sidebar-title">Yönetim Menüsü</div>
 
       <nav class="side-nav">
         <a class="side-link active" href="admin-dashboard.html">Genel Durum</a>
-        <a class="side-link" href="basvuru-yonetim.html">Başvuru Yönetimi</a>
-        <a class="side-link" href="ilan-teklif.html">Teklif Yönetimi</a>
+        <a class="side-link" href="basvuru-kullanici-yonetimi.html">Başvuru ve Kullanıcı</a>
+        <a class="side-link" href="teklif-yonetimi.html">Teklif Yönetimi</a>
         <a class="side-link" href="pazarlik-yonetim.html">Pazarlık Yönetimi</a>
-        <a class="side-link" href="urunler.html">Ürün Yönetimi</a>
-        <a class="side-link" href="urun-vitrini.html">Ürün Vitrini</a>
-        <a class="side-link" href="index.html">Kurumsal Siteye Dön</a>
+        <a class="side-link" href="urunler-v2.html">Ürün Yönetimi</a>
+        <a class="side-link" href="urun-vitrini-v2.html">Ürün Vitrini</a>
+        <a class="side-link" href="index.html">Kurumsal Site</a>
       </nav>
 
       <div class="sidebar-footer">
-        <div class="authority-box">
+        <div class="identity-box">
           <span>Yetki Seviyesi</span>
           <strong>SUPER ADMIN</strong>
         </div>
-        <button id="logoutBtn" class="logout-btn" type="button">Oturumu Kapat</button>
+        <button id="logoutBtn" class="btn btn-primary btn-block" type="button">Oturumu Kapat</button>
       </div>
     </aside>
 
-    <main class="main">
-      <header class="hero-panel">
-        <div class="hero-left">
+    <main class="main-panel">
+      <section class="hero-block">
+        <div class="hero-text">
           <div class="section-kicker">Kurumsal Yönetim Alanı</div>
           <h1>SEVRA yönetim kontrol merkezi</h1>
-          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli kurumsal kontrol paneli üzerinden izlenir. Yönetim tarafı burada daha ağır, net ve profesyonel bir yapıda toplanır.</p>
-
-          <div class="hero-mini-grid">
-            <div class="hero-mini-card">
-              <strong>Tek Merkez</strong>
-              <span>Kontrollü süreç yönetimi</span>
-            </div>
-            <div class="hero-mini-card">
-              <strong>Kurumsal İz</strong>
-              <span>Güçlü panel dili</span>
-            </div>
-            <div class="hero-mini-card">
-              <strong>Net Akış</strong>
-              <span>Yönetim görünürlüğü</span>
-            </div>
-          </div>
+          <p>Başvuru, teklif, pazarlık ve ürün yönetimi aynı kurumsal dil altında tek merkezli yapıda izlenir. Bu ekran operasyonel görünürlüğü artırmak için toparlandı.</p>
         </div>
-
-        <div class="hero-right">
-          <div class="hero-right-card">
-            <span class="hero-right-label">Panel Özeti</span>
-            <h3>Yönetim tarafı hazır</h3>
-            <ul>
-              <li>Başvuru kontrol alanı</li>
-              <li>Teklif ve pazarlık izleme</li>
-              <li>Ürün ve vitrin yönetimi</li>
-              <li>Son işlemler zaman akışı</li>
-            </ul>
-          </div>
+        <div class="hero-side-card">
+          <span class="hero-side-label">Merkez Özeti</span>
+          <h3>Panel standardı oturdu</h3>
+          <ul>
+            <li>Tek sol menü standardı</li>
+            <li>Kurumsal başlık yapısı</li>
+            <li>Tek tip kart ve buton dili</li>
+            <li>Daha ağır ve net görünüm</li>
+          </ul>
         </div>
-      </header>
+      </section>
 
-      <section class="summary-grid">
-        <article class="summary-card">
+      <section class="stats-grid">
+        <article class="stat-card">
           <span>Toplam Başvuru</span>
           <strong id="applicationsCount">0</strong>
         </article>
-        <article class="summary-card">
+        <article class="stat-card">
           <span>Toplam Teklif</span>
           <strong id="offersCount">0</strong>
         </article>
-        <article class="summary-card">
+        <article class="stat-card">
           <span>Toplam Pazarlık</span>
           <strong id="threadsCount">0</strong>
         </article>
-        <article class="summary-card">
+        <article class="stat-card">
           <span>Toplam Ürün</span>
           <strong id="productsCount">0</strong>
         </article>
       </section>
 
-      <section class="content-grid">
-        <article class="panel-card">
+      <section class="panel-grid">
+        <article class="content-card">
           <div class="card-head">
-            <h2>Başvuru Görünümü</h2>
-            <a href="basvuru-yonetim.html">Ayrıntıyı Aç</a>
+            <h2>Başvuru Özeti</h2>
+            <a href="basvuru-kullanici-yonetimi.html">Yönet</a>
           </div>
-          <div class="metric-row">
-            <div class="metric-box">
-              <span>Beklemede</span>
-              <strong id="pendingApplications">0</strong>
-            </div>
-            <div class="metric-box">
-              <span>Onaylandı</span>
-              <strong id="approvedApplications">0</strong>
-            </div>
-            <div class="metric-box">
-              <span>Reddedildi</span>
-              <strong id="rejectedApplications">0</strong>
-            </div>
-          </div>
-          <div id="applicationsPreview" class="preview-list"></div>
+          <div id="applicationsPreview" class="list-stack"></div>
         </article>
 
-        <article class="panel-card">
+        <article class="content-card">
           <div class="card-head">
-            <h2>Teklif ve Pazarlık</h2>
-            <a href="pazarlik-yonetim.html">Süreci İzle</a>
+            <h2>Teklif ve Pazarlık Özeti</h2>
+            <a href="teklif-yonetimi.html">Aç</a>
           </div>
-          <div class="metric-row two">
-            <div class="metric-box">
-              <span>Bekleyen Teklif</span>
-              <strong id="pendingOffers">0</strong>
-            </div>
-            <div class="metric-box">
-              <span>Toplam Mesaj</span>
-              <strong id="messagesCount">0</strong>
-            </div>
-          </div>
-          <div id="offersPreview" class="preview-list"></div>
+          <div id="offersPreview" class="list-stack"></div>
         </article>
 
-        <article class="panel-card">
+        <article class="content-card">
           <div class="card-head">
-            <h2>Ürün ve Vitrin</h2>
-            <a href="urunler.html">Yönetimi Aç</a>
+            <h2>Ürün Özeti</h2>
+            <a href="urunler-v2.html">Yönet</a>
           </div>
-          <div class="metric-row two">
-            <div class="metric-box">
-              <span>Aktif Ürün</span>
-              <strong id="activeProducts">0</strong>
-            </div>
-            <div class="metric-box">
-              <span>Pasif Ürün</span>
-              <strong id="passiveProducts">0</strong>
-            </div>
-          </div>
-          <div id="productsPreview" class="preview-list"></div>
+          <div id="productsPreview" class="list-stack"></div>
         </article>
 
-        <article class="panel-card">
+        <article class="content-card">
           <div class="card-head">
-            <h2>Son İşlemler</h2>
-            <span class="head-mini">Yönetim zaman akışı</span>
+            <h2>Hızlı Geçişler</h2>
           </div>
-          <div id="activityFeed" class="activity-feed"></div>
-        </article>
-
-        <article class="panel-card wide">
-          <div class="card-head">
-            <h2>Hızlı Yönetim Geçişleri</h2>
-          </div>
-          <div class="quick-grid">
-            <a class="quick-action" href="basvuru-yonetim.html">
-              <span>Başvuru</span>
-              <strong>Onay ve red işlemleri</strong>
-            </a>
-            <a class="quick-action" href="ilan-teklif.html">
-              <span>Teklif</span>
-              <strong>Teklif akışını aç</strong>
-            </a>
-            <a class="quick-action" href="pazarlik-yonetim.html">
-              <span>Pazarlık</span>
-              <strong>Mesajlaşmaları izle</strong>
-            </a>
-            <a class="quick-action" href="urunler.html">
-              <span>Ürün</span>
-              <strong>Yeni ürün ekle</strong>
-            </a>
+          <div class="action-grid">
+            <a class="action-card" href="basvuru-kullanici-yonetimi.html"><span>Başvuru</span><strong>Kullanıcı akışını yönet</strong></a>
+            <a class="action-card" href="teklif-yonetimi.html"><span>Teklif</span><strong>Teklif kararlarını yönet</strong></a>
+            <a class="action-card" href="pazarlik-yonetim.html"><span>Pazarlık</span><strong>Sonucu kapat</strong></a>
+            <a class="action-card" href="urunler-v2.html"><span>Ürün</span><strong>Vitrin ürünlerini yönet</strong></a>
           </div>
         </article>
       </section>
@@ -204,123 +128,55 @@
   </div>
 
   <script>
-    function readJson(key, fallback) {
-      try {
+    function readJson(key, fallback){
+      try{
         const raw = localStorage.getItem(key);
         return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
-        return fallback;
-      }
+      }catch(e){ return fallback; }
     }
-
-    const applications = Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
+    const apps = Array.isArray(readJson('sevra_applications', [])) ? readJson('sevra_applications', []) : [];
     const offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
     const threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
     const products = Array.isArray(readJson('sevra_products', [])) ? readJson('sevra_products', []) : [];
 
-    document.getElementById('applicationsCount').textContent = applications.length;
+    document.getElementById('applicationsCount').textContent = apps.length;
     document.getElementById('offersCount').textContent = offers.length;
     document.getElementById('threadsCount').textContent = threads.length;
     document.getElementById('productsCount').textContent = products.length;
 
-    document.getElementById('pendingApplications').textContent = applications.filter(x => x.status === 'Beklemede').length;
-    document.getElementById('approvedApplications').textContent = applications.filter(x => x.status === 'Onaylandı').length;
-    document.getElementById('rejectedApplications').textContent = applications.filter(x => x.status === 'Reddedildi').length;
-
-    document.getElementById('pendingOffers').textContent = offers.filter(x => x.status === 'Beklemede').length;
-    document.getElementById('messagesCount').textContent = threads.reduce((sum, t) => sum + ((t.messages || []).length), 0);
-
-    document.getElementById('activeProducts').textContent = products.filter(x => (x.status || 'Aktif') !== 'Pasif').length;
-    document.getElementById('passiveProducts').textContent = products.filter(x => (x.status || '') === 'Pasif').length;
-
-    const applicationsPreview = document.getElementById('applicationsPreview');
-    const offersPreview = document.getElementById('offersPreview');
-    const productsPreview = document.getElementById('productsPreview');
-    const activityFeed = document.getElementById('activityFeed');
-
-    function addEmpty(el, text) {
-      el.innerHTML = '<div class="empty-row">' + text + '</div>';
-    }
-
-    if (applications.length) {
-      applications.slice(0, 4).forEach(app => {
+    function renderList(el, rows, emptyText){
+      el.innerHTML = '';
+      if(!rows.length){
+        el.innerHTML = '<div class="empty-row">' + emptyText + '</div>';
+        return;
+      }
+      rows.forEach(r => {
         const row = document.createElement('div');
-        row.className = 'preview-row';
-        row.innerHTML = '<strong>' + (app.companyName || '-') + '</strong><span>' + (app.status || '-') + '</span>';
-        applicationsPreview.appendChild(row);
+        row.className = 'list-row';
+        row.innerHTML = '<strong>' + r.left + '</strong><span>' + r.right + '</span>';
+        el.appendChild(row);
       });
-    } else {
-      addEmpty(applicationsPreview, 'Başvuru kaydı bulunmuyor.');
     }
 
-    if (offers.length) {
-      offers.slice(0, 4).forEach(offer => {
-        const row = document.createElement('div');
-        row.className = 'preview-row';
-        row.innerHTML = '<strong>' + (offer.loadTitle || '-') + '</strong><span>' + (offer.price || '-') + '</span>';
-        offersPreview.appendChild(row);
-      });
-    } else {
-      addEmpty(offersPreview, 'Teklif kaydı bulunmuyor.');
-    }
+    renderList(
+      document.getElementById('applicationsPreview'),
+      apps.slice(0,4).map(x => ({left: x.companyName || '-', right: x.status || 'Beklemede'})),
+      'Başvuru kaydı bulunmuyor.'
+    );
 
-    if (products.length) {
-      products.slice(0, 4).forEach(product => {
-        const row = document.createElement('div');
-        row.className = 'preview-row';
-        row.innerHTML = '<strong>' + (product.name || '-') + '</strong><span>' + (product.price || '-') + '</span>';
-        productsPreview.appendChild(row);
-      });
-    } else {
-      addEmpty(productsPreview, 'Ürün kaydı bulunmuyor.');
-    }
+    renderList(
+      document.getElementById('offersPreview'),
+      offers.slice(0,4).map(x => ({left: x.loadTitle || '-', right: x.price || '-'})),
+      'Teklif kaydı bulunmuyor.'
+    );
 
-    const activities = [];
+    renderList(
+      document.getElementById('productsPreview'),
+      products.slice(0,4).map(x => ({left: x.name || '-', right: x.status || 'Aktif'})),
+      'Ürün kaydı bulunmuyor.'
+    );
 
-    applications.slice(-3).reverse().forEach(app => {
-      activities.push({
-        title: (app.companyName || 'Firma') + ' başvurusu',
-        text: 'Durum: ' + (app.status || 'Beklemede'),
-        tag: 'Başvuru'
-      });
-    });
-
-    offers.slice(-3).reverse().forEach(offer => {
-      activities.push({
-        title: offer.loadTitle || 'Teklif',
-        text: 'Son fiyat: ' + (offer.price || '-'),
-        tag: 'Teklif'
-      });
-    });
-
-    threads.slice(-3).reverse().forEach(thread => {
-      activities.push({
-        title: thread.title || 'Pazarlık',
-        text: 'Aktif teklif: ' + new Intl.NumberFormat('tr-TR').format(Number(thread.currentOffer || 0)) + ' TL',
-        tag: 'Pazarlık'
-      });
-    });
-
-    products.slice(-3).reverse().forEach(product => {
-      activities.push({
-        title: product.name || 'Ürün',
-        text: 'Vitrin fiyatı: ' + (product.price || '-'),
-        tag: 'Ürün'
-      });
-    });
-
-    if (activities.length) {
-      activities.slice(0, 8).forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'activity-row';
-        row.innerHTML = '<span class="activity-tag">' + item.tag + '</span><div class="activity-body"><strong>' + item.title + '</strong><span>' + item.text + '</span></div>';
-        activityFeed.appendChild(row);
-      });
-    } else {
-      addEmpty(activityFeed, 'Henüz yönetim hareketi bulunmuyor.');
-    }
-
-    document.getElementById('logoutBtn').addEventListener('click', function() {
+    document.getElementById('logoutBtn').addEventListener('click', function(){
       localStorage.removeItem('sevra_admin_session');
       window.location.href = 'yonetici-giris.html';
     });
