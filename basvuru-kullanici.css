@@ -49,7 +49,7 @@ a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
 .record-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .record-box{border:1px solid var(--line2);border-radius:14px;padding:14px;background:rgba(255,255,255,.015)}
 .record-box span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
-.record-box strong{display:block;font-size:16px;line-height:1.35}
+.record-box strong{display:block;font-size:16px;line-height:1.35;word-break:break-word}
 .record-actions{display:flex;gap:10px;flex-wrap:wrap}
 .mini-btn{min-height:38px;padding:0 14px;border-radius:12px;border:none;color:#fff;font-weight:700}
 .btn-approve{background:linear-gradient(135deg,var(--green),var(--green2))}
