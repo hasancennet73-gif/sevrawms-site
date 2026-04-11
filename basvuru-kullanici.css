@@ -34,7 +34,7 @@ a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
 .summary-card,.panel-card{border:1px solid rgba(255,255,255,.07);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));box-shadow:var(--shadow);padding:22px}
 .summary-card span{display:block;color:var(--muted);font-size:14px;margin-bottom:8px}
 .summary-card strong{display:block;font-size:38px;line-height:1}
-.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.content-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .card-head h2{font-size:30px;line-height:1.08}
 .head-mini{color:#ffe08a;font-size:14px}
@@ -45,6 +45,7 @@ a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
 .record-top h3{font-size:26px;line-height:1.08}
 .status-pill{display:inline-flex;min-height:30px;padding:0 12px;align-items:center;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
 .status-pill-green{background:rgba(31,159,98,.18);color:#d9ffe2}
+.status-pill-red{background:rgba(177,74,74,.18);color:#ffdada}
 .record-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .record-box{border:1px solid var(--line2);border-radius:14px;padding:14px;background:rgba(255,255,255,.015)}
 .record-box span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
