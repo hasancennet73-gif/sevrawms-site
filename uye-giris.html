@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEVRA | Üyelik ve Giriş</title>
-  <link rel="stylesheet" href="kurumsal-ui.css" />
+  <link rel="stylesheet" href="kurumsal-ui.css">
 </head>
-<body class="entry-body">
-  <header class="entry-topbar">
-    <div class="container entry-topbar-inner">
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
       <a class="brand" href="index.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Dijital Lojistik ve Tedarik Platformu</span>
+          <span>Üyelik ve Giriş</span>
         </div>
       </a>
       <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
@@ -26,81 +26,34 @@
         <div class="entry-card">
           <div class="section-kicker">Üye Girişi</div>
           <h2>Mevcut hesapla giriş yap</h2>
-          <form id="loginForm" class="entry-form">
-            <label>Kullanıcı Adı<input id="loginUsername" type="text" placeholder="Kullanıcı adı" required></label>
-            <label>Şifre<input id="loginPassword" type="password" placeholder="Şifre" required></label>
-            <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+          <form class="entry-form">
+            <label>Kullanıcı Adı<input placeholder="Kullanıcı adı"></label>
+            <label>Şifre<input placeholder="Şifre" type="password"></label>
+            <a class="btn btn-primary btn-block" href="uye-panel.html">Giriş Yap</a>
           </form>
-          <div id="loginStatus" class="status-box hidden"></div>
         </div>
 
         <div class="entry-card">
           <div class="section-kicker">Yeni Üyelik</div>
           <h2>Kurumsal kayıt oluştur</h2>
-          <form id="registerForm" class="entry-form two">
-            <label>Firma Adı<input id="companyName" type="text" placeholder="Firma adı" required></label>
-            <label>Yetkili Kişi<input id="contactName" type="text" placeholder="Yetkili kişi" required></label>
-            <label>Telefon<input id="phone" type="text" placeholder="Telefon" required></label>
+          <form class="entry-form two">
+            <label>Firma Adı<input placeholder="Firma adı"></label>
+            <label>Yetkili Kişi<input placeholder="Yetkili kişi"></label>
+            <label>Telefon<input placeholder="Telefon"></label>
             <label>Rol
-              <select id="role">
+              <select>
                 <option>Taşıyıcı</option>
                 <option>Yük Veren</option>
                 <option>Tedarikçi</option>
               </select>
             </label>
-            <label>Kullanıcı Adı<input id="username" type="text" placeholder="Kullanıcı adı" required></label>
-            <label>Şifre<input id="password" type="password" placeholder="Şifre" required></label>
-            <button type="submit" class="btn btn-primary btn-block full">Kayıt Oluştur</button>
+            <div class="full">
+              <a class="btn btn-primary btn-block" href="#">Kayıt Oluştur</a>
+            </div>
           </form>
-          <div id="registerStatus" class="status-box hidden"></div>
         </div>
       </div>
     </div>
   </section>
-
-  <script src="basvuru-kayit-hook.js"></script>
-  <script>
-    function readJson(key, fallback){
-      try{
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      }catch(e){ return fallback; }
-    }
-    function showStatus(el, message, isError=false){
-      el.textContent = message;
-      el.classList.remove('hidden','status-error','status-success');
-      el.classList.add(isError ? 'status-error' : 'status-success');
-    }
-
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const loginStatus = document.getElementById('loginStatus');
-    const registerStatus = document.getElementById('registerStatus');
-
-    loginForm.addEventListener('submit', function(event){
-      event.preventDefault();
-      const username = document.getElementById('loginUsername').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-      const users = readJson('sevra_users', []);
-      const user = users.find(x => x.username === username && x.password === password);
-      if(!user){
-        showStatus(loginStatus, 'Kullanıcı adı veya şifre hatalı.', true);
-        return;
-      }
-      localStorage.setItem('sevra_member_session', JSON.stringify({
-        username: user.username,
-        companyName: user.companyName || '',
-        contactName: user.contactName || '',
-        role: user.role || '',
-        loginAt: new Date().toISOString()
-      }));
-      showStatus(loginStatus, 'Giriş başarılı. Üye paneli açılıyor.');
-      setTimeout(() => { window.location.href = 'uye-panel.html'; }, 350);
-    });
-
-    registerForm.addEventListener('submit', function(){
-      showStatus(registerStatus, 'Başvuru kaydedildi. Yönetici onayı sonrası giriş yapabilirsin.');
-    });
-  </script>
 </body>
 </html>
