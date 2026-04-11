@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Teklif Yönetimi</title>
+  <link rel="stylesheet" href="teklif-yonetimi.css" />
+</head>
+<body>
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    const session = readJson('sevra_admin_session', null);
+    if (!session) {
+      window.location.href = 'yonetici-giris.html';
+    }
+  </script>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="admin-dashboard.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Teklif Yönetim Merkezi</span>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard</a>
+        <a class="btn btn-secondary" href="pazarlik-yonetim.html">Pazarlık Yönetimi</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <div class="section-kicker">Teklif Yönetimi V2</div>
+          <h1>Teklif durumlarını kurumsal şekilde yönet</h1>
+          <p>Yönetici; bekleyen teklifleri onaylayabilir, reddedebilir veya beklemede bırakabilir. Teklif notu, son fiyat ve pazarlık bağlantısı aynı ekrandan izlenir.</p>
+        </div>
+        <div class="head-badge">Admin işlem ekranı</div>
+      </div>
+
+      <div id="statusBox" class="status-box hidden"></div>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <span>Toplam Teklif</span>
+          <strong id="offersCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Beklemede</span>
+          <strong id="pendingCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Onaylandı</span>
+          <strong id="approvedCount">0</strong>
+        </article>
+        <article class="summary-card">
+          <span>Reddedildi</span>
+          <strong id="rejectedCount">0</strong>
+        </article>
+      </section>
+
+      <section class="table-card">
+        <div class="card-head">
+          <h2>Teklif Listesi</h2>
+          <span class="head-mini">Durum yönetimi + pazarlık geçişi</span>
+        </div>
+
+        <div id="offersList" class="offers-list"></div>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    function readJson(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    function writeJson(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+    function moneyText(text) {
+      const n = parseInt(String(text || '').replace(/[^0-9]/g, ''), 10) || 0;
+      return new Intl.NumberFormat('tr-TR').format(n) + ' TL';
+    }
+
+    let offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
+    const threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
+    const loads = Array.isArray(readJson('sevra_loads', [])) ? readJson('sevra_loads', []) : [];
+
+    const offersList = document.getElementById('offersList');
+    const statusBox = document.getElementById('statusBox');
+
+    function showStatus(message, isError = false) {
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    function refreshSummary() {
+      document.getElementById('offersCount').textContent = offers.length;
+      document.getElementById('pendingCount').textContent = offers.filter(x => (x.status || 'Beklemede') === 'Beklemede').length;
+      document.getElementById('approvedCount').textContent = offers.filter(x => x.status === 'Onaylandı').length;
+      document.getElementById('rejectedCount').textContent = offers.filter(x => x.status === 'Reddedildi').length;
+    }
+
+    function saveOffers() {
+      writeJson('sevra_offers', offers);
+    }
+
+    function setStatus(offerId, status) {
+      const offer = offers.find(x => x.id === offerId);
+      if (!offer) {
+        showStatus('Teklif bulunamadı.', true);
+        return;
+      }
+      offer.status = status;
+      saveOffers();
+      renderOffers();
+      showStatus('Teklif durumu güncellendi: ' + status);
+    }
+
+    function openThread(offerId) {
+      const thread = threads.find(x => x.offerId === offerId);
+      if (!thread) {
+        showStatus('Bu teklif için pazarlık kaydı henüz yok.', true);
+        return;
+      }
+      localStorage.setItem('sevra_active_thread_id', thread.id);
+      window.location.href = 'mesajlasma.html';
+    }
+
+    function renderOffers() {
+      refreshSummary();
+      offersList.innerHTML = '';
+
+      if (!offers.length) {
+        offersList.innerHTML = '<div class="empty-row">Teklif kaydı bulunmuyor.</div>';
+        return;
+      }
+
+      offers.forEach(offer => {
+        const thread = threads.find(x => x.offerId === offer.id);
+        const load = loads.find(x => x.id === offer.loadId);
+
+        const card = document.createElement('article');
+        card.className = 'offer-card';
+        card.innerHTML = `
+          <div class="offer-top">
+            <div>
+              <span class="offer-kicker">Teklif Kaydı</span>
+              <h3>${offer.loadTitle || '-'}</h3>
+            </div>
+            <span class="status-pill">${offer.status || 'Beklemede'}</span>
+          </div>
+
+          <div class="offer-grid">
+            <div class="offer-box">
+              <span>Üye</span>
+              <strong>${offer.member || '-'}</strong>
+            </div>
+            <div class="offer-box">
+              <span>Güzergah</span>
+              <strong>${load?.route || '-'}</strong>
+            </div>
+            <div class="offer-box">
+              <span>Verilen Fiyat</span>
+              <strong>${offer.price || '-'}</strong>
+            </div>
+            <div class="offer-box">
+              <span>Son Pazarlık Fiyatı</span>
+              <strong>${thread ? moneyText(thread.currentOffer) : (offer.price || '-')}</strong>
+            </div>
+            <div class="offer-box">
+              <span>Teklif Notu</span>
+              <strong>${offer.note || '-'}</strong>
+            </div>
+            <div class="offer-box">
+              <span>Pazarlık Durumu</span>
+              <strong>${thread ? 'Aktif görüşme var' : 'Henüz yok'}</strong>
+            </div>
+          </div>
+
+          <div class="offer-actions">
+            <button class="mini-btn btn-approve" type="button" data-action="approve">Onayla</button>
+            <button class="mini-btn btn-pending" type="button" data-action="pending">Beklemede Bırak</button>
+            <button class="mini-btn btn-reject" type="button" data-action="reject">Reddet</button>
+            <button class="mini-btn btn-thread" type="button" data-action="thread">${thread ? 'Pazarlığa Git' : 'Pazarlık Yok'}</button>
+          </div>
+        `;
+
+        card.querySelector('[data-action="approve"]').addEventListener('click', () => setStatus(offer.id, 'Onaylandı'));
+        card.querySelector('[data-action="pending"]').addEventListener('click', () => setStatus(offer.id, 'Beklemede'));
+        card.querySelector('[data-action="reject"]').addEventListener('click', () => setStatus(offer.id, 'Reddedildi'));
+
+        const threadBtn = card.querySelector('[data-action="thread"]');
+        if (thread) {
+          threadBtn.addEventListener('click', () => openThread(offer.id));
+        } else {
+          threadBtn.disabled = true;
+          threadBtn.classList.add('disabled-btn');
+        }
+
+        offersList.appendChild(card);
+      });
+    }
+
+    renderOffers();
+  </script>
+</body>
+</html>
