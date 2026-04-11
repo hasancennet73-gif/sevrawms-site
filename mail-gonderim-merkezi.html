@@ -44,11 +44,11 @@
     <div class="container">
       <div class="page-head">
         <div>
-          <div class="section-kicker">Mail Akışı V1</div>
-          <h1>Aktivasyon ve şifre yenileme linklerini yönet</h1>
-          <p>Bu ekran statik yapıda oluşturulan aktivasyon ve şifre sıfırlama bağlantılarını toplar. Gerçek mail servisi bağlanana kadar admin bu merkezden linkleri kontrol eder, kopyalar ve gönderildi olarak işaretler.</p>
+          <div class="section-kicker">Mail Akışı V2</div>
+          <h1>Hazır mail metni ile gönderim sürecini yönet</h1>
+          <p>Bu ekranda aktivasyon ve şifre yenileme kayıtları listelenir. Her kayıt için hazır konu ve hazır mail metni oluşur. Gerçek mail servisi bağlanana kadar admin buradan metni kopyalayıp kullanabilir.</p>
         </div>
-        <div class="head-badge">Statik hazırlık merkezi</div>
+        <div class="head-badge">Hazır mail şablonu</div>
       </div>
 
       <div id="statusBox" class="status-box hidden"></div>
@@ -75,7 +75,7 @@
       <section class="panel-card">
         <div class="card-head">
           <h2>Mail Çıkış Listesi</h2>
-          <span class="head-mini">Kopyala / Gönderildi / Temizle</span>
+          <span class="head-mini">Link / Konu / Metin / Gönderildi</span>
         </div>
         <div id="mailList" class="mail-list"></div>
       </section>
@@ -105,12 +105,19 @@
       p.pop();
       return location.origin + p.join('/') + '/';
     }
+    function escapeHtml(text){
+      return String(text || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
 
     function collectMailQueue(){
       const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
       const current = Array.isArray(readJson('sevra_mail_queue', [])) ? readJson('sevra_mail_queue', []) : [];
       const byKey = new Map(current.map(x => [x.queueKey, x]));
-
       const fresh = [];
 
       members.forEach(member => {
@@ -123,7 +130,8 @@
             title: 'Üyelik aktivasyon bağlantısı',
             link: member.activationLink,
             status: (byKey.get(key) || {}).status || 'Bekliyor',
-            createdAt: member.createdAt || new Date().toISOString()
+            createdAt: member.createdAt || new Date().toISOString(),
+            companyName: member.companyName || ''
           });
         }
         if(member.resetToken){
@@ -135,7 +143,8 @@
             title: 'Şifre sıfırlama bağlantısı',
             link: 'sifre-sifirla.html?token=' + encodeURIComponent(member.resetToken),
             status: (byKey.get(key) || {}).status || 'Bekliyor',
-            createdAt: member.resetRequestedAt || new Date().toISOString()
+            createdAt: member.resetRequestedAt || new Date().toISOString(),
+            companyName: member.companyName || ''
           });
         }
       });
@@ -176,17 +185,51 @@
       showStatus('Mail kaydı listeden kaldırıldı.');
     }
 
-    function copyLink(relativeLink){
-      const full = getBaseUrl() + relativeLink;
-      navigator.clipboard.writeText(full).then(function(){
-        showStatus('Bağlantı kopyalandı.');
+    function copyText(text, successText){
+      navigator.clipboard.writeText(text).then(function(){
+        showStatus(successText);
       }).catch(function(){
-        showStatus('Bağlantı kopyalanamadı.', true);
+        showStatus('Kopyalama yapılamadı.', true);
       });
     }
 
     function badgeClass(status){
       return status === 'Gönderildi' ? 'status-pill status-pill-green' : 'status-pill';
+    }
+
+    function buildSubject(item){
+      if(item.type === 'Aktivasyon'){
+        return 'SEVRA üyelik aktivasyon bağlantınız';
+      }
+      return 'SEVRA şifre yenileme bağlantınız';
+    }
+
+    function buildBody(item){
+      const fullLink = getBaseUrl() + item.link;
+      if(item.type === 'Aktivasyon'){
+        return [
+          'Merhaba,',
+          '',
+          'SEVRA üyelik kaydınız alınmıştır.',
+          'Hesabınızı aktif etmek için aşağıdaki bağlantıyı açın:',
+          fullLink,
+          '',
+          'Bu işlem size ait değilse bu mesajı dikkate almayın.',
+          '',
+          'SEVRA'
+        ].join('\n');
+      }
+      return [
+        'Merhaba,',
+        '',
+        'SEVRA hesabınız için şifre yenileme talebi oluşturulmuştur.',
+        'Yeni şifre belirlemek için aşağıdaki bağlantıyı açın:',
+        fullLink,
+        '',
+        'Bu talep size ait değilse bu mesajı dikkate almayın.',
+        '',
+        'SEVRA'
+      ].join('\n');
     }
 
     function renderQueue(){
@@ -200,30 +243,44 @@
       }
 
       queue.forEach(item => {
+        const subject = buildSubject(item);
+        const body = buildBody(item);
+        const fullLink = getBaseUrl() + item.link;
+
         const row = document.createElement('div');
         row.className = 'mail-card';
         row.innerHTML = `
           <div class="mail-top">
             <div>
-              <span class="mail-kicker">${item.type}</span>
-              <h3>${item.title}</h3>
+              <span class="mail-kicker">${escapeHtml(item.type)}</span>
+              <h3>${escapeHtml(item.title)}</h3>
             </div>
-            <span class="${badgeClass(item.status)}">${item.status}</span>
+            <span class="${badgeClass(item.status)}">${escapeHtml(item.status)}</span>
           </div>
 
           <div class="mail-grid">
             <div class="mail-box">
               <span>E-Posta</span>
-              <strong>${item.email}</strong>
+              <strong>${escapeHtml(item.email)}</strong>
             </div>
             <div class="mail-box">
               <span>Bağlantı</span>
-              <strong>${item.link}</strong>
+              <strong>${escapeHtml(fullLink)}</strong>
+            </div>
+            <div class="mail-box full">
+              <span>Konu</span>
+              <strong>${escapeHtml(subject)}</strong>
+            </div>
+            <div class="mail-box full">
+              <span>Hazır Mail Metni</span>
+              <pre class="mail-pre">${escapeHtml(body)}</pre>
             </div>
           </div>
 
           <div class="mail-actions">
-            <button class="mini-btn btn-copy" data-link="${item.link}">Link Kopyala</button>
+            <button class="mini-btn btn-copy" data-link="${escapeHtml(fullLink)}">Link Kopyala</button>
+            <button class="mini-btn btn-copy" data-subject="${escapeHtml(subject)}">Konuyu Kopyala</button>
+            <button class="mini-btn btn-copy" data-body="${escapeHtml(body)}">Metni Kopyala</button>
             <button class="mini-btn btn-send" data-key="${item.queueKey}">Gönderildi</button>
             <button class="mini-btn btn-clear" data-clear="${item.queueKey}">Listeden Temizle</button>
           </div>
@@ -233,7 +290,17 @@
 
       list.querySelectorAll('button[data-link]').forEach(btn => {
         btn.addEventListener('click', function(){
-          copyLink(btn.getAttribute('data-link'));
+          copyText(btn.getAttribute('data-link'), 'Bağlantı kopyalandı.');
+        });
+      });
+      list.querySelectorAll('button[data-subject]').forEach(btn => {
+        btn.addEventListener('click', function(){
+          copyText(btn.getAttribute('data-subject'), 'Mail konusu kopyalandı.');
+        });
+      });
+      list.querySelectorAll('button[data-body]').forEach(btn => {
+        btn.addEventListener('click', function(){
+          copyText(btn.getAttribute('data-body'), 'Mail metni kopyalandı.');
         });
       });
       list.querySelectorAll('button[data-key]').forEach(btn => {
