@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Yönetim Paneli Girişi</title>
-  <link rel="stylesheet" href="yonetici-giris.css" />
+  <link rel="stylesheet" href="kurumsal-ui.css" />
 </head>
-<body>
-  <header class="topbar">
-    <div class="container topbar-inner">
+<body class="entry-body">
+  <header class="entry-topbar">
+    <div class="container entry-topbar-inner">
       <a class="brand" href="index.html">
         <div class="brand-mark">S</div>
         <div class="brand-text">
@@ -16,63 +16,32 @@
           <span>Dijital Lojistik ve Tedarik Platformu</span>
         </div>
       </a>
-
-      <div class="top-actions">
-        <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
-      </div>
+      <a class="btn btn-secondary" href="index.html">Siteye Dön</a>
     </div>
   </header>
 
-  <section class="admin-login-page">
+  <section class="entry-shell-wrap">
     <div class="container">
-      <div class="admin-login-shell">
-        <div class="login-left">
+      <div class="entry-shell">
+        <div class="entry-info">
           <div class="section-kicker">Yönetim Paneli Erişimi</div>
           <h1>Kurumsal yönetim paneli girişi</h1>
-          <p>Başvurular, üyeler, ilanlar, teklifler, pazarlık süreçleri ve ürün yönetimi tek merkezli yönetim paneli üzerinden kontrol edilir.</p>
-
-          <div class="mini-info-grid">
-            <div class="mini-info">
-              <strong>Başvuru</strong>
-              <span>Kontrollü değerlendirme</span>
-            </div>
-            <div class="mini-info">
-              <strong>Teklif</strong>
-              <span>Merkezi takip</span>
-            </div>
-            <div class="mini-info">
-              <strong>Yönetim</strong>
-              <span>Sol menülü panel yapısı</span>
-            </div>
-          </div>
+          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim kontrol paneli üzerinden takip edilir.</p>
         </div>
 
-        <div class="login-card">
+        <div class="entry-card">
           <div class="section-kicker">Yetkili Erişim</div>
           <h2>Yönetim paneline giriş yap</h2>
-
-          <form id="adminLoginForm" class="admin-form">
-            <div class="form-group">
-              <label for="adminUsername">Kullanıcı Adı</label>
-              <input id="adminUsername" type="text" placeholder="Kullanıcı adı" required />
-            </div>
-
-            <div class="form-group">
-              <label for="adminPassword">Şifre</label>
-              <input id="adminPassword" type="password" placeholder="Şifre" required />
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Yönetim Paneline Gir</button>
-            </div>
+          <form id="adminLoginForm" class="entry-form">
+            <label>Kullanıcı Adı<input id="adminUsername" type="text" placeholder="Kullanıcı adı" required></label>
+            <label>Şifre<input id="adminPassword" type="password" placeholder="Şifre" required></label>
+            <button type="submit" class="btn btn-primary btn-block">Yönetim Paneline Gir</button>
           </form>
-
-          <div class="access-box">
+          <div class="credential-box">
             <span>Test erişim bilgisi</span>
             <strong>Kullanıcı adı: admin</strong>
             <strong>Şifre: 123456</strong>
           </div>
-
           <div id="statusBox" class="status-box hidden"></div>
         </div>
       </div>
@@ -82,30 +51,24 @@
   <script>
     const form = document.getElementById('adminLoginForm');
     const statusBox = document.getElementById('statusBox');
-
-    function showStatus(message, isError = false) {
+    function showStatus(message, isError = false){
       statusBox.textContent = message;
-      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.remove('hidden','status-error','status-success');
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
-
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function(event){
       event.preventDefault();
-
       const username = document.getElementById('adminUsername').value.trim();
       const password = document.getElementById('adminPassword').value.trim();
-
-      if (username === 'admin' && password === '123456') {
+      if(username === 'admin' && password === '123456'){
         localStorage.setItem('sevra_admin_session', JSON.stringify({
           username: 'admin',
           role: 'SUPER_ADMIN',
           loginAt: new Date().toISOString()
         }));
         showStatus('Giriş başarılı. Yönetim paneli açılıyor.');
-        setTimeout(() => {
-          window.location.href = 'admin-dashboard.html';
-        }, 400);
-      } else {
+        setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 350);
+      }else{
         showStatus('Kullanıcı adı veya şifre hatalı.', true);
       }
     });
