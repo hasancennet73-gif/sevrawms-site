@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | İlan ve Teklif Yönetimi</title>
+  <title>SEVRA | Ilan ve Teklif Yonetimi</title>
   <link rel="stylesheet" href="ilan-teklif.css" />
 </head>
 <body>
@@ -17,8 +17,8 @@
         </div>
       </a>
       <div class="top-actions">
-        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanlarına Dön</a>
-        <a class="btn btn-secondary" href="mesajlasma.html">Mesajlaşma</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yuk Ilanlarina Don</a>
+        <a class="btn btn-secondary" href="mesajlasma.html">Mesajlasma</a>
       </div>
     </div>
   </header>
@@ -28,10 +28,10 @@
       <section class="hero-card">
         <div class="hero-copy">
           <div class="section-kicker">Kurumsal Teklif Merkezi</div>
-          <h1>İlan ve teklif akışı</h1>
-          <p>Seçilen yük ilanlarını tek ekranda inceleyin, profesyonel teklif oluşturun ve pazarlık akışını kontrollü biçimde başlatın.</p>
+          <h1>Ilan ve teklif akisi</h1>
+          <p>Secilen yuk ilanlarini tek ekranda inceleyin, profesyonel teklif olusturun ve pazarlik akisina kontrollu bicimde gecin.</p>
         </div>
-        <div id="userBadge" class="user-badge">Üye oturumu kontrol ediliyor</div>
+        <div id="userBadge" class="user-badge">Uye oturumu kontrol ediliyor</div>
       </section>
 
       <div id="statusBox" class="status-box hidden"></div>
@@ -40,25 +40,25 @@
         <div class="card-head">
           <div>
             <div class="section-kicker">Yeni Teklif</div>
-            <h2>Teklif oluştur</h2>
+            <h2>Teklif olustur</h2>
           </div>
         </div>
 
         <form id="offerForm" class="offer-form">
           <div class="form-grid">
             <div class="form-group">
-              <label for="offerLoadSelect">İlan seçin</label>
+              <label for="offerLoadSelect">Ilan secin</label>
               <select id="offerLoadSelect" required></select>
             </div>
 
             <div class="form-group">
-              <label for="offerPrice">Teklif fiyatı</label>
-              <input id="offerPrice" type="number" placeholder="Örn: 18500" required />
+              <label for="offerPrice">Teklif fiyati</label>
+              <input id="offerPrice" type="number" placeholder="Orn: 18500" required />
             </div>
 
             <div class="form-group full">
               <label for="offerNote">Teklif notu</label>
-              <textarea id="offerNote" placeholder="Teslim süresi, araç durumu veya açıklama girin"></textarea>
+              <textarea id="offerNote" placeholder="Teslim suresi, arac durumu veya aciklama girin"></textarea>
             </div>
           </div>
 
@@ -71,19 +71,19 @@
       <section class="table-shell">
         <article class="table-card">
           <div class="card-head">
-            <h2>Aktif İlanlar</h2>
-            <span class="pill">Seçilebilir kayıtlar</span>
+            <h2>Aktif Ilanlar</h2>
+            <span class="pill">Secilebilir kayitlar</span>
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Başlık</th>
-                  <th>Güzergâh</th>
-                  <th>Ağırlık</th>
+                  <th>Baslik</th>
+                  <th>Guzergah</th>
+                  <th>Agirlik</th>
                   <th>Durum</th>
-                  <th>İşlem</th>
+                  <th>Islem</th>
                 </tr>
               </thead>
               <tbody id="loadsTbody"></tbody>
@@ -94,18 +94,18 @@
         <article class="table-card">
           <div class="card-head">
             <h2>Verilen Teklifler</h2>
-            <span class="pill">Pazarlık bağlantılı</span>
+            <span class="pill">Pazarlik baglantili</span>
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>İlan</th>
-                  <th>Üye</th>
+                  <th>Ilan</th>
+                  <th>Uye</th>
                   <th>Fiyat</th>
                   <th>Durum</th>
-                  <th>İşlem</th>
+                  <th>Islem</th>
                 </tr>
               </thead>
               <tbody id="offersTbody"></tbody>
@@ -146,9 +146,9 @@
     const session = readJson('sevra_member_session', null);
 
     if (session && session.email) {
-      userBadge.textContent = 'Üye: ' + (session.companyName || session.email);
+      userBadge.textContent = 'Uye: ' + (session.companyName || session.email);
     } else {
-      userBadge.textContent = 'Üye girişi bulunamadı';
+      userBadge.textContent = 'Uye girisi bulunamadi';
     }
 
     function showStatus(message, isError) {
@@ -163,12 +163,12 @@
       if (!loads.length) {
         const op = document.createElement('option');
         op.value = '';
-        op.textContent = 'İlan bulunmuyor';
+        op.textContent = 'Ilan bulunmuyor';
         offerLoadSelect.appendChild(op);
         return;
       }
 
-      loads.forEach(load => {
+      loads.forEach(function(load) {
         const op = document.createElement('option');
         op.value = load.id;
         op.textContent = (load.title || '-') + ' (' + load.id + ')';
@@ -185,45 +185,45 @@
         return;
       }
 
-      loads.forEach(load => {
+      loads.forEach(function(load) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${load.title || '-'}</td>
-          <td>${load.route || '-'}</td>
-          <td>${load.weight || '-'}</td>
-          <td><span class="mini-pill">${load.status || 'Açık'}</span></td>
-          <td><button class="mini-btn" type="button">Seç</button></td>
-        `;
-        tr.querySelector('button').addEventListener('click', () => {
+        tr.innerHTML = '<td>' + (load.title || '-') + '</td>' +
+          '<td>' + (load.route || '-') + '</td>' +
+          '<td>' + (load.weight || '-') + '</td>' +
+          '<td><span class="mini-pill">' + (load.status || 'Acik') + '</span></td>' +
+          '<td><button class="mini-btn" type="button">Sec</button></td>';
+
+        tr.querySelector('button').addEventListener('click', function() {
           localStorage.setItem('sevra_selected_load', JSON.stringify(load));
           offerLoadSelect.value = load.id;
-          showStatus('İlan seçildi.');
+          showStatus('Ilan secildi.');
         });
+
         loadsTbody.appendChild(tr);
       });
     }
 
     function openOrCreateThread(offer) {
-      const existing = threads.find(x => x.offerId === offer.id);
+      const existing = threads.find(function(x) { return x.offerId === offer.id; });
       if (existing) {
         localStorage.setItem('sevra_active_thread_id', existing.id);
         window.location.href = 'mesajlasma.html';
         return;
       }
 
-      const load = loads.find(x => x.id === offer.loadId);
+      const load = loads.find(function(x) { return x.id === offer.loadId; });
       const numericPrice = parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0;
 
       const thread = {
         id: 'THR-' + Date.now(),
         offerId: offer.id,
         title: offer.loadTitle,
-        route: load?.route || offer.loadTitle,
+        route: load ? (load.route || offer.loadTitle) : offer.loadTitle,
         currentOffer: numericPrice,
-        offerHistory: [{ role: 'Üye', value: numericPrice }],
+        offerHistory: [{ role: 'Uye', value: numericPrice }],
         messages: [{
           role: 'Sistem',
-          text: 'Teklif üzerinden pazarlık ekranı açıldı.',
+          text: 'Teklif uzerinden pazarlik ekrani acildi.',
           time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
         }]
       };
@@ -238,33 +238,32 @@
       offersTbody.innerHTML = '';
 
       if (!offers.length) {
-        offersTbody.innerHTML = '<tr><td colspan="5">Henüz teklif bulunmuyor.</td></tr>';
+        offersTbody.innerHTML = '<tr><td colspan="5">Henuz teklif bulunmuyor.</td></tr>';
         return;
       }
 
-      offers.forEach(offer => {
+      offers.forEach(function(offer) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${offer.loadTitle}</td>
-          <td>${offer.member}</td>
-          <td>${offer.price}</td>
-          <td><span class="mini-pill">${offer.status}</span></td>
-          <td>
-            <div class="table-actions">
-              <button class="mini-btn green js-chat" type="button">Pazarlık Yap</button>
-              <button class="mini-btn js-delete" type="button">Sil</button>
-            </div>
-          </td>
-        `;
+        tr.innerHTML = '<td>' + offer.loadTitle + '</td>' +
+          '<td>' + offer.member + '</td>' +
+          '<td>' + offer.price + '</td>' +
+          '<td><span class="mini-pill">' + offer.status + '</span></td>' +
+          '<td><div class="table-actions">' +
+          '<button class="mini-btn green js-chat" type="button">Pazarlik Yap</button>' +
+          '<button class="mini-btn js-delete" type="button">Sil</button>' +
+          '</div></td>';
 
-        tr.querySelector('.js-delete').addEventListener('click', () => {
-          offers = offers.filter(x => x.id !== offer.id);
+        tr.querySelector('.js-delete').addEventListener('click', function() {
+          offers = offers.filter(function(x) { return x.id !== offer.id; });
           writeJson('sevra_offers', offers);
           renderOffers();
           showStatus('Teklif silindi.');
         });
 
-        tr.querySelector('.js-chat').addEventListener('click', () => openOrCreateThread(offer));
+        tr.querySelector('.js-chat').addEventListener('click', function() {
+          openOrCreateThread(offer);
+        });
+
         offersTbody.appendChild(tr);
       });
     }
@@ -273,7 +272,7 @@
       event.preventDefault();
 
       if (!session || !session.email) {
-        showStatus('Teklif vermek için önce üye girişi yapın.', true);
+        showStatus('Teklif vermek icin once uye girisi yapin.', true);
         return;
       }
 
@@ -282,18 +281,18 @@
       const note = (offerNote.value || '').trim();
 
       if (!loadId) {
-        showStatus('Önce ilan seçin.', true);
+        showStatus('Once ilan secin.', true);
         return;
       }
 
       if (!price) {
-        showStatus('Teklif fiyatını girin.', true);
+        showStatus('Teklif fiyatini girin.', true);
         return;
       }
 
-      const load = loads.find(x => x.id === loadId);
+      const load = loads.find(function(x) { return x.id === loadId; });
       if (!load) {
-        showStatus('Seçilen ilan bulunamadı.', true);
+        showStatus('Secilen ilan bulunamadi.', true);
         return;
       }
 
@@ -314,7 +313,7 @@
       offerNote.value = '';
 
       renderOffers();
-      showStatus('Teklif kaydedildi. Pazarlık Yap butonundan devam edebilirsiniz.');
+      showStatus('Teklif kaydedildi. Pazarlik Yap butonundan devam edebilirsiniz.');
     });
 
     renderSelect();
@@ -322,7 +321,7 @@
     renderOffers();
 
     if (!loads.length) {
-      showStatus('Henüz ilan bulunmuyor. Önce Yük İlanları ekranından bir kayıt seçin.', true);
+      showStatus('Henuz ilan bulunmuyor. Once Yuk Ilanlari ekranindan bir kayit secin.', true);
     }
   </script>
 </body>
