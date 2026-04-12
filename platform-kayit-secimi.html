@@ -3,65 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Kayit Secimi</title>
+  <title>SEVRA | Kayıt Seçimi</title>
+  <meta name="description" content="SEVRA platformunda rolünüzü seçin, ardından kurumsal üyelik oluşturun veya mevcut hesabınızla giriş yapın." />
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    :root{--line:rgba(255,255,255,.08);--text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;}
-    body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),linear-gradient(180deg,#071425,#08111b 74%,#040912);}
+    :root{
+      --bg:#071425;--bg2:#08111b;--bg3:#040912;
+      --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.06);
+      --text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;--yellow2:#f7dc89;
+      --shadow:0 18px 38px rgba(0,0,0,.22);--max:1280px;
+    }
+    body{
+      font-family:Arial,Helvetica,sans-serif;color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
+        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
+        linear-gradient(180deg,var(--bg),var(--bg2) 74%,var(--bg3));
+      line-height:1.5;
+    }
     a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:26px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .title h1{font-size:36px;margin-bottom:8px}
-    .title p{color:var(--muted)}
-    .btn{min-height:42px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:26px 24px 40px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,var(--yellow),var(--yellow2));
+      color:#0b1830;font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center
+    }
+    .brand-text strong{display:block;font-size:34px}
+    .brand-text span{display:block;font-size:12px;color:#d7e1ef}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
+      font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff
+    }
     .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
-    .card,.panel,.note{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-    .card strong{display:block;font-size:28px;margin-bottom:6px}
-    .card span{color:var(--muted);font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-    label{font-size:13px;color:#dce6f5;font-weight:700}
-    input,select,textarea{width:100%;background:#091425;border:1px solid rgba(255,255,255,.10);color:#fff;border-radius:12px;padding:12px;font-size:15px}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-    .status{display:inline-flex;min-height:28px;padding:0 10px;border-radius:999px;align-items:center;font-size:12px;font-weight:700;background:rgba(241,200,77,.14);color:#ffe08a}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    @media (max-width:900px){.grid,.cards{grid-template-columns:1fr}}
+    .hero{
+      border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
+      box-shadow:var(--shadow);padding:28px;margin-bottom:18px
+    }
+    .badge{
+      display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;
+      background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;margin-bottom:14px
+    }
+    .hero h1{font-size:42px;line-height:1.04;margin-bottom:12px}
+    .hero p{color:var(--muted);max-width:860px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .panel{
+      border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.03);padding:24px;
+      box-shadow:var(--shadow)
+    }
+    .panel h2{font-size:28px;margin-bottom:10px}
+    .panel p{color:var(--muted);margin-bottom:18px;min-height:72px}
+    .note{
+      margin-top:18px;border:1px solid var(--line2);border-radius:18px;background:rgba(8,18,34,.72);padding:18px
+    }
+    .note h3{font-size:20px;margin-bottom:10px}
+    .note ul{list-style:none;display:grid;gap:10px}
+    .note li{position:relative;padding-left:18px;color:#d9e4f2}
+    .note li::before{content:"";position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:999px;background:var(--yellow)}
+    @media (max-width:980px){.cards{grid-template-columns:1fr}.hero h1{font-size:34px}}
+    @media (max-width:760px){.brand-text strong{font-size:30px}}
   </style>
 </head>
 <body>
 
 <div class="wrap">
-  <div class="title" style="margin-bottom:18px"><h1>Kayit Secimi</h1><p>Rolunu sec, sonra kayit ol veya giris yap.</p></div>
-  <div class="grid">
-    <div class="panel">
+  <header class="top">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>Kayıt Seçimi</span>
+      </div>
+    </a>
+    <div class="actions">
+      <a class="btn" href="index.html">Ana Sayfa</a>
+      <a class="btn" href="uye-login.html">Üye Girişi</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="badge">Kurumsal Erişim Akışı</div>
+    <h1>Rolünüzü seçin, ardından kayıt olun veya mevcut hesabınızla giriş yapın</h1>
+    <p>SEVRA içinde nakliyeci, yük veren veya standart üye olarak ilerleyebilirsiniz. Seçtiğiniz role göre aynı güvenli üyelik ve giriş akışı üzerinden devam edersiniz.</p>
+  </section>
+
+  <section class="cards">
+    <article class="panel">
       <h2>Nakliyeci</h2>
+      <p>Taşıma kapasitesi sunan, yük inceleyen ve teklif akışına katılan firmalar için giriş noktasıdır.</p>
       <div class="actions">
-        <a id="carrierReg" class="btn primary" href="uye-ol.html?role=carrier">Kayit Ol</a>
-        <a id="carrierLog" class="btn" href="uye-login.html?role=carrier">Giris Yap</a>
+        <a id="carrierReg" class="btn primary" href="uye-ol.html?role=carrier">Kayıt Ol</a>
+        <a id="carrierLog" class="btn" href="uye-login.html?role=carrier">Giriş Yap</a>
       </div>
-    </div>
-    <div class="panel">
-      <h2>Yuk Veren</h2>
+    </article>
+
+    <article class="panel">
+      <h2>Yük Veren</h2>
+      <p>Yük ilanı oluşturan, teklif toplayan ve taşıma organizasyonunu yöneten firmalar için giriş noktasıdır.</p>
       <div class="actions">
-        <a id="shipperReg" class="btn primary" href="uye-ol.html?role=shipper">Kayit Ol</a>
-        <a id="shipperLog" class="btn" href="uye-login.html?role=shipper">Giris Yap</a>
+        <a id="shipperReg" class="btn primary" href="uye-ol.html?role=shipper">Kayıt Ol</a>
+        <a id="shipperLog" class="btn" href="uye-login.html?role=shipper">Giriş Yap</a>
       </div>
-    </div>
-    <div class="panel">
-      <h2>Standart Uye</h2>
+    </article>
+
+    <article class="panel">
+      <h2>Standart Üye</h2>
+      <p>Platformu genel erişimle kullanacak, temel üyelik akışına dahil olacak kullanıcılar için giriş noktasıdır.</p>
       <div class="actions">
-        <a id="memberReg" class="btn primary" href="uye-ol.html?role=member">Kayit Ol</a>
-        <a id="memberLog" class="btn" href="uye-login.html?role=member">Giris Yap</a>
+        <a id="memberReg" class="btn primary" href="uye-ol.html?role=member">Kayıt Ol</a>
+        <a id="memberLog" class="btn" href="uye-login.html?role=member">Giriş Yap</a>
       </div>
-    </div>
-  </div>
+    </article>
+  </section>
+
+  <section class="note">
+    <h3>Süreç nasıl işler?</h3>
+    <ul>
+      <li>Önce rolünüzü seçersiniz.</li>
+      <li>Kayıt oluşturur veya mevcut hesabınızla giriş yaparsınız.</li>
+      <li>Teklif, ilan ve platform içi akışlara kontrollü biçimde yönlendirilirsiniz.</li>
+    </ul>
+  </section>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
-
 <script>
 function q(n){return new URLSearchParams(location.search).get(n)||'';}
 function build(base,role){
