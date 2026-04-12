@@ -48,27 +48,101 @@
   </div>
 
 <script>
-function readJson(key, fallback){
-  try{
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  }catch(e){
-    return fallback;
-  }
-}
-function writeJson(key, value){
-  localStorage.setItem(key, JSON.stringify(value));
-}
+const SUPABASE_URL = 'https://yyiphivbdsjsuxyaihnf.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR';
+
 function show(el, text, ok){
-  el.className='note ' + (ok ? 'ok' : 'err');
-  el.textContent=text;
+  el.className = 'note ' + (ok ? 'ok' : 'err');
+  el.textContent = text;
 }
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token') || '';
 
-document.getElementById('resetForm').addEventListener('submit', function(e){
+async function supabaseFindReset(tokenValue){
+  const url =
+    SUPABASE_URL +
+    '/rest/v1/password_resets?token=eq.' +
+    encodeURIComponent(tokenValue) +
+    '&used=eq.false&select=id,email,token,used';
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error('Reset kaydı okunamadı: ' + text);
+  }
+
+  const data = await response.json();
+  return Array.isArray(data) ? data[0] : null;
+}
+
+async function supabaseUpdateMemberPassword(email, newPassword){
+  const url =
+    SUPABASE_URL +
+    '/rest/v1/members?email=eq.' +
+    encodeURIComponent(email);
+
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify({
+      password: newPassword,
+      updated_at: new Date().toISOString()
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error('Üye şifresi güncellenemedi: ' + text);
+  }
+
+  return await response.json();
+}
+
+async function supabaseMarkResetUsed(resetId){
+  const url =
+    SUPABASE_URL +
+    '/rest/v1/password_resets?id=eq.' +
+    encodeURIComponent(resetId);
+
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify({
+      used: true,
+      used_at: new Date().toISOString()
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error('Reset kaydı kapatılamadı: ' + text);
+  }
+
+  return await response.json();
+}
+
+document.getElementById('resetForm').addEventListener('submit', async function(e){
   e.preventDefault();
+
   const p1 = document.getElementById('newPassword').value.trim();
   const p2 = document.getElementById('newPassword2').value.trim();
   const msg = document.getElementById('resetMsg');
@@ -77,29 +151,32 @@ document.getElementById('resetForm').addEventListener('submit', function(e){
     show(msg, 'Şifre sıfırlama bağlantısı geçersiz.', false);
     return;
   }
+
   if(!p1 || !p2){
     show(msg, 'Lütfen tüm alanları doldur.', false);
     return;
   }
+
   if(p1 !== p2){
     show(msg, 'Şifreler eşleşmiyor.', false);
     return;
   }
 
-  const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
-  const row = members.find(x => x.resetToken === token);
+  try {
+    const resetRow = await supabaseFindReset(token);
 
-  if(!row){
-    show(msg, 'Geçerli bir sıfırlama kaydı bulunamadı.', false);
-    return;
+    if(!resetRow){
+      show(msg, 'Geçerli bir sıfırlama kaydı bulunamadı.', false);
+      return;
+    }
+
+    await supabaseUpdateMemberPassword(resetRow.email, p1);
+    await supabaseMarkResetUsed(resetRow.id);
+
+    show(msg, 'Şifreniz güncellendi. Artık yeni şifrenizle giriş yapabilirsiniz.', true);
+  } catch (err) {
+    show(msg, 'İşlem başarısız: ' + err.message, false);
   }
-
-  row.password = p1;
-  delete row.resetToken;
-  row.passwordUpdatedAt = new Date().toISOString();
-  writeJson('sevra_members', members);
-
-  show(msg, 'Şifreniz güncellendi. Artık yeni şifrenizle giriş yapabilirsiniz.', true);
 });
 </script>
 </body>
