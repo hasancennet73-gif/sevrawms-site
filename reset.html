@@ -1,0 +1,29 @@
+
+<!doctype html>
+<html>
+<head><meta charset="UTF-8"><title>Şifre Sıfırla</title></head>
+<body>
+
+<h2>Yeni Şifre</h2>
+<input id="p1">
+<button onclick="save()">Kaydet</button>
+
+<p id="msg"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+const supabase = supabase.createClient("https://yyiphivbdsjsuxyaihnf.supabase.co", "sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR");
+
+async function save(){
+ const p1=document.getElementById('p1').value;
+
+ const { error } = await supabase.auth.updateUser({
+   password: p1
+ });
+
+ document.getElementById('msg').innerText = error ? error.message : "Şifre değişti!";
+}
+</script>
+
+</body>
+</html>
