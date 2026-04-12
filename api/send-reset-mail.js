@@ -1,24 +1,32 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+module.exports = async function handler(req, res) {
   try {
-    const { email, resetLink } = req.body || {};
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
+    const email = body.email;
+    const resetLink = body.resetLink;
 
     if (!email || !resetLink) {
       return res.status(400).json({ error: 'Eksik bilgi var.' });
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    const fromEmail = process.env.MAIL_FROM || 'mail@sevrawms.com.tr';
+
+    const fromEmail =
+      process.env.MAIL_FROM ||
+      process.env.E_POSTA_GONDEREN ||
+      process.env['E-POSTA_GÖNDEREN'] ||
+      process.env['E-POSTA_GONDEREN'] ||
+      'noreply@mail.sevrawms.com.tr';
 
     if (!apiKey) {
       return res.status(500).json({ error: 'RESEND_API_KEY tanımlı değil.' });
     }
 
     const html = `
-      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111">
+      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111;">
         <h2>SEVRA Şifre Yenileme</h2>
         <p>Şifrenizi yenilemek için aşağıdaki butona tıklayın.</p>
         <p>
@@ -34,14 +42,14 @@ export default async function handler(req, res) {
     const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: 'Bearer ' + apiKey,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: `SEVRA <${fromEmail}>`,
+        from: 'SEVRA <' + fromEmail + '>',
         to: [email],
         subject: 'SEVRA Şifre Yenileme',
-        html
+        html: html
       })
     });
 
@@ -49,13 +57,20 @@ export default async function handler(req, res) {
 
     if (!resendResponse.ok) {
       return res.status(500).json({
-        error: data?.message || data?.error || 'Resend mail gönderemedi.',
-        details: data
+        error: data.message || data.error || 'Resend mail gönderemedi.',
+        details: data,
+        using_from: fromEmail
       });
     }
 
-    return res.status(200).json({ ok: true, data });
+    return res.status(200).json({
+      ok: true,
+      data: data,
+      using_from: fromEmail
+    });
   } catch (error) {
-    return res.status(500).json({ error: error.message || 'Sunucu hatası.' });
+    return res.status(500).json({
+      error: error && error.message ? error.message : 'Sunucu hatası.'
+    });
   }
-}
+};
