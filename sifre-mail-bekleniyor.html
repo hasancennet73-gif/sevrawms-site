@@ -38,8 +38,8 @@
         </div>
 
         <div class="actions-row top-gap">
-          <a class="btn primary" id="resetLinkBtn" href="uye-login.html">Şifre Sıfırlama Sayfasına Git</a>
-          <a class="btn" href="uye-login.html">Üye Girişine Dön</a>
+          <a class="btn primary" href="uye-login.html">Üye Girişine Dön</a>
+          <a class="btn" href="index.html">Ana Sayfa</a>
         </div>
       </section>
     </main>
@@ -47,11 +47,10 @@
 
 <script>
 const email = sessionStorage.getItem('sevra_last_reset_email') || '';
-const link = sessionStorage.getItem('sevra_last_reset_link') || 'sifre-sifirla.html';
-if(email){
-  document.getElementById('waitText').textContent = email + ' adresi için şifre yenileme bağlantısı oluşturuldu.';
+if (email) {
+  document.getElementById('waitText').textContent =
+    email + ' adresi için şifre yenileme süreci başlatıldı. Lütfen gelen kutunuzu kontrol edin.';
 }
-document.getElementById('resetLinkBtn').href = link;
 </script>
 </body>
 </html>
