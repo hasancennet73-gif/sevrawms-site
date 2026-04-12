@@ -28,7 +28,7 @@
         <div class="entry-info">
           <div class="section-kicker">Yetkili Erişim</div>
           <h1>Kurumsal yönetim paneli girişi</h1>
-          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim paneli üzerinden takip edilir. Bu sürümde giriş ekranına beni hatırla mantığı eklendi.</p>
+          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim paneli üzerinden takip edilir. Bu ekran yalnızca yetkili kullanıcılar içindir.</p>
 
           <div class="entry-note-card">
             <h3>Yönetim panelinde neler yönetilir?</h3>
@@ -44,17 +44,12 @@
         <div class="entry-card">
           <div class="section-kicker">Güvenli Giriş</div>
           <h2>Yönetim paneline gir</h2>
-          <form id="adminLoginForm" class="entry-form">
+          <form id="adminLoginForm" class="entry-form" autocomplete="off">
             <label>Kullanıcı Adı
               <input id="adminUsername" placeholder="Kullanıcı adı" autocomplete="off">
             </label>
             <label>Şifre
-              <input id="adminPassword" placeholder="Şifre" type="password" autocomplete="off">
-            </label>
-
-            <label class="remember-row">
-              <input id="rememberMe" type="checkbox">
-              <span>Beni Hatırla</span>
+              <input id="adminPassword" placeholder="Şifre" type="password" autocomplete="new-password">
             </label>
 
             <button type="submit" class="btn btn-primary btn-block">Yönetim Paneline Gir</button>
@@ -70,26 +65,12 @@
     const statusBox = document.getElementById('statusBox');
     const usernameInput = document.getElementById('adminUsername');
     const passwordInput = document.getElementById('adminPassword');
-    const rememberMe = document.getElementById('rememberMe');
 
     function showStatus(message, isError){
       statusBox.textContent = message;
       statusBox.classList.remove('hidden','status-success','status-error');
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
-
-    function loadRemembered(){
-      try{
-        const raw = localStorage.getItem('sevra_admin_remember');
-        if(!raw) return;
-        const data = JSON.parse(raw);
-        usernameInput.value = data.username || '';
-        passwordInput.value = data.password || '';
-        rememberMe.checked = true;
-      }catch(e){}
-    }
-
-    loadRemembered();
 
     form.addEventListener('submit', function(event){
       event.preventDefault();
@@ -102,15 +83,6 @@
           role: 'SUPER_ADMIN',
           loginAt: new Date().toISOString()
         }));
-
-        if(rememberMe.checked){
-          localStorage.setItem('sevra_admin_remember', JSON.stringify({
-            username: username,
-            password: password
-          }));
-        }else{
-          localStorage.removeItem('sevra_admin_remember');
-        }
 
         showStatus('Giriş başarılı. Yönetim paneli açılıyor.', false);
         setTimeout(() => {
