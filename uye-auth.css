@@ -17,20 +17,23 @@ a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
 .actions,.actions-row{display:flex;gap:12px;flex-wrap:wrap}
 .auth-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
 .stack{display:grid;gap:18px}
-.panel{border:1px solid rgba(255,255,255,.07);border-radius:30px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));box-shadow:var(--shadow);padding:28px}
-.center-panel{text-align:left}
+.panel{
+  border:1px solid rgba(255,255,255,.07);border-radius:30px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
+  box-shadow:var(--shadow);padding:28px
+}
 .kicker{color:#f2d780;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
 .panel h1,.panel h2{font-size:42px;line-height:1.04;margin-bottom:12px}
 .panel p{color:var(--muted);margin-bottom:18px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .field{display:flex;flex-direction:column;gap:8px}
-.field.full,.actions-row.full,.helper-row.full{grid-column:1 / -1}
+.field.full,.actions-row.full{grid-column:1 / -1}
 .field label{color:#dce6f3;font-size:14px;font-weight:700}
 .field input,.field select{width:100%;border:1px solid var(--line2);border-radius:14px;background:#0d1a2b;color:#eef4ff;padding:14px 16px}
 .btn{min-height:50px;padding:0 22px;border-radius:15px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff}
 .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-.text-link{color:#ffe08a;font-weight:700}
-.info-box{margin-top:18px;border:1px solid var(--line2);border-radius:24px;padding:22px;background:rgba(8,18,34,.72)}
+.info-box{
+  margin-top:18px;border:1px solid var(--line2);border-radius:24px;padding:22px;background:rgba(8,18,34,.72)
+}
 .info-box h3{font-size:28px;line-height:1.08;margin-bottom:12px}
 .info-box ul{list-style:none;display:grid;gap:10px}
 .info-box li{position:relative;padding-left:18px;color:#d9e4f2}
@@ -39,6 +42,5 @@ a{text-decoration:none;color:inherit} button{font:inherit;cursor:pointer}
 .note.ok{background:rgba(79,152,98,.14);color:#d9ffe2}
 .note.err{background:rgba(180,86,86,.14);color:#ffdada}
 .hidden{display:none}
-.top-gap{margin-top:18px}
 @media (max-width:1100px){.auth-grid,.form-grid{grid-template-columns:1fr}}
 @media (max-width:760px){.panel h1,.panel h2,.info-box h3,.brand-text strong{font-size:32px}}
