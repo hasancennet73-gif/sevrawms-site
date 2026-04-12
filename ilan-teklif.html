@@ -29,9 +29,9 @@
         <div>
           <div class="section-kicker">Kurumsal Akış</div>
           <h1>İlan / Teklif Akışı</h1>
-          <p>Seçilen ilanlar bu ekrana otomatik taşınır. Buradan teklif oluşturabilir, teklifleri izleyebilir ve pazarlık ekranına geçebilirsin.</p>
+          <p>Seçilen ilanlar bu ekrana otomatik taşınır. Buradan teklif oluşturabilir, teklifleri izleyebilir ve pazarlık ekranına geçebilirsiniz.</p>
         </div>
-        <div class="user-badge">Üye: hasanarslan / member</div>
+        <div id="userBadge" class="user-badge">Üye girişi kontrol ediliyor</div>
       </div>
 
       <div id="statusBox" class="status-box hidden"></div>
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group full">
               <label for="offerNote">Not</label>
-              <input id="offerNote" type="text" placeholder="Teklif notu gir" />
+              <input id="offerNote" type="text" placeholder="Teklif notu girin" />
             </div>
           </div>
           <div class="form-actions">
@@ -65,7 +65,7 @@
             <thead>
               <tr>
                 <th>Başlık</th>
-                <th>Güzergah</th>
+                <th>Güzergâh</th>
                 <th>Ağırlık</th>
                 <th>Durum</th>
                 <th>İşlem</th>
@@ -130,11 +130,19 @@
     const offerPrice = document.getElementById('offerPrice');
     const offerNote = document.getElementById('offerNote');
     const statusBox = document.getElementById('statusBox');
+    const userBadge = document.getElementById('userBadge');
 
     let loads = normalizeLoads();
     let offers = normalizeOffers();
     let threads = normalizeThreads();
     const selectedLoad = readJson('sevra_selected_load', null);
+    const session = readJson('sevra_member_session', null);
+
+    if (session && session.email) {
+      userBadge.textContent = 'Üye: ' + (session.companyName || session.email);
+    } else {
+      userBadge.textContent = 'Üye girişi bulunamadı';
+    }
 
     function showStatus(message, isError = false) {
       statusBox.textContent = message;
@@ -168,7 +176,7 @@
       loadsTbody.innerHTML = '';
 
       if (!loads.length) {
-        loadsTbody.innerHTML = '<tr><td colspan="5">İlan yok.</td></tr>';
+        loadsTbody.innerHTML = '<tr><td colspan="5">İlan bulunmuyor.</td></tr>';
         return;
       }
 
@@ -207,9 +215,9 @@
         title: offer.loadTitle,
         route: load?.route || offer.loadTitle,
         currentOffer: numericPrice,
-        offerHistory: [{ role: 'Tasiyici', value: numericPrice }],
+        offerHistory: [{ role: 'Taşıyıcı', value: numericPrice }],
         messages: [{
-          role: 'Admin',
+          role: 'Sistem',
           text: 'Teklif üzerinden pazarlık ekranı açıldı.',
           time: new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
         }]
@@ -225,7 +233,7 @@
       offersTbody.innerHTML = '';
 
       if (!offers.length) {
-        offersTbody.innerHTML = '<tr><td colspan="5">Teklif yok.</td></tr>';
+        offersTbody.innerHTML = '<tr><td colspan="5">Teklif bulunmuyor.</td></tr>';
         return;
       }
 
@@ -259,17 +267,22 @@
     offerForm.addEventListener('submit', function(event) {
       event.preventDefault();
 
+      if (!session || !session.email) {
+        showStatus('Teklif vermek için önce üye girişi yapın.', true);
+        return;
+      }
+
       const loadId = (offerLoadSelect.value || '').trim();
       const price = (offerPrice.value || '').trim();
       const note = (offerNote.value || '').trim();
 
       if (!loadId) {
-        showStatus('Önce ilan seç.', true);
+        showStatus('Önce ilan seçin.', true);
         return;
       }
 
       if (!price) {
-        showStatus('Fiyat gir.', true);
+        showStatus('Fiyat girin.', true);
         return;
       }
 
@@ -284,7 +297,7 @@
         id: 'OFF-' + Date.now(),
         loadId: load.id,
         loadTitle: load.title,
-        member: 'hasanarslan',
+        member: session.companyName || session.email,
         price: price + ' TL',
         note: note,
         status: 'Beklemede'
@@ -297,7 +310,7 @@
       offerNote.value = '';
 
       renderOffers();
-      showStatus('Teklif kaydedildi. Sağdaki yeşil Pazarlık Yap butonundan devam edebilirsin.');
+      showStatus('Teklif kaydedildi. Pazarlık Yap butonundan devam edebilirsiniz.');
     });
 
     renderSelect();
@@ -305,7 +318,7 @@
     renderOffers();
 
     if (!loads.length) {
-      showStatus('Henüz taşınmış ilan yok. Önce Yük İlanları ekranından bir ilana tıkla.', true);
+      showStatus('Henüz taşınmış ilan yok. Önce Yük İlanları ekranından bir ilana tıklayın.', true);
     }
   </script>
 </body>
