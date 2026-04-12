@@ -1,269 +1,55 @@
+
 <!doctype html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Dijital Lojistik ve Tedarik Platformu</title>
-  <meta name="description" content="SEVRA, lojistik operasyon yönetimi, teklif süreçleri ve sektörel tedarik çözümlerini tek kurumsal platformda buluşturur." />
-  <link rel="stylesheet" href="style.css" />
-</head>
+<html>
+<head><meta charset="UTF-8"><title>SEVRA</title></head>
 <body>
-  <div class="utility-bar">
-    <div class="container utility-inner">
-      <div class="utility-left">
-        <span>Kurumsal Lojistik ve Tedarik Altyapısı</span>
-        <span>Türkiye Geneli Operasyon Kurgusu</span>
-      </div>
-      <div class="utility-right">
-        <span>Kurumsal Hat</span>
-        <strong>Teklif · Operasyon · Tedarik</strong>
-      </div>
-    </div>
-  </div>
 
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="index.html">
-        <div class="brand-mark">S</div>
-        <div class="brand-text">
-          <strong>SEVRA</strong>
-          <span>Dijital Lojistik ve Tedarik Platformu</span>
-        </div>
-      </a>
+<h2>Üyelik</h2>
+<input id="email" placeholder="mail">
+<input id="password" placeholder="şifre">
+<button onclick="register()">Kayıt Ol</button>
 
-      <nav class="nav">
-        <a href="#hero">Ana Sayfa</a>
-        <a href="#hizmetler">Hizmetler</a>
-        <a href="#neden-biz">Neden Biz</a>
-        <a href="#iletisim">İletişim</a>
-      </nav>
+<h2>Login</h2>
+<input id="lemail" placeholder="mail">
+<input id="lpassword" placeholder="şifre">
+<button onclick="login()">Giriş</button>
 
-      <div class="top-actions">
-        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
-        <a class="btn btn-secondary" href="yonetici-giris.html">Yönetici Girişi</a>
-        <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Giriş</a>
-      </div>
-    </div>
-  </header>
+<h2>Şifre Sıfırla</h2>
+<input id="remail" placeholder="mail">
+<button onclick="reset()">Mail Gönder</button>
 
-  <section id="hero" class="hero">
-    <div class="container">
-      <div class="hero-shell">
-        <div class="hero-grid">
-          <div class="hero-left">
-            <div class="hero-badge">Kurumsal Operasyon Merkezi</div>
-            <h1>Lojistik operasyonu ve ticari tedarik akışını tek kurumsal zeminde yönetin</h1>
-            <p>SEVRA; yük veren firmalar, taşıyıcı yapılar ve sektörel tedarik ihtiyaçları için daha güven veren, daha düzenli ve daha profesyonel bir dijital operasyon yüzü sunar.</p>
+<p id="msg"></p>
 
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Giriş</a>
-              <a class="btn btn-secondary" href="yuk-ilanlari.html">Açık Yükleri İncele</a>
-            </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+const supabase = supabase.createClient("https://yyiphivbdsjsuxyaihnf.supabase.co", "sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR");
 
-            <div class="stats-grid">
-              <div class="stat-card">
-                <strong>7/24</strong>
-                <span>Operasyon görünürlüğü</span>
-              </div>
-              <div class="stat-card">
-                <strong>B2B</strong>
-                <span>Kurumsal iş modeli</span>
-              </div>
-              <div class="stat-card">
-                <strong>Tek Merkez</strong>
-                <span>Lojistik + tedarik</span>
-              </div>
-            </div>
-          </div>
+async function register(){
+ const email=document.getElementById('email').value;
+ const password=document.getElementById('password').value;
 
-          <div class="hero-right">
-            <div class="hero-right-shell">
-              <div class="hero-main-card">
-                <span class="hero-label">Lojistik Yönetimi</span>
-                <h3>Yük, teklif ve taşıma organizasyonu</h3>
-                <p>Yük ilanı oluşturma, teklif alma ve taşıyıcı eşleşme süreçleri daha kontrollü hale getirilir.</p>
-                <ul class="hero-main-list">
-                  <li>İlan açma ve teklif toplama</li>
-                  <li>Taşıyıcı eşleşme mantığı</li>
-                  <li>Kurumsal operasyon görünürlüğü</li>
-                </ul>
-              </div>
+ const { error } = await supabase.auth.signUp({ email, password });
+ document.getElementById('msg').innerText = error ? error.message : "Mail gönderildi!";
+}
 
-              <div class="hero-sub-grid">
-                <div class="hero-sub-card">
-                  <span class="hero-label">Tedarik Alanı</span>
-                  <h4>Kurumsal ürün vitrini</h4>
-                  <p>Sektörel ürün ve ekipmanlar için profesyonel katalog zemini.</p>
-                </div>
+async function login(){
+ const email=document.getElementById('lemail').value;
+ const password=document.getElementById('lpassword').value;
 
-                <div class="hero-sub-card hero-sub-card-accent">
-                  <span class="hero-label">SEVRA Koruması</span>
-                  <h4>İletişim gizli</h4>
-                  <p>Gerçek iletişim bilgileri komisyon tamamlanmadan açılmaz.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+ const { error } = await supabase.auth.signInWithPassword({ email, password });
+ document.getElementById('msg').innerText = error ? error.message : "Giriş başarılı!";
+}
 
-        <div class="hero-band">
-          <div>Kurumsal operasyon</div>
-          <div>Taşıma organizasyonu</div>
-          <div>Yük ilanı yönetimi</div>
-          <div>Ticari tedarik</div>
-          <div>Komisyon koruması</div>
-        </div>
-      </div>
-    </div>
-  </section>
+async function reset(){
+ const email=document.getElementById('remail').value;
 
-  <section id="hizmetler" class="section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">Hizmet Çerçevesi</div>
-          <h2>Ana hizmet omurgası</h2>
-        </div>
-        <p>Lojistik ve tedarik başlıkları daha net karar akışıyla sunulur.</p>
-      </div>
+ const { error } = await supabase.auth.resetPasswordForEmail(email, {
+   redirectTo: window.location.origin + "/reset.html"
+ });
 
-      <div class="service-stack">
-        <article class="service-wide">
-          <div class="service-index">01</div>
-          <div class="service-copy">
-            <h3>Yük İlanı ve Teklif Toplama</h3>
-            <p>Yük veren firmalar için ilan açma, teklif alma ve uygun taşıyıcıya ulaşma süreci daha kurumsal biçimde yönetilir.</p>
-          </div>
-        </article>
+ document.getElementById('msg').innerText = error ? error.message : "Reset mail gönderildi!";
+}
+</script>
 
-        <article class="service-wide">
-          <div class="service-index">02</div>
-          <div class="service-copy">
-            <h3>Taşıma Organizasyonu</h3>
-            <p>Parsiyel, komple ve kurumsal sevkiyat akışları için daha net operasyon dili ve daha düzenli hizmet yapısı sunulur.</p>
-          </div>
-        </article>
-
-        <article class="service-wide">
-          <div class="service-index">03</div>
-          <div class="service-copy">
-            <h3>Tedarik ve Ürün Vitrini</h3>
-            <p>Sektörel ürün, ekipman ve yedek parça grupları kontrollü vitrin mantığında sunularak ticari görünürlük güçlendirilir.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="neden-biz" class="section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">Neden Biz</div>
-          <h2>SEVRA neden daha kontrollü bir model sunar?</h2>
-        </div>
-        <p>Kurumsal görünüm kadar önemli olan konu, sürecin platform içinde kalması ve ticari akışın dağılmadan yönetilmesidir.</p>
-      </div>
-
-      <div class="reason-grid">
-        <article class="reason-card">
-          <h3>Platform içi teklif akışı</h3>
-          <p>Teklif ve pazarlık süreci platform içinde yürür. Karar zinciri daha düzenli ve kayıtlı ilerler.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Ticari koruma mantığı</h3>
-          <p>Telefon, e-posta ve WhatsApp gibi bilgiler public alanda açık görünmez.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Komisyon güvenliği</h3>
-          <p>Gerçek iletişim bilgileri ancak komisyon ödendikten sonra açılacak kuralla korunur.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Yönetilebilir büyüme zemini</h3>
-          <p>İlan, teklif, pazarlık, vitrin ve kurumsal içerik tek merkezli mantıkla büyütülmeye uygundur.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="iletisim" class="section contact-section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">İletişim</div>
-          <h2>Kurumsal iletişim alanı</h2>
-        </div>
-        <p id="contactIntro">İletişim bilgileri platform güvenliği ve komisyon koruması nedeniyle kontrollü açılır.</p>
-      </div>
-
-      <div class="contact-grid">
-        <article class="contact-card">
-          <span>E-Posta</span>
-          <strong id="contactEmailLabel">Komisyon sonrası görünür</strong>
-          <p id="contactEmailText">Gerçek iletişim bilgileri public alanda açık paylaşılmaz.</p>
-        </article>
-
-        <article class="contact-card">
-          <span>İletişim Kuralı</span>
-          <strong id="contactPolicyLabel">Önce platform içi süreç</strong>
-          <p id="contactPolicyText">Teklif, pazarlık ve anlaşma sistem içinde yürür; gerçek iletişim komisyon tamamlanınca açılır.</p>
-        </article>
-
-        <article class="contact-card">
-          <span>WhatsApp</span>
-          <strong id="contactWhatsappLabel">Kontrollü iletişim hattı</strong>
-          <p id="contactWhatsappText">WhatsApp butonu görünse bile numara açık yazı olarak yayınlanmaz.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <a id="whatsappFab" class="whatsapp-fab hidden" href="#" target="_blank" rel="noopener">WhatsApp</a>
-
-  <script>
-    function readJson(key, fallback){
-      try{
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      }catch(e){
-        return fallback;
-      }
-    }
-
-    const defaults = {
-      contact_email: 'hasancennet73@gmail.com',
-      whatsapp_number: '',
-      whatsapp_enabled: false,
-      allow_public_contact: false,
-      contact_intro: 'İletişim bilgileri platform güvenliği ve komisyon koruması nedeniyle kontrollü açılır.',
-      policy_label: 'Önce platform içi süreç',
-      policy_text: 'Teklif, pazarlık ve anlaşma sistem içinde yürür; gerçek iletişim komisyon tamamlanınca açılır.',
-      release_mode: 'after_commission'
-    };
-
-    const settings = Object.assign({}, defaults, readJson('sevra_site_settings', {}));
-
-    document.getElementById('contactIntro').textContent = settings.contact_intro || defaults.contact_intro;
-    document.getElementById('contactPolicyLabel').textContent = settings.policy_label || defaults.policy_label;
-    document.getElementById('contactPolicyText').textContent = settings.policy_text || defaults.policy_text;
-
-    if(settings.release_mode === 'public' && settings.allow_public_contact){
-      document.getElementById('contactEmailLabel').textContent = settings.contact_email || defaults.contact_email;
-      document.getElementById('contactEmailText').textContent = 'Bu bilgi yönetici panelinden güncellenebilir.';
-    } else if(settings.release_mode === 'after_commission'){
-      document.getElementById('contactEmailLabel').textContent = 'Komisyon sonrası görünür';
-      document.getElementById('contactEmailText').textContent = 'Gerçek iletişim bilgileri ancak komisyon tamamlandığında açılır.';
-    }
-
-    if(settings.whatsapp_enabled && settings.whatsapp_number){
-      const clean = String(settings.whatsapp_number).replace(/[^0-9]/g, '');
-      const fab = document.getElementById('whatsappFab');
-      fab.classList.remove('hidden');
-      fab.href = 'https://wa.me/' + clean;
-    }
-  </script>
 </body>
 </html>
