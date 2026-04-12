@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SEVRA | Yönetim Paneli Girişi</title>
+  <title>SEVRA | Yonetim Paneli Girisi</title>
   <link rel="stylesheet" href="kurumsal-ui.css">
 </head>
 <body>
@@ -13,11 +13,11 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Yönetim Paneli Girişi</span>
+          <span>Yonetim Paneli Girisi</span>
         </div>
       </a>
       <div class="top-actions">
-        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Don</a>
       </div>
     </div>
   </header>
@@ -26,33 +26,33 @@
     <div class="container">
       <div class="entry-shell">
         <div class="entry-info">
-          <div class="section-kicker">Yetkili Erişim</div>
-          <h1>Kurumsal yönetim paneli girişi</h1>
-          <p>Başvuru, teklif, pazarlık ve ürün süreçleri tek merkezli yönetim paneli üzerinden takip edilir. Bu ekran yalnızca yetkili kullanıcılar içindir.</p>
+          <div class="section-kicker">Yetkili Erisim</div>
+          <h1>Kurumsal yonetim paneli girisi</h1>
+          <p>Basvuru, teklif, pazarlik ve urun surecleri tek merkezli yonetim paneli uzerinden takip edilir. Bu ekran yalnizca yetkili kullanicilar icindir.</p>
 
           <div class="entry-note-card">
-            <h3>Yönetim panelinde neler yönetilir?</h3>
+            <h3>Yonetim panelinde neler yonetilir?</h3>
             <ul>
-              <li>Başvuru ve kullanıcı süreçleri</li>
-              <li>Teklif ve pazarlık karar akışı</li>
-              <li>Ürün ve vitrin yönetimi</li>
-              <li>Site ayarları ve iletişim yönetimi</li>
+              <li>Basvuru ve kullanici surecleri</li>
+              <li>Teklif ve pazarlik karar akisi</li>
+              <li>Urun ve vitrin yonetimi</li>
+              <li>Site ayarlari ve iletisim yonetimi</li>
             </ul>
           </div>
         </div>
 
         <div class="entry-card">
-          <div class="section-kicker">Güvenli Giriş</div>
-          <h2>Yönetim paneline gir</h2>
+          <div class="section-kicker">Guvenli Giris</div>
+          <h2>Yonetim paneline gir</h2>
           <form id="adminLoginForm" class="entry-form" autocomplete="off">
-            <label>Kullanıcı Adı
-              <input id="adminUsername" placeholder="Kullanıcı adı" autocomplete="off">
+            <label for="adminUsername">Kullanici Adi
+              <input id="adminUsername" placeholder="Kullanici adi" autocomplete="off">
             </label>
-            <label>Şifre
-              <input id="adminPassword" placeholder="Şifre" type="password" autocomplete="new-password">
+            <label for="adminPassword">Sifre
+              <input id="adminPassword" placeholder="Sifre" type="password" autocomplete="new-password">
             </label>
 
-            <button type="submit" class="btn btn-primary btn-block">Yönetim Paneline Gir</button>
+            <button type="submit" class="btn btn-primary btn-block">Yonetim Paneline Gir</button>
           </form>
           <div id="statusBox" class="status-box hidden"></div>
         </div>
@@ -66,30 +66,32 @@
     const usernameInput = document.getElementById('adminUsername');
     const passwordInput = document.getElementById('adminPassword');
 
-    function showStatus(message, isError){
+    function showStatus(message, isError) {
       statusBox.textContent = message;
-      statusBox.classList.remove('hidden','status-success','status-error');
+      statusBox.classList.remove('hidden', 'status-success', 'status-error');
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
-    form.addEventListener('submit', function(event){
+    form.addEventListener('submit', function(event) {
       event.preventDefault();
+
       const username = usernameInput.value.trim();
       const password = passwordInput.value.trim();
 
-      if(username === 'Hasan Arslan' && password === 'a11571683H'){
+      if (username === 'Hasan Arslan' && password === 'a11571683H') {
         localStorage.setItem('sevra_admin_session', JSON.stringify({
           username: 'Hasan Arslan',
           role: 'SUPER_ADMIN',
           loginAt: new Date().toISOString()
         }));
 
-        showStatus('Giriş başarılı. Yönetim paneli açılıyor.', false);
-        setTimeout(() => {
+        showStatus('Giris basarili. Yonetim paneli aciliyor.', false);
+
+        setTimeout(function() {
           window.location.href = 'admin-dashboard.html';
         }, 400);
       } else {
-        showStatus('Kullanıcı adı veya şifre hatalı.', true);
+        showStatus('Kullanici adi veya sifre hatali.', true);
       }
     });
   </script>
