@@ -1,12 +1,10 @@
-module.exports = async function handler(req, res) {
-  try {
-    if (req.method !== 'POST') {
-      return res.status(405).json({ error: 'Method not allowed' });
-    }
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
-    const email = body.email;
-    const resetLink = body.resetLink;
+  try {
+    const { email, resetLink } = req.body || {};
 
     if (!email || !resetLink) {
       return res.status(400).json({ error: 'Eksik bilgi var.' });
@@ -20,7 +18,7 @@ module.exports = async function handler(req, res) {
     }
 
     const html = `
-      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111;">
+      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111">
         <h2>SEVRA Şifre Yenileme</h2>
         <p>Şifrenizi yenilemek için aşağıdaki butona tıklayın.</p>
         <p>
@@ -36,14 +34,14 @@ module.exports = async function handler(req, res) {
     const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + apiKey,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'SEVRA <' + fromEmail + '>',
+        from: `SEVRA <${fromEmail}>`,
         to: [email],
         subject: 'SEVRA Şifre Yenileme',
-        html: html
+        html
       })
     });
 
@@ -51,15 +49,13 @@ module.exports = async function handler(req, res) {
 
     if (!resendResponse.ok) {
       return res.status(500).json({
-        error: data.message || data.error || 'Resend mail gönderemedi.',
+        error: data?.message || data?.error || 'Resend mail gönderemedi.',
         details: data
       });
     }
 
-    return res.status(200).json({ ok: true, data: data });
+    return res.status(200).json({ ok: true, data });
   } catch (error) {
-    return res.status(500).json({
-      error: error && error.message ? error.message : 'Sunucu hatası.'
-    });
+    return res.status(500).json({ error: error.message || 'Sunucu hatası.' });
   }
-};
+}
