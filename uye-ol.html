@@ -26,39 +26,39 @@
       <section class="panel">
         <div class="kicker">Kurumsal Kayıt</div>
         <h1>Yeni üyelik oluştur</h1>
-        <p>Kurumsal kullanıcılar aşağıdaki bilgilerle başvuru oluşturur. Başvuru kaydı oluşturulduktan sonra üyelik onay sürecine alınır.</p>
+        <p>Kurumsal kullanıcılar aşağıdaki bilgilerle başvuru oluşturur. Başvuru kaydı sistemde açılır ve kayıtlı e-posta ile giriş / şifre sıfırlama akışı kullanılabilir.</p>
 
-        <form id="registerForm" class="form-grid">
+        <form id="registerForm" class="form-grid" autocomplete="off">
           <div class="field">
-            <label>Firma Adı</label>
-            <input id="companyName" type="text" placeholder="Firma adı" />
+            <label for="companyName">Firma Adı</label>
+            <input id="companyName" name="companyName" type="text" placeholder="Firma adı" autocomplete="organization" />
           </div>
           <div class="field">
-            <label>Yetkili Kişi</label>
-            <input id="contactName" type="text" placeholder="Yetkili kişi" />
+            <label for="contactName">Yetkili Kişi</label>
+            <input id="contactName" name="contactName" type="text" placeholder="Yetkili kişi" autocomplete="name" />
           </div>
           <div class="field">
-            <label>E-Posta</label>
-            <input id="email" type="email" placeholder="ornek@firma.com" />
+            <label for="email">E-Posta</label>
+            <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="email" autocapitalize="none" spellcheck="false" />
           </div>
           <div class="field">
-            <label>Telefon</label>
-            <input id="phone" type="text" placeholder="Telefon" />
+            <label for="phone">Telefon</label>
+            <input id="phone" name="phone" type="text" placeholder="Telefon" autocomplete="tel" />
           </div>
           <div class="field">
-            <label>Rol</label>
-            <select id="role">
+            <label for="role">Rol</label>
+            <select id="role" name="role">
               <option>Taşıyıcı</option>
               <option>Yük Veren</option>
               <option>Tedarikçi</option>
             </select>
           </div>
           <div class="field">
-            <label>Şifre</label>
-            <input id="password" type="password" placeholder="Şifre" />
+            <label for="password">Şifre</label>
+            <input id="password" name="password" type="password" placeholder="Şifre" autocomplete="new-password" />
           </div>
           <div class="actions-row full">
-            <button type="submit" class="btn primary">Başvuru Oluştur</button>
+            <button id="registerBtn" type="submit" class="btn primary">Başvuru Oluştur</button>
             <a class="btn" href="uye-login.html">Giriş Ekranına Dön</a>
           </div>
         </form>
@@ -69,15 +69,15 @@
       <section class="panel">
         <div class="kicker">Kurumsal Bilgi</div>
         <h2>Başvuru sonrası süreç</h2>
-        <p>Başvurun kayıt altına alınır ve üyelik değerlendirme sürecine alınır. Onaylanan hesaplar daha sonra giriş ekranı üzerinden platforma erişebilir.</p>
+        <p>Başvurun kayıt altına alınır. Bu kayıt ile giriş, şifre sıfırlama ve sonraki üye akışları aynı veritabanı üzerinden çalışır.</p>
 
         <div class="info-box">
           <h3>Başvuru adımları</h3>
           <ul>
             <li>Kurumsal bilgilerle kayıt oluşturulur</li>
-            <li>Üyelik kaydı sistemde açılır</li>
-            <li>Onay süreci tamamlanır</li>
-            <li>Onaylı hesap ile giriş yapılır</li>
+            <li>Üyelik kaydı veritabanına yazılır</li>
+            <li>Aynı e-posta ile giriş ve şifre sıfırlama kullanılabilir</li>
+            <li>Platform akışına kontrollü erişim sağlanır</li>
           </ul>
         </div>
       </section>
@@ -91,6 +91,12 @@ const SUPABASE_ANON_KEY = 'sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR';
 function show(el, text, ok){
   el.className = 'note ' + (ok ? 'ok' : 'err');
   el.textContent = text;
+}
+
+function setBusy(isBusy){
+  const btn = document.getElementById('registerBtn');
+  btn.disabled = isBusy;
+  btn.textContent = isBusy ? 'Kaydediliyor...' : 'Başvuru Oluştur';
 }
 
 async function supabaseCheckMemberByEmail(email){
@@ -152,15 +158,23 @@ document.getElementById('registerForm').addEventListener('submit', async functio
   const msg = document.getElementById('registerMsg');
 
   if(!companyName || !contactName || !email || !phone || !password){
-    show(msg, 'Lütfen tüm alanları doldur.', false);
+    show(msg, 'Lütfen tüm alanları doldurun.', false);
     return;
   }
+
+  if(password.length < 4){
+    show(msg, 'Şifre en az 4 karakter olmalıdır.', false);
+    return;
+  }
+
+  setBusy(true);
 
   try {
     const exists = await supabaseCheckMemberByEmail(email);
 
     if (exists) {
       show(msg, 'Bu e-posta ile daha önce kayıt oluşturulmuş.', false);
+      setBusy(false);
       return;
     }
 
@@ -175,10 +189,15 @@ document.getElementById('registerForm').addEventListener('submit', async functio
       updated_at: new Date().toISOString()
     });
 
-    show(msg, 'Başvuru kaydedildi. Artık bu e-posta ile şifre sıfırlama ve giriş akışını kullanabilirsiniz.', true);
+    show(msg, 'Başvuru kaydedildi. Giriş ekranına yönlendiriliyorsunuz.', true);
     document.getElementById('registerForm').reset();
+
+    setTimeout(function(){
+      window.location.href = 'uye-login.html';
+    }, 1000);
   } catch (err) {
     show(msg, 'İşlem başarısız: ' + err.message, false);
+    setBusy(false);
   }
 });
 </script>
