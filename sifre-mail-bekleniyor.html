@@ -18,6 +18,7 @@
       </a>
       <div class="actions">
         <a class="btn" href="uye-login.html">Üye Girişi</a>
+        <a class="btn" href="index.html">Ana Sayfa</a>
       </div>
     </header>
 
@@ -32,7 +33,7 @@
           <ul>
             <li>Gelen kutunuzu kontrol edin</li>
             <li>Şifre yenileme bağlantısını açın</li>
-            <li>Yeni şifre belirleyin</li>
+            <li>Yeni şifrenizi belirleyin</li>
             <li>Ardından tekrar giriş yapın</li>
           </ul>
         </div>
@@ -41,16 +42,35 @@
           <a class="btn primary" href="uye-login.html">Üye Girişine Dön</a>
           <a class="btn" href="index.html">Ana Sayfa</a>
         </div>
+
+        <div id="infoMsg" class="note hidden"></div>
       </section>
     </main>
   </div>
 
 <script>
-const email = sessionStorage.getItem('sevra_last_reset_email') || '';
-if (email) {
-  document.getElementById('waitText').textContent =
-    email + ' adresi için şifre yenileme süreci başlatıldı. Lütfen gelen kutunuzu kontrol edin.';
-}
+(function () {
+  const waitText = document.getElementById('waitText');
+  const infoMsg = document.getElementById('infoMsg');
+
+  try {
+    const email = sessionStorage.getItem('sevra_last_reset_email') || '';
+
+    if (email) {
+      waitText.textContent =
+        email + ' adresi için şifre yenileme bağlantısı gönderildi. Lütfen e-posta kutunuzu kontrol edin.';
+    } else {
+      waitText.textContent =
+        'Şifre yenileme süreci başlatıldı. Lütfen e-posta kutunuzu kontrol edin.';
+    }
+
+    infoMsg.className = 'note ok';
+    infoMsg.textContent = 'Mail birkaç dakika içinde gelmezse spam / gereksiz klasörünü de kontrol edin.';
+  } catch (e) {
+    waitText.textContent =
+      'Şifre yenileme süreci başlatıldı. Lütfen e-posta kutunuzu kontrol edin.';
+  }
+})();
 </script>
 </body>
 </html>
