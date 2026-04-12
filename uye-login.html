@@ -26,7 +26,7 @@
       <section class="panel intro">
         <div class="kicker">Kurumsal Erişim</div>
         <h1>SEVRA üye girişi</h1>
-        <p>Taşıyıcı, yük veren ve tedarik tarafı için oluşturulan hesaplar bu ekran üzerinden güvenli biçimde yönetilir. Kurumsal kullanıcılar onaylı hesaplarıyla sisteme giriş yapar.</p>
+        <p>Taşıyıcı, yük veren ve tedarik tarafı için oluşturulan hesaplar bu ekran üzerinden güvenli biçimde yönetilir. Kurumsal kullanıcılar kayıtlı hesaplarıyla sisteme giriş yapar.</p>
 
         <div class="info-box">
           <h3>Üyelik yapısı</h3>
@@ -34,7 +34,7 @@
             <li>Kurumsal hesap ile giriş</li>
             <li>Teklif ve pazarlık ekranlarına kontrollü erişim</li>
             <li>Platform içi ticari akışta kayıtlı ilerleme</li>
-            <li>Onaylı üyelik yapısı</li>
+            <li>Şifre sıfırlama ve giriş aynı veritabanından çalışır</li>
           </ul>
         </div>
       </section>
@@ -46,17 +46,17 @@
 
         <form id="loginForm" class="form-grid" autocomplete="off">
           <div class="field full">
-            <label>E-Posta</label>
+            <label for="email">E-Posta</label>
             <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="off" autocapitalize="none" spellcheck="false" />
           </div>
 
           <div class="field full">
-            <label>Şifre</label>
+            <label for="password">Şifre</label>
             <input id="password" name="password" type="password" placeholder="Şifre" autocomplete="new-password" />
           </div>
 
           <div class="actions-row full">
-            <button type="submit" class="btn primary">Giriş Yap</button>
+            <button id="loginBtn" type="submit" class="btn primary">Giriş Yap</button>
             <a class="btn" href="uye-ol.html">Üyelik Oluştur</a>
             <a class="btn" href="sifremi-unuttum.html">Şifremi Unuttum</a>
             <a class="btn" href="index.html">Ana Sayfa</a>
@@ -97,6 +97,12 @@ function showMsg(text, ok){
   m.textContent = text;
 }
 
+function setBusy(isBusy){
+  var btn = document.getElementById('loginBtn');
+  btn.disabled = isBusy;
+  btn.textContent = isBusy ? 'Kontrol ediliyor...' : 'Giriş Yap';
+}
+
 async function supabaseFindMember(email, password){
   const url =
     SUPABASE_URL +
@@ -135,16 +141,20 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     return;
   }
 
+  setBusy(true);
+
   try {
     var row = await supabaseFindMember(email, password);
 
     if(!row){
       showMsg('E-posta veya şifre hatalı.', false);
+      setBusy(false);
       return;
     }
 
     if(row.status !== 'Aktif'){
       showMsg('Hesabın henüz aktif değil. Üyelik onay süreci tamamlandıktan sonra giriş yapabilirsin.', false);
+      setBusy(false);
       return;
     }
 
@@ -163,6 +173,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     }, 500);
   } catch (err) {
     showMsg('İşlem başarısız: ' + err.message, false);
+    setBusy(false);
   }
 });
 </script>
