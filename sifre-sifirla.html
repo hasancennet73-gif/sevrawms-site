@@ -1,106 +1,48 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yeni Şifre Belirle</title>
-  <link rel="stylesheet" href="uye-auth.css" />
+<meta charset="UTF-8">
+<title>Şifre Sıfırla</title>
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
-      <a class="brand" href="index.html">
-        <div class="brand-mark">S</div>
-        <div class="brand-text">
-          <strong>SEVRA</strong>
-          <span>Yeni Şifre Belirle</span>
-        </div>
-      </a>
-      <div class="actions">
-        <a class="btn" href="uye-login.html">Üye Girişi</a>
-      </div>
-    </header>
 
-    <main class="stack">
-      <section class="panel">
-        <div class="kicker">Şifre Sıfırlama</div>
-        <h1>Yeni şifre oluştur</h1>
-        <p>Geçerli sıfırlama bağlantısı ile yeni şifrenizi belirleyin.</p>
+<h2>Yeni Şifre</h2>
+<input id="p1" placeholder="yeni şifre"><br>
+<input id="p2" placeholder="tekrar"><br>
+<button onclick="save()">Kaydet</button>
 
-        <form id="resetForm" class="form-grid">
-          <div class="field full">
-            <label>Yeni Şifre</label>
-            <input id="newPassword" type="password" placeholder="Yeni şifre" />
-          </div>
-          <div class="field full">
-            <label>Yeni Şifre Tekrar</label>
-            <input id="newPassword2" type="password" placeholder="Yeni şifre tekrar" />
-          </div>
-          <div class="actions-row full">
-            <button type="submit" class="btn primary">Şifreyi Güncelle</button>
-            <a class="btn" href="uye-login.html">Üye Girişine Dön</a>
-          </div>
-        </form>
-
-        <div id="resetMsg" class="note hidden"></div>
-      </section>
-    </main>
-  </div>
+<p id="msg"></p>
 
 <script>
-function readJson(key, fallback){
-  try{
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  }catch(e){
-    return fallback;
-  }
+function readJson(key){return JSON.parse(localStorage.getItem(key)||"[]")}
+function writeJson(key,val){localStorage.setItem(key,JSON.stringify(val))}
+
+const token=new URLSearchParams(location.search).get("token");
+
+function save(){
+ const p1=document.getElementById('p1').value;
+ const p2=document.getElementById('p2').value;
+
+ if(p1!==p2){
+  msg.innerText="eşleşmiyor";
+  return;
+ }
+
+ const members=readJson('sevra_members');
+ const row=members.find(x=>x.resetToken===token);
+
+ if(!row){
+  msg.innerText="token hatalı";
+  return;
+ }
+
+ row.password=p1;
+ delete row.resetToken;
+ writeJson('sevra_members',members);
+
+ msg.innerText="şifre değişti";
 }
-function writeJson(key, value){
-  localStorage.setItem(key, JSON.stringify(value));
-}
-function show(el, text, ok){
-  el.className='note ' + (ok ? 'ok' : 'err');
-  el.textContent=text;
-}
-
-const params = new URLSearchParams(location.search);
-const token = params.get('token') || '';
-
-document.getElementById('resetForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const p1 = document.getElementById('newPassword').value.trim();
-  const p2 = document.getElementById('newPassword2').value.trim();
-  const msg = document.getElementById('resetMsg');
-
-  if(!token){
-    show(msg, 'Şifre sıfırlama bağlantısı geçersiz.', false);
-    return;
-  }
-  if(!p1 || !p2){
-    show(msg, 'Lütfen tüm alanları doldur.', false);
-    return;
-  }
-  if(p1 !== p2){
-    show(msg, 'Şifreler eşleşmiyor.', false);
-    return;
-  }
-
-  const members = Array.isArray(readJson('sevra_members', [])) ? readJson('sevra_members', []) : [];
-  const row = members.find(x => x.resetToken === token);
-
-  if(!row){
-    show(msg, 'Geçerli bir sıfırlama kaydı bulunamadı.', false);
-    return;
-  }
-
-  row.password = p1;
-  delete row.resetToken;
-  row.passwordUpdatedAt = new Date().toISOString();
-  writeJson('sevra_members', members);
-
-  show(msg, 'Şifreniz güncellendi. Artık yeni şifrenizle giriş yapabilirsiniz.', true);
-});
 </script>
+
 </body>
 </html>
