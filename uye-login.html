@@ -49,13 +49,16 @@
             <label>E-Posta</label>
             <input id="email" type="email" placeholder="ornek@firma.com" autocomplete="off" />
           </div>
+
           <div class="field full">
             <label>Şifre</label>
             <input id="password" type="password" placeholder="Şifre" autocomplete="off" />
           </div>
+
           <div class="actions-row full">
             <button type="submit" class="btn primary">Giriş Yap</button>
             <a class="btn" href="uye-ol.html">Üyelik Oluştur</a>
+            <a class="btn" href="sifremi-unuttum.html">Şifremi Unuttum</a>
             <a class="btn" href="index.html">Ana Sayfa</a>
           </div>
         </form>
@@ -66,16 +69,25 @@
   </div>
 
 <script>
-function q(n){return new URLSearchParams(location.search).get(n)||'';}
+function q(n){
+  return new URLSearchParams(location.search).get(n) || '';
+}
+
 function nextUrl(){
-  var r=q('redirect'), l=q('load_id');
-  if(r==='ilan-teklif'){
-    var u='ilan-teklif.html';
-    if(l){u+='?load_id='+encodeURIComponent(l);}
+  var r = q('redirect');
+  var l = q('load_id');
+
+  if(r === 'ilan-teklif'){
+    var u = 'ilan-teklif.html';
+    if(l){
+      u += '?load_id=' + encodeURIComponent(l);
+    }
     return u;
   }
+
   return 'uye-panel.html';
 }
+
 function readJson(key, fallback){
   try{
     const raw = localStorage.getItem(key);
@@ -84,26 +96,33 @@ function readJson(key, fallback){
     return fallback;
   }
 }
+
 function writeJson(key, value){
   localStorage.setItem(key, JSON.stringify(value));
 }
+
 function showMsg(text, ok){
-  var m=document.getElementById('msg');
-  m.className='note ' + (ok ? 'ok' : 'err');
-  m.textContent=text;
+  var m = document.getElementById('msg');
+  m.className = 'note ' + (ok ? 'ok' : 'err');
+  m.textContent = text;
 }
+
 document.getElementById('loginForm').addEventListener('submit', function(e){
   e.preventDefault();
-  var email=document.getElementById('email').value.trim().toLowerCase();
-  var password=document.getElementById('password').value.trim();
-  var members=readJson('sevra_members', []);
-  var row=members.find(function(x){ return x.email===email && x.password===password; });
+
+  var email = document.getElementById('email').value.trim().toLowerCase();
+  var password = document.getElementById('password').value.trim();
+  var members = readJson('sevra_members', []);
+  var row = members.find(function(x){
+    return x.email === email && x.password === password;
+  });
 
   if(!row){
     showMsg('E-posta veya şifre hatalı.', false);
     return;
   }
-  if(row.status!=='Aktif'){
+
+  if(row.status !== 'Aktif'){
     showMsg('Hesabın henüz aktif değil. Üyelik onay süreci tamamlandıktan sonra giriş yapabilirsin.', false);
     return;
   }
@@ -117,7 +136,10 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
   });
 
   showMsg('Giriş başarılı. Yönlendiriliyorsun.', true);
-  setTimeout(function(){ window.location.href=nextUrl(); }, 400);
+
+  setTimeout(function(){
+    window.location.href = nextUrl();
+  }, 400);
 });
 </script>
 </body>
