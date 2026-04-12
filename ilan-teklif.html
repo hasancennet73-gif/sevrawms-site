@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | İlan / Teklif Akışı</title>
+  <title>SEVRA | İlan ve Teklif Yönetimi</title>
   <link rel="stylesheet" href="ilan-teklif.css" />
 </head>
 <body>
@@ -23,76 +23,98 @@
     </div>
   </header>
 
-  <section class="flow-page">
+  <main class="page">
     <div class="container">
-      <div class="flow-head">
-        <div>
-          <div class="section-kicker">Kurumsal Akış</div>
-          <h1>İlan / Teklif Akışı</h1>
-          <p>Seçilen ilanlar bu ekrana otomatik taşınır. Buradan teklif oluşturabilir, teklifleri izleyebilir ve pazarlık ekranına geçebilirsiniz.</p>
+      <section class="hero-card">
+        <div class="hero-copy">
+          <div class="section-kicker">Kurumsal Teklif Merkezi</div>
+          <h1>İlan ve teklif akışı</h1>
+          <p>Seçilen yük ilanlarını tek ekranda inceleyin, profesyonel teklif oluşturun ve pazarlık akışını kontrollü biçimde başlatın.</p>
         </div>
-        <div id="userBadge" class="user-badge">Üye girişi kontrol ediliyor</div>
-      </div>
+        <div id="userBadge" class="user-badge">Üye oturumu kontrol ediliyor</div>
+      </section>
 
       <div id="statusBox" class="status-box hidden"></div>
 
-      <div class="flow-form-card">
-        <form id="offerForm">
+      <section class="offer-entry-card">
+        <div class="card-head">
+          <div>
+            <div class="section-kicker">Yeni Teklif</div>
+            <h2>Teklif oluştur</h2>
+          </div>
+        </div>
+
+        <form id="offerForm" class="offer-form">
           <div class="form-grid">
             <div class="form-group">
-              <label for="offerLoadSelect">İlan</label>
+              <label for="offerLoadSelect">İlan seçin</label>
               <select id="offerLoadSelect" required></select>
             </div>
+
             <div class="form-group">
-              <label for="offerPrice">Fiyat</label>
+              <label for="offerPrice">Teklif fiyatı</label>
               <input id="offerPrice" type="number" placeholder="Örn: 18500" required />
             </div>
+
             <div class="form-group full">
-              <label for="offerNote">Not</label>
-              <input id="offerNote" type="text" placeholder="Teklif notu girin" />
+              <label for="offerNote">Teklif notu</label>
+              <textarea id="offerNote" placeholder="Teslim süresi, araç durumu veya açıklama girin"></textarea>
             </div>
           </div>
-          <div class="form-actions">
+
+          <div class="action-row">
             <button id="saveOfferBtn" type="submit" class="btn btn-primary">Teklif Ver</button>
           </div>
         </form>
-      </div>
+      </section>
 
-      <div class="tables-grid">
-        <div class="table-card">
-          <h2>İlanlar</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Başlık</th>
-                <th>Güzergâh</th>
-                <th>Ağırlık</th>
-                <th>Durum</th>
-                <th>İşlem</th>
-              </tr>
-            </thead>
-            <tbody id="loadsTbody"></tbody>
-          </table>
-        </div>
+      <section class="table-shell">
+        <article class="table-card">
+          <div class="card-head">
+            <h2>Aktif İlanlar</h2>
+            <span class="pill">Seçilebilir kayıtlar</span>
+          </div>
 
-        <div class="table-card">
-          <h2>Teklifler</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>İlan</th>
-                <th>Üye</th>
-                <th>Fiyat</th>
-                <th>Durum</th>
-                <th>İşlem</th>
-              </tr>
-            </thead>
-            <tbody id="offersTbody"></tbody>
-          </table>
-        </div>
-      </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Başlık</th>
+                  <th>Güzergâh</th>
+                  <th>Ağırlık</th>
+                  <th>Durum</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="loadsTbody"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="table-card">
+          <div class="card-head">
+            <h2>Verilen Teklifler</h2>
+            <span class="pill">Pazarlık bağlantılı</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>İlan</th>
+                  <th>Üye</th>
+                  <th>Fiyat</th>
+                  <th>Durum</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="offersTbody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
     </div>
-  </section>
+  </main>
 
   <script>
     function readJson(key, fallback) {
@@ -108,21 +130,6 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
-    function normalizeLoads() {
-      const loads = readJson('sevra_loads', []);
-      return Array.isArray(loads) ? loads : [];
-    }
-
-    function normalizeOffers() {
-      const offers = readJson('sevra_offers', []);
-      return Array.isArray(offers) ? offers : [];
-    }
-
-    function normalizeThreads() {
-      const threads = readJson('sevra_threads', []);
-      return Array.isArray(threads) ? threads : [];
-    }
-
     const offerForm = document.getElementById('offerForm');
     const offerLoadSelect = document.getElementById('offerLoadSelect');
     const loadsTbody = document.getElementById('loadsTbody');
@@ -132,9 +139,9 @@
     const statusBox = document.getElementById('statusBox');
     const userBadge = document.getElementById('userBadge');
 
-    let loads = normalizeLoads();
-    let offers = normalizeOffers();
-    let threads = normalizeThreads();
+    let loads = Array.isArray(readJson('sevra_loads', [])) ? readJson('sevra_loads', []) : [];
+    let offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
+    let threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
     const selectedLoad = readJson('sevra_selected_load', null);
     const session = readJson('sevra_member_session', null);
 
@@ -144,9 +151,9 @@
       userBadge.textContent = 'Üye girişi bulunamadı';
     }
 
-    function showStatus(message, isError = false) {
+    function showStatus(message, isError) {
       statusBox.textContent = message;
-      statusBox.classList.remove('hidden', 'status-error', 'status-success');
+      statusBox.classList.remove('hidden', 'status-success', 'status-error');
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
@@ -156,7 +163,7 @@
       if (!loads.length) {
         const op = document.createElement('option');
         op.value = '';
-        op.textContent = 'İlan yok';
+        op.textContent = 'İlan bulunmuyor';
         offerLoadSelect.appendChild(op);
         return;
       }
@@ -164,10 +171,8 @@
       loads.forEach(load => {
         const op = document.createElement('option');
         op.value = load.id;
-        op.textContent = load.title + ' (' + load.id + ')';
-        if (selectedLoad && selectedLoad.id === load.id) {
-          op.selected = true;
-        }
+        op.textContent = (load.title || '-') + ' (' + load.id + ')';
+        if (selectedLoad && selectedLoad.id === load.id) op.selected = true;
         offerLoadSelect.appendChild(op);
       });
     }
@@ -176,7 +181,7 @@
       loadsTbody.innerHTML = '';
 
       if (!loads.length) {
-        loadsTbody.innerHTML = '<tr><td colspan="5">İlan bulunmuyor.</td></tr>';
+        loadsTbody.innerHTML = '<tr><td colspan="5">Aktif ilan bulunmuyor.</td></tr>';
         return;
       }
 
@@ -186,8 +191,8 @@
           <td>${load.title || '-'}</td>
           <td>${load.route || '-'}</td>
           <td>${load.weight || '-'}</td>
-          <td>${load.status || 'Açık'}</td>
-          <td><button class="mini-btn" type="button" data-id="${load.id}">Seç</button></td>
+          <td><span class="mini-pill">${load.status || 'Açık'}</span></td>
+          <td><button class="mini-btn" type="button">Seç</button></td>
         `;
         tr.querySelector('button').addEventListener('click', () => {
           localStorage.setItem('sevra_selected_load', JSON.stringify(load));
@@ -215,7 +220,7 @@
         title: offer.loadTitle,
         route: load?.route || offer.loadTitle,
         currentOffer: numericPrice,
-        offerHistory: [{ role: 'Taşıyıcı', value: numericPrice }],
+        offerHistory: [{ role: 'Üye', value: numericPrice }],
         messages: [{
           role: 'Sistem',
           text: 'Teklif üzerinden pazarlık ekranı açıldı.',
@@ -233,7 +238,7 @@
       offersTbody.innerHTML = '';
 
       if (!offers.length) {
-        offersTbody.innerHTML = '<tr><td colspan="5">Teklif bulunmuyor.</td></tr>';
+        offersTbody.innerHTML = '<tr><td colspan="5">Henüz teklif bulunmuyor.</td></tr>';
         return;
       }
 
@@ -243,14 +248,15 @@
           <td>${offer.loadTitle}</td>
           <td>${offer.member}</td>
           <td>${offer.price}</td>
-          <td>${offer.status}</td>
+          <td><span class="mini-pill">${offer.status}</span></td>
           <td>
-            <div class="action-stack">
-              <button class="mini-btn pazarlik-btn js-chat" type="button" data-id="${offer.id}">Pazarlık Yap</button>
-              <button class="mini-btn js-delete" type="button" data-id="${offer.id}">Sil</button>
+            <div class="table-actions">
+              <button class="mini-btn green js-chat" type="button">Pazarlık Yap</button>
+              <button class="mini-btn js-delete" type="button">Sil</button>
             </div>
           </td>
         `;
+
         tr.querySelector('.js-delete').addEventListener('click', () => {
           offers = offers.filter(x => x.id !== offer.id);
           writeJson('sevra_offers', offers);
@@ -259,7 +265,6 @@
         });
 
         tr.querySelector('.js-chat').addEventListener('click', () => openOrCreateThread(offer));
-
         offersTbody.appendChild(tr);
       });
     }
@@ -282,12 +287,11 @@
       }
 
       if (!price) {
-        showStatus('Fiyat girin.', true);
+        showStatus('Teklif fiyatını girin.', true);
         return;
       }
 
       const load = loads.find(x => x.id === loadId);
-
       if (!load) {
         showStatus('Seçilen ilan bulunamadı.', true);
         return;
@@ -318,7 +322,7 @@
     renderOffers();
 
     if (!loads.length) {
-      showStatus('Henüz taşınmış ilan yok. Önce Yük İlanları ekranından bir ilana tıklayın.', true);
+      showStatus('Henüz ilan bulunmuyor. Önce Yük İlanları ekranından bir kayıt seçin.', true);
     }
   </script>
 </body>
