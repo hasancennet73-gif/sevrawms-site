@@ -130,7 +130,6 @@ td{font-size:14px;color:#eef4ff}
 }
 .mini-btn.green{background:rgba(86,178,120,.18);color:#dcffe6;border-color:rgba(86,178,120,.28)}
 .table-actions{display:flex;gap:8px;flex-wrap:wrap}
-
 @media (max-width:1100px){
   .table-shell,.form-grid{grid-template-columns:1fr}
 }
