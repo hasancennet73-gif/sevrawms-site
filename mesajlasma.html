@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SEVRA | Mesajlaşma ve Pazarlık</title>
+  <title>SEVRA | Mesajlasma ve Pazarlik</title>
   <link rel="stylesheet" href="kurumsal-ui.css">
 </head>
 <body>
@@ -13,13 +13,13 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Mesajlaşma ve Pazarlık</span>
+          <span>Mesajlasma ve Pazarlik</span>
         </div>
       </a>
       <div class="top-actions">
-        <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışına Dön</a>
-        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard'a Dön</a>
-        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+        <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akisina Don</a>
+        <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard'a Don</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Don</a>
       </div>
     </div>
   </header>
@@ -27,40 +27,37 @@
   <main class="page">
     <div class="container">
       <section class="hero-mini">
-        <div>
-          <div class="section-kicker">Kontrollü Mesajlaşma</div>
-          <h1>Pazarlık ekranı</h1>
-          <p>Platform içi görüşmeler bu ekran üzerinden kontrollü biçimde yürütülür. Dış iletişim paylaşımı sistem kurallarına göre sınırlandırılır.</p>
-        </div>
+        <div class="section-kicker">Kontrollu Mesajlasma</div>
+        <h1>Pazarlik ekrani</h1>
+        <p>Platform ici gorusmeler bu ekran uzerinden kontrollu bicimde yurutulur. Dis iletisim paylasimi sistem kurallarina gore sinirlandirilir.</p>
       </section>
 
       <section class="content-card chat-shell">
         <div class="card-head">
-          <h2>Mesaj Akışı</h2>
+          <h2>Mesaj Akisi</h2>
           <span class="pill">Koruma aktif</span>
         </div>
 
         <div id="chatStatus" class="status-box hidden"></div>
-
         <div id="chatMessages" class="chat-messages"></div>
 
         <form id="chatForm" class="chat-form">
-          <textarea id="chatInput" placeholder="Mesajınızı yazın"></textarea>
-          <button type="submit" class="btn btn-primary">Gönder</button>
+          <textarea id="chatInput" placeholder="Mesajinizi yazin"></textarea>
+          <button type="submit" class="btn btn-primary">Gonder</button>
         </form>
       </section>
     </div>
   </main>
 
   <script>
-    const initialMessages = [
-      { sender: 'Sistem', text: 'Teklif üzerinden pazarlık ekranı açıldı.', time: '21:15' }
-    ];
-
     const chatMessages = document.getElementById('chatMessages');
     const chatInput = document.getElementById('chatInput');
     const chatForm = document.getElementById('chatForm');
     const chatStatus = document.getElementById('chatStatus');
+
+    let messages = [
+      { sender: 'Sistem', text: 'Teklif uzerinden pazarlik ekrani acildi.', time: '21:15' }
+    ];
 
     function showStatus(message, isError) {
       chatStatus.textContent = message;
@@ -68,9 +65,9 @@
       chatStatus.classList.add(isError ? 'status-error' : 'status-success');
     }
 
-    function sanitizeExistingText(text) {
+    function sanitizeText(text) {
       return text
-        .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, '[iletişim bilgisi gizlendi]')
+        .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, '[iletisim bilgisi gizlendi]')
         .replace(/(?:\+?90|0)?\s*5\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/g, '[telefon gizlendi]')
         .replace(/wa\.me\/\d+/ig, '[whatsapp gizlendi]');
     }
@@ -82,22 +79,19 @@
       return emailRegex.test(text) || phoneRegex.test(text) || whatsappRegex.test(text);
     }
 
-    function render(messages) {
-      chatMessages.innerHTML = messages.map((item, idx) => {
+    function render() {
+      chatMessages.innerHTML = messages.map(function(item, idx) {
         const cls = idx % 2 === 0 ? 'msg admin' : 'msg user';
-        return `
-          <div class="${cls}">
-            <div class="msg-sender">${item.sender}</div>
-            <div class="msg-text">${sanitizeExistingText(item.text)}</div>
-            <div class="msg-time">${item.time}</div>
-          </div>
-        `;
+        return '<div class="' + cls + '">' +
+          '<div class="msg-sender">' + item.sender + '</div>' +
+          '<div class="msg-text">' + sanitizeText(item.text) + '</div>' +
+          '<div class="msg-time">' + item.time + '</div>' +
+        '</div>';
       }).join('');
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    let messages = initialMessages.slice();
-    render(messages);
+    render();
 
     chatForm.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -105,20 +99,20 @@
       if (!value) return;
 
       if (hasForbiddenContact(value)) {
-        showStatus('Telefon, e-posta, WhatsApp numarası veya dış iletişim bilgisi tespit edildi. Mesaj gönderilmedi.', true);
+        showStatus('Telefon, e-posta veya dis iletisim bilgisi tespit edildi. Mesaj gonderilmedi.', true);
         chatInput.value = '';
         return;
       }
 
       messages.push({
-        sender: 'Üye',
+        sender: 'Uye',
         text: value,
         time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
       });
 
-      render(messages);
+      render();
       chatInput.value = '';
-      showStatus('Mesaj gönderildi.', false);
+      showStatus('Mesaj gonderildi.', false);
     });
   </script>
 </body>
