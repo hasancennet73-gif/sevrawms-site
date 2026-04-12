@@ -1,24 +1,39 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Şifremi Unuttum</title>
+</head>
+<body>
+<h2>Şifremi Unuttum</h2>
+<input id="email" placeholder="mail gir">
+<button onclick="reset()">Gönder</button>
+
+<p id="msg"></p>
+
 <script>
-function createToken(){
-  return 'RESET-' + Math.random().toString(36).slice(2,10) + '-' + Date.now();
+function readJson(key){return JSON.parse(localStorage.getItem(key)||"[]")}
+function writeJson(key,val){localStorage.setItem(key,JSON.stringify(val))}
+
+function reset(){
+ const email=document.getElementById('email').value;
+ const members=readJson('sevra_members');
+ const row=members.find(x=>x.email===email);
+
+ if(!row){
+  document.getElementById('msg').innerText="Mail bulunamadı";
+  return;
+ }
+
+ const token="RESET-"+Date.now();
+ row.resetToken=token;
+ writeJson('sevra_members',members);
+
+ const link="sifre-sifirla.html?token="+token;
+
+ document.getElementById('msg').innerHTML=
+ "MAIL SİSTEMİ YOK → TEST LİNKİ:<br><a href='"+link+"'>ŞİFREYİ SIFIRLA</a>";
 }
-
-document.getElementById('forgotForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const email = document.getElementById('email').value.trim().toLowerCase();
-
-  const token = createToken();
-
-  fetch('/api/send-mail', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email: email,
-      link: 'https://sevrawms.com.tr/sifre-sifirla.html?token=' + token,
-      type: 'reset'
-    })
-  });
-
-  window.location.href = 'sifre-mail-bekleniyor.html';
-});
 </script>
+</body>
+</html>
