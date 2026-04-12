@@ -28,13 +28,13 @@
         <h1>Şifrenizi yenileyin</h1>
         <p>Kayıtlı e-posta adresinizi girin. Şifre yenileme bağlantısı e-posta adresinize gönderilir.</p>
 
-        <form id="forgotForm" class="form-grid">
+        <form id="forgotForm" class="form-grid" autocomplete="off">
           <div class="field full">
-            <label>E-Posta</label>
-            <input id="email" type="email" placeholder="ornek@firma.com" />
+            <label for="email">E-Posta</label>
+            <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="email" autocapitalize="none" spellcheck="false" />
           </div>
           <div class="actions-row full">
-            <button type="submit" class="btn primary">Yenileme Bağlantısı Gönder</button>
+            <button id="forgotBtn" type="submit" class="btn primary">Yenileme Bağlantısı Gönder</button>
             <a class="btn" href="uye-login.html">Girişe Dön</a>
           </div>
         </form>
@@ -51,6 +51,12 @@
     function show(el, text, ok) {
       el.className = 'note ' + (ok ? 'ok' : 'err');
       el.textContent = text;
+    }
+
+    function setBusy(isBusy) {
+      const btn = document.getElementById('forgotBtn');
+      btn.disabled = isBusy;
+      btn.textContent = isBusy ? 'Gönderiliyor...' : 'Yenileme Bağlantısı Gönder';
     }
 
     function createToken() {
@@ -121,16 +127,20 @@
         return;
       }
 
+      setBusy(true);
+
       try {
         const member = await supabaseSelectMemberByEmail(email);
 
         if (!member) {
           show(msg, 'Bu e-posta ile kayıt bulunamadı.', false);
+          setBusy(false);
           return;
         }
 
         if (member.status && member.status !== 'Aktif') {
           show(msg, 'Bu hesap aktif değil.', false);
+          setBusy(false);
           return;
         }
 
@@ -164,6 +174,7 @@
         }, 700);
       } catch (err) {
         show(msg, 'İşlem başarısız: ' + err.message, false);
+        setBusy(false);
       }
     });
   </script>
