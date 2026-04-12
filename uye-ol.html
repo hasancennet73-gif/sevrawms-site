@@ -85,57 +85,101 @@
   </div>
 
 <script>
-function readJson(key, fallback){
-  try{
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  }catch(e){
-    return fallback;
-  }
-}
-function writeJson(key, value){
-  localStorage.setItem(key, JSON.stringify(value));
-}
+const SUPABASE_URL = 'https://yyiphivbdsjsuxyaihnf.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR';
+
 function show(el, text, ok){
   el.className = 'note ' + (ok ? 'ok' : 'err');
   el.textContent = text;
 }
 
-document.getElementById('registerForm').addEventListener('submit', function(e){
+async function supabaseCheckMemberByEmail(email){
+  const url =
+    SUPABASE_URL +
+    '/rest/v1/members?email=eq.' +
+    encodeURIComponent(email) +
+    '&select=id,email';
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error('Üye kontrolü başarısız: ' + text);
+  }
+
+  const data = await response.json();
+  return Array.isArray(data) ? data[0] : null;
+}
+
+async function supabaseInsertMember(payload){
+  const url = SUPABASE_URL + '/rest/v1/members';
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify([payload])
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error('Kayıt oluşturulamadı: ' + text);
+  }
+
+  return await response.json();
+}
+
+document.getElementById('registerForm').addEventListener('submit', async function(e){
   e.preventDefault();
-  const companyName=document.getElementById('companyName').value.trim();
-  const contactName=document.getElementById('contactName').value.trim();
-  const email=document.getElementById('email').value.trim().toLowerCase();
-  const phone=document.getElementById('phone').value.trim();
-  const role=document.getElementById('role').value;
-  const password=document.getElementById('password').value.trim();
-  const msg=document.getElementById('registerMsg');
+
+  const companyName = document.getElementById('companyName').value.trim();
+  const contactName = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const phone = document.getElementById('phone').value.trim();
+  const role = document.getElementById('role').value;
+  const password = document.getElementById('password').value.trim();
+  const msg = document.getElementById('registerMsg');
 
   if(!companyName || !contactName || !email || !phone || !password){
     show(msg, 'Lütfen tüm alanları doldur.', false);
     return;
   }
 
-  const members=readJson('sevra_members', []);
-  if(members.some(x => x.email===email)){
-    show(msg, 'Bu e-posta ile daha önce kayıt oluşturulmuş.', false);
-    return;
+  try {
+    const exists = await supabaseCheckMemberByEmail(email);
+
+    if (exists) {
+      show(msg, 'Bu e-posta ile daha önce kayıt oluşturulmuş.', false);
+      return;
+    }
+
+    await supabaseInsertMember({
+      email: email,
+      password: password,
+      company_name: companyName,
+      contact_name: contactName,
+      role: role,
+      status: 'Aktif',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+
+    show(msg, 'Başvuru kaydedildi. Artık bu e-posta ile şifre sıfırlama ve giriş akışını kullanabilirsiniz.', true);
+    document.getElementById('registerForm').reset();
+  } catch (err) {
+    show(msg, 'İşlem başarısız: ' + err.message, false);
   }
-
-  members.push({
-    companyName,
-    contactName,
-    email,
-    phone,
-    role,
-    password,
-    status: 'Onay Bekliyor',
-    createdAt: new Date().toISOString()
-  });
-
-  writeJson('sevra_members', members);
-  show(msg, 'Başvuru kaydedildi. Üyelik değerlendirme sürecine alındı.', true);
-  document.getElementById('registerForm').reset();
 });
 </script>
 </body>
