@@ -16,6 +16,7 @@
           <span>Mesajlasma ve Pazarlik</span>
         </div>
       </a>
+
       <div class="top-actions">
         <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akisina Don</a>
         <a class="btn btn-secondary" href="admin-dashboard.html">Dashboard'a Don</a>
@@ -50,69 +51,75 @@
   </main>
 
   <script>
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const chatForm = document.getElementById('chatForm');
-    const chatStatus = document.getElementById('chatStatus');
+    var chatMessages = document.getElementById("chatMessages");
+    var chatInput = document.getElementById("chatInput");
+    var chatForm = document.getElementById("chatForm");
+    var chatStatus = document.getElementById("chatStatus");
 
-    let messages = [
-      { sender: 'Sistem', text: 'Teklif uzerinden pazarlik ekrani acildi.', time: '21:15' }
+    var messages = [
+      { sender: "Sistem", text: "Teklif uzerinden pazarlik ekrani acildi.", time: "21:15" }
     ];
 
     function showStatus(message, isError) {
       chatStatus.textContent = message;
-      chatStatus.classList.remove('hidden', 'status-success', 'status-error');
-      chatStatus.classList.add(isError ? 'status-error' : 'status-success');
+      chatStatus.className = "status-box " + (isError ? "status-error" : "status-success");
     }
 
     function sanitizeText(text) {
       return text
-        .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, '[iletisim bilgisi gizlendi]')
-        .replace(/(?:\+?90|0)?\s*5\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/g, '[telefon gizlendi]')
-        .replace(/wa\.me\/\d+/ig, '[whatsapp gizlendi]');
+        .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, "[iletisim bilgisi gizlendi]")
+        .replace(/(?:\+?90|0)?\s*5\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/g, "[telefon gizlendi]")
+        .replace(/wa\.me\/\d+/ig, "[whatsapp gizlendi]");
     }
 
     function hasForbiddenContact(text) {
-      const emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig;
-      const phoneRegex = /(?:\+?90|0)?\s*5\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/g;
-      const whatsappRegex = /(whatsapp|wa\.me|@gmail|@hotmail|@outlook|ara beni|beni ara)/ig;
+      var emailRegex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig;
+      var phoneRegex = /(?:\+?90|0)?\s*5\d{2}[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}/g;
+      var whatsappRegex = /(whatsapp|wa\.me|@gmail|@hotmail|@outlook|ara beni|beni ara)/ig;
       return emailRegex.test(text) || phoneRegex.test(text) || whatsappRegex.test(text);
     }
 
-    function render() {
-      chatMessages.innerHTML = messages.map(function(item, idx) {
-        const cls = idx % 2 === 0 ? 'msg admin' : 'msg user';
-        return '<div class="' + cls + '">' +
-          '<div class="msg-sender">' + item.sender + '</div>' +
-          '<div class="msg-text">' + sanitizeText(item.text) + '</div>' +
-          '<div class="msg-time">' + item.time + '</div>' +
-        '</div>';
-      }).join('');
+    function renderMessages() {
+      var html = "";
+
+      for (var i = 0; i < messages.length; i++) {
+        var item = messages[i];
+        var cls = i % 2 === 0 ? "msg admin" : "msg user";
+
+        html += '<div class="' + cls + '">';
+        html += '<div class="msg-sender">' + item.sender + "</div>";
+        html += '<div class="msg-text">' + sanitizeText(item.text) + "</div>";
+        html += '<div class="msg-time">' + item.time + "</div>";
+        html += "</div>";
+      }
+
+      chatMessages.innerHTML = html;
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    render();
+    renderMessages();
 
-    chatForm.addEventListener('submit', function(event) {
+    chatForm.addEventListener("submit", function (event) {
       event.preventDefault();
-      const value = chatInput.value.trim();
+
+      var value = chatInput.value.trim();
       if (!value) return;
 
       if (hasForbiddenContact(value)) {
-        showStatus('Telefon, e-posta veya dis iletisim bilgisi tespit edildi. Mesaj gonderilmedi.', true);
-        chatInput.value = '';
+        showStatus("Telefon, e-posta veya dis iletisim bilgisi tespit edildi. Mesaj gonderilmedi.", true);
+        chatInput.value = "";
         return;
       }
 
       messages.push({
-        sender: 'Uye',
+        sender: "Uye",
         text: value,
-        time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+        time: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })
       });
 
-      render();
-      chatInput.value = '';
-      showStatus('Mesaj gonderildi.', false);
+      renderMessages();
+      chatInput.value = "";
+      showStatus("Mesaj gonderildi.", false);
     });
   </script>
 </body>
