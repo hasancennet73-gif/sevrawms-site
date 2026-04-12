@@ -30,7 +30,7 @@
         <div>
           <div class="section-kicker">Kontrollü Mesajlaşma</div>
           <h1>Pazarlık ekranı</h1>
-          <p>Bu sürümde telefon, e-posta, WhatsApp numarası ve benzeri dış iletişim bilgileri otomatik olarak engellenir.</p>
+          <p>Platform içi görüşmeler bu ekran üzerinden kontrollü biçimde yürütülür. Dış iletişim paylaşımı sistem kurallarına göre sınırlandırılır.</p>
         </div>
       </section>
 
@@ -45,7 +45,7 @@
         <div id="chatMessages" class="chat-messages"></div>
 
         <form id="chatForm" class="chat-form">
-          <textarea id="chatInput" placeholder="Mesajını yaz"></textarea>
+          <textarea id="chatInput" placeholder="Mesajınızı yazın"></textarea>
           <button type="submit" class="btn btn-primary">Gönder</button>
         </form>
       </section>
@@ -54,7 +54,7 @@
 
   <script>
     const initialMessages = [
-      {sender:'Admin', text:'Teklif üzerinden pazarlık ekranı açıldı.', time:'21:15'}
+      {sender:'Sistem', text:'Teklif üzerinden pazarlık ekranı açıldı.', time:'21:15'}
     ];
 
     const chatMessages = document.getElementById('chatMessages');
@@ -105,13 +105,13 @@
       if(!value) return;
 
       if(hasForbiddenContact(value)){
-        showStatus('Telefon, e-posta, WhatsApp numarası veya dış iletişim bilgisi tespit edildi. Mesaj engellendi.', true);
+        showStatus('Telefon, e-posta, WhatsApp numarası veya dış iletişim bilgisi tespit edildi. Mesaj gönderilmedi.', true);
         chatInput.value = '';
         return;
       }
 
       messages.push({
-        sender:'Taşıyıcı',
+        sender:'Üye',
         text:value,
         time:new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'})
       });
