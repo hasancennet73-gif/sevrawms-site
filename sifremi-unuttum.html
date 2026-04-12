@@ -26,7 +26,7 @@
       <section class="panel">
         <div class="kicker">Şifre Yenileme</div>
         <h1>Şifrenizi yenileyin</h1>
-        <p>Kayıtlı e-posta adresinizi girin. Şifre yenileme bağlantısı hazırlanır ve bir sonraki adıma yönlendirilirsiniz.</p>
+        <p>Kayıtlı e-posta adresinizi girin. Şifre yenileme bağlantısı e-posta adresinize gönderilir.</p>
 
         <form id="forgotForm" class="form-grid">
           <div class="field full">
@@ -34,7 +34,7 @@
             <input id="email" type="email" placeholder="ornek@firma.com" />
           </div>
           <div class="actions-row full">
-            <button type="submit" class="btn primary">Yenileme Bağlantısı Oluştur</button>
+            <button type="submit" class="btn primary">Yenileme Bağlantısı Gönder</button>
             <a class="btn" href="uye-login.html">Girişe Dön</a>
           </div>
         </form>
@@ -67,7 +67,7 @@ function createToken() {
   return 'RESET-' + Math.random().toString(36).slice(2, 10) + '-' + Date.now();
 }
 
-document.getElementById('forgotForm').addEventListener('submit', function (e) {
+document.getElementById('forgotForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const email = document.getElementById('email').value.trim().toLowerCase();
@@ -91,16 +91,32 @@ document.getElementById('forgotForm').addEventListener('submit', function (e) {
   row.resetRequestedAt = new Date().toISOString();
   writeJson('sevra_members', members);
 
-  const resetLink = 'sifre-sifirla.html?token=' + encodeURIComponent(token);
+  const resetLink = window.location.origin + '/sifre-sifirla.html?token=' + encodeURIComponent(token);
 
   sessionStorage.setItem('sevra_last_reset_email', email);
   sessionStorage.setItem('sevra_last_reset_link', resetLink);
 
-  show(msg, 'Şifre yenileme bağlantısı hazırlandı. Yönlendiriliyorsunuz.', true);
+  try {
+    const response = await fetch('/api/send-reset-mail', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, resetLink })
+    });
 
-  setTimeout(function () {
-    window.location.href = 'sifre-mail-bekleniyor.html';
-  }, 400);
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || 'Mail gönderilemedi.');
+    }
+
+    show(msg, 'Şifre yenileme bağlantısı gönderildi. Yönlendiriliyorsunuz.', true);
+
+    setTimeout(function () {
+      window.location.href = 'sifre-mail-bekleniyor.html';
+    }, 500);
+  } catch (err) {
+    show(msg, 'Mail gönderilemedi: ' + err.message, false);
+  }
 });
 </script>
 </body>
