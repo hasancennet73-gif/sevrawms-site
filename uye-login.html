@@ -44,15 +44,15 @@
         <h2>Hesabınla giriş yap</h2>
         <p>Kayıtlı hesabınla sisteme giriş yaparak teklif ve pazarlık akışına devam edebilirsin.</p>
 
-        <form id="loginForm" class="form-grid">
+        <form id="loginForm" class="form-grid" autocomplete="off">
           <div class="field full">
             <label>E-Posta</label>
-            <input id="email" type="email" placeholder="ornek@firma.com" autocomplete="off" />
+            <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="off" autocapitalize="none" spellcheck="false" />
           </div>
 
           <div class="field full">
             <label>Şifre</label>
-            <input id="password" type="password" placeholder="Şifre" autocomplete="off" />
+            <input id="password" name="password" type="password" placeholder="Şifre" autocomplete="new-password" />
           </div>
 
           <div class="actions-row full">
@@ -69,6 +69,9 @@
   </div>
 
 <script>
+const SUPABASE_URL = 'https://yyiphivbdsjsuxyaihnf.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR';
+
 function q(n){
   return new URLSearchParams(location.search).get(n) || '';
 }
@@ -88,58 +91,79 @@ function nextUrl(){
   return 'uye-panel.html';
 }
 
-function readJson(key, fallback){
-  try{
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  }catch(e){
-    return fallback;
-  }
-}
-
-function writeJson(key, value){
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
 function showMsg(text, ok){
   var m = document.getElementById('msg');
   m.className = 'note ' + (ok ? 'ok' : 'err');
   m.textContent = text;
 }
 
-document.getElementById('loginForm').addEventListener('submit', function(e){
+async function supabaseFindMember(email, password){
+  const url =
+    SUPABASE_URL +
+    '/rest/v1/members?email=eq.' +
+    encodeURIComponent(email) +
+    '&password=eq.' +
+    encodeURIComponent(password) +
+    '&select=id,email,company_name,contact_name,role,status';
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error('Giriş kontrolü başarısız: ' + text);
+  }
+
+  const data = await response.json();
+  return Array.isArray(data) ? data[0] : null;
+}
+
+document.getElementById('loginForm').addEventListener('submit', async function(e){
   e.preventDefault();
 
   var email = document.getElementById('email').value.trim().toLowerCase();
   var password = document.getElementById('password').value.trim();
-  var members = readJson('sevra_members', []);
-  var row = members.find(function(x){
-    return x.email === email && x.password === password;
-  });
 
-  if(!row){
-    showMsg('E-posta veya şifre hatalı.', false);
+  if(!email || !password){
+    showMsg('E-posta ve şifre girin.', false);
     return;
   }
 
-  if(row.status !== 'Aktif'){
-    showMsg('Hesabın henüz aktif değil. Üyelik onay süreci tamamlandıktan sonra giriş yapabilirsin.', false);
-    return;
+  try {
+    var row = await supabaseFindMember(email, password);
+
+    if(!row){
+      showMsg('E-posta veya şifre hatalı.', false);
+      return;
+    }
+
+    if(row.status !== 'Aktif'){
+      showMsg('Hesabın henüz aktif değil. Üyelik onay süreci tamamlandıktan sonra giriş yapabilirsin.', false);
+      return;
+    }
+
+    localStorage.setItem('sevra_member_session', JSON.stringify({
+      email: row.email,
+      companyName: row.company_name || '',
+      contactName: row.contact_name || '',
+      role: row.role || '',
+      loginAt: new Date().toISOString()
+    }));
+
+    showMsg('Giriş başarılı. Yönlendiriliyorsun.', true);
+
+    setTimeout(function(){
+      window.location.href = nextUrl();
+    }, 500);
+  } catch (err) {
+    showMsg('İşlem başarısız: ' + err.message, false);
   }
-
-  writeJson('sevra_member_session', {
-    email: row.email,
-    companyName: row.companyName || '',
-    contactName: row.contactName || '',
-    role: row.role || '',
-    loginAt: new Date().toISOString()
-  });
-
-  showMsg('Giriş başarılı. Yönlendiriliyorsun.', true);
-
-  setTimeout(function(){
-    window.location.href = nextUrl();
-  }, 400);
 });
 </script>
 </body>
