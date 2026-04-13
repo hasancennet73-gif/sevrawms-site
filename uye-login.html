@@ -47,12 +47,26 @@
         <form id="loginForm" class="form-grid" autocomplete="off">
           <div class="field full">
             <label for="email">E-Posta</label>
-            <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="off" autocapitalize="none" spellcheck="false" />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="ornek@firma.com"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+            />
           </div>
 
           <div class="field full">
             <label for="password">Şifre</label>
-            <input id="password" name="password" type="password" placeholder="Şifre" autocomplete="new-password" />
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Şifre"
+              autocomplete="new-password"
+            />
           </div>
 
           <div class="actions-row full">
@@ -72,38 +86,41 @@
 const SUPABASE_URL = 'https://yyiphivbdsjsuxyaihnf.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR';
 
-function q(n){
-  return new URLSearchParams(location.search).get(n) || '';
+function q(name) {
+  return new URLSearchParams(window.location.search).get(name) || '';
 }
 
-function nextUrl(){
-  var r = q('redirect');
-  var l = q('load_id');
+function nextUrl() {
+  var params = new URLSearchParams(window.location.search);
+  var redirectValue = params.get('redirect') || '';
+  var loadId = params.get('load_id') || '';
 
-  if(r === 'ilan-teklif'){
-    var u = 'ilan-teklif.html';
-    if(l){
-      u += '?load_id=' + encodeURIComponent(l);
+  if (redirectValue === 'ilan-teklif') {
+    var url = 'ilan-teklif.html';
+
+    if (loadId) {
+      url += '?load_id=' + encodeURIComponent(loadId);
     }
-    return u;
+
+    return url;
   }
 
   return 'uye-panel.html';
 }
 
-function showMsg(text, ok){
+function showMsg(text, ok) {
   var m = document.getElementById('msg');
   m.className = 'note ' + (ok ? 'ok' : 'err');
   m.textContent = text;
 }
 
-function setBusy(isBusy){
+function setBusy(isBusy) {
   var btn = document.getElementById('loginBtn');
   btn.disabled = isBusy;
   btn.textContent = isBusy ? 'Kontrol ediliyor...' : 'Giriş Yap';
 }
 
-async function supabaseFindMember(email, password){
+async function supabaseFindMember(email, password) {
   const url =
     SUPABASE_URL +
     '/rest/v1/members?email=eq.' +
@@ -130,13 +147,13 @@ async function supabaseFindMember(email, password){
   return Array.isArray(data) ? data[0] : null;
 }
 
-document.getElementById('loginForm').addEventListener('submit', async function(e){
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
   var email = document.getElementById('email').value.trim().toLowerCase();
   var password = document.getElementById('password').value.trim();
 
-  if(!email || !password){
+  if (!email || !password) {
     showMsg('E-posta ve şifre girin.', false);
     return;
   }
@@ -146,13 +163,13 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   try {
     var row = await supabaseFindMember(email, password);
 
-    if(!row){
+    if (!row) {
       showMsg('E-posta veya şifre hatalı.', false);
       setBusy(false);
       return;
     }
 
-    if(row.status !== 'Aktif'){
+    if (row.status !== 'Aktif') {
       showMsg('Hesabın henüz aktif değil. Üyelik onay süreci tamamlandıktan sonra giriş yapabilirsin.', false);
       setBusy(false);
       return;
@@ -168,7 +185,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     showMsg('Giriş başarılı. Yönlendiriliyorsun.', true);
 
-    setTimeout(function(){
+    setTimeout(function() {
       window.location.href = nextUrl();
     }, 500);
   } catch (err) {
