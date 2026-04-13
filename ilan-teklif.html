@@ -30,7 +30,7 @@
         <div class="hero-copy">
           <div class="section-kicker">Kurumsal Teklif Merkezi</div>
           <h1>Ilan ve teklif akisi</h1>
-          <p>Secilen yuk ilanlarini tek ekranda inceleyin, profesyonel teklif olusturun ve pazarlik akisina kontrollu bicimde gecin.</p>
+          <p>Secilen yuk ilanlarini tek ekranda inceleyin, teklif olusturun ve pazarlik akisina kontrollu sekilde gecin.</p>
         </div>
         <div id="userBadge" class="user-badge">Uye kontrol ediliyor</div>
       </section>
@@ -138,12 +138,14 @@
     var session = readJson('sevra_member_session', null);
 
     if (!session || !session.email) {
-      var target = 'uye-login.html?redirect=ilan-teklif';
-      var loadId = q('load_id') || q('id');
-      if (loadId) {
-        target += '&load_id=' + encodeURIComponent(loadId);
+      var loginUrl = 'uye-login.html?redirect=ilan-teklif';
+      var queryLoadId = q('load_id') || q('id');
+
+      if (queryLoadId) {
+        loginUrl += '&load_id=' + encodeURIComponent(queryLoadId);
       }
-      window.location.href = target;
+
+      window.location.href = loginUrl;
     }
 
     var offerForm = document.getElementById('offerForm');
@@ -172,8 +174,8 @@
       var queryLoadId = q('load_id') || q('id');
       if (!queryLoadId) return;
 
-      var found = loads.find(function(x) {
-        return x.id === queryLoadId;
+      var found = loads.find(function(item) {
+        return item.id === queryLoadId;
       });
 
       if (found) {
@@ -197,9 +199,11 @@
         var op = document.createElement('option');
         op.value = load.id;
         op.textContent = (load.title || '-') + ' (' + load.id + ')';
+
         if (selectedLoad && selectedLoad.id === load.id) {
           op.selected = true;
         }
+
         offerLoadSelect.appendChild(op);
       });
     }
@@ -234,8 +238,8 @@
     }
 
     function openOrCreateThread(offer) {
-      var existing = threads.find(function(x) {
-        return x.offerId === offer.id;
+      var existing = threads.find(function(item) {
+        return item.offerId === offer.id;
       });
 
       if (existing) {
@@ -244,8 +248,8 @@
         return;
       }
 
-      var load = loads.find(function(x) {
-        return x.id === offer.loadId;
+      var load = loads.find(function(item) {
+        return item.id === offer.loadId;
       });
 
       var numericPrice = parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0;
@@ -257,7 +261,10 @@
         route: load ? (load.route || offer.loadTitle) : offer.loadTitle,
         currentOffer: numericPrice,
         offerHistory: [
-          { role: offer.member, value: numericPrice }
+          {
+            role: offer.member,
+            value: numericPrice
+          }
         ],
         messages: [
           {
@@ -296,9 +303,10 @@
           '</div></td>';
 
         tr.querySelector('.js-delete').addEventListener('click', function() {
-          offers = offers.filter(function(x) {
-            return x.id !== offer.id;
+          offers = offers.filter(function(item) {
+            return item.id !== offer.id;
           });
+
           writeJson('sevra_offers', offers);
           renderOffers();
           showStatus('Teklif silindi.', false);
@@ -329,8 +337,8 @@
         return;
       }
 
-      var load = loads.find(function(x) {
-        return x.id === loadId;
+      var load = loads.find(function(item) {
+        return item.id === loadId;
       });
 
       if (!load) {
