@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Kurumsal Üye Girişi</title>
+  <title>SEVRA | Kurumsal Uye Girisi</title>
   <link rel="stylesheet" href="uye-auth.css" />
 </head>
 <body>
@@ -13,71 +13,52 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Kurumsal Üye Girişi</span>
+          <span>Kurumsal Uye Girisi</span>
         </div>
       </a>
       <div class="actions">
         <a class="btn" href="index.html">Ana Sayfa</a>
-        <a class="btn" href="yuk-ilanlari.html">Yük İlanları</a>
+        <a class="btn" href="yuk-ilanlari.html">Yuk Ilanlari</a>
       </div>
     </header>
 
     <main class="auth-grid">
       <section class="panel intro">
-        <div class="kicker">Kurumsal Erişim</div>
-        <h1 id="heroTitle">SEVRA üye girişi</h1>
-        <p id="heroText">Taşıyıcı, yük veren ve tedarik tarafı için oluşturulan hesaplar bu ekran üzerinden güvenli biçimde yönetilir. Kurumsal kullanıcılar kayıtlı hesaplarıyla sisteme giriş yapar.</p>
-
+        <div class="kicker" id="roleKicker">Uye Girisi</div>
+        <h1>SEVRA uye girisi</h1>
+        <p id="formText">Kayitli hesabinla sisteme giris yaparak teklif ve pazarlik akisina devam edebilirsin.</p>
         <div id="redirectInfo" class="note ok hidden"></div>
 
         <div class="info-box">
-          <h3>Üyelik yapısı</h3>
+          <h3>Uyelik yapisi</h3>
           <ul>
-            <li>Kurumsal hesap ile giriş</li>
-            <li>Teklif ve pazarlık ekranlarına kontrollü erişim</li>
-            <li>Platform içi ticari akışta kayıtlı ilerleme</li>
-            <li>Şifre sıfırlama ve giriş aynı veritabanından çalışır</li>
+            <li>Kurumsal hesap ile giris</li>
+            <li>Teklif ve pazarlik ekranlarina kontrollu erisim</li>
+            <li>Platform ici ticari akista kayitli ilerleme</li>
+            <li>Sifre sifirlama ve giris ayni veritabanindan calisir</li>
           </ul>
         </div>
       </section>
 
       <section class="panel">
-        <div class="kicker" id="roleKicker">Üye Girişi</div>
-        <h2>Hesabınla giriş yap</h2>
-        <p id="formText">Kayıtlı hesabınla sisteme giriş yaparak teklif ve pazarlık akışına devam edebilirsin.</p>
+        <div class="kicker">Giris</div>
+        <h2>Hesabinla giris yap</h2>
 
         <form id="loginForm" class="form-grid" autocomplete="off">
           <div class="field full">
             <label for="email">E-Posta</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="ornek@firma.com"
-              autocomplete="off"
-              autocapitalize="none"
-              spellcheck="false"
-            />
+            <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="off" autocapitalize="none" spellcheck="false" />
           </div>
 
           <div class="field full">
-            <label for="password">Şifre</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Şifre"
-              autocomplete="new-password"
-            />
+            <label for="password">Sifre</label>
+            <input id="password" name="password" type="password" placeholder="Sifre" autocomplete="new-password" />
           </div>
 
           <div class="actions-row full">
-            <button id="loginBtn" type="submit" class="btn primary">Giriş Yap</button>
-          </div>
-
-          <div class="actions-row full">
-            <a class="btn" href="uye-ol.html" id="registerLink">Üyelik Oluştur</a>
-            <a class="btn" href="sifremi-unuttum.html">Şifremi Unuttum</a>
+            <button id="loginBtn" type="submit" class="btn primary">Giris Yap</button>
+            <a class="btn" href="uye-ol.html">Uyelik Olustur</a>
+            <a class="btn" href="sifremi-unuttum.html">Sifremi Unuttum</a>
             <a class="btn" href="index.html">Ana Sayfa</a>
           </div>
         </form>
@@ -135,35 +116,15 @@ function hideMsg() {
 function setBusy(isBusy) {
   var btn = document.getElementById('loginBtn');
   btn.disabled = isBusy;
-  btn.textContent = isBusy ? 'Kontrol ediliyor...' : 'Giriş Yap';
+  btn.textContent = isBusy ? 'Kontrol ediliyor...' : 'Giris Yap';
 }
 
 function roleLabel(roleValue) {
   var role = String(roleValue || '').toLowerCase();
-
-  if (role === 'shipper') return 'Yük Veren Girişi';
-  if (role === 'carrier') return 'Taşıyıcı Girişi';
-  if (role === 'member') return 'Standart Üye Girişi';
-
-  return 'Üye Girişi';
-}
-
-function roleDescription(roleValue) {
-  var role = String(roleValue || '').toLowerCase();
-
-  if (role === 'shipper') {
-    return 'Yük veren firmalar bu ekran üzerinden giriş yaparak teklif sürecini ve taşıma akışını yönetebilir.';
-  }
-
-  if (role === 'carrier') {
-    return 'Taşıyıcı firmalar bu ekran üzerinden giriş yaparak açık yükler için teklif ve pazarlık akışına devam edebilir.';
-  }
-
-  if (role === 'member') {
-    return 'Standart üyeler bu ekran üzerinden güvenli giriş yaparak platform içi akışlara kontrollü şekilde devam edebilir.';
-  }
-
-  return 'Kayıtlı hesabınla sisteme giriş yaparak teklif ve pazarlık akışına devam edebilirsin.';
+  if (role === 'shipper') return 'Yuk Veren Girisi';
+  if (role === 'carrier') return 'Tasiyici Girisi';
+  if (role === 'member') return 'Standart Uye Girisi';
+  return 'Uye Girisi';
 }
 
 function setupPageContext() {
@@ -173,38 +134,18 @@ function setupPageContext() {
   var selectedLoad = readJson('sevra_selected_load', null);
 
   document.getElementById('roleKicker').textContent = roleLabel(role);
-  document.getElementById('formText').textContent = roleDescription(role);
-
-  var registerLink = document.getElementById('registerLink');
-  var regUrl = 'uye-ol.html';
-  var params = [];
-
-  if (role) params.push('role=' + encodeURIComponent(role));
-  if (redirect) params.push('redirect=' + encodeURIComponent(redirect));
-  if (loadId) params.push('load_id=' + encodeURIComponent(loadId));
-
-  if (params.length) {
-    regUrl += '?' + params.join('&');
-  }
-
-  registerLink.href = regUrl;
 
   if (redirect === 'ilan-teklif') {
     var info = document.getElementById('redirectInfo');
-    var text = 'Giriş sonrası teklif ekranına geri döneceksiniz.';
+    var text = 'Giris sonrasi teklif ekranina geri doneceksiniz.';
 
     if (selectedLoad && selectedLoad.title) {
-      text = 'Seçilen ilan: ' + selectedLoad.title;
-
-      if (selectedLoad.route) {
-        text += ' | Güzergah: ' + selectedLoad.route;
-      }
-
-      if (selectedLoad.id) {
-        text += ' | Ref: ' + selectedLoad.id;
-      }
-
-      text += '. Giriş sonrası teklif ekranına geri döneceksiniz.';
+      text = 'Secilen ilan: ' + selectedLoad.title;
+      if (selectedLoad.route) text += ' | Guzergah: ' + selectedLoad.route;
+      if (selectedLoad.id) text += ' | Ref: ' + selectedLoad.id;
+      text += '. Giris sonrasi teklif ekranina geri doneceksiniz.';
+    } else if (loadId) {
+      text = 'Ref: ' + loadId + '. Giris sonrasi teklif ekranina geri doneceksiniz.';
     }
 
     info.textContent = text;
@@ -232,7 +173,7 @@ async function supabaseFindMember(email, password) {
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error('Giriş kontrolü başarısız: ' + text);
+    throw new Error('Giris kontrolu basarisiz: ' + text);
   }
 
   const data = await response.json();
@@ -249,7 +190,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   var password = document.getElementById('password').value.trim();
 
   if (!email || !password) {
-    showMsg('E-posta ve şifre girin.', false);
+    showMsg('E-posta ve sifre girin.', false);
     return;
   }
 
@@ -259,13 +200,13 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     var row = await supabaseFindMember(email, password);
 
     if (!row) {
-      showMsg('E-posta veya şifre hatalı.', false);
+      showMsg('E-posta veya sifre hatali.', false);
       setBusy(false);
       return;
     }
 
     if (row.status !== 'Aktif') {
-      showMsg('Hesabın henüz aktif değil. Üyelik onay süreci tamamlandıktan sonra giriş yapabilirsin.', false);
+      showMsg('Hesabin henuz aktif degil.', false);
       setBusy(false);
       return;
     }
@@ -278,14 +219,21 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       loginAt: new Date().toISOString()
     }));
 
-    showMsg('Giriş başarılı. Yönlendiriliyorsun.', true);
+    showMsg('Giris basarili. Yonlendiriliyorsun.', true);
 
     setTimeout(function() {
       window.location.href = nextUrl();
     }, 500);
   } catch (err) {
-    showMsg('İşlem başarısız: ' + err.message, false);
+    showMsg('Islem basarisiz: ' + err.message, false);
     setBusy(false);
+  }
+});
+
+document.getElementById('password').addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    document.getElementById('loginForm').requestSubmit();
   }
 });
 </script>
