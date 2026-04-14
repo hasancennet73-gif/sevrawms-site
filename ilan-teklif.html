@@ -22,6 +22,7 @@
       </div>
     </div>
   </header>
+
   <main class="page">
     <div class="container">
       <section class="hero-card">
@@ -32,7 +33,9 @@
         </div>
         <div id="userBadge" class="user-badge">Uye kontrol ediliyor</div>
       </section>
+
       <div id="statusBox" class="status-box hidden"></div>
+
       <section class="offer-entry-card">
         <div class="card-head">
           <div>
@@ -40,50 +43,70 @@
             <h2>Teklif olustur</h2>
           </div>
         </div>
+
         <form id="offerForm" class="offer-form">
           <div class="form-grid">
             <div class="form-group">
               <label for="offerLoadSelect">Ilan secin</label>
               <select id="offerLoadSelect" required></select>
             </div>
+
             <div class="form-group">
               <label for="offerPrice">Teklif fiyati</label>
               <input id="offerPrice" type="number" placeholder="Orn: 18500" required />
             </div>
+
             <div class="form-group full">
               <label for="offerNote">Teklif notu</label>
               <textarea id="offerNote" placeholder="Teslim suresi, arac durumu veya aciklama girin"></textarea>
             </div>
           </div>
+
           <div class="action-row">
             <button id="saveOfferBtn" type="submit" class="btn btn-primary">Teklif Ver</button>
           </div>
         </form>
       </section>
+
       <section class="table-shell">
         <article class="table-card">
           <div class="card-head">
             <h2>Aktif Ilanlar</h2>
             <span class="pill">Secilebilir kayitlar</span>
           </div>
+
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>Baslik</th><th>Guzergah</th><th>Agirlik</th><th>Durum</th><th>Islem</th></tr>
+                <tr>
+                  <th>Baslik</th>
+                  <th>Guzergah</th>
+                  <th>Agirlik</th>
+                  <th>Durum</th>
+                  <th>Islem</th>
+                </tr>
               </thead>
               <tbody id="loadsTbody"></tbody>
             </table>
           </div>
         </article>
+
         <article class="table-card">
           <div class="card-head">
             <h2>Verilen Teklifler</h2>
             <span class="pill">Pazarlik baglantili</span>
           </div>
+
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>Ilan</th><th>Uye</th><th>Fiyat</th><th>Durum</th><th>Islem</th></tr>
+                <tr>
+                  <th>Ilan</th>
+                  <th>Uye</th>
+                  <th>Fiyat</th>
+                  <th>Durum</th>
+                  <th>Islem</th>
+                </tr>
               </thead>
               <tbody id="offersTbody"></tbody>
             </table>
@@ -92,27 +115,43 @@
       </section>
     </div>
   </main>
+
   <script>
-    function q(name){ return new URLSearchParams(location.search).get(name) || ''; }
-    function readJson(key,fallback){ try{ var raw=localStorage.getItem(key); return raw?JSON.parse(raw):fallback; }catch(e){ return fallback; } }
-    function writeJson(key,value){ localStorage.setItem(key, JSON.stringify(value)); }
+    function q(name) {
+      return new URLSearchParams(location.search).get(name) || '';
+    }
+
+    function readJson(key, fallback) {
+      try {
+        var raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function writeJson(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
 
     var session = readJson('sevra_member_session', null);
     if (!session || !session.email) {
       var loginUrl = 'uye-login.html?redirect=ilan-teklif';
       var queryLoadId = q('load_id') || q('id');
-      if (queryLoadId) loginUrl += '&load_id=' + encodeURIComponent(queryLoadId);
+      if (queryLoadId) {
+        loginUrl += '&load_id=' + encodeURIComponent(queryLoadId);
+      }
       window.location.href = loginUrl;
     }
 
-    var offerForm=document.getElementById('offerForm');
-    var offerLoadSelect=document.getElementById('offerLoadSelect');
-    var loadsTbody=document.getElementById('loadsTbody');
-    var offersTbody=document.getElementById('offersTbody');
-    var offerPrice=document.getElementById('offerPrice');
-    var offerNote=document.getElementById('offerNote');
-    var statusBox=document.getElementById('statusBox');
-    var userBadge=document.getElementById('userBadge');
+    var offerForm = document.getElementById('offerForm');
+    var offerLoadSelect = document.getElementById('offerLoadSelect');
+    var loadsTbody = document.getElementById('loadsTbody');
+    var offersTbody = document.getElementById('offersTbody');
+    var offerPrice = document.getElementById('offerPrice');
+    var offerNote = document.getElementById('offerNote');
+    var statusBox = document.getElementById('statusBox');
+    var userBadge = document.getElementById('userBadge');
 
     var loads = Array.isArray(readJson('sevra_loads', [])) ? readJson('sevra_loads', []) : [];
     var offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
@@ -121,118 +160,217 @@
 
     userBadge.textContent = 'Uye: ' + (session.companyName || session.contactName || session.email);
 
-    function showStatus(message,isError){
+    function showStatus(message, isError) {
       statusBox.textContent = message;
-      statusBox.classList.remove('hidden','status-success','status-error');
-      statusBox.classList.add(isError?'status-error':'status-success');
+      statusBox.classList.remove('hidden', 'status-success', 'status-error');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
-    function ensureSelectedLoadFromQuery(){
+    function ensureSelectedLoadFromQuery() {
       var queryLoadId = q('load_id') || q('id');
-      if(!queryLoadId) return;
-      var found = loads.find(function(item){ return item.id===queryLoadId; });
-      if(found){
+      if (!queryLoadId) return;
+
+      var found = loads.find(function(item) {
+        return item.id === queryLoadId;
+      });
+
+      if (found) {
         selectedLoad = found;
         localStorage.setItem('sevra_selected_load', JSON.stringify(found));
       }
     }
 
-    function renderSelect(){
+    function renderSelect() {
       offerLoadSelect.innerHTML = '';
-      if(!loads.length){
-        var op=document.createElement('option');
-        op.value=''; op.textContent='Ilan bulunmuyor';
-        offerLoadSelect.appendChild(op); return;
+
+      if (!loads.length) {
+        var op = document.createElement('option');
+        op.value = '';
+        op.textContent = 'Ilan bulunmuyor';
+        offerLoadSelect.appendChild(op);
+        return;
       }
-      loads.forEach(function(load){
-        var op=document.createElement('option');
-        op.value=load.id;
-        op.textContent=(load.title||'-')+' ('+load.id+')';
-        if(selectedLoad && selectedLoad.id===load.id) op.selected=true;
+
+      loads.forEach(function(load) {
+        var op = document.createElement('option');
+        op.value = load.id;
+        op.textContent = (load.title || '-') + ' (' + load.id + ')';
+        if (selectedLoad && selectedLoad.id === load.id) {
+          op.selected = true;
+        }
         offerLoadSelect.appendChild(op);
       });
     }
 
-    function renderLoads(){
-      loadsTbody.innerHTML='';
-      if(!loads.length){ loadsTbody.innerHTML='<tr><td colspan="5">Aktif ilan bulunmuyor.</td></tr>'; return; }
-      loads.forEach(function(load){
-        var tr=document.createElement('tr');
-        tr.innerHTML='<td>'+(load.title||'-')+'</td><td>'+(load.route||'-')+'</td><td>'+(load.weight||'-')+'</td><td><span class="mini-pill">'+(load.status||'Acik')+'</span></td><td><button class="mini-btn" type="button">Sec</button></td>';
-        tr.querySelector('button').addEventListener('click', function(){
-          selectedLoad=load;
+    function renderLoads() {
+      loadsTbody.innerHTML = '';
+
+      if (!loads.length) {
+        loadsTbody.innerHTML = '<tr><td colspan="5">Aktif ilan bulunmuyor.</td></tr>';
+        return;
+      }
+
+      loads.forEach(function(load) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + (load.title || '-') + '</td>' +
+          '<td>' + (load.route || '-') + '</td>' +
+          '<td>' + (load.weight || '-') + '</td>' +
+          '<td><span class="mini-pill">' + (load.status || 'Acik') + '</span></td>' +
+          '<td><button class="mini-btn" type="button">Sec</button></td>';
+
+        tr.querySelector('button').addEventListener('click', function() {
+          selectedLoad = load;
           localStorage.setItem('sevra_selected_load', JSON.stringify(load));
-          offerLoadSelect.value=load.id;
+          offerLoadSelect.value = load.id;
           showStatus('Ilan secildi.', false);
         });
+
         loadsTbody.appendChild(tr);
       });
     }
 
-    function openOrCreateThread(offer){
-      var existing=threads.find(function(item){ return item.offerId===offer.id; });
-      if(existing){
+    function openOrCreateThread(offer) {
+      var existing = threads.find(function(item) {
+        return item.offerId === offer.id;
+      });
+
+      if (existing) {
         localStorage.setItem('sevra_active_thread_id', existing.id);
-        window.location.href='mesajlasma.html';
+        window.location.href = 'mesajlasma.html';
         return;
       }
-      var load = loads.find(function(item){ return item.id===offer.loadId; });
-      var numericPrice = parseInt(String(offer.price).replace(/[^0-9]/g,''), 10) || 0;
+
+      var load = loads.find(function(item) {
+        return item.id === offer.loadId;
+      });
+
+      var numericPrice = parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0;
+
       var thread = {
-        id:'THR-'+Date.now(),
-        offerId:offer.id,
-        title:offer.loadTitle,
+        id: 'THR-' + Date.now(),
+        offerId: offer.id,
+        title: offer.loadTitle,
         route: load ? (load.route || offer.loadTitle) : offer.loadTitle,
-        currentOffer:numericPrice,
-        offerHistory:[{ role:offer.member, value:numericPrice }],
-        messages:[{ role:'Sistem', text:'Teklif uzerinden pazarlik ekrani acildi.', time:new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}) }]
+        currentOffer: numericPrice,
+        offerHistory: [{ role: offer.member, value: numericPrice }],
+        messages: [{
+          role: 'Sistem',
+          text: 'Teklif uzerinden pazarlik ekrani acildi.',
+          time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+        }]
       };
+
       threads.push(thread);
       writeJson('sevra_threads', threads);
       localStorage.setItem('sevra_active_thread_id', thread.id);
-      window.location.href='mesajlasma.html';
+      window.location.href = 'mesajlasma.html';
     }
 
-    function renderOffers(){
-      offersTbody.innerHTML='';
-      if(!offers.length){ offersTbody.innerHTML='<tr><td colspan="5">Henuz teklif bulunmuyor.</td></tr>'; return; }
-      offers.forEach(function(offer){
-        var tr=document.createElement('tr');
-        tr.innerHTML='<td>'+offer.loadTitle+'</td><td>'+offer.member+'</td><td>'+offer.price+'</td><td><span class="mini-pill">'+offer.status+'</span></td><td><div class="table-actions"><button class="mini-btn green js-chat" type="button">Pazarlik Yap</button><button class="mini-btn js-delete" type="button">Sil</button></div></td>';
-        tr.querySelector('.js-delete').addEventListener('click', function(){
-          offers=offers.filter(function(item){ return item.id!==offer.id; });
+    function renderOffers() {
+      offersTbody.innerHTML = '';
+
+      if (!offers.length) {
+        offersTbody.innerHTML = '<tr><td colspan="5">Henuz teklif bulunmuyor.</td></tr>';
+        return;
+      }
+
+      offers.forEach(function(offer) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + offer.loadTitle + '</td>' +
+          '<td>' + offer.member + '</td>' +
+          '<td>' + offer.price + '</td>' +
+          '<td><span class="mini-pill">' + offer.status + '</span></td>' +
+          '<td><div class="table-actions">' +
+          '<button class="mini-btn green js-chat" type="button">Pazarlik Yap</button>' +
+          '<button class="mini-btn js-delete" type="button">Sil</button>' +
+          '</div></td>';
+
+        tr.querySelector('.js-delete').addEventListener('click', function() {
+          offers = offers.filter(function(item) {
+            return item.id !== offer.id;
+          });
           writeJson('sevra_offers', offers);
           renderOffers();
           showStatus('Teklif silindi.', false);
         });
-        tr.querySelector('.js-chat').addEventListener('click', function(){ openOrCreateThread(offer); });
+
+        tr.querySelector('.js-chat').addEventListener('click', function() {
+          openOrCreateThread(offer);
+        });
+
         offersTbody.appendChild(tr);
       });
     }
 
-    offerForm.addEventListener('submit', function(event){
-      event.preventDefault();
-      var loadId=(offerLoadSelect.value||'').trim();
-      var price=(offerPrice.value||'').trim();
-      var note=(offerNote.value||'').trim();
-      if(!loadId){ showStatus('Once ilan secin.', true); return; }
-      if(!price){ showStatus('Teklif fiyatini girin.', true); return; }
-      var load=loads.find(function(item){ return item.id===loadId; });
-      if(!load){ showStatus('Secilen ilan bulunamadi.', true); return; }
-      var memberLabel=session.companyName || session.contactName || session.email;
-      var offer={ id:'OFF-'+Date.now(), loadId:load.id, loadTitle:load.title, member:memberLabel, price:price+' TL', note:note, status:'Beklemede', createdAt:new Date().toISOString() };
+    function submitOffer() {
+      var loadId = (offerLoadSelect.value || '').trim();
+      var price = (offerPrice.value || '').trim();
+      var note = (offerNote.value || '').trim();
+
+      if (!loadId) {
+        showStatus('Once ilan secin.', true);
+        return;
+      }
+
+      if (!price) {
+        showStatus('Teklif fiyatini girin.', true);
+        return;
+      }
+
+      var load = loads.find(function(item) {
+        return item.id === loadId;
+      });
+
+      if (!load) {
+        showStatus('Secilen ilan bulunamadi.', true);
+        return;
+      }
+
+      var memberLabel = session.companyName || session.contactName || session.email;
+
+      var offer = {
+        id: 'OFF-' + Date.now(),
+        loadId: load.id,
+        loadTitle: load.title,
+        member: memberLabel,
+        price: price + ' TL',
+        note: note,
+        status: 'Beklemede',
+        createdAt: new Date().toISOString()
+      };
+
       offers.push(offer);
       writeJson('sevra_offers', offers);
-      offerPrice.value=''; offerNote.value='';
+
+      offerPrice.value = '';
+      offerNote.value = '';
+
       renderOffers();
       showStatus('Teklif kaydedildi. Pazarlik Yap butonundan devam edebilirsiniz.', false);
+    }
+
+    offerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      submitOffer();
+    });
+
+    offerPrice.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        submitOffer();
+      }
     });
 
     ensureSelectedLoadFromQuery();
     renderSelect();
     renderLoads();
     renderOffers();
-    if(!loads.length){ showStatus('Henuz ilan bulunmuyor. Once Yuk Ilanlari ekranindan bir kayit secin.', true); }
+
+    if (!loads.length) {
+      showStatus('Henuz ilan bulunmuyor. Once Yuk Ilanlari ekranindan bir kayit secin.', true);
+    }
   </script>
 </body>
 </html>
