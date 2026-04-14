@@ -1,1 +1,339 @@
-<h1>TEST 999</h1>
+
+let state = {
+  user: null, bootstrap: null, vehicles: [], maintenanceLogs: [], kmLogs: [],
+  assignments: [], documents: [], users: [], company: null, license: null,
+  ownerUnlocked: false, editingVehicleId: null
+};
+
+const $ = (sel) => document.querySelector(sel);
+
+document.addEventListener('DOMContentLoaded', async () => {
+  bindNav();
+  bindForms();
+  $('#logoutBtn').addEventListener('click', logout);
+  $('#loginForm').addEventListener('submit', onLogin);
+  $('#cancelEditBtn').addEventListener('click', cancelVehicleEdit);
+
+  const init = await fetch('/api/initial-company').then(r => r.json());
+  if (!init.companyExists) {
+    $('#setupView').classList.remove('hidden');
+  } else {
+    $('#loginView').classList.remove('hidden');
+    $('#loginCompanyName').textContent = init.company.companyName || '';
+  }
+});
+
+function bindNav() {
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-btn').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+}
+function bindForms() {
+  $('#setupForm').addEventListener('submit', submitSetup);
+  $('#vehicleForm').addEventListener('submit', submitVehicle);
+  $('#maintenanceForm').addEventListener('submit', submitMaintenance);
+  $('#kmForm').addEventListener('submit', submitKm);
+  $('#assignmentForm').addEventListener('submit', submitAssignment);
+  $('#documentForm').addEventListener('submit', submitDocument);
+  $('#companyForm').addEventListener('submit', submitCompany);
+  $('#userForm').addEventListener('submit', submitUser);
+  $('#ownerPinForm').addEventListener('submit', unlockOwner);
+  $('#licenseForm').addEventListener('submit', saveLicense);
+  $('#runNotificationsBtn').addEventListener('click', runNotifications);
+  $('#closeOwnerPanelBtn').addEventListener('click', closeOwnerPanel);
+}
+
+async function submitSetup(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  const res = await fetch('/api/company/setup', {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  if (!data.success) { $('#setupMsg').textContent = 'Kurulum kaydedilemedi'; return; }
+  $('#setupMsg').textContent = 'Şirket tanımlandı. Giriş ekranına yönlendiriliyor...';
+  setTimeout(() => location.reload(), 700);
+}
+async function onLogin(e) {
+  e.preventDefault();
+  const res = await fetch('/api/login', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ username: $('#username').value.trim(), password: $('#password').value.trim() })
+  });
+  const data = await res.json();
+  if (!res.ok || !data.success) { $('#loginMsg').textContent = data.message || 'Giriş hatası'; return; }
+  state.user = data.user;
+  $('#loginMsg').textContent = 'Giriş başarılı, panel açılıyor...';
+  await loadPanel();
+}
+async function loadPanel() {
+  $('#setupView').classList.add('hidden');
+  $('#loginView').classList.add('hidden');
+  $('#panelView').classList.remove('hidden');
+  const [bootstrap, vehicles, maintenanceLogs, kmLogs, assignments, documents, users, company, license] = await Promise.all([
+    fetch('/api/bootstrap').then(r=>r.json()),
+    fetch('/api/vehicles').then(r=>r.json()),
+    fetch('/api/maintenance-logs').then(r=>r.json()),
+    fetch('/api/km-logs').then(r=>r.json()),
+    fetch('/api/assignments').then(r=>r.json()),
+    fetch('/api/documents').then(r=>r.json()),
+    fetch('/api/users').then(r=>r.json()),
+    fetch('/api/company').then(r=>r.json()),
+    fetch('/api/license').then(r=>r.json())
+  ]);
+  Object.assign(state, { bootstrap, vehicles, maintenanceLogs, kmLogs, assignments, documents, users, company, license });
+  renderAll();
+}
+function renderAll() {
+  $('#currentUser').textContent = `${state.user.fullName} (${state.user.role})`;
+  $('#companySideName').textContent = state.company.companyName || 'Şirket Tanımlanmadı';
+  $('#licenseDaysLeft').textContent = state.license.daysLeft;
+  renderSummaryCards();
+  renderNotifications();
+  renderVehicleQuick();
+  renderVehiclesTable();
+  renderMaintenanceTable();
+  renderKmTable();
+  renderAssignmentsTable();
+  renderDocumentsTable();
+  renderUsersTable();
+  fillVehicleSelects();
+  fillCompanyForm();
+  fillLicenseForm();
+}
+function renderSummaryCards() {
+  const cards = [
+    ['Toplam Araç', state.bootstrap.counts.vehicles],
+    ['Kritik / Yaklaşan', state.bootstrap.counts.criticalAlerts],
+    ['Bakım Kaydı', state.bootstrap.counts.maintenanceLogs],
+    ['Görev / Sevk', state.bootstrap.counts.assignments],
+    ['Kullanıcı', state.bootstrap.counts.users]
+  ];
+  $('#summaryCards').innerHTML = cards.map(([t,v]) => `<div class="card"><h4>${t}</h4><strong>${v}</strong></div>`).join('');
+}
+function renderNotifications() {
+  const list = state.bootstrap.notifications || [];
+  $('#notificationsList').innerHTML = list.length ? list.map(n => `
+    <div class="note ${n.status}">
+      <strong>${n.plate}</strong> — ${n.message}<br>
+      <span class="muted">Tür: ${n.type} ${n.dueDate ? ' | Tarih: '+n.dueDate : ''}</span>
+    </div>
+  `).join('') : '<div class="note info">Aktif kritik kayıt yok.</div>';
+  $('#licenseInfo').innerHTML = `
+    <div class="note info">
+      <strong>Lisans Durumu:</strong> ${state.license.status}<br>
+      <strong>Başlangıç:</strong> ${state.license.startDate}<br>
+      <strong>Bitiş:</strong> ${state.license.endDate}<br>
+      <strong>Kalan Gün:</strong> ${state.license.daysLeft}<br>
+      <strong>Kullanıcı Limiti:</strong> ${state.license.userLimit}
+    </div>
+  `;
+}
+function renderVehicleQuick() {
+  $('#vehicleQuickList').innerHTML = state.vehicles.map(v => `
+    <div class="note info">
+      <strong>${v.plate}</strong> — ${v.brand || ''} ${v.model || ''}<br>
+      <span class="muted">KM: ${v.currentKm || 0} | Zimmetli: ${v.assignedTo || '-'} | Durum: ${v.status}</span>
+    </div>
+  `).join('') || '<div class="note info">Henüz araç kaydı yok.</div>';
+}
+function table(headers, rowsHtml) {
+  return `<div class="table-wrap"><table><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rowsHtml || ''}</tbody></table></div>`;
+}
+function renderVehiclesTable() {
+  const rows = state.vehicles.map(v => `
+    <tr>
+      <td>${v.plate}</td>
+      <td>${v.brand || ''} ${v.model || ''}</td>
+      <td>${v.currentKm || 0}</td>
+      <td>${v.monthlyKmLimit || 0}</td>
+      <td>${v.assignedTo || '-'}</td>
+      <td>${v.insuranceEnd || '-'}</td>
+      <td>${v.cascoEnd || '-'}</td>
+      <td>${v.inspectionEnd || '-'}</td>
+      <td>${v.maintenanceDate || '-'}</td>
+      <td>${v.status}</td>
+      <td><button class="action-btn edit" onclick="editVehicle(${v.id})">Düzenle</button></td>
+    </tr>
+  `).join('');
+  $('#vehiclesTable').innerHTML = table(['Plaka','Araç','KM','Aylık Limit','Zimmetli','Sigorta','Kasko','Muayene','Bakım','Durum','İşlem'], rows);
+}
+function renderMaintenanceTable() {
+  const rows = state.maintenanceLogs.map(r => `
+    <tr><td>${r.plate}</td><td>${r.serviceType}</td><td>${r.serviceDate || '-'}</td><td>${r.km || 0}</td><td>${r.amount || 0}</td><td>${r.vendor || '-'}</td><td>${r.nextDate || '-'}</td><td>${r.nextKm || 0}</td></tr>
+  `).join('');
+  $('#maintenanceTable').innerHTML = table(['Plaka','Bakım Türü','Tarih','KM','Tutar','Servis','Sonraki Tarih','Sonraki KM'], rows);
+}
+function renderKmTable() {
+  const rows = state.kmLogs.map(r => {
+    const vehicle = state.vehicles.find(v => v.id === r.vehicleId);
+    const warn = vehicle && vehicle.monthlyKmLimit > 0 && r.totalKm > vehicle.monthlyKmLimit;
+    return `<tr><td>${r.plate}</td><td>${r.month}</td><td>${r.startKm}</td><td>${r.endKm}</td><td><span class="status-badge ${warn ? 'status-warning' : 'status-ok'}">${r.totalKm}</span></td><td>${r.note || '-'}</td></tr>`;
+  }).join('');
+  $('#kmTable').innerHTML = table(['Plaka','Ay','Başlangıç','Bitiş','Toplam KM','Not'], rows);
+}
+function renderAssignmentsTable() {
+  const rows = state.assignments.map(r => `
+    <tr><td>${r.plate}</td><td>${r.missionTitle}</td><td>${r.customer || '-'}</td><td>${r.fromLocation || '-'}</td><td>${r.toLocation || '-'}</td><td>${r.driverName || '-'}</td><td>${r.startDate || '-'}</td><td>${r.endDate || '-'}</td></tr>
+  `).join('');
+  $('#assignmentsTable').innerHTML = table(['Plaka','Görev','Müşteri','Çıkış','Varış','Sürücü','Başlangıç','Bitiş'], rows);
+}
+function renderDocumentsTable() {
+  const rows = state.documents.map(r => `
+    <tr><td>${r.plate}</td><td>${r.docType}</td><td>${r.originalName}</td><td>${new Date(r.uploadedAt).toLocaleString('tr-TR')}</td><td><a href="${r.url}" target="_blank">Görüntüle</a></td></tr>
+  `).join('');
+  $('#documentsTable').innerHTML = table(['Plaka','Belge Türü','Dosya','Yüklenme','İşlem'], rows);
+}
+function renderUsersTable() {
+  const rows = state.users.map(r => {
+    const canDelete = r.username !== 'admin';
+    return `<tr>
+      <td>${r.fullName || '-'}</td>
+      <td>${r.username}</td>
+      <td>${r.role}</td>
+      <td>${r.active === false ? 'Pasif' : 'Aktif'}</td>
+      <td>${canDelete ? `<button class="action-btn delete" onclick="deleteUser('${r.username}')">Sil</button>` : '-'}</td>
+    </tr>`;
+  }).join('');
+  $('#usersTable').innerHTML = table(['Ad Soyad','Kullanıcı','Rol','Durum','İşlem'], rows);
+}
+function fillVehicleSelects() {
+  const options = state.vehicles.map(v => `<option value="${v.id}">${v.plate} - ${v.brand || ''} ${v.model || ''}</option>`).join('');
+  ['#maintenanceVehicleSelect','#kmVehicleSelect','#assignmentVehicleSelect','#documentVehicleSelect'].forEach(id => { $(id).innerHTML = options; });
+}
+function fillCompanyForm() {
+  const form = $('#companyForm');
+  Object.keys(state.company || {}).forEach(k => { if (form.elements[k]) form.elements[k].value = state.company[k] || ''; });
+}
+function fillLicenseForm() {
+  const form = $('#licenseForm');
+  ['startDate','endDate','userLimit','status'].forEach(k => { if (form.elements[k]) form.elements[k].value = state.license[k] || ''; });
+}
+function editVehicle(id) {
+  const v = state.vehicles.find(x => x.id === id);
+  if (!v) return;
+  state.editingVehicleId = id;
+  const form = $('#vehicleForm');
+  Object.keys(v).forEach(k => { if (form.elements[k]) form.elements[k].value = v[k] ?? ''; });
+  $('#vehicleFormTitle').textContent = 'Araç Kartı Düzenle';
+  $('#vehicleSubmitBtn').textContent = 'Araç Güncelle';
+  $('#cancelEditBtn').classList.remove('hidden');
+  document.querySelector('[data-tab="vehiclesTab"]').click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function cancelVehicleEdit() {
+  state.editingVehicleId = null;
+  const form = $('#vehicleForm');
+  form.reset();
+  $('#vehicleFormTitle').textContent = 'Araç Kartı Ekle';
+  $('#vehicleSubmitBtn').textContent = 'Araç Kaydet';
+  $('#cancelEditBtn').classList.add('hidden');
+}
+async function submitVehicle(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  let res;
+  if (state.editingVehicleId) {
+    res = await fetch(`/api/vehicles/${state.editingVehicleId}`, {
+      method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+  } else {
+    res = await fetch('/api/vehicles', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    });
+  }
+  const data = await res.json();
+  if (!res.ok || !data.success) { alert(data.message || 'Araç kaydedilemedi'); return; }
+  cancelVehicleEdit();
+  await loadPanel();
+}
+async function submitMaintenance(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  await fetch('/api/maintenance-logs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  e.target.reset(); await loadPanel();
+}
+async function submitKm(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  await fetch('/api/km-logs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  e.target.reset(); await loadPanel();
+}
+async function submitAssignment(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  await fetch('/api/assignments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  e.target.reset(); await loadPanel();
+}
+async function submitDocument(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const res = await fetch('/api/documents/upload', { method:'POST', body: formData });
+  const data = await res.json();
+  if (!data.success) alert(data.message || 'Belge yükleme hatası');
+  e.target.reset(); await loadPanel();
+}
+async function submitCompany(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  await fetch('/api/company',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  await loadPanel();
+}
+async function submitUser(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  const res = await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data = await res.json();
+  if (!res.ok || !data.success) { alert(data.message || 'Kullanıcı kaydedilemedi'); return; }
+  e.target.reset(); await loadPanel();
+}
+async function deleteUser(username) {
+  if (!confirm(`${username} kullanıcısı silinsin mi?`)) return;
+  const pin = prompt('Kullanıcıyı silmek için owner PIN gir');
+  if (pin === null) return;
+  const res = await fetch(`/api/users/${encodeURIComponent(username)}`, { method:'DELETE', headers:{ 'x-owner-pin': pin } });
+  const data = await res.json();
+  if (!res.ok || !data.success) { alert(data.message || 'Kullanıcı silinemedi'); return; }
+  alert('Kullanıcı silindi'); await loadPanel();
+}
+async function unlockOwner(e) {
+  e.preventDefault();
+  const pin = $('#ownerPinInput').value.trim();
+  const res = await fetch('/api/owner/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ pin })});
+  const data = await res.json();
+  if (!data.success) { alert('Owner PIN hatalı'); return; }
+  state.ownerUnlocked = true;
+  $('#licenseForm').classList.remove('hidden');
+  $('#closeOwnerPanelBtn').classList.remove('hidden');
+  $('#ownerPinInput').value = '';
+  alert('Owner paneli açıldı');
+}
+function closeOwnerPanel() {
+  state.ownerUnlocked = false;
+  $('#licenseForm').classList.add('hidden');
+  $('#closeOwnerPanelBtn').classList.add('hidden');
+  $('#ownerPinInput').value = '';
+}
+async function saveLicense(e) {
+  e.preventDefault();
+  if (!state.ownerUnlocked) return alert('Önce owner panelini aç');
+  const pin = prompt('Lisansı kaydetmek için owner PIN gir');
+  if (pin === null) return;
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  payload.pin = pin;
+  const res = await fetch('/api/license',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data = await res.json();
+  if (!res.ok || !data.success) { alert(data.message || 'Lisans kaydedilemedi'); return; }
+  alert('Lisans kaydedildi');
+  closeOwnerPanel();
+  await loadPanel();
+}
+async function runNotifications() { await fetch('/api/notifications/run',{method:'POST'}); await loadPanel(); }
+function logout() { location.reload(); }
+c
