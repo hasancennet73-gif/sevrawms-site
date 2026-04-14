@@ -99,15 +99,12 @@
 
     function sanitizeText(text) {
       var value = String(text || "");
-
       value = value.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, "[e-posta gizlendi]");
       value = value.replace(/(?:\+?90|0)?\s*5\d{2}[\s.\-]?\d{3}[\s.\-]?\d{2}[\s.\-]?\d{2}/g, "[telefon gizlendi]");
       value = value.replace(/wa\.me\/\d+/ig, "[whatsapp gizlendi]");
       value = value.replace(/https?:\/\/[^\s]+/ig, "[link gizlendi]");
-
       value = value.replace(/\b(a\.?\s*ş\.?|anonim şirket|limited|ltd|ltd\.şti|ltd şti|ticaret|sanayi|holding|lojistik|nakliyat|taşımacılık|transport|kargo|depo)\b/ig, "[şirket bilgisi gizlendi]");
       value = value.replace(/\b(mahallesi|mah|mahalle|cadde|caddesi|cad\.|sokak|sok\.|bulvar|blv|apartman|apt|daire|no:|no\b|kat\b|dükkan|iş merkezi|plaza|posta kodu|pk|ilçe|il|adres)\b/ig, "[adres bilgisi gizlendi]");
-
       return value;
     }
 
@@ -119,26 +116,14 @@
       var whatsappRegex = /(whatsapp|wa\.me|telegram|t\.me|beni ara|ara beni|numaram|telefonum|gsm|cep numaram|mobil numaram)/i;
       var socialRegex = /(instagram|insta|facebook|fb|linkedin|telegram|discord|skype)/i;
       var linkRegex = /(https?:\/\/|www\.)/i;
-
       var companyRegex = /\b(a\.?\s*ş\.?|anonim şirket|limited|ltd|ltd\.şti|ltd şti|ticaret|sanayi|holding|lojistik|nakliyat|taşımacılık|transport|kargo|depo|firma adımız|şirket adımız|şirketim|firmamız|firmam)\b/i;
       var addressRegex = /\b(mahallesi|mah|mahalle|cadde|caddesi|cad\.|sokak|sok\.|bulvar|blv|apartman|apt|daire|no:| no |kat |dükkan|iş merkezi|plaza|posta kodu|pk |ilçe|il |adresimiz|adres)\b/i;
 
-      if (emailRegex.test(value)) return true;
-      if (phoneRegex.test(value)) return true;
-      if (whatsappRegex.test(value)) return true;
-      if (socialRegex.test(value)) return true;
-      if (linkRegex.test(value)) return true;
-      if (companyRegex.test(value)) return true;
-      if (addressRegex.test(value)) return true;
-
-      return false;
+      return emailRegex.test(value) || phoneRegex.test(value) || whatsappRegex.test(value) || socialRegex.test(value) || linkRegex.test(value) || companyRegex.test(value) || addressRegex.test(value);
     }
 
     function currentTimeText() {
-      return new Date().toLocaleTimeString("tr-TR", {
-        hour: "2-digit",
-        minute: "2-digit"
-      });
+      return new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
     }
 
     function saveThreads() {
@@ -155,20 +140,13 @@
       var html = "";
 
       if (!list.length) {
-        html += '<div class="msg admin">';
-        html += '<div class="msg-sender">Sistem</div>';
-        html += '<div class="msg-text">Bu pazarlık için henüz mesaj yok.</div>';
-        html += '<div class="msg-time">--:--</div>';
-        html += '</div>';
+        html += '<div class="msg admin"><div class="msg-sender">Sistem</div><div class="msg-text">Bu pazarlık için henüz mesaj yok.</div><div class="msg-time">--:--</div></div>';
       } else {
         for (var i = 0; i < list.length; i++) {
           var item = list[i];
           var role = String(item.role || "Sistem");
           var cls = "msg admin";
-
-          if (role !== "Sistem" && role !== "Admin") {
-            cls = "msg user";
-          }
+          if (role !== "Sistem" && role !== "Admin") cls = "msg user";
 
           html += '<div class="' + cls + '">';
           html += '<div class="msg-sender">' + role + '</div>';
@@ -189,29 +167,15 @@
       }
 
       var infoText = "İlan: " + (activeThread.title || "-");
-
-      if (activeThread.route) {
-        infoText += " | Güzergah: " + activeThread.route;
-      }
-
-      if (activeThread.currentOffer) {
-        infoText += " | Son Teklif: " + activeThread.currentOffer + " TL";
-      }
-
+      if (activeThread.route) infoText += " | Güzergah: " + activeThread.route;
+      if (activeThread.currentOffer) infoText += " | Son Teklif: " + activeThread.currentOffer + " TL";
       showThreadInfo(infoText);
     }
 
     function ensureThreadShape() {
       if (!activeThread) return;
-
-      if (!Array.isArray(activeThread.messages)) {
-        activeThread.messages = [];
-      }
-
-      if (!Array.isArray(activeThread.offerHistory)) {
-        activeThread.offerHistory = [];
-      }
-
+      if (!Array.isArray(activeThread.messages)) activeThread.messages = [];
+      if (!Array.isArray(activeThread.offerHistory)) activeThread.offerHistory = [];
       if (!activeThread.messages.length) {
         activeThread.messages.push({
           role: "Sistem",
@@ -240,7 +204,6 @@
       }
 
       var value = chatInput.value.trim();
-
       if (!value) {
         showStatus("Mesaj yazın.", true);
         return;
