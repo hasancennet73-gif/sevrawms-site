@@ -1,339 +1,376 @@
-
-let state = {
-  user: null, bootstrap: null, vehicles: [], maintenanceLogs: [], kmLogs: [],
-  assignments: [], documents: [], users: [], company: null, license: null,
-  ownerUnlocked: false, editingVehicleId: null
-};
-
-const $ = (sel) => document.querySelector(sel);
-
-document.addEventListener('DOMContentLoaded', async () => {
-  bindNav();
-  bindForms();
-  $('#logoutBtn').addEventListener('click', logout);
-  $('#loginForm').addEventListener('submit', onLogin);
-  $('#cancelEditBtn').addEventListener('click', cancelVehicleEdit);
-
-  const init = await fetch('/api/initial-company').then(r => r.json());
-  if (!init.companyExists) {
-    $('#setupView').classList.remove('hidden');
-  } else {
-    $('#loginView').classList.remove('hidden');
-    $('#loginCompanyName').textContent = init.company.companyName || '';
-  }
-});
-
-function bindNav() {
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.nav-btn').forEach(x => x.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab).classList.add('active');
-    });
-  });
-}
-function bindForms() {
-  $('#setupForm').addEventListener('submit', submitSetup);
-  $('#vehicleForm').addEventListener('submit', submitVehicle);
-  $('#maintenanceForm').addEventListener('submit', submitMaintenance);
-  $('#kmForm').addEventListener('submit', submitKm);
-  $('#assignmentForm').addEventListener('submit', submitAssignment);
-  $('#documentForm').addEventListener('submit', submitDocument);
-  $('#companyForm').addEventListener('submit', submitCompany);
-  $('#userForm').addEventListener('submit', submitUser);
-  $('#ownerPinForm').addEventListener('submit', unlockOwner);
-  $('#licenseForm').addEventListener('submit', saveLicense);
-  $('#runNotificationsBtn').addEventListener('click', runNotifications);
-  $('#closeOwnerPanelBtn').addEventListener('click', closeOwnerPanel);
-}
-
-async function submitSetup(e) {
-  e.preventDefault();
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  const res = await fetch('/api/company/setup', {
-    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
-  });
-  const data = await res.json();
-  if (!data.success) { $('#setupMsg').textContent = 'Kurulum kaydedilemedi'; return; }
-  $('#setupMsg').textContent = 'Şirket tanımlandı. Giriş ekranına yönlendiriliyor...';
-  setTimeout(() => location.reload(), 700);
-}
-async function onLogin(e) {
-  e.preventDefault();
-  const res = await fetch('/api/login', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ username: $('#username').value.trim(), password: $('#password').value.trim() })
-  });
-  const data = await res.json();
-  if (!res.ok || !data.success) { $('#loginMsg').textContent = data.message || 'Giriş hatası'; return; }
-  state.user = data.user;
-  $('#loginMsg').textContent = 'Giriş başarılı, panel açılıyor...';
-  await loadPanel();
-}
-async function loadPanel() {
-  $('#setupView').classList.add('hidden');
-  $('#loginView').classList.add('hidden');
-  $('#panelView').classList.remove('hidden');
-  const [bootstrap, vehicles, maintenanceLogs, kmLogs, assignments, documents, users, company, license] = await Promise.all([
-    fetch('/api/bootstrap').then(r=>r.json()),
-    fetch('/api/vehicles').then(r=>r.json()),
-    fetch('/api/maintenance-logs').then(r=>r.json()),
-    fetch('/api/km-logs').then(r=>r.json()),
-    fetch('/api/assignments').then(r=>r.json()),
-    fetch('/api/documents').then(r=>r.json()),
-    fetch('/api/users').then(r=>r.json()),
-    fetch('/api/company').then(r=>r.json()),
-    fetch('/api/license').then(r=>r.json())
-  ]);
-  Object.assign(state, { bootstrap, vehicles, maintenanceLogs, kmLogs, assignments, documents, users, company, license });
-  renderAll();
-}
-function renderAll() {
-  $('#currentUser').textContent = `${state.user.fullName} (${state.user.role})`;
-  $('#companySideName').textContent = state.company.companyName || 'Şirket Tanımlanmadı';
-  $('#licenseDaysLeft').textContent = state.license.daysLeft;
-  renderSummaryCards();
-  renderNotifications();
-  renderVehicleQuick();
-  renderVehiclesTable();
-  renderMaintenanceTable();
-  renderKmTable();
-  renderAssignmentsTable();
-  renderDocumentsTable();
-  renderUsersTable();
-  fillVehicleSelects();
-  fillCompanyForm();
-  fillLicenseForm();
-}
-function renderSummaryCards() {
-  const cards = [
-    ['Toplam Araç', state.bootstrap.counts.vehicles],
-    ['Kritik / Yaklaşan', state.bootstrap.counts.criticalAlerts],
-    ['Bakım Kaydı', state.bootstrap.counts.maintenanceLogs],
-    ['Görev / Sevk', state.bootstrap.counts.assignments],
-    ['Kullanıcı', state.bootstrap.counts.users]
-  ];
-  $('#summaryCards').innerHTML = cards.map(([t,v]) => `<div class="card"><h4>${t}</h4><strong>${v}</strong></div>`).join('');
-}
-function renderNotifications() {
-  const list = state.bootstrap.notifications || [];
-  $('#notificationsList').innerHTML = list.length ? list.map(n => `
-    <div class="note ${n.status}">
-      <strong>${n.plate}</strong> — ${n.message}<br>
-      <span class="muted">Tür: ${n.type} ${n.dueDate ? ' | Tarih: '+n.dueDate : ''}</span>
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Ilan ve Teklif Yonetimi</title>
+  <link rel="stylesheet" href="ilan-teklif.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Dijital Lojistik ve Tedarik Platformu</span>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yuk Ilanlarina Don</a>
+        <a class="btn btn-secondary" href="mesajlasma.html">Mesajlasma</a>
+      </div>
     </div>
-  `).join('') : '<div class="note info">Aktif kritik kayıt yok.</div>';
-  $('#licenseInfo').innerHTML = `
-    <div class="note info">
-      <strong>Lisans Durumu:</strong> ${state.license.status}<br>
-      <strong>Başlangıç:</strong> ${state.license.startDate}<br>
-      <strong>Bitiş:</strong> ${state.license.endDate}<br>
-      <strong>Kalan Gün:</strong> ${state.license.daysLeft}<br>
-      <strong>Kullanıcı Limiti:</strong> ${state.license.userLimit}
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <div class="section-kicker">Kurumsal Teklif Merkezi</div>
+          <h1>Ilan ve teklif akisi</h1>
+          <p>Secilen yuk ilanlarini tek ekranda inceleyin, teklif olusturun ve pazarlik akisina kontrollu sekilde gecin.</p>
+        </div>
+        <div id="userBadge" class="user-badge">Uye kontrol ediliyor</div>
+      </section>
+
+      <div id="statusBox" class="status-box hidden"></div>
+
+      <section class="offer-entry-card">
+        <div class="card-head">
+          <div>
+            <div class="section-kicker">Yeni Teklif</div>
+            <h2>Teklif olustur</h2>
+          </div>
+        </div>
+
+        <form id="offerForm" class="offer-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="offerLoadSelect">Ilan secin</label>
+              <select id="offerLoadSelect" required></select>
+            </div>
+
+            <div class="form-group">
+              <label for="offerPrice">Teklif fiyati</label>
+              <input id="offerPrice" type="number" placeholder="Orn: 18500" required />
+            </div>
+
+            <div class="form-group full">
+              <label for="offerNote">Teklif notu</label>
+              <textarea id="offerNote" placeholder="Teslim suresi, arac durumu veya aciklama girin"></textarea>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button id="saveOfferBtn" type="submit" class="btn btn-primary">Teklif Ver</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="table-shell">
+        <article class="table-card">
+          <div class="card-head">
+            <h2>Aktif Ilanlar</h2>
+            <span class="pill">Secilebilir kayitlar</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Baslik</th>
+                  <th>Guzergah</th>
+                  <th>Agirlik</th>
+                  <th>Durum</th>
+                  <th>Islem</th>
+                </tr>
+              </thead>
+              <tbody id="loadsTbody"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="table-card">
+          <div class="card-head">
+            <h2>Verilen Teklifler</h2>
+            <span class="pill">Pazarlik baglantili</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ilan</th>
+                  <th>Uye</th>
+                  <th>Fiyat</th>
+                  <th>Durum</th>
+                  <th>Islem</th>
+                </tr>
+              </thead>
+              <tbody id="offersTbody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
     </div>
-  `;
-}
-function renderVehicleQuick() {
-  $('#vehicleQuickList').innerHTML = state.vehicles.map(v => `
-    <div class="note info">
-      <strong>${v.plate}</strong> — ${v.brand || ''} ${v.model || ''}<br>
-      <span class="muted">KM: ${v.currentKm || 0} | Zimmetli: ${v.assignedTo || '-'} | Durum: ${v.status}</span>
-    </div>
-  `).join('') || '<div class="note info">Henüz araç kaydı yok.</div>';
-}
-function table(headers, rowsHtml) {
-  return `<div class="table-wrap"><table><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rowsHtml || ''}</tbody></table></div>`;
-}
-function renderVehiclesTable() {
-  const rows = state.vehicles.map(v => `
-    <tr>
-      <td>${v.plate}</td>
-      <td>${v.brand || ''} ${v.model || ''}</td>
-      <td>${v.currentKm || 0}</td>
-      <td>${v.monthlyKmLimit || 0}</td>
-      <td>${v.assignedTo || '-'}</td>
-      <td>${v.insuranceEnd || '-'}</td>
-      <td>${v.cascoEnd || '-'}</td>
-      <td>${v.inspectionEnd || '-'}</td>
-      <td>${v.maintenanceDate || '-'}</td>
-      <td>${v.status}</td>
-      <td><button class="action-btn edit" onclick="editVehicle(${v.id})">Düzenle</button></td>
-    </tr>
-  `).join('');
-  $('#vehiclesTable').innerHTML = table(['Plaka','Araç','KM','Aylık Limit','Zimmetli','Sigorta','Kasko','Muayene','Bakım','Durum','İşlem'], rows);
-}
-function renderMaintenanceTable() {
-  const rows = state.maintenanceLogs.map(r => `
-    <tr><td>${r.plate}</td><td>${r.serviceType}</td><td>${r.serviceDate || '-'}</td><td>${r.km || 0}</td><td>${r.amount || 0}</td><td>${r.vendor || '-'}</td><td>${r.nextDate || '-'}</td><td>${r.nextKm || 0}</td></tr>
-  `).join('');
-  $('#maintenanceTable').innerHTML = table(['Plaka','Bakım Türü','Tarih','KM','Tutar','Servis','Sonraki Tarih','Sonraki KM'], rows);
-}
-function renderKmTable() {
-  const rows = state.kmLogs.map(r => {
-    const vehicle = state.vehicles.find(v => v.id === r.vehicleId);
-    const warn = vehicle && vehicle.monthlyKmLimit > 0 && r.totalKm > vehicle.monthlyKmLimit;
-    return `<tr><td>${r.plate}</td><td>${r.month}</td><td>${r.startKm}</td><td>${r.endKm}</td><td><span class="status-badge ${warn ? 'status-warning' : 'status-ok'}">${r.totalKm}</span></td><td>${r.note || '-'}</td></tr>`;
-  }).join('');
-  $('#kmTable').innerHTML = table(['Plaka','Ay','Başlangıç','Bitiş','Toplam KM','Not'], rows);
-}
-function renderAssignmentsTable() {
-  const rows = state.assignments.map(r => `
-    <tr><td>${r.plate}</td><td>${r.missionTitle}</td><td>${r.customer || '-'}</td><td>${r.fromLocation || '-'}</td><td>${r.toLocation || '-'}</td><td>${r.driverName || '-'}</td><td>${r.startDate || '-'}</td><td>${r.endDate || '-'}</td></tr>
-  `).join('');
-  $('#assignmentsTable').innerHTML = table(['Plaka','Görev','Müşteri','Çıkış','Varış','Sürücü','Başlangıç','Bitiş'], rows);
-}
-function renderDocumentsTable() {
-  const rows = state.documents.map(r => `
-    <tr><td>${r.plate}</td><td>${r.docType}</td><td>${r.originalName}</td><td>${new Date(r.uploadedAt).toLocaleString('tr-TR')}</td><td><a href="${r.url}" target="_blank">Görüntüle</a></td></tr>
-  `).join('');
-  $('#documentsTable').innerHTML = table(['Plaka','Belge Türü','Dosya','Yüklenme','İşlem'], rows);
-}
-function renderUsersTable() {
-  const rows = state.users.map(r => {
-    const canDelete = r.username !== 'admin';
-    return `<tr>
-      <td>${r.fullName || '-'}</td>
-      <td>${r.username}</td>
-      <td>${r.role}</td>
-      <td>${r.active === false ? 'Pasif' : 'Aktif'}</td>
-      <td>${canDelete ? `<button class="action-btn delete" onclick="deleteUser('${r.username}')">Sil</button>` : '-'}</td>
-    </tr>`;
-  }).join('');
-  $('#usersTable').innerHTML = table(['Ad Soyad','Kullanıcı','Rol','Durum','İşlem'], rows);
-}
-function fillVehicleSelects() {
-  const options = state.vehicles.map(v => `<option value="${v.id}">${v.plate} - ${v.brand || ''} ${v.model || ''}</option>`).join('');
-  ['#maintenanceVehicleSelect','#kmVehicleSelect','#assignmentVehicleSelect','#documentVehicleSelect'].forEach(id => { $(id).innerHTML = options; });
-}
-function fillCompanyForm() {
-  const form = $('#companyForm');
-  Object.keys(state.company || {}).forEach(k => { if (form.elements[k]) form.elements[k].value = state.company[k] || ''; });
-}
-function fillLicenseForm() {
-  const form = $('#licenseForm');
-  ['startDate','endDate','userLimit','status'].forEach(k => { if (form.elements[k]) form.elements[k].value = state.license[k] || ''; });
-}
-function editVehicle(id) {
-  const v = state.vehicles.find(x => x.id === id);
-  if (!v) return;
-  state.editingVehicleId = id;
-  const form = $('#vehicleForm');
-  Object.keys(v).forEach(k => { if (form.elements[k]) form.elements[k].value = v[k] ?? ''; });
-  $('#vehicleFormTitle').textContent = 'Araç Kartı Düzenle';
-  $('#vehicleSubmitBtn').textContent = 'Araç Güncelle';
-  $('#cancelEditBtn').classList.remove('hidden');
-  document.querySelector('[data-tab="vehiclesTab"]').click();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function cancelVehicleEdit() {
-  state.editingVehicleId = null;
-  const form = $('#vehicleForm');
-  form.reset();
-  $('#vehicleFormTitle').textContent = 'Araç Kartı Ekle';
-  $('#vehicleSubmitBtn').textContent = 'Araç Kaydet';
-  $('#cancelEditBtn').classList.add('hidden');
-}
-async function submitVehicle(e) {
-  e.preventDefault();
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  let res;
-  if (state.editingVehicleId) {
-    res = await fetch(`/api/vehicles/${state.editingVehicleId}`, {
-      method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+  </main>
+
+  <script>
+    function q(name) {
+      return new URLSearchParams(location.search).get(name) || '';
+    }
+
+    function readJson(key, fallback) {
+      try {
+        var raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function writeJson(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    var session = readJson('sevra_member_session', null);
+    if (!session || !session.email) {
+      var loginUrl = 'uye-login.html?redirect=ilan-teklif';
+      var queryLoadId = q('load_id') || q('id');
+      if (queryLoadId) {
+        loginUrl += '&load_id=' + encodeURIComponent(queryLoadId);
+      }
+      window.location.href = loginUrl;
+    }
+
+    var offerForm = document.getElementById('offerForm');
+    var offerLoadSelect = document.getElementById('offerLoadSelect');
+    var loadsTbody = document.getElementById('loadsTbody');
+    var offersTbody = document.getElementById('offersTbody');
+    var offerPrice = document.getElementById('offerPrice');
+    var offerNote = document.getElementById('offerNote');
+    var statusBox = document.getElementById('statusBox');
+    var userBadge = document.getElementById('userBadge');
+
+    var loads = Array.isArray(readJson('sevra_loads', [])) ? readJson('sevra_loads', []) : [];
+    var offers = Array.isArray(readJson('sevra_offers', [])) ? readJson('sevra_offers', []) : [];
+    var threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
+    var selectedLoad = readJson('sevra_selected_load', null);
+
+    userBadge.textContent = 'Uye: ' + (session.companyName || session.contactName || session.email);
+
+    function showStatus(message, isError) {
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden', 'status-success', 'status-error');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    function ensureSelectedLoadFromQuery() {
+      var queryLoadId = q('load_id') || q('id');
+      if (!queryLoadId) return;
+
+      var found = loads.find(function(item) {
+        return item.id === queryLoadId;
+      });
+
+      if (found) {
+        selectedLoad = found;
+        localStorage.setItem('sevra_selected_load', JSON.stringify(found));
+      }
+    }
+
+    function renderSelect() {
+      offerLoadSelect.innerHTML = '';
+
+      if (!loads.length) {
+        var op = document.createElement('option');
+        op.value = '';
+        op.textContent = 'Ilan bulunmuyor';
+        offerLoadSelect.appendChild(op);
+        return;
+      }
+
+      loads.forEach(function(load) {
+        var op = document.createElement('option');
+        op.value = load.id;
+        op.textContent = (load.title || '-') + ' (' + load.id + ')';
+        if (selectedLoad && selectedLoad.id === load.id) {
+          op.selected = true;
+        }
+        offerLoadSelect.appendChild(op);
+      });
+    }
+
+    function renderLoads() {
+      loadsTbody.innerHTML = '';
+
+      if (!loads.length) {
+        loadsTbody.innerHTML = '<tr><td colspan="5">Aktif ilan bulunmuyor.</td></tr>';
+        return;
+      }
+
+      loads.forEach(function(load) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + (load.title || '-') + '</td>' +
+          '<td>' + (load.route || '-') + '</td>' +
+          '<td>' + (load.weight || '-') + '</td>' +
+          '<td><span class="mini-pill">' + (load.status || 'Acik') + '</span></td>' +
+          '<td><button class="mini-btn" type="button">Sec</button></td>';
+
+        tr.querySelector('button').addEventListener('click', function() {
+          selectedLoad = load;
+          localStorage.setItem('sevra_selected_load', JSON.stringify(load));
+          offerLoadSelect.value = load.id;
+          showStatus('Ilan secildi.', false);
+        });
+
+        loadsTbody.appendChild(tr);
+      });
+    }
+
+    function openOrCreateThread(offer) {
+      var existing = threads.find(function(item) {
+        return item.offerId === offer.id;
+      });
+
+      if (existing) {
+        localStorage.setItem('sevra_active_thread_id', existing.id);
+        window.location.href = 'mesajlasma.html';
+        return;
+      }
+
+      var load = loads.find(function(item) {
+        return item.id === offer.loadId;
+      });
+
+      var numericPrice = parseInt(String(offer.price).replace(/[^0-9]/g, ''), 10) || 0;
+
+      var thread = {
+        id: 'THR-' + Date.now(),
+        offerId: offer.id,
+        title: offer.loadTitle,
+        route: load ? (load.route || offer.loadTitle) : offer.loadTitle,
+        currentOffer: numericPrice,
+        offerHistory: [{ role: offer.member, value: numericPrice }],
+        messages: [{
+          role: 'Sistem',
+          text: 'Teklif uzerinden pazarlik ekrani acildi.',
+          time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
+        }]
+      };
+
+      threads.push(thread);
+      writeJson('sevra_threads', threads);
+      localStorage.setItem('sevra_active_thread_id', thread.id);
+      window.location.href = 'mesajlasma.html';
+    }
+
+    function renderOffers() {
+      offersTbody.innerHTML = '';
+
+      if (!offers.length) {
+        offersTbody.innerHTML = '<tr><td colspan="5">Henuz teklif bulunmuyor.</td></tr>';
+        return;
+      }
+
+      offers.forEach(function(offer) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + offer.loadTitle + '</td>' +
+          '<td>' + offer.member + '</td>' +
+          '<td>' + offer.price + '</td>' +
+          '<td><span class="mini-pill">' + offer.status + '</span></td>' +
+          '<td><div class="table-actions">' +
+          '<button class="mini-btn green js-chat" type="button">Pazarlik Yap</button>' +
+          '<button class="mini-btn js-delete" type="button">Sil</button>' +
+          '</div></td>';
+
+        tr.querySelector('.js-delete').addEventListener('click', function() {
+          offers = offers.filter(function(item) {
+            return item.id !== offer.id;
+          });
+          writeJson('sevra_offers', offers);
+          renderOffers();
+          showStatus('Teklif silindi.', false);
+        });
+
+        tr.querySelector('.js-chat').addEventListener('click', function() {
+          openOrCreateThread(offer);
+        });
+
+        offersTbody.appendChild(tr);
+      });
+    }
+
+    function submitOffer() {
+      var loadId = (offerLoadSelect.value || '').trim();
+      var price = (offerPrice.value || '').trim();
+      var note = (offerNote.value || '').trim();
+
+      if (!loadId) {
+        showStatus('Once ilan secin.', true);
+        return;
+      }
+
+      if (!price) {
+        showStatus('Teklif fiyatini girin.', true);
+        return;
+      }
+
+      var load = loads.find(function(item) {
+        return item.id === loadId;
+      });
+
+      if (!load) {
+        showStatus('Secilen ilan bulunamadi.', true);
+        return;
+      }
+
+      var memberLabel = session.companyName || session.contactName || session.email;
+
+      var offer = {
+        id: 'OFF-' + Date.now(),
+        loadId: load.id,
+        loadTitle: load.title,
+        member: memberLabel,
+        price: price + ' TL',
+        note: note,
+        status: 'Beklemede',
+        createdAt: new Date().toISOString()
+      };
+
+      offers.push(offer);
+      writeJson('sevra_offers', offers);
+
+      offerPrice.value = '';
+      offerNote.value = '';
+
+      renderOffers();
+      showStatus('Teklif kaydedildi. Pazarlik Yap butonundan devam edebilirsiniz.', false);
+    }
+
+    offerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      submitOffer();
     });
-  } else {
-    res = await fetch('/api/vehicles', {
-      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+
+    offerPrice.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        submitOffer();
+      }
     });
-  }
-  const data = await res.json();
-  if (!res.ok || !data.success) { alert(data.message || 'Araç kaydedilemedi'); return; }
-  cancelVehicleEdit();
-  await loadPanel();
-}
-async function submitMaintenance(e) {
-  e.preventDefault();
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  await fetch('/api/maintenance-logs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  e.target.reset(); await loadPanel();
-}
-async function submitKm(e) {
-  e.preventDefault();
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  await fetch('/api/km-logs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  e.target.reset(); await loadPanel();
-}
-async function submitAssignment(e) {
-  e.preventDefault();
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  await fetch('/api/assignments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  e.target.reset(); await loadPanel();
-}
-async function submitDocument(e) {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const res = await fetch('/api/documents/upload', { method:'POST', body: formData });
-  const data = await res.json();
-  if (!data.success) alert(data.message || 'Belge yükleme hatası');
-  e.target.reset(); await loadPanel();
-}
-async function submitCompany(e) {
-  e.preventDefault();
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  await fetch('/api/company',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  await loadPanel();
-}
-async function submitUser(e) {
-  e.preventDefault();
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  const res = await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  const data = await res.json();
-  if (!res.ok || !data.success) { alert(data.message || 'Kullanıcı kaydedilemedi'); return; }
-  e.target.reset(); await loadPanel();
-}
-async function deleteUser(username) {
-  if (!confirm(`${username} kullanıcısı silinsin mi?`)) return;
-  const pin = prompt('Kullanıcıyı silmek için owner PIN gir');
-  if (pin === null) return;
-  const res = await fetch(`/api/users/${encodeURIComponent(username)}`, { method:'DELETE', headers:{ 'x-owner-pin': pin } });
-  const data = await res.json();
-  if (!res.ok || !data.success) { alert(data.message || 'Kullanıcı silinemedi'); return; }
-  alert('Kullanıcı silindi'); await loadPanel();
-}
-async function unlockOwner(e) {
-  e.preventDefault();
-  const pin = $('#ownerPinInput').value.trim();
-  const res = await fetch('/api/owner/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ pin })});
-  const data = await res.json();
-  if (!data.success) { alert('Owner PIN hatalı'); return; }
-  state.ownerUnlocked = true;
-  $('#licenseForm').classList.remove('hidden');
-  $('#closeOwnerPanelBtn').classList.remove('hidden');
-  $('#ownerPinInput').value = '';
-  alert('Owner paneli açıldı');
-}
-function closeOwnerPanel() {
-  state.ownerUnlocked = false;
-  $('#licenseForm').classList.add('hidden');
-  $('#closeOwnerPanelBtn').classList.add('hidden');
-  $('#ownerPinInput').value = '';
-}
-async function saveLicense(e) {
-  e.preventDefault();
-  if (!state.ownerUnlocked) return alert('Önce owner panelini aç');
-  const pin = prompt('Lisansı kaydetmek için owner PIN gir');
-  if (pin === null) return;
-  const payload = Object.fromEntries(new FormData(e.target).entries());
-  payload.pin = pin;
-  const res = await fetch('/api/license',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  const data = await res.json();
-  if (!res.ok || !data.success) { alert(data.message || 'Lisans kaydedilemedi'); return; }
-  alert('Lisans kaydedildi');
-  closeOwnerPanel();
-  await loadPanel();
-}
-async function runNotifications() { await fetch('/api/notifications/run',{method:'POST'}); await loadPanel(); }
-function logout() { location.reload(); }
-c
+
+    ensureSelectedLoadFromQuery();
+    renderSelect();
+    renderLoads();
+    renderOffers();
+
+    if (!loads.length) {
+      showStatus('Henuz ilan bulunmuyor. Once Yuk Ilanlari ekranindan bir kayit secin.', true);
+    }
+  </script>
+</body>
+</html>
