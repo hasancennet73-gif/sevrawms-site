@@ -12,7 +12,6 @@
   --shadow:0 18px 38px rgba(0,0,0,.22);
   --max:1380px;
 }
-
 body{
   font-family:Arial,Helvetica,sans-serif;
   color:var(--text);
@@ -22,17 +21,10 @@ body{
     linear-gradient(180deg,var(--bg),var(--bg2) 76%,#03060b);
   line-height:1.5;
 }
-
 a{text-decoration:none;color:inherit}
 button,textarea,input{font:inherit}
 button{cursor:pointer}
-
-.container{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 24px;
-}
-
+.container{max-width:var(--max);margin:0 auto;padding:0 24px}
 .topbar{
   position:sticky;
   top:0;
@@ -41,7 +33,6 @@ button{cursor:pointer}
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
 }
-
 .topbar-inner{
   min-height:100px;
   display:flex;
@@ -50,13 +41,7 @@ button{cursor:pointer}
   gap:18px;
   flex-wrap:wrap;
 }
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
+.brand{display:flex;align-items:center;gap:14px}
 .brand-mark{
   width:62px;
   height:62px;
@@ -70,26 +55,9 @@ button{cursor:pointer}
   justify-content:center;
   box-shadow:0 6px 14px rgba(0,0,0,.14);
 }
-
-.brand-text strong{
-  display:block;
-  font-size:38px;
-  letter-spacing:.2px;
-}
-
-.brand-text span{
-  display:block;
-  font-size:12px;
-  color:#d7e1ef;
-}
-
-.top-actions{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
+.brand-text strong{display:block;font-size:38px;letter-spacing:.2px}
+.brand-text span{display:block;font-size:12px;color:#d7e1ef}
+.top-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .btn{
   min-height:52px;
   padding:0 22px;
@@ -101,27 +69,18 @@ button{cursor:pointer}
   border:1px solid transparent;
   transition:.2s ease;
 }
-
 .btn-primary{
   background:var(--yellow);
   color:#0b1830;
   box-shadow:0 8px 18px rgba(0,0,0,.14);
 }
-
-.btn-primary:hover{
-  background:var(--yellow-dark);
-}
-
+.btn-primary:hover{background:var(--yellow-dark)}
 .btn-secondary{
   background:rgba(255,255,255,.04);
   border:1px solid var(--line);
   color:#fff;
 }
-
-.page{
-  padding:30px 0 42px;
-}
-
+.page{padding:30px 0 42px}
 .section-kicker{
   color:#f2d780;
   font-size:12px;
@@ -130,36 +89,29 @@ button{cursor:pointer}
   letter-spacing:.8px;
   margin-bottom:10px;
 }
-
-.hero-mini,
-.content-card{
+.hero-mini,.content-card{
   border:1px solid rgba(255,255,255,.07);
   border-radius:28px;
   box-shadow:var(--shadow);
   padding:24px;
 }
-
 .hero-mini{
   background:linear-gradient(135deg,var(--panel2),var(--bg));
   margin-bottom:18px;
 }
-
 .hero-mini h1{
   font-size:52px;
   line-height:1.02;
   margin:10px 0 12px;
 }
-
 .hero-mini p{
   color:#d6e0ef;
   max-width:980px;
   font-size:15px;
 }
-
 .content-card{
   background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
 }
-
 .card-head{
   display:flex;
   align-items:center;
@@ -168,12 +120,10 @@ button{cursor:pointer}
   margin-bottom:16px;
   flex-wrap:wrap;
 }
-
 .card-head h2{
   font-size:34px;
   line-height:1.08;
 }
-
 .pill{
   display:inline-flex;
   min-height:30px;
@@ -185,61 +135,31 @@ button{cursor:pointer}
   font-size:12px;
   font-weight:700;
 }
-
 .status-box{
   margin-top:14px;
   border-radius:14px;
   padding:12px 14px;
   border:1px solid rgba(255,255,255,.08);
 }
+.status-success{background:rgba(79,152,98,.14);color:#d9ffe2}
+.status-error{background:rgba(180,86,86,.14);color:#ffdada}
+.hidden{display:none !important}
 
-.status-success{
-  background:rgba(79,152,98,.14);
-  color:#d9ffe2;
-}
-
-.status-error{
-  background:rgba(180,86,86,.14);
-  color:#ffdada;
-}
-
-.hidden{
-  display:none !important;
-}
-
-.entry-shell-wrap{
-  padding:36px 0 50px;
-}
-
+.entry-shell-wrap{padding:36px 0 50px}
 .entry-shell{
   display:grid;
   grid-template-columns:1.1fr .9fr;
   gap:18px;
 }
-
-.entry-info,
-.entry-card{
+.entry-info,.entry-card{
   border:1px solid rgba(255,255,255,.07);
   border-radius:28px;
   box-shadow:var(--shadow);
   padding:28px;
 }
-
-.entry-info{
-  background:linear-gradient(135deg,var(--panel2),var(--bg));
-}
-
-.entry-info h1{
-  font-size:54px;
-  line-height:1.02;
-  margin:12px 0 14px;
-}
-
-.entry-info p{
-  color:#d6e0ef;
-  max-width:900px;
-}
-
+.entry-info{background:linear-gradient(135deg,var(--panel2),var(--bg))}
+.entry-info h1{font-size:54px;line-height:1.02;margin:12px 0 14px}
+.entry-info p{color:#d6e0ef;max-width:900px}
 .entry-note-card{
   margin-top:18px;
   border:1px solid rgba(255,255,255,.07);
@@ -247,40 +167,17 @@ button{cursor:pointer}
   background:rgba(255,255,255,.03);
   padding:20px;
 }
-
-.entry-note-card h3{
-  font-size:28px;
-  line-height:1.08;
-  margin-bottom:10px;
-}
-
-.entry-note-card ul{
-  padding-left:18px;
-  color:#d9e4f2;
-}
-
-.entry-card{
-  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
-}
-
-.entry-card h2{
-  font-size:34px;
-  line-height:1.08;
-  margin-bottom:14px;
-}
-
-.entry-form{
-  display:grid;
-  gap:14px;
-}
-
+.entry-note-card h3{font-size:28px;line-height:1.08;margin-bottom:10px}
+.entry-note-card ul{padding-left:18px;color:#d9e4f2}
+.entry-card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02))}
+.entry-card h2{font-size:34px;line-height:1.08;margin-bottom:14px}
+.entry-form{display:grid;gap:14px}
 .entry-form label{
   display:grid;
   gap:8px;
   font-weight:700;
   color:#dce6f5;
 }
-
 .entry-form input,
 .chat-form textarea{
   width:100%;
@@ -291,17 +188,10 @@ button{cursor:pointer}
   padding:12px;
   font-size:15px;
 }
-
-.btn-block{
-  width:100%;
-}
+.btn-block{width:100%}
 
 /* WhatsApp benzeri chat */
-.chat-shell{
-  display:grid;
-  gap:18px;
-}
-
+.chat-shell{display:grid;gap:18px}
 .chat-messages{
   min-height:460px;
   max-height:560px;
@@ -314,7 +204,6 @@ button{cursor:pointer}
   border-radius:24px;
   background:linear-gradient(180deg, rgba(6,15,28,.92), rgba(7,18,34,.86));
 }
-
 .msg{
   max-width:74%;
   border-radius:18px;
@@ -322,29 +211,24 @@ button{cursor:pointer}
   box-shadow:0 10px 20px rgba(0,0,0,.12);
   border:1px solid rgba(255,255,255,.05);
 }
-
 .msg-system{
   align-self:center;
   background:rgba(86,105,140,.22);
 }
-
 .msg-admin{
   align-self:flex-start;
   background:linear-gradient(180deg, rgba(66,96,163,.30), rgba(57,82,140,.22));
 }
-
 .msg-user{
   align-self:flex-end;
   background:linear-gradient(180deg, rgba(241,200,77,.20), rgba(241,200,77,.12));
 }
-
 .msg-sender{
   font-weight:800;
   margin-bottom:5px;
   font-size:12px;
   color:#fff;
 }
-
 .msg-text{
   color:#eaf1fb;
   font-size:15px;
@@ -352,24 +236,18 @@ button{cursor:pointer}
   white-space:pre-wrap;
   word-break:break-word;
 }
-
 .msg-time{
   margin-top:6px;
   font-size:11px;
   color:#c1cee0;
 }
-
 .chat-form{
   display:grid;
   grid-template-columns:1fr 150px;
   gap:12px;
   align-items:end;
 }
-
-.chat-input-wrap{
-  position:relative;
-}
-
+.chat-input-wrap{position:relative}
 .chat-form textarea{
   min-height:74px;
   max-height:180px;
@@ -377,7 +255,6 @@ button{cursor:pointer}
   padding:16px 18px;
   border-radius:18px;
 }
-
 .chat-send-btn{
   min-height:74px !important;
   border-radius:18px !important;
@@ -385,11 +262,8 @@ button{cursor:pointer}
 }
 
 @media (max-width:1200px){
-  .entry-shell{
-    grid-template-columns:1fr;
-  }
+  .entry-shell{grid-template-columns:1fr}
 }
-
 @media (max-width:760px){
   .hero-mini h1,
   .card-head h2,
@@ -399,20 +273,8 @@ button{cursor:pointer}
   .entry-note-card h3{
     font-size:34px;
   }
-
-  .chat-form{
-    grid-template-columns:1fr;
-  }
-
-  .chat-send-btn{
-    min-height:54px !important;
-  }
-
-  .msg{
-    max-width:100%;
-  }
-
-  .chat-messages{
-    min-height:340px;
-  }
+  .chat-form{grid-template-columns:1fr}
+  .chat-send-btn{min-height:54px !important}
+  .msg{max-width:100%}
+  .chat-messages{min-height:340px}
 }
