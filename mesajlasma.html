@@ -45,9 +45,9 @@
 
         <form id="chatForm" class="chat-form">
           <div class="chat-input-wrap">
-            <textarea id="chatInput" placeholder="Sadece fiyat / navlun / ödeme / indirim yazın. Enter = gönder, Shift+Enter = alt satır"></textarea>
+            <textarea id="chatInput" placeholder="Sadece fiyat / navlun / ödeme / indirim yazın. Enter = gonder, Shift+Enter = alt satir"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary chat-send-btn">Gönder</button>
+          <button type="submit" class="btn btn-primary chat-send-btn">Gonder</button>
         </form>
       </section>
     </div>
@@ -148,8 +148,8 @@
       const whatsappRegex = /(whatsapp|wa\.me|telegram|t\.me|beni ara|ara beni|numaram|telefonum|gsm|cep|mobil|iletisim|ulas)/i;
       const socialRegex = /(instagram|insta|facebook|fb|linkedin|discord|skype|twitter|x\.com)/i;
       const linkRegex = /(https?:\/\/|www\.)/i;
-      const companyRegex = /\b(a\.s|as|anonim sirket|limited|ltd|ltd sti|ticaret|sanayi|holding|lojistik|nakliyat|tasimacilik|transport|kargo|depo|kimya|plastik|metal|tekstil|gida|firma|sirket|kurum|kurulus|nevpa|kaya kimya)\b/i;
-      const addressRegex = /\b(mah|mahalle|mahallesi|cadde|caddesi|cad|sokak|sok|bulvar|blv|apartman|apt|daire|no|kat|dukkan|is merkezi|plaza|posta kodu|pk|ilce|adres)\b/i;
+      const companyRegex = /(a\.s|as|anonim sirket|limited|ltd|ltd sti|ticaret|sanayi|holding|lojistik|nakliyat|tasimacilik|transport|kargo|depo|kimya|plastik|metal|tekstil|gida|firma|sirket|kurum|kurulus|nevpa|kaya kimya)/i;
+      const addressRegex = /(mah|mahalle|mahallesi|cadde|caddesi|cad|sokak|sok|bulvar|blv|apartman|apt|daire|no|kat|dukkan|is merkezi|plaza|posta kodu|pk|ilce|adres)/i;
 
       return emailRegex.test(value) ||
         phoneRegex1.test(value) ||
@@ -168,32 +168,32 @@
       if (hasForbiddenDirectInfo(normalized)) return false;
 
       const allowedPatterns = [
-        /\b\d+\s*tl\b/,
-        /\b\d+\s*try\b/,
-        /\b\d+\s*lira\b/,
-        /\b\d+\s*bin\b/,
-        /\bnavlun\b/,
-        /\bfiyat\b/,
-        /\bteklif\b/,
-        /\bucret\b/,
-        /\bodeme\b/,
-        /\bindirim\b/,
-        /\bson fiyat\b/,
-        /\bson teklif\b/,
-        /\bkabul\b/,
-        /\bret\b/,
-        /\banlastik\b/,
-        /\banlasildi\b/,
-        /\btamam\b/,
-        /\bolur\b/,
-        /\buygun\b/,
-        /\bpahali\b/,
-        /\byuksek\b/,
-        /\bdusuk\b/,
-        /\bpesin\b/,
-        /\bvade\b/,
-        /\bnakit\b/,
-        /\bhavale\b/
+        /\d+\s*tl/,
+        /\d+\s*try/,
+        /\d+\s*lira/,
+        /\d+\s*bin/,
+        /navlun/,
+        /fiyat/,
+        /teklif/,
+        /ucret/,
+        /odeme/,
+        /indirim/,
+        /son fiyat/,
+        /son teklif/,
+        /kabul/,
+        /ret/,
+        /anlastik/,
+        /anlasildi/,
+        /tamam/,
+        /olur/,
+        /uygun/,
+        /pahali/,
+        /yuksek/,
+        /dusuk/,
+        /pesin/,
+        /vade/,
+        /nakit/,
+        /havale/
       ];
 
       let hasAllowedSignal = false;
@@ -209,12 +209,12 @@
       }
 
       const cleaned = normalized
-        .replace(/\b\d+\s*tl\b/g, " ")
-        .replace(/\b\d+\s*try\b/g, " ")
-        .replace(/\b\d+\s*lira\b/g, " ")
-        .replace(/\b\d+\s*bin\b/g, " ")
+        .replace(/\d+\s*tl/g, " ")
+        .replace(/\d+\s*try/g, " ")
+        .replace(/\d+\s*lira/g, " ")
+        .replace(/\d+\s*bin/g, " ")
         .replace(/[0-9.,\-+]/g, " ")
-        .replace(/\b(navlun|fiyat|teklif|ucret|odeme|indirim|son|kabul|ret|anlastik|anlasildi|tamam|olur|uygun|pahali|yuksek|dusuk|pesin|vade|nakit|havale)\b/g, " ")
+        .replace(/(navlun|fiyat|teklif|ucret|odeme|indirim|son|kabul|ret|anlastik|anlasildi|tamam|olur|uygun|pahali|yuksek|dusuk|pesin|vade|nakit|havale)/g, " ")
         .replace(/\s+/g, " ")
         .trim();
 
@@ -224,7 +224,7 @@
     function renderMessages() {
       if (!activeThread) {
         chatMessages.innerHTML =
-          '<div class="msg msg-system"><div class="msg-sender">Sistem</div><div class="msg-text">Aktif pazarlık kaydı bulunamadı. Önce teklif ekranından Pazarlık Yap ile gelin.</div><div class="msg-time">--:--</div></div>';
+          '<div class="msg msg-system"><div class="msg-sender">Sistem</div><div class="msg-text">Aktif pazarlik kaydi bulunamadi. Once teklif ekranindan Pazarlik Yap ile gelin.</div><div class="msg-time">--:--</div></div>';
         return;
       }
 
@@ -232,13 +232,13 @@
       let html = "";
 
       if (!list.length) {
-        html += '<div class="msg msg-system"><div class="msg-sender">Sistem</div><div class="msg-text">Bu pazarlık için henüz mesaj yok.</div><div class="msg-time">--:--</div></div>';
+        html += '<div class="msg msg-system"><div class="msg-sender">Sistem</div><div class="msg-text">Bu pazarlik icin henuz mesaj yok.</div><div class="msg-time">--:--</div></div>';
       } else {
         for (let i = 0; i < list.length; i++) {
           const item = list[i];
           const role = String(item.role || "Sistem");
           let cls = "msg msg-system";
-          if (role === "Üye") cls = "msg msg-user";
+          if (role === "Üye" || role === "Uye") cls = "msg msg-user";
           if (role === "Admin") cls = "msg msg-admin";
 
           html += '<div class="' + cls + '">';
@@ -259,8 +259,8 @@
         return;
       }
 
-      let infoText = "İlan: " + (activeThread.title || "-");
-      if (activeThread.route) infoText += " | Güzergah: " + activeThread.route;
+      let infoText = "Ilan: " + (activeThread.title || "-");
+      if (activeThread.route) infoText += " | Guzergah: " + activeThread.route;
       if (activeThread.currentOffer) infoText += " | Son Teklif: " + activeThread.currentOffer + " TL";
       showThreadInfo(infoText);
     }
@@ -274,7 +274,7 @@
       if (!activeThread.messages.length) {
         activeThread.messages.push({
           role: "Sistem",
-          text: "Teklif üzerinden pazarlık ekranı açıldı.",
+          text: "Teklif uzerinden pazarlik ekrani acildi.",
           time: currentTimeText()
         });
       }
@@ -282,7 +282,7 @@
 
     function pushUserMessage(text) {
       activeThread.messages.push({
-        role: "Üye",
+        role: "Uye",
         text: text,
         time: currentTimeText()
       });
@@ -298,24 +298,24 @@
       renderMessages();
       chatInput.value = "";
       chatInput.focus();
-      showStatus("Mesaj gönderildi.", false);
+      showStatus("Mesaj gonderildi.", false);
     }
 
     function submitChat() {
       if (!activeThread) {
-        showStatus("Aktif pazarlık kaydı olmadığı için mesaj gönderilemiyor.", true);
+        showStatus("Aktif pazarlik kaydi olmadigi icin mesaj gonderilemiyor.", true);
         return;
       }
 
       const value = chatInput.value.trim();
 
       if (!value) {
-        showStatus("Mesaj yazın.", true);
+        showStatus("Mesaj yazin.", true);
         return;
       }
 
       if (!isPriceOnlyMessage(value)) {
-        showStatus("Bu alanda yalnızca fiyat, navlun, ödeme, indirim, kabul ve ret mesajları gönderilebilir. Ücret dışı tüm içerikler engellenir.", true);
+        showStatus("Bu alanda yalnizca fiyat, navlun, odeme, indirim, kabul ve ret mesajlari gonderilebilir. Ucret disi tum icerikler engellenir.", true);
         return;
       }
 
@@ -327,7 +327,7 @@
     renderMessages();
 
     if (!activeThread) {
-      showStatus("Aktif pazarlık bulunamadı. Önce teklif ekranından Pazarlık Yap butonunu kullanın.", true);
+      showStatus("Aktif pazarlik bulunamadi. Once teklif ekranindan Pazarlik Yap butonunu kullanin.", true);
     } else {
       hideStatus();
     }
