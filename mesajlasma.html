@@ -30,22 +30,25 @@
       <section class="hero-mini">
         <div class="section-kicker">Kontrollü Mesajlaşma</div>
         <h1>Pazarlık ekranı</h1>
-        <p>Platform içi görüşmeler bu ekran üzerinden kontrollü biçimde yürütülür. Telefon, e-posta, WhatsApp, şirket adı, açık adres ve dış iletişim paylaşımı sistem tarafından engellenir.</p>
+        <p>Bu alanda yalnızca fiyat, teklif tutarı, navlun, ödeme, indirim, kabul ve ret konuşulabilir. Firma adı, kişi adı, telefon, e-posta, WhatsApp, adres, şirket bilgisi ve ücret dışı tüm içerikler otomatik engellenir.</p>
       </section>
 
       <section class="content-card chat-shell">
         <div class="card-head">
           <h2>Mesaj Akışı</h2>
-          <span class="pill">Koruma aktif</span>
+          <span class="pill">Sadece ücret konuşulur</span>
         </div>
 
         <div id="threadInfo" class="status-box status-success hidden"></div>
         <div id="chatStatus" class="status-box hidden"></div>
+
         <div id="chatMessages" class="chat-messages"></div>
 
         <form id="chatForm" class="chat-form">
-          <textarea id="chatInput" placeholder="Mesajınızı yazın"></textarea>
-          <button type="submit" class="btn btn-primary">Gönder</button>
+          <div class="chat-input-wrap">
+            <textarea id="chatInput" placeholder="Sadece fiyat / navlun / ödeme / indirim yazın. Enter = gönder, Shift+Enter = alt satır"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary chat-send-btn">Gönder</button>
         </form>
       </section>
     </div>
@@ -97,42 +100,145 @@
       threadInfo.textContent = "";
     }
 
-    function sanitizeText(text) {
-      var value = String(text || "");
-      value = value.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, "[e-posta gizlendi]");
-      value = value.replace(/(?:\+?90|0)?\s*5\d{2}[\s.\-]?\d{3}[\s.\-]?\d{2}[\s.\-]?\d{2}/g, "[telefon gizlendi]");
-      value = value.replace(/wa\.me\/\d+/ig, "[whatsapp gizlendi]");
-      value = value.replace(/https?:\/\/[^\s]+/ig, "[link gizlendi]");
-      value = value.replace(/\b(a\.?\s*ş\.?|anonim şirket|limited|ltd|ltd\.şti|ltd şti|ticaret|sanayi|holding|lojistik|nakliyat|taşımacılık|transport|kargo|depo)\b/ig, "[şirket bilgisi gizlendi]");
-      value = value.replace(/\b(mahallesi|mah|mahalle|cadde|caddesi|cad\.|sokak|sok\.|bulvar|blv|apartman|apt|daire|no:|no\b|kat\b|dükkan|iş merkezi|plaza|posta kodu|pk|ilçe|il|adres)\b/ig, "[adres bilgisi gizlendi]");
-      return value;
-    }
-
-    function hasForbiddenContact(text) {
-      var value = String(text || "").toLowerCase();
-
-      var emailRegex = /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}/i;
-      var phoneRegex = /(?:\+?90|0)?\s*5\d{2}[\s.\-]?\d{3}[\s.\-]?\d{2}[\s.\-]?\d{2}/;
-      var whatsappRegex = /(whatsapp|wa\.me|telegram|t\.me|beni ara|ara beni|numaram|telefonum|gsm|cep numaram|mobil numaram)/i;
-      var socialRegex = /(instagram|insta|facebook|fb|linkedin|telegram|discord|skype)/i;
-      var linkRegex = /(https?:\/\/|www\.)/i;
-      var companyRegex = /\b(a\.?\s*ş\.?|anonim şirket|limited|ltd|ltd\.şti|ltd şti|ticaret|sanayi|holding|lojistik|nakliyat|taşımacılık|transport|kargo|depo|firma adımız|şirket adımız|şirketim|firmamız|firmam)\b/i;
-      var addressRegex = /\b(mahallesi|mah|mahalle|cadde|caddesi|cad\.|sokak|sok\.|bulvar|blv|apartman|apt|daire|no:| no |kat |dükkan|iş merkezi|plaza|posta kodu|pk |ilçe|il |adresimiz|adres)\b/i;
-
-      return emailRegex.test(value) || phoneRegex.test(value) || whatsappRegex.test(value) || socialRegex.test(value) || linkRegex.test(value) || companyRegex.test(value) || addressRegex.test(value);
-    }
-
     function currentTimeText() {
-      return new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
+      return new Date().toLocaleTimeString("tr-TR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
     }
 
     function saveThreads() {
       writeJson("sevra_threads", threads);
     }
 
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function normalizeText(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/ç/g, "c")
+        .replace(/ğ/g, "g")
+        .replace(/ı/g, "i")
+        .replace(/ö/g, "o")
+        .replace(/ş/g, "s")
+        .replace(/ü/g, "u");
+    }
+
+    function sanitizeText(text) {
+      var value = String(text || "");
+
+      value = value.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, "[e-posta gizlendi]");
+      value = value.replace(/(?:\+?90|0)?\s*5\d{2}[\s.\-]?\d{3}[\s.\-]?\d{2}[\s.\-]?\d{2}/g, "[telefon gizlendi]");
+      value = value.replace(/(?:\+?90|0)?\s*2\d{2}[\s.\-]?\d{3}[\s.\-]?\d{2}[\s.\-]?\d{2}/g, "[telefon gizlendi]");
+      value = value.replace(/wa\.me\/\d+/ig, "[whatsapp gizlendi]");
+      value = value.replace(/https?:\/\/[^\s]+/ig, "[link gizlendi]");
+      value = value.replace(/www\.[^\s]+/ig, "[link gizlendi]");
+
+      return escapeHtml(value);
+    }
+
+    function hasForbiddenDirectInfo(text) {
+      var value = normalizeText(text);
+
+      var emailRegex = /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}/i;
+      var phoneRegex1 = /(?:\+?90|0)?\s*5\d{2}[\s.\-]?\d{3}[\s.\-]?\d{2}[\s.\-]?\d{2}/i;
+      var phoneRegex2 = /(?:\+?90|0)?\s*2\d{2}[\s.\-]?\d{3}[\s.\-]?\d{2}[\s.\-]?\d{2}/i;
+      var whatsappRegex = /(whatsapp|wa\.me|telegram|t\.me|beni ara|ara beni|numaram|telefonum|gsm|cep|mobil|iletisim|ulas|ara)/i;
+      var socialRegex = /(instagram|insta|facebook|fb|linkedin|discord|skype|x\.com|twitter)/i;
+      var linkRegex = /(https?:\/\/|www\.)/i;
+      var companyRegex = /\b(a\.s|as|anonim sirket|limited|ltd|ltd sti|ticaret|sanayi|holding|lojistik|nakliyat|tasimacilik|transport|kargo|depo|kimya|plastik|metal|tekstil|gida|firma|sirket|sirketimiz|firmamiz|kurum|kurulus)\b/i;
+      var addressRegex = /\b(mah|mahalle|mahallesi|cadde|caddesi|cad|sokak|sok|bulvar|blv|apartman|apt|daire|no|kat|dukkan|is merkezi|plaza|posta kodu|pk|ilce|adres)\b/i;
+
+      if (emailRegex.test(value)) return true;
+      if (phoneRegex1.test(value)) return true;
+      if (phoneRegex2.test(value)) return true;
+      if (whatsappRegex.test(value)) return true;
+      if (socialRegex.test(value)) return true;
+      if (linkRegex.test(value)) return true;
+      if (companyRegex.test(value)) return true;
+      if (addressRegex.test(value)) return true;
+
+      return false;
+    }
+
+    function isPriceOnlyMessage(text) {
+      var normalized = normalizeText(text).trim();
+
+      if (!normalized) return false;
+      if (normalized.length > 180) return false;
+
+      if (hasForbiddenDirectInfo(normalized)) return false;
+
+      var allowedPatterns = [
+        /\b\d+\s*tl\b/,
+        /\b\d+\s*try\b/,
+        /\b\d+\s*lira\b/,
+        /\b\d+\s*bin\b/,
+        /\bnavlun\b/,
+        /\bfiyat\b/,
+        /\bteklif\b/,
+        /\bucret\b/,
+        /\bodeme\b/,
+        /\bindirim\b/,
+        /\bson fiyat\b/,
+        /\bson teklif\b/,
+        /\bkabul\b/,
+        /\bret\b/,
+        /\banlastik\b/,
+        /\banlasildi\b/,
+        /\btamam\b/,
+        /\bolur\b/,
+        /\buygun\b/,
+        /\bpahali\b/,
+        /\byuksek\b/,
+        /\bdusuk\b/,
+        /\bpesin\b/,
+        /\bvade\b/,
+        /\bnakit\b/,
+        /\bhavale\b/,
+        /\biban\b/
+      ];
+
+      var hasAllowedSignal = false;
+      for (var i = 0; i < allowedPatterns.length; i++) {
+        if (allowedPatterns[i].test(normalized)) {
+          hasAllowedSignal = true;
+          break;
+        }
+      }
+
+      if (!hasAllowedSignal && !/^[\d\s.,\-+]+$/.test(normalized)) {
+        return false;
+      }
+
+      var cleaned = normalized
+        .replace(/\b\d+\s*tl\b/g, " ")
+        .replace(/\b\d+\s*try\b/g, " ")
+        .replace(/\b\d+\s*lira\b/g, " ")
+        .replace(/\b\d+\s*bin\b/g, " ")
+        .replace(/[0-9.,\-+]/g, " ")
+        .replace(/\b(navlun|fiyat|teklif|ucret|odeme|indirim|son|kabul|ret|anlastik|anlasildi|tamam|olur|uygun|pahali|yuksek|dusuk|pesin|vade|nakit|havale|iban)\b/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      return cleaned === "";
+    }
+
     function renderMessages() {
       if (!activeThread) {
-        chatMessages.innerHTML = '<div class="msg admin"><div class="msg-sender">Sistem</div><div class="msg-text">Aktif pazarlık kaydı bulunamadı. Önce teklif ekranından Pazarlık Yap ile gelin.</div><div class="msg-time">--:--</div></div>';
+        chatMessages.innerHTML =
+          '<div class="msg msg-system">' +
+          '<div class="msg-sender">Sistem</div>' +
+          '<div class="msg-text">Aktif pazarlık kaydı bulunamadı. Önce teklif ekranından Pazarlık Yap ile gelin.</div>' +
+          '<div class="msg-time">--:--</div>' +
+          '</div>';
         return;
       }
 
@@ -140,18 +246,25 @@
       var html = "";
 
       if (!list.length) {
-        html += '<div class="msg admin"><div class="msg-sender">Sistem</div><div class="msg-text">Bu pazarlık için henüz mesaj yok.</div><div class="msg-time">--:--</div></div>';
+        html +=
+          '<div class="msg msg-system">' +
+          '<div class="msg-sender">Sistem</div>' +
+          '<div class="msg-text">Bu pazarlık için henüz mesaj yok.</div>' +
+          '<div class="msg-time">--:--</div>' +
+          '</div>';
       } else {
         for (var i = 0; i < list.length; i++) {
           var item = list[i];
           var role = String(item.role || "Sistem");
-          var cls = "msg admin";
-          if (role !== "Sistem" && role !== "Admin") cls = "msg user";
+          var cls = "msg msg-system";
+
+          if (role === "Üye") cls = "msg msg-user";
+          if (role === "Admin") cls = "msg msg-admin";
 
           html += '<div class="' + cls + '">';
-          html += '<div class="msg-sender">' + role + '</div>';
+          html += '<div class="msg-sender">' + escapeHtml(role) + '</div>';
           html += '<div class="msg-text">' + sanitizeText(item.text || "") + '</div>';
-          html += '<div class="msg-time">' + (item.time || "--:--") + '</div>';
+          html += '<div class="msg-time">' + escapeHtml(item.time || "--:--") + '</div>';
           html += '</div>';
         }
       }
@@ -167,15 +280,29 @@
       }
 
       var infoText = "İlan: " + (activeThread.title || "-");
-      if (activeThread.route) infoText += " | Güzergah: " + activeThread.route;
-      if (activeThread.currentOffer) infoText += " | Son Teklif: " + activeThread.currentOffer + " TL";
+
+      if (activeThread.route) {
+        infoText += " | Güzergah: " + activeThread.route;
+      }
+
+      if (activeThread.currentOffer) {
+        infoText += " | Son Teklif: " + activeThread.currentOffer + " TL";
+      }
+
       showThreadInfo(infoText);
     }
 
     function ensureThreadShape() {
       if (!activeThread) return;
-      if (!Array.isArray(activeThread.messages)) activeThread.messages = [];
-      if (!Array.isArray(activeThread.offerHistory)) activeThread.offerHistory = [];
+
+      if (!Array.isArray(activeThread.messages)) {
+        activeThread.messages = [];
+      }
+
+      if (!Array.isArray(activeThread.offerHistory)) {
+        activeThread.offerHistory = [];
+      }
+
       if (!activeThread.messages.length) {
         activeThread.messages.push({
           role: "Sistem",
@@ -183,6 +310,48 @@
           time: currentTimeText()
         });
       }
+    }
+
+    function pushUserMessage(text) {
+      activeThread.messages.push({
+        role: "Üye",
+        text: text,
+        time: currentTimeText()
+      });
+
+      for (var i = 0; i < threads.length; i++) {
+        if (threads[i].id === activeThread.id) {
+          threads[i] = activeThread;
+          break;
+        }
+      }
+
+      saveThreads();
+      renderMessages();
+      chatInput.value = "";
+      chatInput.focus();
+      showStatus("Mesaj gönderildi.", false);
+    }
+
+    function submitChat() {
+      if (!activeThread) {
+        showStatus("Aktif pazarlık kaydı olmadığı için mesaj gönderilemiyor.", true);
+        return;
+      }
+
+      var value = chatInput.value.trim();
+
+      if (!value) {
+        showStatus("Mesaj yazın.", true);
+        return;
+      }
+
+      if (!isPriceOnlyMessage(value)) {
+        showStatus("Bu alanda yalnızca fiyat, navlun, ödeme, indirim, kabul ve ret mesajları gönderilebilir. Firma adı, kişi adı, adres ve ücret dışı içerikler engellenir.", true);
+        return;
+      }
+
+      pushUserMessage(value);
     }
 
     ensureThreadShape();
@@ -197,42 +366,342 @@
 
     chatForm.addEventListener("submit", function(event) {
       event.preventDefault();
+      submitChat();
+    });
 
-      if (!activeThread) {
-        showStatus("Aktif pazarlık kaydı olmadığı için mesaj gönderilemiyor.", true);
-        return;
+    chatInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        submitChat();
       }
-
-      var value = chatInput.value.trim();
-      if (!value) {
-        showStatus("Mesaj yazın.", true);
-        return;
-      }
-
-      if (hasForbiddenContact(value)) {
-        showStatus("Telefon, e-posta, WhatsApp, şirket adı, adres veya dış iletişim bilgisi tespit edildi. Mesaj gönderilmedi.", true);
-        chatInput.value = "";
-        return;
-      }
-
-      activeThread.messages.push({
-        role: "Üye",
-        text: value,
-        time: currentTimeText()
-      });
-
-      for (var i = 0; i < threads.length; i++) {
-        if (threads[i].id === activeThread.id) {
-          threads[i] = activeThread;
-          break;
-        }
-      }
-
-      saveThreads();
-      renderMessages();
-      chatInput.value = "";
-      showStatus("Mesaj gönderildi.", false);
     });
   </script>
 </body>
 </html>
+
+=== DOSYA: kurumsal-ui.css ===
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07111c;
+  --bg2:#040913;
+  --panel:#0b1626;
+  --panel2:#10294a;
+  --line:rgba(255,255,255,.08);
+  --text:#eef4ff;
+  --muted:#b9c7d9;
+  --yellow:#f1c84d;
+  --yellow-dark:#ddb534;
+  --shadow:0 18px 38px rgba(0,0,0,.22);
+  --max:1380px;
+}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(241,200,77,.05), transparent 18%),
+    radial-gradient(circle at left top, rgba(44,89,179,.10), transparent 24%),
+    linear-gradient(180deg,var(--bg),var(--bg2) 76%,#03060b);
+  line-height:1.5;
+}
+a{text-decoration:none;color:inherit}
+button,textarea,input{font:inherit}
+button{cursor:pointer}
+.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(4,10,18,.93);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:100px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{
+  width:62px;
+  height:62px;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--yellow),#f7dc89);
+  color:#0b1830;
+  font-size:28px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 14px rgba(0,0,0,.14);
+}
+.brand-text strong{display:block;font-size:38px;letter-spacing:.2px}
+.brand-text span{display:block;font-size:12px;color:#d7e1ef}
+.top-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn{
+  min-height:52px;
+  padding:0 22px;
+  border-radius:15px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  border:1px solid transparent;
+}
+.btn-primary{
+  background:var(--yellow);
+  color:#0b1830;
+  box-shadow:0 8px 18px rgba(0,0,0,.14);
+}
+.btn-primary:hover{background:var(--yellow-dark)}
+.btn-secondary{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+  color:#fff;
+}
+.page{padding:30px 0 42px}
+.section-kicker{
+  color:#f2d780;
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  margin-bottom:10px;
+}
+.hero-mini,.content-card{
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  padding:24px;
+}
+.hero-mini{
+  background:linear-gradient(135deg,var(--panel2),var(--bg));
+  margin-bottom:18px;
+}
+.hero-mini h1{
+  font-size:52px;
+  line-height:1.02;
+  margin:10px 0 12px;
+}
+.hero-mini p{
+  color:#d6e0ef;
+  max-width:980px;
+  font-size:15px;
+}
+.content-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
+}
+.card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.card-head h2{
+  font-size:34px;
+  line-height:1.08;
+}
+.pill{
+  display:inline-flex;
+  min-height:30px;
+  padding:0 12px;
+  align-items:center;
+  border-radius:999px;
+  background:rgba(241,200,77,.14);
+  color:#ffe08a;
+  font-size:12px;
+  font-weight:700;
+}
+.status-box{
+  margin-top:14px;
+  border-radius:14px;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.status-success{
+  background:rgba(79,152,98,.14);
+  color:#d9ffe2;
+}
+.status-error{
+  background:rgba(180,86,86,.14);
+  color:#ffdada;
+}
+.hidden{display:none !important}
+
+.entry-shell-wrap{padding:36px 0 50px}
+.entry-shell{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+}
+.entry-info,.entry-card{
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  padding:28px;
+}
+.entry-info{
+  background:linear-gradient(135deg,var(--panel2),var(--bg));
+}
+.entry-info h1{
+  font-size:54px;
+  line-height:1.02;
+  margin:12px 0 14px;
+}
+.entry-info p{
+  color:#d6e0ef;
+  max-width:900px;
+}
+.entry-note-card{
+  margin-top:18px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:22px;
+  background:rgba(255,255,255,.03);
+  padding:20px;
+}
+.entry-note-card h3{
+  font-size:28px;
+  line-height:1.08;
+  margin-bottom:10px;
+}
+.entry-note-card ul{
+  padding-left:18px;
+  color:#d9e4f2;
+}
+.entry-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
+}
+.entry-card h2{
+  font-size:34px;
+  line-height:1.08;
+  margin-bottom:14px;
+}
+.entry-form{
+  display:grid;
+  gap:14px;
+}
+.entry-form label{
+  display:grid;
+  gap:8px;
+  font-weight:700;
+  color:#dce6f5;
+}
+.entry-form input,
+.chat-form textarea{
+  width:100%;
+  background:#091425;
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  border-radius:12px;
+  padding:12px;
+  font-size:15px;
+}
+.btn-block{width:100%}
+
+/* WhatsApp benzeri chat */
+.chat-shell{
+  display:grid;
+  gap:18px;
+}
+.chat-messages{
+  min-height:460px;
+  max-height:560px;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:18px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:24px;
+  background:
+    linear-gradient(180deg, rgba(6,15,28,.92), rgba(7,18,34,.86));
+}
+.msg{
+  max-width:74%;
+  border-radius:18px;
+  padding:12px 14px;
+  box-shadow:0 10px 20px rgba(0,0,0,.12);
+  border:1px solid rgba(255,255,255,.05);
+}
+.msg-system{
+  align-self:center;
+  background:rgba(86,105,140,.22);
+}
+.msg-admin{
+  align-self:flex-start;
+  background:linear-gradient(180deg, rgba(66,96,163,.30), rgba(57,82,140,.22));
+}
+.msg-user{
+  align-self:flex-end;
+  background:linear-gradient(180deg, rgba(241,200,77,.20), rgba(241,200,77,.12));
+}
+.msg-sender{
+  font-weight:800;
+  margin-bottom:5px;
+  font-size:12px;
+  color:#fff;
+}
+.msg-text{
+  color:#eaf1fb;
+  font-size:15px;
+  line-height:1.45;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.msg-time{
+  margin-top:6px;
+  font-size:11px;
+  color:#c1cee0;
+}
+
+.chat-form{
+  display:grid;
+  grid-template-columns:1fr 150px;
+  gap:12px;
+  align-items:end;
+}
+.chat-input-wrap{
+  position:relative;
+}
+.chat-form textarea{
+  min-height:74px;
+  max-height:180px;
+  resize:vertical;
+  padding:16px 18px;
+  border-radius:18px;
+}
+.chat-send-btn{
+  min-height:74px !important;
+  border-radius:18px !important;
+  font-size:16px;
+}
+
+@media (max-width:1200px){
+  .entry-shell{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .hero-mini h1,
+  .card-head h2,
+  .brand-text strong,
+  .entry-info h1,
+  .entry-card h2,
+  .entry-note-card h3{
+    font-size:34px;
+  }
+  .chat-form{
+    grid-template-columns:1fr;
+  }
+  .chat-send-btn{
+    min-height:54px !important;
+  }
+  .msg{
+    max-width:100%;
+  }
+  .chat-messages{
+    min-height:340px;
+  }
+}
