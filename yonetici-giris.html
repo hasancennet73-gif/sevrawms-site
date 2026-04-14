@@ -21,7 +21,6 @@
       </div>
     </div>
   </header>
-
   <section class="entry-shell-wrap">
     <div class="container">
       <div class="entry-shell">
@@ -29,7 +28,6 @@
           <div class="section-kicker">Yetkili Erisim</div>
           <h1>Kurumsal yonetim paneli girisi</h1>
           <p>Basvuru, teklif, pazarlik ve urun surecleri tek merkezli yonetim paneli uzerinden takip edilir. Bu ekran yalnizca yetkili kullanicilar icindir.</p>
-
           <div class="entry-note-card">
             <h3>Yonetim panelinde neler yonetilir?</h3>
             <ul>
@@ -40,7 +38,6 @@
             </ul>
           </div>
         </div>
-
         <div class="entry-card">
           <div class="section-kicker">Guvenli Giris</div>
           <h2>Yonetim paneline gir</h2>
@@ -51,7 +48,6 @@
             <label for="adminPassword">Sifre
               <input id="adminPassword" placeholder="Sifre" type="password" autocomplete="new-password">
             </label>
-
             <button type="submit" class="btn btn-primary btn-block">Yonetim Paneline Gir</button>
           </form>
           <div id="statusBox" class="status-box hidden"></div>
@@ -59,38 +55,25 @@
       </div>
     </div>
   </section>
-
   <script>
-    const form = document.getElementById('adminLoginForm');
-    const statusBox = document.getElementById('statusBox');
-    const usernameInput = document.getElementById('adminUsername');
-    const passwordInput = document.getElementById('adminPassword');
-
-    function showStatus(message, isError) {
-      statusBox.textContent = message;
-      statusBox.classList.remove('hidden', 'status-success', 'status-error');
-      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    const form=document.getElementById('adminLoginForm');
+    const statusBox=document.getElementById('statusBox');
+    const usernameInput=document.getElementById('adminUsername');
+    const passwordInput=document.getElementById('adminPassword');
+    function showStatus(message,isError){
+      statusBox.textContent=message;
+      statusBox.classList.remove('hidden','status-success','status-error');
+      statusBox.classList.add(isError?'status-error':'status-success');
     }
-
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function(event){
       event.preventDefault();
-
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value.trim();
-
-      if (username === 'Hasan Arslan' && password === 'a11571683H') {
-        localStorage.setItem('sevra_admin_session', JSON.stringify({
-          username: 'Hasan Arslan',
-          role: 'SUPER_ADMIN',
-          loginAt: new Date().toISOString()
-        }));
-
+      const username=usernameInput.value.trim();
+      const password=passwordInput.value.trim();
+      if(username==='Hasan Arslan' && password==='a11571683H'){
+        localStorage.setItem('sevra_admin_session', JSON.stringify({username:'Hasan Arslan',role:'SUPER_ADMIN',loginAt:new Date().toISOString()}));
         showStatus('Giris basarili. Yonetim paneli aciliyor.', false);
-
-        setTimeout(function() {
-          window.location.href = 'admin-dashboard.html';
-        }, 400);
-      } else {
+        setTimeout(function(){ window.location.href='admin-dashboard.html'; }, 400);
+      }else{
         showStatus('Kullanici adi veya sifre hatali.', true);
       }
     });
