@@ -144,7 +144,6 @@ button{cursor:pointer}
 .status-success{background:rgba(79,152,98,.14);color:#d9ffe2}
 .status-error{background:rgba(180,86,86,.14);color:#ffdada}
 .hidden{display:none !important}
-
 .entry-shell-wrap{padding:36px 0 50px}
 .entry-shell{
   display:grid;
@@ -189,8 +188,6 @@ button{cursor:pointer}
   font-size:15px;
 }
 .btn-block{width:100%}
-
-/* WhatsApp benzeri chat */
 .chat-shell{display:grid;gap:18px}
 .chat-messages{
   min-height:460px;
@@ -260,7 +257,6 @@ button{cursor:pointer}
   border-radius:18px !important;
   font-size:16px;
 }
-
 @media (max-width:1200px){
   .entry-shell{grid-template-columns:1fr}
 }
