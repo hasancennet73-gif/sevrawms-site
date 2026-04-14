@@ -25,8 +25,10 @@
     <main class="auth-grid">
       <section class="panel intro">
         <div class="kicker">Kurumsal Erişim</div>
-        <h1>SEVRA üye girişi</h1>
-        <p>Taşıyıcı, yük veren ve tedarik tarafı için oluşturulan hesaplar bu ekran üzerinden güvenli biçimde yönetilir. Kurumsal kullanıcılar kayıtlı hesaplarıyla sisteme giriş yapar.</p>
+        <h1 id="heroTitle">SEVRA üye girişi</h1>
+        <p id="heroText">Taşıyıcı, yük veren ve tedarik tarafı için oluşturulan hesaplar bu ekran üzerinden güvenli biçimde yönetilir. Kurumsal kullanıcılar kayıtlı hesaplarıyla sisteme giriş yapar.</p>
+
+        <div id="redirectInfo" class="note ok hidden"></div>
 
         <div class="info-box">
           <h3>Üyelik yapısı</h3>
@@ -40,24 +42,41 @@
       </section>
 
       <section class="panel">
-        <div class="kicker">Üye Girişi</div>
+        <div class="kicker" id="roleKicker">Üye Girişi</div>
         <h2>Hesabınla giriş yap</h2>
-        <p>Kayıtlı hesabınla sisteme giriş yaparak teklif ve pazarlık akışına devam edebilirsin.</p>
+        <p id="formText">Kayıtlı hesabınla sisteme giriş yaparak teklif ve pazarlık akışına devam edebilirsin.</p>
 
         <form id="loginForm" class="form-grid" autocomplete="off">
           <div class="field full">
             <label for="email">E-Posta</label>
-            <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="off" autocapitalize="none" spellcheck="false" />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="ornek@firma.com"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+            />
           </div>
 
           <div class="field full">
             <label for="password">Şifre</label>
-            <input id="password" name="password" type="password" placeholder="Şifre" autocomplete="new-password" />
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Şifre"
+              autocomplete="new-password"
+            />
           </div>
 
           <div class="actions-row full">
             <button id="loginBtn" type="submit" class="btn primary">Giriş Yap</button>
-            <a class="btn" href="uye-ol.html">Üyelik Oluştur</a>
+          </div>
+
+          <div class="actions-row full">
+            <a class="btn" href="uye-ol.html" id="registerLink">Üyelik Oluştur</a>
             <a class="btn" href="sifremi-unuttum.html">Şifremi Unuttum</a>
             <a class="btn" href="index.html">Ana Sayfa</a>
           </div>
@@ -74,6 +93,15 @@ const SUPABASE_ANON_KEY = 'sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR';
 
 function q(name) {
   return new URLSearchParams(window.location.search).get(name) || '';
+}
+
+function readJson(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    return fallback;
+  }
 }
 
 function nextUrl() {
@@ -98,10 +126,90 @@ function showMsg(text, ok) {
   m.textContent = text;
 }
 
+function hideMsg() {
+  var m = document.getElementById('msg');
+  m.className = 'note hidden';
+  m.textContent = '';
+}
+
 function setBusy(isBusy) {
   var btn = document.getElementById('loginBtn');
   btn.disabled = isBusy;
   btn.textContent = isBusy ? 'Kontrol ediliyor...' : 'Giriş Yap';
+}
+
+function roleLabel(roleValue) {
+  var role = String(roleValue || '').toLowerCase();
+
+  if (role === 'shipper') return 'Yük Veren Girişi';
+  if (role === 'carrier') return 'Taşıyıcı Girişi';
+  if (role === 'member') return 'Standart Üye Girişi';
+
+  return 'Üye Girişi';
+}
+
+function roleDescription(roleValue) {
+  var role = String(roleValue || '').toLowerCase();
+
+  if (role === 'shipper') {
+    return 'Yük veren firmalar bu ekran üzerinden giriş yaparak teklif sürecini ve taşıma akışını yönetebilir.';
+  }
+
+  if (role === 'carrier') {
+    return 'Taşıyıcı firmalar bu ekran üzerinden giriş yaparak açık yükler için teklif ve pazarlık akışına devam edebilir.';
+  }
+
+  if (role === 'member') {
+    return 'Standart üyeler bu ekran üzerinden güvenli giriş yaparak platform içi akışlara kontrollü şekilde devam edebilir.';
+  }
+
+  return 'Kayıtlı hesabınla sisteme giriş yaparak teklif ve pazarlık akışına devam edebilirsin.';
+}
+
+function setupPageContext() {
+  var role = q('role');
+  var redirect = q('redirect');
+  var loadId = q('load_id');
+  var selectedLoad = readJson('sevra_selected_load', null);
+
+  document.getElementById('roleKicker').textContent = roleLabel(role);
+  document.getElementById('formText').textContent = roleDescription(role);
+
+  var registerLink = document.getElementById('registerLink');
+  var regUrl = 'uye-ol.html';
+  var params = [];
+
+  if (role) params.push('role=' + encodeURIComponent(role));
+  if (redirect) params.push('redirect=' + encodeURIComponent(redirect));
+  if (loadId) params.push('load_id=' + encodeURIComponent(loadId));
+
+  if (params.length) {
+    regUrl += '?' + params.join('&');
+  }
+
+  registerLink.href = regUrl;
+
+  if (redirect === 'ilan-teklif') {
+    var info = document.getElementById('redirectInfo');
+    var text = 'Giriş sonrası teklif ekranına geri döneceksiniz.';
+
+    if (selectedLoad && selectedLoad.title) {
+      text = 'Seçilen ilan: ' + selectedLoad.title;
+
+      if (selectedLoad.route) {
+        text += ' | Güzergah: ' + selectedLoad.route;
+      }
+
+      if (selectedLoad.id) {
+        text += ' | Ref: ' + selectedLoad.id;
+      }
+
+      text += '. Giriş sonrası teklif ekranına geri döneceksiniz.';
+    }
+
+    info.textContent = text;
+    info.className = 'note ok';
+  }
 }
 
 async function supabaseFindMember(email, password) {
@@ -130,6 +238,9 @@ async function supabaseFindMember(email, password) {
   const data = await response.json();
   return Array.isArray(data) ? data[0] : null;
 }
+
+setupPageContext();
+hideMsg();
 
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
   e.preventDefault();
