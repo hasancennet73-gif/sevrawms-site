@@ -1,52 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url>
-    <loc>https://sevrawms.com.tr/</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/index.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/yuk-ilanlari.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/ilan-teklif.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/mesajlasma.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/platform-kayit-secimi.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/uye-login.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/uye-ol.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/yonetici-giris.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/ambar-hizmeti.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/nakliye-platformu.html</loc>
-  </url>
-
-  <url>
-    <loc>https://sevrawms.com.tr/yuk-bulma-sistemi.html</loc>
-  </url>
+  <url><loc>https://sevrawms.com.tr/</loc></url>
+  <url><loc>https://sevrawms.com.tr/index.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/yuk-ilanlari.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/ilan-teklif.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/mesajlasma.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/platform-kayit-secimi.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/uye-login.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/uye-ol.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/yonetici-giris.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/ambar-hizmeti.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/nakliye-platformu.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/yuk-bulma-sistemi.html</loc></url>
+  <url><loc>https://sevrawms.com.tr/arac-bulma-sistemi.html</loc></url>
 
 </urlset>
