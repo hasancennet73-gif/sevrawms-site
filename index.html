@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
 
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEYRWGSB3N"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-ZEYRWGSB3N');
+    gtag('config', 'G-4XD6PKE0RD');
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -117,9 +117,9 @@
                 </div>
 
                 <div class="hero-sub-card hero-sub-card-accent">
-                  <span class="hero-label">SEVRA Koruması</span>
-                  <h4>İletişim gizli</h4>
-                  <p>Gerçek iletişim bilgileri komisyon tamamlanmadan açılmaz.</p>
+                  <span class="hero-label">Hızlı Destek</span>
+                  <h4>Kolay iletişim</h4>
+                  <p>Teklif, operasyon ve hizmet talepleriniz için hızlı iletişim ve destek kanalları aktif olarak kullanılabilir.</p>
                 </div>
               </div>
             </div>
@@ -169,7 +169,7 @@
       <div class="reason-grid">
         <article class="reason-card"><h3>Platform içi teklif akışı</h3><p>Teklif ve pazarlık süreci platform içinde yürür. Karar zinciri daha düzenli ve kayıtlı ilerler.</p></article>
         <article class="reason-card"><h3>Ticari koruma mantığı</h3><p>Telefon, e-posta ve WhatsApp gibi bilgiler açık alanda görünmez.</p></article>
-        <article class="reason-card"><h3>Komisyon güvenliği</h3><p>Gerçek iletişim bilgileri ancak komisyon süreci tamamlandıktan sonra açılır.</p></article>
+        <article class="reason-card"><h3>Hızlı hizmet yaklaşımı</h3><p>İhtiyaca uygun taşıma ve teslimat çözümleri daha hızlı ve düzenli biçimde yönlendirilir.</p></article>
         <article class="reason-card"><h3>Yönetilebilir büyüme zemini</h3><p>İlan, teklif, pazarlık, kurye, kargo ve kurumsal içerik tek merkezli mantıkla büyütülmeye uygundur.</p></article>
       </div>
     </div>
@@ -198,13 +198,13 @@
     <div class="container">
       <div class="section-head">
         <div><div class="section-kicker">İletişim</div><h2>Kurumsal iletişim alanı</h2></div>
-        <p id="contactIntro">İletişim bilgileri platform güvenliği ve komisyon koruması nedeniyle kontrollü açılır.</p>
+        <p id="contactIntro">Sorularınız, teklif talepleriniz ve operasyon ihtiyaçlarınız için hızlı dönüş sağlanır.</p>
       </div>
 
       <div class="contact-grid">
-        <article class="contact-card"><span>E-Posta</span><strong id="contactEmailLabel">Komisyon sonrası görünür</strong><p id="contactEmailText">Gerçek iletişim bilgileri açık alanda paylaşılmaz.</p></article>
-        <article class="contact-card"><span>İletişim Kuralı</span><strong id="contactPolicyLabel">Önce platform içi süreç</strong><p id="contactPolicyText">Teklif, pazarlık ve anlaşma sistem içinde yürür; gerçek iletişim komisyon tamamlanınca açılır.</p></article>
-        <article class="contact-card"><span>WhatsApp</span><strong id="contactWhatsappLabel">Kontrollü iletişim hattı</strong><p id="contactWhatsappText">WhatsApp butonu görünse bile numara açık yazı olarak yayınlanmaz.</p></article>
+        <article class="contact-card"><span>E-Posta</span><strong id="contactEmailLabel">Kurumsal destek hattı</strong><p id="contactEmailText">Bilgi, teklif ve operasyon talepleriniz için iletişim kanalları aktif olarak kullanılabilir.</p></article>
+        <article class="contact-card"><span>İletişim Süreci</span><strong id="contactPolicyLabel">Hızlı dönüş ve planlama</strong><p id="contactPolicyText">Nakliye, ambar, kurye ve kargo ihtiyaçlarınız için uygun çözüm hızlı şekilde değerlendirilir.</p></article>
+        <article class="contact-card"><span>WhatsApp</span><strong id="contactWhatsappLabel">Hızlı iletişim hattı</strong><p id="contactWhatsappText">WhatsApp üzerinden hızlı ön bilgi ve yönlendirme sağlanabilir.</p></article>
       </div>
     </div>
   </section>
@@ -225,11 +225,11 @@
       contact_email: 'hasancennet73@gmail.com',
       whatsapp_number: '',
       whatsapp_enabled: false,
-      allow_public_contact: false,
-      contact_intro: 'İletişim bilgileri platform güvenliği ve komisyon koruması nedeniyle kontrollü açılır.',
-      policy_label: 'Önce platform içi süreç',
-      policy_text: 'Teklif, pazarlık ve anlaşma sistem içinde yürür; gerçek iletişim komisyon tamamlanınca açılır.',
-      release_mode: 'after_commission'
+      allow_public_contact: true,
+      contact_intro: 'Sorularınız, teklif talepleriniz ve operasyon ihtiyaçlarınız için hızlı dönüş sağlanır.',
+      policy_label: 'Hızlı dönüş ve planlama',
+      policy_text: 'Nakliye, ambar, kurye ve kargo ihtiyaçlarınız için uygun çözüm hızlı şekilde değerlendirilir.',
+      release_mode: 'public'
     };
 
     const settings = Object.assign({}, defaults, readJson('sevra_site_settings', {}));
@@ -238,13 +238,8 @@
     document.getElementById('contactPolicyLabel').textContent = settings.policy_label || defaults.policy_label;
     document.getElementById('contactPolicyText').textContent = settings.policy_text || defaults.policy_text;
 
-    if(settings.release_mode === 'public' && settings.allow_public_contact){
-      document.getElementById('contactEmailLabel').textContent = settings.contact_email || defaults.contact_email;
-      document.getElementById('contactEmailText').textContent = 'Bu bilgi yönetici panelinden güncellenebilir.';
-    } else if(settings.release_mode === 'after_commission'){
-      document.getElementById('contactEmailLabel').textContent = 'Komisyon sonrası görünür';
-      document.getElementById('contactEmailText').textContent = 'Gerçek iletişim bilgileri ancak komisyon tamamlandığında açılır.';
-    }
+    document.getElementById('contactEmailLabel').textContent = settings.contact_email || defaults.contact_email;
+    document.getElementById('contactEmailText').textContent = 'Bu bilgi yönetici panelinden güncellenebilir.';
 
     if(settings.whatsapp_enabled && settings.whatsapp_number){
       const clean = String(settings.whatsapp_number).replace(/[^0-9]/g, '');
@@ -253,14 +248,5 @@
       fab.href = 'https://wa.me/' + clean;
     }
   </script>
-  <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-4XD6PKE0RD');
-</script>
 </body>
 </html>
