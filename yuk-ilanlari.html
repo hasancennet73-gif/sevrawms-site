@@ -2,6 +2,16 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Yük İlanları</title>
   <link rel="stylesheet" href="yuk-ilanlari.css" />
@@ -27,6 +37,7 @@
       </div>
     </div>
   </header>
+
   <section class="hero">
     <div class="container">
       <div class="hero-shell">
@@ -47,8 +58,33 @@
       </div>
     </div>
   </section>
+
   <section class="list-section">
     <div class="container">
+      <div class="entry-box" style="margin-bottom:28px; padding:20px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(7,15,32,.72);">
+        <div class="section-kicker">Hızlı İlan Girişi</div>
+        <h3 style="margin-top:8px; margin-bottom:16px;">Yeni yük ilanı oluştur</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;">
+          <input id="fRoute" placeholder="Güzergah (İstanbul → Ankara)" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
+          <input id="fLoad" placeholder="Yük türü" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
+          <input id="fVehicle" placeholder="Araç tipi" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
+          <input id="fWeight" placeholder="Ağırlık (ör. 2.400 kg)" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
+          <input id="fDate" placeholder="Tarih (ör. 18.04.2026)" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
+          <select id="fType" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
+            <option value="Parsiyel">Parsiyel</option>
+            <option value="Komple">Komple</option>
+            <option value="Paletli">Paletli</option>
+            <option value="Makine">Makine</option>
+          </select>
+        </div>
+        <textarea id="fDesc" placeholder="Kısa açıklama" style="margin-top:12px; width:100%; min-height:84px; padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;"></textarea>
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="btnAddLoad" class="btn btn-primary" type="button">İlan Ekle</button>
+          <button id="btnResetDemo" class="btn btn-secondary" type="button">Demo İlanları Geri Yükle</button>
+        </div>
+        <p style="margin-top:10px; opacity:.8;">Bu alan hızlı vitrin kullanımı içindir. Girilen ilanlar bu cihazın tarayıcısında görünür.</p>
+      </div>
+
       <div class="section-head">
         <div>
           <div class="section-kicker">Açık İlanlar</div>
@@ -56,62 +92,154 @@
         </div>
         <p>Detay veya teklif aksiyonunda ilgili ilan akış ekranına geçilir.</p>
       </div>
-      <div class="load-grid" id="loadGrid">
-        <article class="load-card" data-id="SVR-1001" data-title="İstanbul → Ankara" data-route="İstanbul → Ankara" data-weight="2.400 kg" data-status="Açık" data-type="Parsiyel" data-vehicle="Kamyon" data-date="12.04.2026" data-load="Ambalajlı ürün">
-          <div class="load-card-top"><span class="load-tag">Parsiyel</span><span class="load-ref">REF: SVR-1001</span></div>
-          <h3>İstanbul → Ankara</h3>
-          <div class="load-meta"><span>Yük: Ambalajlı ürün</span><span>Araç: Kamyon</span><span>Ağırlık: 2.400 kg</span><span>Tarih: 12.04.2026</span></div>
-          <p>Kurumsal sevkiyat akışına uygun, teklif toplanan açık ilan.</p>
-          <div class="load-actions"><button class="btn btn-secondary js-detay">Detay</button><button class="btn btn-primary js-teklif">Teklif Ver</button></div>
-        </article>
-        <article class="load-card" data-id="SVR-1002" data-title="Bursa → İzmir" data-route="Bursa → İzmir" data-weight="14.000 kg" data-status="Açık" data-type="Komple" data-vehicle="Tır" data-date="13.04.2026" data-load="Sanayi malzemesi">
-          <div class="load-card-top"><span class="load-tag">Komple</span><span class="load-ref">REF: SVR-1002</span></div>
-          <h3>Bursa → İzmir</h3>
-          <div class="load-meta"><span>Yük: Sanayi malzemesi</span><span>Araç: Tır</span><span>Ağırlık: 14.000 kg</span><span>Tarih: 13.04.2026</span></div>
-          <p>Tek seferde tam araç planlaması gerektiren yük ilanı.</p>
-          <div class="load-actions"><button class="btn btn-secondary js-detay">Detay</button><button class="btn btn-primary js-teklif">Teklif Ver</button></div>
-        </article>
-        <article class="load-card" data-id="SVR-1003" data-title="Gaziantep → Adana" data-route="Gaziantep → Adana" data-weight="850 kg" data-status="Açık" data-type="Paletli" data-vehicle="Kamyonet" data-date="14.04.2026" data-load="Paletli gıda dışı ürün">
-          <div class="load-card-top"><span class="load-tag">Paletli</span><span class="load-ref">REF: SVR-1003</span></div>
-          <h3>Gaziantep → Adana</h3>
-          <div class="load-meta"><span>Yük: Paletli gıda dışı ürün</span><span>Araç: Kamyonet</span><span>Ağırlık: 850 kg</span><span>Tarih: 14.04.2026</span></div>
-          <p>Kısa mesafe ve hızlı taşıma planı için uygun açık yük.</p>
-          <div class="load-actions"><button class="btn btn-secondary js-detay">Detay</button><button class="btn btn-primary js-teklif">Teklif Ver</button></div>
-        </article>
-        <article class="load-card" data-id="SVR-1004" data-title="Ankara → İstanbul" data-route="Ankara → İstanbul" data-weight="9.500 kg" data-status="Açık" data-type="Makine" data-vehicle="Tır" data-date="15.04.2026" data-load="Endüstriyel ekipman">
-          <div class="load-card-top"><span class="load-tag">Makine</span><span class="load-ref">REF: SVR-1004</span></div>
-          <h3>Ankara → İstanbul</h3>
-          <div class="load-meta"><span>Yük: Endüstriyel ekipman</span><span>Araç: Tır</span><span>Ağırlık: 9.500 kg</span><span>Tarih: 15.04.2026</span></div>
-          <p>Dikkatli yükleme ve kurumsal süreç takibi isteyen ilan.</p>
-          <div class="load-actions"><button class="btn btn-secondary js-detay">Detay</button><button class="btn btn-primary js-teklif">Teklif Ver</button></div>
-        </article>
-      </div>
+
+      <div class="load-grid" id="loadGrid"></div>
     </div>
   </section>
+
   <script>
-    function readLoads(){ try{ return JSON.parse(localStorage.getItem('sevra_loads') || '[]'); }catch(e){ return []; } }
-    function writeLoads(loads){ localStorage.setItem('sevra_loads', JSON.stringify(loads)); }
+    const DEMO_LOADS = [
+      { id:'SVR-1001', title:'İstanbul → Ankara', route:'İstanbul → Ankara', weight:'2.400 kg', status:'Açık', type:'Parsiyel', vehicle:'Kamyon', date:'12.04.2026', load:'Ambalajlı ürün', desc:'Kurumsal sevkiyat akışına uygun, teklif toplanan açık ilan.' },
+      { id:'SVR-1002', title:'Bursa → İzmir', route:'Bursa → İzmir', weight:'14.000 kg', status:'Açık', type:'Komple', vehicle:'Tır', date:'13.04.2026', load:'Sanayi malzemesi', desc:'Tek seferde tam araç planlaması gerektiren yük ilanı.' },
+      { id:'SVR-1003', title:'Gaziantep → Adana', route:'Gaziantep → Adana', weight:'850 kg', status:'Açık', type:'Paletli', vehicle:'Kamyonet', date:'14.04.2026', load:'Paletli gıda dışı ürün', desc:'Kısa mesafe ve hızlı taşıma planı için uygun açık yük.' },
+      { id:'SVR-1004', title:'Ankara → İstanbul', route:'Ankara → İstanbul', weight:'9.500 kg', status:'Açık', type:'Makine', vehicle:'Tır', date:'15.04.2026', load:'Endüstriyel ekipman', desc:'Dikkatli yükleme ve kurumsal süreç takibi isteyen ilan.' },
+      { id:'SVR-1005', title:'İstanbul Tuzla → Konya', route:'İstanbul Tuzla → Konya', weight:'18 ton', status:'Açık', type:'Komple', vehicle:'13.60 Tenteli', date:'18.04.2026', load:'Paletli plastik ürün', desc:'Haftalık düzenli çıkış planına uygun örnek yük.' },
+      { id:'SVR-1006', title:'Kocaeli Gebze → Adana', route:'Kocaeli Gebze → Adana', weight:'22 ton', status:'Açık', type:'Komple', vehicle:'Açık dorseli', date:'18.04.2026', load:'Demir profil', desc:'Açık dorseli araç planlaması gerektiren örnek ilan.' }
+    ];
+
+    function readLoads(){
+      try{
+        const raw = localStorage.getItem('sevra_loads');
+        const parsed = raw ? JSON.parse(raw) : null;
+        if(Array.isArray(parsed) && parsed.length) return parsed;
+      }catch(e){}
+      localStorage.setItem('sevra_loads', JSON.stringify(DEMO_LOADS));
+      return [...DEMO_LOADS];
+    }
+
+    function writeLoads(loads){
+      localStorage.setItem('sevra_loads', JSON.stringify(loads));
+    }
+
     function upsertLoad(load){
-      const loads=readLoads();
-      const idx=loads.findIndex(x=>x.id===load.id);
-      if(idx>=0){ loads[idx]=load; } else { loads.push(load); }
+      const loads = readLoads();
+      const idx = loads.findIndex(x => x.id === load.id);
+      if(idx >= 0){ loads[idx] = load; } else { loads.unshift(load); }
       writeLoads(loads);
       localStorage.setItem('sevra_selected_load', JSON.stringify(load));
     }
-    function cardToLoad(card){
-      return { id:card.dataset.id, title:card.dataset.title, route:card.dataset.route, weight:card.dataset.weight, status:card.dataset.status, type:card.dataset.type, vehicle:card.dataset.vehicle, date:card.dataset.date, load:card.dataset.load };
+
+    function renderCard(load){
+      return `
+        <article class="load-card" data-id="${load.id}" data-title="${load.title}" data-route="${load.route}" data-weight="${load.weight}" data-status="${load.status}" data-type="${load.type}" data-vehicle="${load.vehicle}" data-date="${load.date}" data-load="${load.load}">
+          <div class="load-card-top"><span class="load-tag">${load.type}</span><span class="load-ref">REF: ${load.id}</span></div>
+          <h3>${load.title}</h3>
+          <div class="load-meta">
+            <span>Yük: ${load.load}</span>
+            <span>Araç: ${load.vehicle}</span>
+            <span>Ağırlık: ${load.weight}</span>
+            <span>Tarih: ${load.date}</span>
+          </div>
+          <p>${load.desc || 'Kurumsal teklif akışına uygun açık ilan.'}</p>
+          <div class="load-actions">
+            <button class="btn btn-secondary js-detay">Detay</button>
+            <button class="btn btn-primary js-teklif">Teklif Ver</button>
+          </div>
+        </article>
+      `;
     }
-    document.querySelectorAll('.load-card').forEach(card=>{
-      const load=cardToLoad(card);
-      card.querySelector('.js-detay').addEventListener('click', function(){
-        upsertLoad(load);
-        window.location.href='ilan-detay.html?id='+encodeURIComponent(load.id);
+
+    function bindCardActions(){
+      document.querySelectorAll('.load-card').forEach(card=>{
+        const load = {
+          id: card.dataset.id,
+          title: card.dataset.title,
+          route: card.dataset.route,
+          weight: card.dataset.weight,
+          status: card.dataset.status,
+          type: card.dataset.type,
+          vehicle: card.dataset.vehicle,
+          date: card.dataset.date,
+          load: card.dataset.load
+        };
+        card.querySelector('.js-detay').onclick = function(){
+          upsertLoad(load);
+          window.location.href = 'ilan-detay.html?id=' + encodeURIComponent(load.id);
+        };
+        card.querySelector('.js-teklif').onclick = function(){
+          upsertLoad(load);
+          window.location.href = 'ilan-teklif.html?id=' + encodeURIComponent(load.id);
+        };
       });
-      card.querySelector('.js-teklif').addEventListener('click', function(){
-        upsertLoad(load);
-        window.location.href='ilan-teklif.html?id='+encodeURIComponent(load.id);
+    }
+
+    function renderLoads(){
+      const grid = document.getElementById('loadGrid');
+      const loads = readLoads();
+      grid.innerHTML = loads.map(renderCard).join('');
+      bindCardActions();
+    }
+
+    function nextId(){
+      const loads = readLoads();
+      let max = 1000;
+      loads.forEach(l=>{
+        const n = Number(String(l.id || '').replace('SVR-',''));
+        if(!isNaN(n) && n > max) max = n;
       });
+      return 'SVR-' + String(max + 1);
+    }
+
+    document.getElementById('btnAddLoad').addEventListener('click', function(){
+      const route = document.getElementById('fRoute').value.trim();
+      const loadName = document.getElementById('fLoad').value.trim();
+      const vehicle = document.getElementById('fVehicle').value.trim();
+      const weight = document.getElementById('fWeight').value.trim();
+      const date = document.getElementById('fDate').value.trim();
+      const type = document.getElementById('fType').value;
+      const desc = document.getElementById('fDesc').value.trim();
+
+      if(!route || !loadName || !vehicle || !weight || !date){
+        alert('Lütfen güzergah, yük, araç, ağırlık ve tarih alanlarını doldurun.');
+        return;
+      }
+
+      const load = {
+        id: nextId(),
+        title: route,
+        route: route,
+        weight: weight,
+        status: 'Açık',
+        type: type,
+        vehicle: vehicle,
+        date: date,
+        load: loadName,
+        desc: desc || 'Yeni oluşturulan açık yük ilanı.'
+      };
+
+      const loads = readLoads();
+      loads.unshift(load);
+      writeLoads(loads);
+      localStorage.setItem('sevra_selected_load', JSON.stringify(load));
+
+      document.getElementById('fRoute').value = '';
+      document.getElementById('fLoad').value = '';
+      document.getElementById('fVehicle').value = '';
+      document.getElementById('fWeight').value = '';
+      document.getElementById('fDate').value = '';
+      document.getElementById('fDesc').value = '';
+
+      renderLoads();
+      alert('İlan başarıyla eklendi.');
     });
+
+    document.getElementById('btnResetDemo').addEventListener('click', function(){
+      localStorage.setItem('sevra_loads', JSON.stringify(DEMO_LOADS));
+      renderLoads();
+      alert('Demo ilanlar geri yüklendi.');
+    });
+
+    renderLoads();
   </script>
 </body>
 </html>
