@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEVRA | İlan Yönetimi</title>
+  <link rel="stylesheet" href="kurumsal-ui.css">
+  <style>
+    .panel-wrap{padding:28px 0 40px}
+    .panel-grid{display:grid;grid-template-columns:420px 1fr;gap:18px}
+    .panel-card{border:1px solid rgba(255,255,255,.07);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));box-shadow:0 18px 38px rgba(0,0,0,.22);padding:22px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-group{display:grid;gap:6px}
+    .form-group.full{grid-column:1/-1}
+    .form-group label{font-size:13px;color:#dbe4f2}
+    .form-group input,.form-group select,.form-group textarea{
+      min-height:46px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#0d1730;color:#fff;padding:12px
+    }
+    .form-group textarea{min-height:92px;resize:vertical}
+    .action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .mini-note{color:#b9c7d9;font-size:13px;margin-top:12px}
+    .list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .load-list{display:grid;gap:12px}
+    .load-item{border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;background:rgba(255,255,255,.02)}
+    .load-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px}
+    .load-top strong{font-size:18px}
+    .pill{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 10px;border-radius:999px;background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700}
+    .load-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:13px;color:#d6e0ef;margin:10px 0}
+    .load-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .hidden{display:none}
+    .status-box{margin-top:12px;padding:12px 14px;border-radius:14px;font-size:14px}
+    .status-success{background:rgba(35,161,97,.14);border:1px solid rgba(35,161,97,.25);color:#b7ffd9}
+    .status-error{background:rgba(194,61,61,.14);border:1px solid rgba(194,61,61,.25);color:#ffd0d0}
+    @media (max-width:1100px){.panel-grid{grid-template-columns:1fr}.load-meta,.form-grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:700px){.load-meta,.form-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="yonetici-panoso.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>İlan Yönetimi</span>
+        </div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="yonetici-panoso.html">Panele Dön</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanlarını Aç</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page panel-wrap">
+    <div class="container">
+      <section class="hero-mini">
+        <div class="section-kicker">Admin İlan Modülü</div>
+        <h1>Yük ilanı ekle ve yönet</h1>
+        <p>Bu ekrandan girilen kayıtlar vitrin tarafındaki Yük İlanları sayfasında görünür. Admin burada ekler, ziyaretçi vitrinde görür.</p>
+      </section>
+
+      <div id="statusBox" class="status-box hidden"></div>
+
+      <section class="panel-grid">
+        <article class="panel-card">
+          <div class="list-head">
+            <div>
+              <div class="section-kicker">Yeni İlan</div>
+              <h2 style="font-size:30px;line-height:1.08;">İlan Oluştur</h2>
+            </div>
+            <span class="pill">Yönetici</span>
+          </div>
+
+          <form id="loadForm">
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="fRoute">Güzergah</label>
+                <input id="fRoute" placeholder="Örn: İstanbul Tuzla → Ankara Sincan" required>
+              </div>
+
+              <div class="form-group">
+                <label for="fLoad">Yük türü</label>
+                <input id="fLoad" placeholder="Örn: Paletli plastik ürün" required>
+              </div>
+
+              <div class="form-group">
+                <label for="fVehicle">Araç tipi</label>
+                <input id="fVehicle" placeholder="Örn: 13.60 Tenteli" required>
+              </div>
+
+              <div class="form-group">
+                <label for="fWeight">Ağırlık</label>
+                <input id="fWeight" placeholder="Örn: 18 ton" required>
+              </div>
+
+              <div class="form-group">
+                <label for="fDate">Tarih</label>
+                <input id="fDate" placeholder="Örn: 18.04.2026" required>
+              </div>
+
+              <div class="form-group">
+                <label for="fType">İlan tipi</label>
+                <select id="fType">
+                  <option value="Parsiyel">Parsiyel</option>
+                  <option value="Komple">Komple</option>
+                  <option value="Paletli">Paletli</option>
+                  <option value="Makine">Makine</option>
+                </select>
+              </div>
+
+              <div class="form-group full">
+                <label for="fDesc">Açıklama</label>
+                <textarea id="fDesc" placeholder="Kısa ilan açıklaması"></textarea>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <button class="btn btn-primary" type="submit">İlanı Kaydet</button>
+              <button class="btn btn-secondary" id="btnCancelEdit" type="button">Düzenlemeyi İptal Et</button>
+            </div>
+          </form>
+
+          <p class="mini-note">Not: Bu V1 sürümünde kayıtlar tarayıcı depolamasında tutulur. Aynı cihazdan admin yönetimi ve vitrin testi yapılır.</p>
+        </article>
+
+        <article class="panel-card">
+          <div class="list-head">
+            <div>
+              <div class="section-kicker">Aktif Kayıtlar</div>
+              <h2 style="font-size:30px;line-height:1.08;">İlan Listesi</h2>
+            </div>
+            <span class="pill" id="countBadge">0 ilan</span>
+          </div>
+
+          <div id="loadList" class="load-list"></div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const session = JSON.parse(localStorage.getItem('sevra_admin_session') || 'null');
+    if(!session || !session.username){
+      window.location.href = 'yonetici-giris.html';
+    }
+
+    const DEFAULT_LOADS = [
+      { id:'SVR-1001', title:'İstanbul Tuzla → Ankara Sincan', route:'İstanbul Tuzla → Ankara Sincan', weight:'18 ton', status:'Açık', type:'Komple', vehicle:'13.60 Tenteli', date:'18.04.2026', load:'Paletli plastik ürün', desc:'Haftalık düzenli çıkış planına uygun, kurumsal sevkiyat yükü.' },
+      { id:'SVR-1002', title:'Bursa → İzmir Kemalpaşa', route:'Bursa → İzmir Kemalpaşa', weight:'14.000 kg', status:'Açık', type:'Komple', vehicle:'Tır', date:'19.04.2026', load:'Sanayi malzemesi', desc:'Tek seferde tam araç planlaması gerektiren açık yük ilanı.' },
+      { id:'SVR-1003', title:'Gaziantep → Adana', route:'Gaziantep → Adana', weight:'850 kg', status:'Açık', type:'Paletli', vehicle:'Kamyonet', date:'19.04.2026', load:'Paletli gıda dışı ürün', desc:'Kısa mesafe ve hızlı teslimat planı için uygun açık yük.' }
+    ];
+
+    function readLoads(){
+      try{
+        const parsed = JSON.parse(localStorage.getItem('sevra_loads') || '[]');
+        if(Array.isArray(parsed) && parsed.length) return parsed;
+      }catch(e){}
+      localStorage.setItem('sevra_loads', JSON.stringify(DEFAULT_LOADS));
+      return [...DEFAULT_LOADS];
+    }
+
+    function writeLoads(loads){
+      localStorage.setItem('sevra_loads', JSON.stringify(loads));
+    }
+
+    function nextId(loads){
+      let max = 1000;
+      loads.forEach(item=>{
+        const n = Number(String(item.id || '').replace('SVR-',''));
+        if(!isNaN(n) && n > max) max = n;
+      });
+      return 'SVR-' + String(max + 1);
+    }
+
+    const loadForm = document.getElementById('loadForm');
+    const loadList = document.getElementById('loadList');
+    const countBadge = document.getElementById('countBadge');
+    const statusBox = document.getElementById('statusBox');
+    const btnCancelEdit = document.getElementById('btnCancelEdit');
+
+    const fRoute = document.getElementById('fRoute');
+    const fLoad = document.getElementById('fLoad');
+    const fVehicle = document.getElementById('fVehicle');
+    const fWeight = document.getElementById('fWeight');
+    const fDate = document.getElementById('fDate');
+    const fType = document.getElementById('fType');
+    const fDesc = document.getElementById('fDesc');
+
+    let editingId = '';
+
+    function showStatus(message, isError){
+      statusBox.textContent = message;
+      statusBox.classList.remove('hidden','status-success','status-error');
+      statusBox.classList.add(isError ? 'status-error' : 'status-success');
+    }
+
+    function resetForm(){
+      editingId = '';
+      fRoute.value = '';
+      fLoad.value = '';
+      fVehicle.value = '';
+      fWeight.value = '';
+      fDate.value = '';
+      fType.value = 'Parsiyel';
+      fDesc.value = '';
+    }
+
+    function renderLoads(){
+      const loads = readLoads();
+      countBadge.textContent = loads.length + ' ilan';
+      if(!loads.length){
+        loadList.innerHTML = '<div class="load-item">Henüz ilan bulunmuyor.</div>';
+        return;
+      }
+
+      loadList.innerHTML = loads.map(load => `
+        <article class="load-item">
+          <div class="load-top">
+            <strong>${load.title}</strong>
+            <span class="pill">${load.type}</span>
+          </div>
+          <div class="load-meta">
+            <span>REF: ${load.id}</span>
+            <span>Yük: ${load.load}</span>
+            <span>Araç: ${load.vehicle}</span>
+            <span>Ağırlık: ${load.weight}</span>
+            <span>Tarih: ${load.date}</span>
+            <span>Durum: ${load.status || 'Açık'}</span>
+            <span>Güzergah: ${load.route}</span>
+            <span>Not: ${load.desc || '-'}</span>
+          </div>
+          <div class="load-actions">
+            <button class="btn btn-secondary js-edit" data-id="${load.id}" type="button">Düzenle</button>
+            <button class="btn btn-secondary js-delete" data-id="${load.id}" type="button">Sil</button>
+          </div>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('.js-edit').forEach(btn=>{
+        btn.addEventListener('click', function(){
+          const loads = readLoads();
+          const load = loads.find(x => x.id === btn.dataset.id);
+          if(!load) return;
+          editingId = load.id;
+          fRoute.value = load.route || '';
+          fLoad.value = load.load || '';
+          fVehicle.value = load.vehicle || '';
+          fWeight.value = load.weight || '';
+          fDate.value = load.date || '';
+          fType.value = load.type || 'Parsiyel';
+          fDesc.value = load.desc || '';
+          showStatus('İlan düzenleme moduna alındı.', false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      document.querySelectorAll('.js-delete').forEach(btn=>{
+        btn.addEventListener('click', function(){
+          let loads = readLoads();
+          loads = loads.filter(x => x.id !== btn.dataset.id);
+          writeLoads(loads);
+          renderLoads();
+          showStatus('İlan silindi.', false);
+        });
+      });
+    }
+
+    loadForm.addEventListener('submit', function(event){
+      event.preventDefault();
+      let loads = readLoads();
+
+      const route = fRoute.value.trim();
+      const loadName = fLoad.value.trim();
+      const vehicle = fVehicle.value.trim();
+      const weight = fWeight.value.trim();
+      const date = fDate.value.trim();
+      const type = fType.value;
+      const desc = fDesc.value.trim();
+
+      if(!route || !loadName || !vehicle || !weight || !date){
+        showStatus('Lütfen güzergah, yük, araç, ağırlık ve tarih alanlarını doldurun.', true);
+        return;
+      }
+
+      if(editingId){
+        loads = loads.map(item => item.id === editingId ? {
+          ...item,
+          title: route,
+          route: route,
+          load: loadName,
+          vehicle: vehicle,
+          weight: weight,
+          date: date,
+          type: type,
+          desc: desc || 'Kurumsal teklif akışına uygun açık ilan.',
+          status: 'Açık'
+        } : item);
+        writeLoads(loads);
+        renderLoads();
+        resetForm();
+        showStatus('İlan güncellendi.', false);
+        return;
+      }
+
+      const newLoad = {
+        id: nextId(loads),
+        title: route,
+        route: route,
+        weight: weight,
+        status: 'Açık',
+        type: type,
+        vehicle: vehicle,
+        date: date,
+        load: loadName,
+        desc: desc || 'Kurumsal teklif akışına uygun açık ilan.'
+      };
+
+      loads.unshift(newLoad);
+      writeLoads(loads);
+      renderLoads();
+      resetForm();
+      showStatus('Yeni ilan kaydedildi. Yük İlanları sayfasında görünür.', false);
+    });
+
+    btnCancelEdit.addEventListener('click', function(){
+      resetForm();
+      showStatus('Düzenleme iptal edildi.', false);
+    });
+
+    renderLoads();
+  </script>
+</body>
+</html>
