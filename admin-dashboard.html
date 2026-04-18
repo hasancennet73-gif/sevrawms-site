@@ -5,6 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEVRA | Yönetim Kontrol Merkezi</title>
   <link rel="stylesheet" href="kurumsal-ui.css">
+  <link rel="stylesheet" href="admin-panosu.css">
+  <style>
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin-top:24px;
+    }
+    .content-card{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      padding:22px;
+      box-shadow:0 18px 38px rgba(0,0,0,.22);
+      min-height:210px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .card-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .card-head h2{
+      margin:0;
+      font-size:24px;
+      line-height:1.1;
+    }
+    .card-text{
+      color:#c9d6e6;
+      font-size:14px;
+      line-height:1.55;
+      margin:8px 0 18px;
+    }
+    .card-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:auto;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:rgba(241,200,77,.14);
+      color:#ffe08a;
+      font-size:12px;
+      font-weight:700;
+    }
+    .quick-strip{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    @media(max-width:1100px){
+      .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+    @media(max-width:720px){
+      .dashboard-grid{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -29,71 +97,104 @@
       <section class="hero-mini">
         <div class="section-kicker">Yönetim Merkezi</div>
         <h1>SEVRA yönetim paneli</h1>
-        <p>Panel yapısı toparlandı. Modüller artık daha net kartlar halinde görünür, geçişler daha belirgin ve geri dönüş yolları daha görünür durumdadır.</p>
+        <p>Yük ilanı, teklif, başvuru, pazarlık ve site ayarları bu merkezden yönetilir.</p>
+
+        <div class="quick-strip">
+          <a class="btn btn-primary" href="ilan-yonetimi.html">İlan Yönetimine Git</a>
+          <a class="btn btn-secondary" href="yuk-ilanlari.html">Vitrindeki Yük İlanlarını Gör</a>
+          <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışını Aç</a>
+        </div>
       </section>
 
       <section class="dashboard-grid">
         <article class="content-card">
-          <div class="card-head">
-            <h2>Başvuru ve Kullanıcı</h2>
-            <span class="pill">Kontrol</span>
+          <div>
+            <div class="card-head">
+              <h2>İlan Yönetimi</h2>
+              <span class="pill">Aktif</span>
+            </div>
+            <p class="card-text">Yük ilanı ekle, il/ilçe seçimiyle rota oluştur, mevcut ilanları düzenle veya sil. Kaydedilen ilanlar vitrin tarafındaki Yük İlanları sayfasında görünür.</p>
           </div>
-          <p class="card-text">Yeni üyelik başvurularını, kullanıcı kayıt akışını ve onay sürecini takip et.</p>
+          <div class="card-actions">
+            <a class="btn btn-primary" href="ilan-yonetimi.html">İlan Yönetimini Aç</a>
+            <a class="btn btn-secondary" href="yuk-ilanlari.html">Vitrini Gör</a>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div>
+            <div class="card-head">
+              <h2>Başvuru ve Kullanıcı</h2>
+              <span class="pill">Kontrol</span>
+            </div>
+            <p class="card-text">Yeni üyelik başvurularını, kullanıcı kayıt akışını ve onay sürecini takip et.</p>
+          </div>
           <div class="card-actions">
             <a class="btn btn-primary" href="basvuru-kullanici-yonetimi.html">Aç</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head">
-            <h2>Teklif Yönetimi</h2>
-            <span class="pill">Aktif</span>
+          <div>
+            <div class="card-head">
+              <h2>Teklif Yönetimi</h2>
+              <span class="pill">Aktif</span>
+            </div>
+            <p class="card-text">Teklif kayıtlarını, fiyat akışını ve komisyon durumu bilgisini takip et.</p>
           </div>
-          <p class="card-text">Teklif kayıtlarını, fiyat akışını ve komisyon durumu bilgisini takip et.</p>
           <div class="card-actions">
             <a class="btn btn-primary" href="teklif-yonetimi.html">Aç</a>
+            <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışı</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head">
-            <h2>Pazarlık Yönetimi</h2>
-            <span class="pill">Aktif</span>
+          <div>
+            <div class="card-head">
+              <h2>Pazarlık Yönetimi</h2>
+              <span class="pill">Aktif</span>
+            </div>
+            <p class="card-text">Pazarlık kayıtlarını, iletişim açılma mantığını ve karar sürecini yönet.</p>
           </div>
-          <p class="card-text">Pazarlık kayıtlarını, iletişim açılma mantığını ve karar sürecini yönet.</p>
           <div class="card-actions">
             <a class="btn btn-primary" href="pazarlik-yonetim.html">Aç</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head">
-            <h2>Mesajlaşma Kontrolü</h2>
-            <span class="pill">Koruma</span>
+          <div>
+            <div class="card-head">
+              <h2>Mesajlaşma Kontrolü</h2>
+              <span class="pill">Koruma</span>
+            </div>
+            <p class="card-text">Telefon, e-posta ve WhatsApp bilgisini otomatik engelleyen pazarlık mesajlaşma ekranına geç.</p>
           </div>
-          <p class="card-text">Telefon, e-posta ve WhatsApp bilgisini otomatik engelleyen pazarlık mesajlaşma ekranına geç.</p>
           <div class="card-actions">
             <a class="btn btn-primary" href="mesajlasma.html">Aç</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head">
-            <h2>Site Ayarları</h2>
-            <span class="pill">Yönetim</span>
+          <div>
+            <div class="card-head">
+              <h2>Site Ayarları</h2>
+              <span class="pill">Yönetim</span>
+            </div>
+            <p class="card-text">İletişim metinleri, WhatsApp butonu ve görünürlük ayarlarını yönet.</p>
           </div>
-          <p class="card-text">İletişim metinleri, WhatsApp butonu ve görünürlük ayarlarını yönet.</p>
           <div class="card-actions">
             <a class="btn btn-primary" href="site-ayarlari.html">Aç</a>
           </div>
         </article>
 
         <article class="content-card">
-          <div class="card-head">
-            <h2>Kurumsal Site</h2>
-            <span class="pill">Vitrin</span>
+          <div>
+            <div class="card-head">
+              <h2>Kurumsal Site</h2>
+              <span class="pill">Vitrin</span>
+            </div>
+            <p class="card-text">Ana sayfaya dönerek vitrindeki kurumsal görünümü ve menü geçişlerini kontrol et.</p>
           </div>
-          <p class="card-text">Ana sayfaya dönerek vitrindeki kurumsal görünümü ve menü geçişlerini kontrol et.</p>
           <div class="card-actions">
             <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
           </div>
@@ -101,5 +202,12 @@
       </section>
     </div>
   </main>
+
+  <script>
+    const session = JSON.parse(localStorage.getItem('sevra_admin_session') || 'null');
+    if(!session || !session.username){
+      window.location.href = 'yonetici-giris.html';
+    }
+  </script>
 </body>
 </html>
