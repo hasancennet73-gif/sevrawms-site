@@ -14,7 +14,6 @@
     .form-group.full{grid-column:1/-1}
     .form-group label{font-size:13px;color:#dbe4f2}
     .form-group input,.form-group select,.form-group textarea{min-height:46px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#0d1730;color:#fff;padding:12px}
-    .form-group select:disabled{opacity:.55;cursor:not-allowed}
     .form-group textarea{min-height:92px;resize:vertical}
     .action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .mini-note{color:#b9c7d9;font-size:13px;margin-top:12px}
@@ -103,7 +102,7 @@
 
               <div class="form-group full">
                 <label for="fRoute">Güzergah</label>
-                <input id="fRoute" placeholder="İl / İlçe seçiminden otomatik oluşur" readonly required>
+                <input id="fRoute" placeholder="İl / ilçe seçiminden otomatik oluşur" readonly required>
               </div>
 
               <div class="form-group">
@@ -148,7 +147,7 @@
             </div>
           </form>
 
-          <p class="mini-note">Bu sürüm Firebase Firestore kullanır. Admin bu ekranda ilan eklediğinde vitrin tarafı aynı kayıtları okur. İl/ilçe seçimi otomatik dropdown çalışır.</p>
+          <p class="mini-note">Bu sürüm Firebase Firestore kullanır. İl/ilçe listesi Türkiye API üzerinden otomatik gelir.</p>
         </article>
 
         <article class="panel-card">
@@ -167,6 +166,7 @@
   </main>
 
   <script src="il-ilce.js"></script>
+
   <script type="module">
     import { db } from './firebase-config.js';
     import {
@@ -214,31 +214,27 @@
       statusBox.classList.add(isError ? 'status-error' : 'status-success');
     }
 
-    function updateRouteField(){
-      const fromCity = window.sevraSeciliIlAdi ? window.sevraSeciliIlAdi('neredenIl') : '';
-      const fromDistrict = window.sevraSeciliIlceAdi ? window.sevraSeciliIlceAdi('neredenIlce') : '';
-      const toCity = window.sevraSeciliIlAdi ? window.sevraSeciliIlAdi('nereyeIl') : '';
-      const toDistrict = window.sevraSeciliIlceAdi ? window.sevraSeciliIlceAdi('nereyeIlce') : '';
+    window.sevraRouteAutoUpdate = function(){
+      const fromIl = window.sevraSeciliIlAdi ? window.sevraSeciliIlAdi('neredenIl') : '';
+      const fromIlce = window.sevraSeciliIlceAdi ? window.sevraSeciliIlceAdi('neredenIlce','neredenIl') : '';
+      const toIl = window.sevraSeciliIlAdi ? window.sevraSeciliIlAdi('nereyeIl') : '';
+      const toIlce = window.sevraSeciliIlceAdi ? window.sevraSeciliIlceAdi('nereyeIlce','nereyeIl') : '';
 
-      if(fromCity && fromDistrict && toCity && toDistrict){
-        fRoute.value = `${fromCity} / ${fromDistrict} → ${toCity} / ${toDistrict}`;
+      if(fromIl && fromIlce && toIl && toIlce){
+        fRoute.value = `${fromIl} / ${fromIlce} → ${toIl} / ${toIlce}`;
       }else{
         fRoute.value = '';
       }
-    }
-
-    [neredenIl, neredenIlce, nereyeIl, nereyeIlce].forEach(el => {
-      el.addEventListener('change', updateRouteField);
-    });
+    };
 
     function resetForm(){
       editingId = '';
       neredenIl.value = '';
       nereyeIl.value = '';
-      neredenIlce.innerHTML = '<option value="">Önce il seçiniz</option>';
-      nereyeIlce.innerHTML = '<option value="">Önce il seçiniz</option>';
-      neredenIlce.disabled = true;
-      nereyeIlce.disabled = true;
+      if(window.sevraIlceDoldur){
+        window.sevraIlceDoldur('neredenIl', 'neredenIlce');
+        window.sevraIlceDoldur('nereyeIl', 'nereyeIlce');
+      }
       fRoute.value = '';
       fLoad.value = '';
       fVehicle.value = '';
@@ -248,14 +244,8 @@
       fDesc.value = '';
     }
 
-    async function setRouteSelectsFromLoad(load){
-      if(!window.sevraSetIlIlceDegeri) return;
-      await window.sevraSetIlIlceDegeri('neredenIl', 'neredenIlce', load.neredenIl || '', load.neredenIlce || '');
-      await window.sevraSetIlIlceDegeri('nereyeIl', 'nereyeIlce', load.nereyeIl || '', load.nereyeIlce || '');
-      updateRouteField();
-      if(!fRoute.value && load.route){
-        fRoute.value = load.route;
-      }
+    function escapeText(v){
+      return String(v ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
     }
 
     function renderLoads(){
@@ -268,47 +258,48 @@
       loadList.innerHTML = cachedLoads.map(load => `
         <article class="load-item">
           <div class="load-top">
-            <strong>${load.title || load.route || '-'}</strong>
-            <span class="pill">${load.type || '-'}</span>
+            <strong>${escapeText(load.title)}</strong>
+            <span class="pill">${escapeText(load.type)}</span>
           </div>
           <div class="load-meta">
-            <span>REF: ${load.code || '-'}</span>
-            <span>Yük: ${load.load || '-'}</span>
-            <span>Araç: ${load.vehicle || '-'}</span>
-            <span>Ağırlık: ${load.weight || '-'}</span>
-            <span>Tarih: ${load.date || '-'}</span>
-            <span>Durum: ${load.status || 'Açık'}</span>
-            <span>Güzergah: ${load.route || '-'}</span>
-            <span>Not: ${load.desc || '-'}</span>
+            <span>REF: ${escapeText(load.code || '-')}</span>
+            <span>Yük: ${escapeText(load.load)}</span>
+            <span>Araç: ${escapeText(load.vehicle)}</span>
+            <span>Ağırlık: ${escapeText(load.weight)}</span>
+            <span>Tarih: ${escapeText(load.date)}</span>
+            <span>Durum: ${escapeText(load.status || 'Açık')}</span>
+            <span>Güzergah: ${escapeText(load.route)}</span>
+            <span>Not: ${escapeText(load.desc || '-')}</span>
           </div>
           <div class="load-actions">
-            <button class="btn btn-secondary js-edit" data-id="${load.id}" type="button">Düzenle</button>
-            <button class="btn btn-secondary js-delete" data-id="${load.id}" type="button">Sil</button>
+            <button class="btn btn-secondary js-edit" data-id="${escapeText(load.id)}" type="button">Düzenle</button>
+            <button class="btn btn-secondary js-delete" data-id="${escapeText(load.id)}" type="button">Sil</button>
           </div>
         </article>
       `).join('');
 
       document.querySelectorAll('.js-edit').forEach(btn=>{
-        btn.addEventListener('click', async function(){
+        btn.addEventListener('click', function(){
           const load = cachedLoads.find(x => x.id === btn.dataset.id);
           if(!load) return;
           editingId = load.id;
-          await setRouteSelectsFromLoad(load);
+
+          // Eski kayıtlar rota metniyle çalışmaya devam eder. Yeni kayıtlar il/ilçe alanlarıyla tutulur.
+          fRoute.value = load.route || '';
           fLoad.value = load.load || '';
           fVehicle.value = load.vehicle || '';
           fWeight.value = load.weight || '';
           fDate.value = load.date || '';
           fType.value = load.type || 'Parsiyel';
           fDesc.value = load.desc || '';
-          showStatus('İlan düzenleme moduna alındı.', false);
+
+          showStatus('İlan düzenleme moduna alındı. Yeni rota seçmek istersen il/ilçe alanlarını yeniden seç.', false);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       });
 
       document.querySelectorAll('.js-delete').forEach(btn=>{
         btn.addEventListener('click', async function(){
-          const onay = confirm('Bu ilan silinsin mi?');
-          if(!onay) return;
           try{
             await deleteDoc(doc(db, 'loads', btn.dataset.id));
             showStatus('İlan silindi.', false);
@@ -339,11 +330,13 @@
     loadForm.addEventListener('submit', async function(event){
       event.preventDefault();
 
-      const fromCity = window.sevraSeciliIlAdi('neredenIl');
-      const fromDistrict = window.sevraSeciliIlceAdi('neredenIlce');
-      const toCity = window.sevraSeciliIlAdi('nereyeIl');
-      const toDistrict = window.sevraSeciliIlceAdi('nereyeIlce');
-      const route = `${fromCity} / ${fromDistrict} → ${toCity} / ${toDistrict}`;
+      const fromIl = window.sevraSeciliIlAdi ? window.sevraSeciliIlAdi('neredenIl') : '';
+      const fromIlce = window.sevraSeciliIlceAdi ? window.sevraSeciliIlceAdi('neredenIlce','neredenIl') : '';
+      const toIl = window.sevraSeciliIlAdi ? window.sevraSeciliIlAdi('nereyeIl') : '';
+      const toIlce = window.sevraSeciliIlceAdi ? window.sevraSeciliIlceAdi('nereyeIlce','nereyeIl') : '';
+
+      const route = `${fromIl} / ${fromIlce} → ${toIl} / ${toIlce}`.trim();
+      fRoute.value = route;
 
       const loadName = fLoad.value.trim();
       const vehicle = fVehicle.value.trim();
@@ -352,7 +345,7 @@
       const type = fType.value;
       const desc = fDesc.value.trim();
 
-      if(!fromCity || !fromDistrict || !toCity || !toDistrict || !loadName || !vehicle || !weight || !date){
+      if(!fromIl || !fromIlce || !toIl || !toIlce || !loadName || !vehicle || !weight || !date){
         showStatus('Lütfen nereden il/ilçe, nereye il/ilçe, yük, araç, ağırlık ve tarih alanlarını doldurun.', true);
         return;
       }
@@ -360,10 +353,10 @@
       const payload = {
         title: route,
         route: route,
-        neredenIl: fromCity,
-        neredenIlce: fromDistrict,
-        nereyeIl: toCity,
-        nereyeIlce: toDistrict,
+        fromCity: fromIl,
+        fromDistrict: fromIlce,
+        toCity: toIl,
+        toDistrict: toIlce,
         load: loadName,
         vehicle: vehicle,
         weight: weight,
