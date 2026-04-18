@@ -13,9 +13,7 @@
     .form-group{display:grid;gap:6px}
     .form-group.full{grid-column:1/-1}
     .form-group label{font-size:13px;color:#dbe4f2}
-    .form-group input,.form-group select,.form-group textarea{
-      min-height:46px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#0d1730;color:#fff;padding:12px
-    }
+    .form-group input,.form-group select,.form-group textarea{min-height:46px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:#0d1730;color:#fff;padding:12px}
     .form-group textarea{min-height:92px;resize:vertical}
     .action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .mini-note{color:#b9c7d9;font-size:13px;margin-top:12px}
@@ -121,7 +119,7 @@
             </div>
           </form>
 
-          <p class="mini-note">Not: Bu V1 sürümünde kayıtlar tarayıcı depolamasında tutulur. Aynı cihazdan admin yönetimi ve vitrin testi yapılır.</p>
+          <p class="mini-note">Bu sürüm Firebase Firestore kullanır. Admin bu ekranda ilan eklediğinde vitrin tarafı aynı kayıtları okur.</p>
         </article>
 
         <article class="panel-card">
@@ -139,38 +137,23 @@
     </div>
   </main>
 
-  <script>
+  <script type="module">
+    import { db } from './firebase-config.js';
+    import {
+      collection,
+      addDoc,
+      getDocs,
+      updateDoc,
+      deleteDoc,
+      doc,
+      query,
+      orderBy,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
     const session = JSON.parse(localStorage.getItem('sevra_admin_session') || 'null');
     if(!session || !session.username){
       window.location.href = 'yonetici-giris.html';
-    }
-
-    const DEFAULT_LOADS = [
-      { id:'SVR-1001', title:'İstanbul Tuzla → Ankara Sincan', route:'İstanbul Tuzla → Ankara Sincan', weight:'18 ton', status:'Açık', type:'Komple', vehicle:'13.60 Tenteli', date:'18.04.2026', load:'Paletli plastik ürün', desc:'Haftalık düzenli çıkış planına uygun, kurumsal sevkiyat yükü.' },
-      { id:'SVR-1002', title:'Bursa → İzmir Kemalpaşa', route:'Bursa → İzmir Kemalpaşa', weight:'14.000 kg', status:'Açık', type:'Komple', vehicle:'Tır', date:'19.04.2026', load:'Sanayi malzemesi', desc:'Tek seferde tam araç planlaması gerektiren açık yük ilanı.' },
-      { id:'SVR-1003', title:'Gaziantep → Adana', route:'Gaziantep → Adana', weight:'850 kg', status:'Açık', type:'Paletli', vehicle:'Kamyonet', date:'19.04.2026', load:'Paletli gıda dışı ürün', desc:'Kısa mesafe ve hızlı teslimat planı için uygun açık yük.' }
-    ];
-
-    function readLoads(){
-      try{
-        const parsed = JSON.parse(localStorage.getItem('sevra_loads') || '[]');
-        if(Array.isArray(parsed) && parsed.length) return parsed;
-      }catch(e){}
-      localStorage.setItem('sevra_loads', JSON.stringify(DEFAULT_LOADS));
-      return [...DEFAULT_LOADS];
-    }
-
-    function writeLoads(loads){
-      localStorage.setItem('sevra_loads', JSON.stringify(loads));
-    }
-
-    function nextId(loads){
-      let max = 1000;
-      loads.forEach(item=>{
-        const n = Number(String(item.id || '').replace('SVR-',''));
-        if(!isNaN(n) && n > max) max = n;
-      });
-      return 'SVR-' + String(max + 1);
     }
 
     const loadForm = document.getElementById('loadForm');
@@ -188,6 +171,7 @@
     const fDesc = document.getElementById('fDesc');
 
     let editingId = '';
+    let cachedLoads = [];
 
     function showStatus(message, isError){
       statusBox.textContent = message;
@@ -207,21 +191,20 @@
     }
 
     function renderLoads(){
-      const loads = readLoads();
-      countBadge.textContent = loads.length + ' ilan';
-      if(!loads.length){
+      countBadge.textContent = cachedLoads.length + ' ilan';
+      if(!cachedLoads.length){
         loadList.innerHTML = '<div class="load-item">Henüz ilan bulunmuyor.</div>';
         return;
       }
 
-      loadList.innerHTML = loads.map(load => `
+      loadList.innerHTML = cachedLoads.map(load => `
         <article class="load-item">
           <div class="load-top">
             <strong>${load.title}</strong>
             <span class="pill">${load.type}</span>
           </div>
           <div class="load-meta">
-            <span>REF: ${load.id}</span>
+            <span>REF: ${load.code || '-'}</span>
             <span>Yük: ${load.load}</span>
             <span>Araç: ${load.vehicle}</span>
             <span>Ağırlık: ${load.weight}</span>
@@ -239,8 +222,7 @@
 
       document.querySelectorAll('.js-edit').forEach(btn=>{
         btn.addEventListener('click', function(){
-          const loads = readLoads();
-          const load = loads.find(x => x.id === btn.dataset.id);
+          const load = cachedLoads.find(x => x.id === btn.dataset.id);
           if(!load) return;
           editingId = load.id;
           fRoute.value = load.route || '';
@@ -256,19 +238,36 @@
       });
 
       document.querySelectorAll('.js-delete').forEach(btn=>{
-        btn.addEventListener('click', function(){
-          let loads = readLoads();
-          loads = loads.filter(x => x.id !== btn.dataset.id);
-          writeLoads(loads);
-          renderLoads();
-          showStatus('İlan silindi.', false);
+        btn.addEventListener('click', async function(){
+          try{
+            await deleteDoc(doc(db, 'loads', btn.dataset.id));
+            showStatus('İlan silindi.', false);
+            await fetchLoads();
+          }catch(err){
+            showStatus('İlan silinemedi: ' + err.message, true);
+          }
         });
       });
     }
 
-    loadForm.addEventListener('submit', function(event){
+    async function fetchLoads(){
+      const q = query(collection(db, 'loads'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      cachedLoads = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderLoads();
+    }
+
+    function nextCode(){
+      let max = 1000;
+      cachedLoads.forEach(item=>{
+        const n = Number(String(item.code || '').replace('SVR-',''));
+        if(!isNaN(n) && n > max) max = n;
+      });
+      return 'SVR-' + String(max + 1);
+    }
+
+    loadForm.addEventListener('submit', async function(event){
       event.preventDefault();
-      let loads = readLoads();
 
       const route = fRoute.value.trim();
       const loadName = fLoad.value.trim();
@@ -283,44 +282,37 @@
         return;
       }
 
-      if(editingId){
-        loads = loads.map(item => item.id === editingId ? {
-          ...item,
-          title: route,
-          route: route,
-          load: loadName,
-          vehicle: vehicle,
-          weight: weight,
-          date: date,
-          type: type,
-          desc: desc || 'Kurumsal teklif akışına uygun açık ilan.',
-          status: 'Açık'
-        } : item);
-        writeLoads(loads);
-        renderLoads();
-        resetForm();
-        showStatus('İlan güncellendi.', false);
-        return;
-      }
-
-      const newLoad = {
-        id: nextId(loads),
+      const payload = {
         title: route,
         route: route,
-        weight: weight,
-        status: 'Açık',
-        type: type,
-        vehicle: vehicle,
-        date: date,
         load: loadName,
-        desc: desc || 'Kurumsal teklif akışına uygun açık ilan.'
+        vehicle: vehicle,
+        weight: weight,
+        date: date,
+        type: type,
+        desc: desc || 'Kurumsal teklif akışına uygun açık ilan.',
+        status: 'Açık',
+        updatedAt: serverTimestamp()
       };
 
-      loads.unshift(newLoad);
-      writeLoads(loads);
-      renderLoads();
-      resetForm();
-      showStatus('Yeni ilan kaydedildi. Yük İlanları sayfasında görünür.', false);
+      try{
+        if(editingId){
+          await updateDoc(doc(db, 'loads', editingId), payload);
+          showStatus('İlan güncellendi.', false);
+        }else{
+          await addDoc(collection(db, 'loads'), {
+            ...payload,
+            code: nextCode(),
+            createdAt: serverTimestamp()
+          });
+          showStatus('Yeni ilan kaydedildi. Vitrinde görünür.', false);
+        }
+
+        resetForm();
+        await fetchLoads();
+      }catch(err){
+        showStatus('Kayıt sırasında hata: ' + err.message, true);
+      }
     });
 
     btnCancelEdit.addEventListener('click', function(){
@@ -328,7 +320,9 @@
       showStatus('Düzenleme iptal edildi.', false);
     });
 
-    renderLoads();
+    fetchLoads().catch(err => {
+      showStatus('Kayıtlar okunamadı: ' + err.message, true);
+    });
   </script>
 </body>
 </html>
