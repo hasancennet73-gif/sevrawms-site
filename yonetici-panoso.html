@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEVRA | Yönetim Kontrol Merkezi</title>
   <link rel="stylesheet" href="kurumsal-ui.css">
+  <style>
+    .quick-link-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .module-note{margin-top:10px;color:#b9c7d9;font-size:13px;line-height:1.5}
+    .sub-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .sub-actions .btn{min-height:38px;padding:9px 13px;font-size:13px}
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -18,6 +24,7 @@
       </a>
       <div class="top-actions">
         <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
         <a class="btn btn-secondary" href="site-ayarlari.html">Site Ayarları</a>
         <a class="btn btn-secondary" href="yonetici-giris.html">Güvenli Çıkış</a>
       </div>
@@ -29,18 +36,28 @@
       <section class="hero-mini">
         <div class="section-kicker">Yönetim Merkezi</div>
         <h1>SEVRA yönetim paneli</h1>
-        <p>Panel yapısı toparlandı. Modüller artık daha net kartlar halinde görünür, geçişler daha belirgin ve geri dönüş yolları daha görünür durumdadır.</p>
+        <p>Panel yapısı toparlandı. İlan yönetimi, vitrin ilanları ve teklif akışı artık ana panelden doğrudan açılır.</p>
+        <div class="quick-link-row">
+          <a class="btn btn-primary" href="ilan-yonetimi.html">İlan Yönetimine Git</a>
+          <a class="btn btn-secondary" href="yuk-ilanlari.html">Vitrindeki Yük İlanlarını Gör</a>
+          <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışını Aç</a>
+        </div>
       </section>
 
       <section class="dashboard-grid">
         <article class="content-card">
           <div class="card-head">
             <h2>İlan Yönetimi</h2>
-            <span class="pill">Yeni</span>
+            <span class="pill">Aktif</span>
           </div>
           <p class="card-text">Yük ilanı ekle, mevcut ilanları düzenle veya sil. Kaydedilen ilanlar vitrin tarafındaki Yük İlanları sayfasında görünür.</p>
+          <p class="module-note">Bu modül Firebase ilan sistemi ve il/ilçe seçimli rota yapısı ile bağlıdır.</p>
           <div class="card-actions">
-            <a class="btn btn-primary" href="ilan-yonetimi.html">Aç</a>
+            <a class="btn btn-primary" href="ilan-yonetimi.html">İlan Yönetimini Aç</a>
+          </div>
+          <div class="sub-actions">
+            <a class="btn btn-secondary" href="yuk-ilanlari.html">Vitrini Gör</a>
+            <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışı</a>
           </div>
         </article>
 
