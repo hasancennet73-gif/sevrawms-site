@@ -69,43 +69,31 @@
         <p>Detay veya teklif aksiyonunda ilgili ilan akış ekranına geçilir.</p>
       </div>
 
+      <div id="loadingBox" style="padding:16px;border:1px solid rgba(255,255,255,.06);border-radius:16px;margin-bottom:18px;background:rgba(255,255,255,.02);">İlanlar yükleniyor...</div>
       <div class="load-grid" id="loadGrid"></div>
     </div>
   </section>
 
-  <script>
-    const DEFAULT_LOADS = [
-      { id:'SVR-1001', title:'İstanbul Tuzla → Ankara Sincan', route:'İstanbul Tuzla → Ankara Sincan', weight:'18 ton', status:'Açık', type:'Komple', vehicle:'13.60 Tenteli', date:'18.04.2026', load:'Paletli plastik ürün', desc:'Haftalık düzenli çıkış planına uygun, kurumsal sevkiyat yükü.' },
-      { id:'SVR-1002', title:'Bursa → İzmir Kemalpaşa', route:'Bursa → İzmir Kemalpaşa', weight:'14.000 kg', status:'Açık', type:'Komple', vehicle:'Tır', date:'19.04.2026', load:'Sanayi malzemesi', desc:'Tek seferde tam araç planlaması gerektiren açık yük ilanı.' },
-      { id:'SVR-1003', title:'Gaziantep → Adana', route:'Gaziantep → Adana', weight:'850 kg', status:'Açık', type:'Paletli', vehicle:'Kamyonet', date:'19.04.2026', load:'Paletli gıda dışı ürün', desc:'Kısa mesafe ve hızlı teslimat planı için uygun açık yük.' }
-    ];
+  <script type="module">
+    import { db } from './firebase-config.js';
+    import {
+      collection,
+      getDocs,
+      query,
+      orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    function readLoads(){
-      try{
-        const parsed = JSON.parse(localStorage.getItem('sevra_loads') || '[]');
-        if(Array.isArray(parsed) && parsed.length) return parsed;
-      }catch(e){}
-      localStorage.setItem('sevra_loads', JSON.stringify(DEFAULT_LOADS));
-      return [...DEFAULT_LOADS];
-    }
+    const loadGrid = document.getElementById('loadGrid');
+    const loadingBox = document.getElementById('loadingBox');
 
-    function writeLoads(loads){
-      localStorage.setItem('sevra_loads', JSON.stringify(loads));
-    }
-
-    function upsertLoad(load){
-      let loads = [];
-      try { loads = JSON.parse(localStorage.getItem('sevra_loads') || '[]'); } catch(e) {}
-      const idx = loads.findIndex(x => x.id === load.id);
-      if(idx >= 0){ loads[idx] = load; } else { loads.push(load); }
-      localStorage.setItem('sevra_loads', JSON.stringify(loads));
+    function upsertSelectedLoad(load){
       localStorage.setItem('sevra_selected_load', JSON.stringify(load));
     }
 
     function renderCard(load){
       return `
         <article class="load-card" data-id="${load.id}" data-title="${load.title}" data-route="${load.route}" data-weight="${load.weight}" data-status="${load.status}" data-type="${load.type}" data-vehicle="${load.vehicle}" data-date="${load.date}" data-load="${load.load}">
-          <div class="load-card-top"><span class="load-tag">${load.type}</span><span class="load-ref">REF: ${load.id}</span></div>
+          <div class="load-card-top"><span class="load-tag">${load.type}</span><span class="load-ref">REF: ${load.code || load.id}</span></div>
           <h3>${load.title}</h3>
           <div class="load-meta">
             <span>Yük: ${load.load}</span>
@@ -122,42 +110,42 @@
       `;
     }
 
-    function cardToLoad(card){
-      return {
-        id: card.dataset.id,
-        title: card.dataset.title,
-        route: card.dataset.route,
-        weight: card.dataset.weight,
-        status: card.dataset.status,
-        type: card.dataset.type,
-        vehicle: card.dataset.vehicle,
-        date: card.dataset.date,
-        load: card.dataset.load
-      };
-    }
-
-    function bindCardActions(){
+    function bindCardActions(loads){
       document.querySelectorAll('.load-card').forEach(card => {
-        const load = cardToLoad(card);
+        const load = loads.find(x => x.id === card.dataset.id);
+        if(!load) return;
         card.querySelector('.js-detay').addEventListener('click', function(){
-          upsertLoad(load);
+          upsertSelectedLoad(load);
           window.location.href = 'ilan-detay.html?id=' + encodeURIComponent(load.id);
         });
         card.querySelector('.js-teklif').addEventListener('click', function(){
-          upsertLoad(load);
+          upsertSelectedLoad(load);
           window.location.href = 'ilan-teklif.html?id=' + encodeURIComponent(load.id);
         });
       });
     }
 
-    function renderLoads(){
-      const grid = document.getElementById('loadGrid');
-      const loads = readLoads();
-      grid.innerHTML = loads.map(renderCard).join('');
-      bindCardActions();
+    async function fetchLoads(){
+      try{
+        const q = query(collection(db, 'loads'), orderBy('createdAt', 'desc'));
+        const snap = await getDocs(q);
+        const loads = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        loadingBox.remove();
+
+        if(!loads.length){
+          loadGrid.innerHTML = '<div style="padding:18px;border:1px dashed rgba(255,255,255,.1);border-radius:18px;">Henüz ilan bulunmuyor.</div>';
+          return;
+        }
+
+        loadGrid.innerHTML = loads.map(renderCard).join('');
+        bindCardActions(loads);
+      }catch(err){
+        loadingBox.textContent = 'İlanlar okunamadı: ' + err.message;
+      }
     }
 
-    renderLoads();
+    fetchLoads();
   </script>
 </body>
 </html>
