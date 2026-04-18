@@ -15,6 +15,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Yük İlanları</title>
   <link rel="stylesheet" href="yuk-ilanlari.css" />
+  <style>
+    .sevra-summary-bar{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin:0 0 20px;
+    }
+    .sevra-summary-item{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      background:rgba(255,255,255,.025);
+      padding:14px 16px;
+      min-height:82px;
+    }
+    .sevra-summary-item small{display:block;color:#aebcd0;font-size:12px;margin-bottom:8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+    .sevra-summary-item strong{display:block;color:#fff;font-size:22px;line-height:1.1}
+    .load-card.sevra-pro-card{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.09);
+      background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.022));
+      box-shadow:0 22px 46px rgba(0,0,0,.24);
+    }
+    .load-card.sevra-pro-card:before{
+      content:"";
+      position:absolute;
+      left:0;top:0;bottom:0;width:4px;
+      background:linear-gradient(180deg,#f1c84d,#977928);
+    }
+    .load-card-top.sevra-pro-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .sevra-route-box{
+      display:grid;
+      gap:10px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(13,23,48,.56);
+      border:1px solid rgba(255,255,255,.07);
+      margin:10px 0 14px;
+    }
+    .sevra-route-line{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:12px;
+      align-items:center;
+    }
+    .sevra-place small{display:block;color:#9fb0c7;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+    .sevra-place strong{display:block;color:#fff;font-size:18px;line-height:1.2}
+    .sevra-place span{display:block;color:#d6e0ef;font-size:13px;margin-top:3px}
+    .sevra-arrow{
+      width:42px;height:42px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(241,200,77,.14);color:#ffe08a;font-weight:900;
+      border:1px solid rgba(241,200,77,.22);
+    }
+    .sevra-info-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin:12px 0;
+    }
+    .sevra-info-box{
+      border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.025);
+      border-radius:14px;
+      padding:11px 12px;
+      min-height:66px;
+    }
+    .sevra-info-box small{display:block;color:#aebcd0;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+    .sevra-info-box strong{display:block;color:#f7fbff;font-size:14px;line-height:1.24;word-break:break-word}
+    .sevra-desc{
+      color:#d5dfec;
+      line-height:1.55;
+      margin-top:12px;
+      min-height:44px;
+    }
+    .sevra-empty-box{
+      padding:24px;
+      border:1px dashed rgba(255,255,255,.12);
+      border-radius:20px;
+      background:rgba(255,255,255,.02);
+      color:#d6e0ef;
+    }
+    @media (max-width:1000px){
+      .sevra-summary-bar{grid-template-columns:repeat(2,1fr)}
+      .sevra-info-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:650px){
+      .sevra-summary-bar,.sevra-info-grid{grid-template-columns:1fr}
+      .sevra-route-line{grid-template-columns:1fr;gap:8px}
+      .sevra-arrow{width:100%;height:34px}
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -69,6 +167,13 @@
         <p>Detay veya teklif aksiyonunda ilgili ilan akış ekranına geçilir.</p>
       </div>
 
+      <div class="sevra-summary-bar" id="summaryBar">
+        <div class="sevra-summary-item"><small>Toplam Açık İlan</small><strong id="sumTotal">0</strong></div>
+        <div class="sevra-summary-item"><small>Parsiyel</small><strong id="sumParsiyel">0</strong></div>
+        <div class="sevra-summary-item"><small>Komple</small><strong id="sumKomple">0</strong></div>
+        <div class="sevra-summary-item"><small>Son Güncelleme</small><strong id="sumDate">-</strong></div>
+      </div>
+
       <div id="loadingBox" style="padding:16px;border:1px solid rgba(255,255,255,.06);border-radius:16px;margin-bottom:18px;background:rgba(255,255,255,.02);">İlanlar yükleniyor...</div>
       <div class="load-grid" id="loadGrid"></div>
     </div>
@@ -85,26 +190,132 @@
 
     const loadGrid = document.getElementById('loadGrid');
     const loadingBox = document.getElementById('loadingBox');
+    const sumTotal = document.getElementById('sumTotal');
+    const sumParsiyel = document.getElementById('sumParsiyel');
+    const sumKomple = document.getElementById('sumKomple');
+    const sumDate = document.getElementById('sumDate');
+
+    function esc(value){
+      return String(value ?? '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+    }
+
+    function clean(value, fallback){
+      const v = String(value ?? '').trim();
+      return v || fallback || '-';
+    }
+
+    function routeText(load){
+      const from = [load.neredenIl, load.neredenIlce].filter(Boolean).join(' / ');
+      const to = [load.nereyeIl, load.nereyeIlce].filter(Boolean).join(' / ');
+      if(from && to) return `${from} → ${to}`;
+      return clean(load.route || load.title, 'Rota belirtilmedi');
+    }
+
+    function parseLegacyRoute(route){
+      const txt = clean(route, '');
+      if(!txt) return { fromMain:'Nereden', fromSub:'-', toMain:'Nereye', toSub:'-' };
+      const parts = txt.split('→').map(x => x.trim());
+      if(parts.length >= 2){
+        const left = parts[0].split('/').map(x => x.trim()).filter(Boolean);
+        const right = parts[1].split('/').map(x => x.trim()).filter(Boolean);
+        return {
+          fromMain: left[0] || parts[0],
+          fromSub: left.slice(1).join(' / ') || '-',
+          toMain: right[0] || parts[1],
+          toSub: right.slice(1).join(' / ') || '-'
+        };
+      }
+      return { fromMain: txt, fromSub:'-', toMain:'-', toSub:'-' };
+    }
+
+    function routeParts(load){
+      const hasNew = load.neredenIl || load.neredenIlce || load.nereyeIl || load.nereyeIlce;
+      if(hasNew){
+        return {
+          fromMain: clean(load.neredenIl, 'Nereden'),
+          fromSub: clean(load.neredenIlce, '-'),
+          toMain: clean(load.nereyeIl, 'Nereye'),
+          toSub: clean(load.nereyeIlce, '-')
+        };
+      }
+      return parseLegacyRoute(load.route || load.title);
+    }
 
     function upsertSelectedLoad(load){
-      localStorage.setItem('sevra_selected_load', JSON.stringify(load));
+      localStorage.setItem('sevra_selected_load', JSON.stringify({
+        ...load,
+        route: routeText(load),
+        title: routeText(load)
+      }));
+    }
+
+    function updateSummary(loads){
+      sumTotal.textContent = loads.length;
+      sumParsiyel.textContent = loads.filter(x => String(x.type || '').toLowerCase().includes('parsiyel')).length;
+      sumKomple.textContent = loads.filter(x => String(x.type || '').toLowerCase().includes('komple')).length;
+      const now = new Date();
+      sumDate.textContent = now.toLocaleDateString('tr-TR');
     }
 
     function renderCard(load){
+      const route = routeText(load);
+      const r = routeParts(load);
+      const ref = clean(load.code || load.id, '-');
+      const type = clean(load.type, 'İlan');
+      const loadName = clean(load.load, 'Belirtilmedi');
+      const vehicle = clean(load.vehicle, 'Belirtilmedi');
+      const weight = clean(load.weight, 'Belirtilmedi');
+      const date = clean(load.date, 'Belirtilmedi');
+      const status = clean(load.status, 'Açık');
+      const desc = clean(load.desc, 'Kurumsal teklif akışına uygun açık ilan.');
+
       return `
-        <article class="load-card" data-id="${load.id}" data-title="${load.title}" data-route="${load.route}" data-weight="${load.weight}" data-status="${load.status}" data-type="${load.type}" data-vehicle="${load.vehicle}" data-date="${load.date}" data-load="${load.load}">
-          <div class="load-card-top"><span class="load-tag">${load.type}</span><span class="load-ref">REF: ${load.code || load.id}</span></div>
-          <h3>${load.title}</h3>
-          <div class="load-meta">
-            <span>Yük: ${load.load}</span>
-            <span>Araç: ${load.vehicle}</span>
-            <span>Ağırlık: ${load.weight}</span>
-            <span>Tarih: ${load.date}</span>
+        <article class="load-card sevra-pro-card" data-id="${esc(load.id)}" data-title="${esc(route)}" data-route="${esc(route)}" data-weight="${esc(weight)}" data-status="${esc(status)}" data-type="${esc(type)}" data-vehicle="${esc(vehicle)}" data-date="${esc(date)}" data-load="${esc(loadName)}">
+          <div class="load-card-top sevra-pro-top">
+            <span class="load-tag">${esc(type)}</span>
+            <span class="load-ref">REF: ${esc(ref)}</span>
           </div>
-          <p>${load.desc || 'Kurumsal teklif akışına uygun açık ilan.'}</p>
+
+          <div class="sevra-route-box">
+            <div class="sevra-route-line">
+              <div class="sevra-place">
+                <small>Nereden</small>
+                <strong>${esc(r.fromMain)}</strong>
+                <span>${esc(r.fromSub)}</span>
+              </div>
+              <div class="sevra-arrow">→</div>
+              <div class="sevra-place">
+                <small>Nereye</small>
+                <strong>${esc(r.toMain)}</strong>
+                <span>${esc(r.toSub)}</span>
+              </div>
+            </div>
+          </div>
+
+          <h3>${esc(route)}</h3>
+
+          <div class="sevra-info-grid">
+            <div class="sevra-info-box"><small>Yük Türü</small><strong>${esc(loadName)}</strong></div>
+            <div class="sevra-info-box"><small>Araç Tipi</small><strong>${esc(vehicle)}</strong></div>
+            <div class="sevra-info-box"><small>Ağırlık</small><strong>${esc(weight)}</strong></div>
+            <div class="sevra-info-box"><small>Tarih</small><strong>${esc(date)}</strong></div>
+          </div>
+
+          <div class="load-meta">
+            <span>Durum: ${esc(status)}</span>
+            <span>Güzergah: ${esc(route)}</span>
+          </div>
+
+          <p class="sevra-desc">${esc(desc)}</p>
+
           <div class="load-actions">
-            <button class="btn btn-secondary js-detay">Detay</button>
-            <button class="btn btn-primary js-teklif">Teklif Ver</button>
+            <button class="btn btn-secondary js-detay" type="button">Detay Gör</button>
+            <button class="btn btn-primary js-teklif" type="button">Teklif Ver</button>
           </div>
         </article>
       `;
@@ -131,10 +342,11 @@
         const snap = await getDocs(q);
         const loads = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-        loadingBox.remove();
+        if(loadingBox) loadingBox.remove();
+        updateSummary(loads);
 
         if(!loads.length){
-          loadGrid.innerHTML = '<div style="padding:18px;border:1px dashed rgba(255,255,255,.1);border-radius:18px;">Henüz ilan bulunmuyor.</div>';
+          loadGrid.innerHTML = '<div class="sevra-empty-box">Henüz ilan bulunmuyor.</div>';
           return;
         }
 
