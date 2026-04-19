@@ -1,0 +1,2 @@
+<!-- </body> kapanışından hemen önce ekle -->
+<script src="/pwa-install.js"></script>

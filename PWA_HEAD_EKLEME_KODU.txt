@@ -1,0 +1,10 @@
+<!-- SEVRA PWA BAŞLANGIÇ -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#071326">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="SEVRA">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SEVRA">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/sevra-icon-192.png">
+<!-- SEVRA PWA BİTİŞ -->
