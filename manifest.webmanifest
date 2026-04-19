@@ -11,34 +11,12 @@
   "lang": "tr",
   "dir": "ltr",
   "icons": [
-    {
-      "src": "/sevra-icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/sevra-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/sevra-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/sevra-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
   "categories": ["business", "productivity", "utilities"],
   "shortcuts": [
-    {
-      "name": "Yük İlanları",
-      "short_name": "İlanlar",
-      "description": "Açık yük ilanlarını görüntüle",
-      "url": "/yuk-ilanlari.html",
-      "icons": [{ "src": "/sevra-icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Teklif Akışı",
-      "short_name": "Teklif",
-      "description": "Teklif akış ekranını aç",
-      "url": "/ilan-teklif.html",
-      "icons": [{ "src": "/sevra-icon-192.png", "sizes": "192x192" }]
-    }
+    { "name": "Yük İlanları", "short_name": "İlanlar", "description": "Açık yük ilanlarını görüntüle", "url": "/yuk-ilanlari.html", "icons": [{ "src": "/sevra-icon-192.png", "sizes": "192x192" }] },
+    { "name": "Teklif Akışı", "short_name": "Teklif", "description": "Teklif akış ekranını aç", "url": "/ilan-teklif.html", "icons": [{ "src": "/sevra-icon-192.png", "sizes": "192x192" }] }
   ]
 }

@@ -1,6 +1,5 @@
 // SEVRA PWA Service Worker
 const SEVRA_CACHE = "sevra-pwa-v1";
-
 const CORE_ASSETS = [
   "/",
   "/index.html",
@@ -10,6 +9,7 @@ const CORE_ASSETS = [
   "/manifest.webmanifest",
   "/sevra-icon-192.png",
   "/sevra-icon-512.png",
+  "/style.css",
   "/kurumsal-ui.css",
   "/yuk-ilanlari.css"
 ];
