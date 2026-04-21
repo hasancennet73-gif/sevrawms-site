@@ -694,6 +694,147 @@
       .seo-card-grid{grid-template-columns:1fr}
     }
 
+
+    .how-hero{
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .how-hero h2{
+      font-size:clamp(32px,4vw,54px);
+      line-height:1.05;
+      margin:0 0 12px;
+      color:#0b1930;
+      letter-spacing:-.035em;
+    }
+    .how-hero p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:980px;
+      margin:0;
+    }
+    .how-steps{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+      margin-top:18px;
+    }
+    .how-step{
+      position:relative;
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px;
+      min-height:250px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      overflow:hidden;
+    }
+    .how-step::after{
+      content:"";
+      position:absolute;
+      right:-44px;
+      top:-44px;
+      width:132px;
+      height:132px;
+      border-radius:999px;
+      background:rgba(246,164,0,.12);
+    }
+    .how-number{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:24px;
+      font-weight:900;
+      margin-bottom:16px;
+      position:relative;
+      z-index:2;
+    }
+    .how-step h3{
+      color:#0b1930;
+      font-size:26px;
+      line-height:1.12;
+      margin:0 0 10px;
+      position:relative;
+      z-index:2;
+    }
+    .how-step p{
+      color:#526174;
+      font-size:15px;
+      line-height:1.5;
+      margin:0;
+      position:relative;
+      z-index:2;
+    }
+    .how-mini-list{
+      list-style:none;
+      display:grid;
+      gap:8px;
+      margin-top:15px;
+      color:#526174;
+      font-size:14px;
+      position:relative;
+      z-index:2;
+    }
+    .how-mini-list li{
+      position:relative;
+      padding-left:18px;
+    }
+    .how-mini-list li::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:8px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+    .how-cta{
+      margin-top:18px;
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+    .how-cta strong{
+      display:block;
+      font-size:23px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+    .how-cta span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+    .how-cta-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .how-cta .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+    @media(max-width:980px){
+      .how-steps{grid-template-columns:1fr}
+      .how-cta{align-items:flex-start}
+    }
+
     .whatsapp-fab{
       position:fixed;
       right:22px;
@@ -770,6 +911,7 @@
           <a href="#hero">Ana Sayfa</a>
           <a href="#hizmetler">Hizmetler</a>
           <a href="#neden-biz">Neden Biz</a>
+          <a href="#nasil-calisir">Nasıl Çalışır?</a>
           <a href="#seo-sayfalari">SEO Sayfaları</a>
           <a href="#iletisim">İletişim</a>
           <a href="yuk-ilanlari.html">Yük İlanları</a>
@@ -972,6 +1114,65 @@
           <span>SEVRA, nakliye, kurye, kargo ve ambar tarafını tek topluluk altında toplayarak görünürlüğü artırmayı hedefler.</span>
         </div>
         <a class="btn btn-secondary" href="platform-kayit-secimi.html?redirect=ilan-teklif">SEVRA’ya Katıl</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="nasil-calisir" class="section">
+    <div class="container">
+      <div class="how-hero">
+        <div class="section-kicker">Nasıl Çalışır?</div>
+        <h2>Yükünü paylaş, teklifleri gör, uygun taşıyıcıyla anlaş</h2>
+        <p>
+          SEVRA’nın amacı süreci karışık hale getirmek değil; yük veren, nakliyeci, kurye, kargo ve ambar hizmetlerini daha anlaşılır bir akışta buluşturmaktır. Kullanıcı önce ihtiyacını paylaşır, sonra uygun teklif ve hizmet seçeneklerini değerlendirir.
+        </p>
+      </div>
+
+      <div class="how-steps">
+        <article class="how-step">
+          <div class="how-number">1</div>
+          <h3>İlanını ver</h3>
+          <p>Yük, nakliye, kurye, kargo veya ambar ihtiyacını net bilgilerle paylaş.</p>
+          <ul class="how-mini-list">
+            <li>Nereden nereye taşınacak?</li>
+            <li>Yük türü ve miktarı nedir?</li>
+            <li>Taşıma zamanı ne zaman?</li>
+          </ul>
+        </article>
+
+        <article class="how-step">
+          <div class="how-number">2</div>
+          <h3>Teklifleri gör</h3>
+          <p>Uygun taşıyıcı, nakliyeci, kurye veya ambar hizmetlerinden gelen dönüşleri değerlendir.</p>
+          <ul class="how-mini-list">
+            <li>Fiyat ve hizmet karşılaştırması</li>
+            <li>Araç ve güzergâh uygunluğu</li>
+            <li>Platform içinde daha düzenli iletişim</li>
+          </ul>
+        </article>
+
+        <article class="how-step">
+          <div class="how-number">3</div>
+          <h3>Uygun taşıyıcıyla anlaş</h3>
+          <p>Sana en uygun hizmet sağlayıcıyla anlaşarak taşıma sürecini başlat.</p>
+          <ul class="how-mini-list">
+            <li>Daha kontrollü karar süreci</li>
+            <li>Yük veren ve taşıyıcı için görünürlük</li>
+            <li>Gelecekte güvenli işlem altyapısına hazır yapı</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="how-cta">
+        <div>
+          <strong>SEVRA’da süreç basit: paylaş, gör, anlaş.</strong>
+          <span>Yük verenler için daha hızlı teklif; nakliyeciler ve kuryeler için daha fazla görünürlük hedeflenir.</span>
+        </div>
+        <div class="how-cta-actions">
+          <a class="btn btn-primary" href="nakliye-ilani-ver.html">İlan Vermeye Başla</a>
+          <a class="btn btn-secondary" href="yuk-bulma-sistemi.html">Yük Bul</a>
+          <a class="btn btn-secondary" href="arac-bulma-sistemi.html">Araç Bul</a>
+        </div>
       </div>
     </div>
   </section>
