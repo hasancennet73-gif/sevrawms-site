@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071326"/>
+      <stop offset="55%" stop-color="#0b3f78"/>
+      <stop offset="100%" stop-color="#0a1630"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#f6a400"/>
+    </linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="980" height="620" rx="34" fill="url(#bg)"/>
+  <circle cx="120" cy="90" r="150" fill="#f6a400" opacity=".14"/>
+  <circle cx="850" cy="120" r="170" fill="#4db2ff" opacity=".16"/>
+  <path d="M0 485 C240 370 470 390 670 455 C800 498 900 488 980 450 L980 620 L0 620 Z" fill="#020617" opacity=".72"/>
+  <path d="M70 545 C250 430 455 430 680 500 C805 538 890 520 955 490" fill="none" stroke="#f6a400" stroke-width="7" stroke-dasharray="45 35"/>
+  <g transform="translate(430 210)" filter="url(#sh)">
+    <rect x="190" y="70" width="250" height="120" rx="14" fill="#f8fafc"/>
+    <rect x="20" y="105" width="180" height="85" rx="16" fill="#e2e8f0"/>
+    <path d="M20 105 L78 48 L158 48 L200 105 Z" fill="#f8fafc"/>
+    <rect x="83" y="67" width="60" height="34" rx="6" fill="#0b3f78"/>
+    <circle cx="82" cy="205" r="32" fill="#111827"/>
+    <circle cx="82" cy="205" r="13" fill="#94a3b8"/>
+    <circle cx="310" cy="205" r="32" fill="#111827"/>
+    <circle cx="310" cy="205" r="13" fill="#94a3b8"/>
+    <circle cx="395" cy="205" r="32" fill="#111827"/>
+    <circle cx="395" cy="205" r="13" fill="#94a3b8"/>
+    <rect x="50" y="150" width="140" height="14" rx="7" fill="#f6a400"/>
+  </g>
+  <g transform="translate(60 62)">
+    <text x="0" y="70" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="900" fill="#fff">SEVRA</text>
+    <text x="0" y="118" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffd166">Türkiye Nakliye Topluluğu</text>
+    <text x="0" y="170" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#e2e8f0">Yük ilanı ver • Aracına yük bul</text>
+  </g>
+  <g transform="translate(60 265)">
+    <rect x="0" y="0" width="250" height="78" rx="18" fill="rgba(255,255,255,.11)" stroke="#fff" stroke-opacity=".14"/>
+    <text x="24" y="34" font-family="Arial" font-size="19" font-weight="800" fill="#fff">🚚 Nakliyeciler</text>
+    <text x="24" y="58" font-family="Arial" font-size="15" fill="#dbeafe">Güzergah paylaş</text>
+    <rect x="0" y="96" width="250" height="78" rx="18" fill="rgba(255,255,255,.11)" stroke="#fff" stroke-opacity=".14"/>
+    <text x="24" y="130" font-family="Arial" font-size="19" font-weight="800" fill="#fff">📦 Yük Verenler</text>
+    <text x="24" y="154" font-family="Arial" font-size="15" fill="#dbeafe">İlan oluştur</text>
+    <rect x="0" y="192" width="250" height="78" rx="18" fill="rgba(255,255,255,.11)" stroke="#fff" stroke-opacity=".14"/>
+    <text x="24" y="226" font-family="Arial" font-size="19" font-weight="800" fill="#fff">🏍️ Kurye / Kargo</text>
+    <text x="24" y="250" font-family="Arial" font-size="15" fill="#dbeafe">Hizmetini duyur</text>
+  </g>
+</svg>
