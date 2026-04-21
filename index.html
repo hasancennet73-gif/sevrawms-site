@@ -313,6 +313,140 @@
     .contact-card span{display:block;color:#a46b00;font-weight:900;font-size:13px;margin-bottom:8px}
     .contact-card strong{display:block;font-size:18px;margin-bottom:8px;color:#0b1930}
 
+
+    .why-hero{
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .why-hero h2{
+      font-size:clamp(32px,4vw,54px);
+      line-height:1.05;
+      margin:0 0 12px;
+      color:#0b1930;
+      letter-spacing:-.035em;
+    }
+    .why-hero p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:980px;
+      margin:0;
+    }
+    .why-highlight-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin:18px 0;
+    }
+    .why-highlight{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+    }
+    .why-highlight strong{
+      display:block;
+      color:#0b1930;
+      font-size:22px;
+      margin-bottom:6px;
+    }
+    .why-highlight span{
+      color:#637083;
+      font-size:14px;
+      line-height:1.45;
+    }
+    .why-card{
+      position:relative;
+      overflow:hidden;
+      min-height:230px;
+    }
+    .why-card::after{
+      content:"";
+      position:absolute;
+      right:-38px;
+      top:-38px;
+      width:120px;
+      height:120px;
+      border-radius:999px;
+      background:rgba(246,164,0,.12);
+    }
+    .why-card .why-icon{
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:#fff4d8;
+      color:#8a5a00;
+      font-size:22px;
+      margin-bottom:14px;
+      font-weight:900;
+    }
+    .why-card ul{
+      list-style:none;
+      display:grid;
+      gap:8px;
+      margin-top:12px;
+      color:#526174;
+      font-size:14px;
+    }
+    .why-card li{
+      position:relative;
+      padding-left:18px;
+    }
+    .why-card li::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:8px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+    .why-cta{
+      margin-top:18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+    .why-cta strong{
+      display:block;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+    .why-cta span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+    .why-cta-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .why-cta .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+    @media(max-width:980px){
+      .why-highlight-grid{grid-template-columns:1fr}
+      .why-cta{align-items:flex-start}
+    }
+
     .whatsapp-fab{
       position:fixed;
       right:22px;
@@ -503,15 +637,85 @@
 
   <section id="neden-biz" class="section">
     <div class="container">
-      <div class="section-head">
-        <div><div class="section-kicker">Neden Biz</div><h2>SEVRA neden daha kontrollü bir model sunar?</h2></div>
-        <p>Kurumsal görünüm kadar önemli olan konu, sürecin platform içinde kalması ve ticari akışın dağılmadan yönetilmesidir.</p>
+      <div class="why-hero">
+        <div class="section-kicker">Neden SEVRA?</div>
+        <h2>Sadece ilan sitesi değil, nakliye ve kurye dünyası için görünürlük merkezi</h2>
+        <p>
+          SEVRA; yük verenleri, nakliyecileri, araç sahiplerini, kuryeleri, kargo ve ambar hizmetlerini tek noktada buluşturmak için hazırlanmış dijital lojistik topluluğudur. Amaç sadece ilan göstermek değil; doğru kişiyi doğru hizmetle daha hızlı, daha düzenli ve daha güvenli şekilde buluşturmaktır.
+        </p>
       </div>
+
+      <div class="why-highlight-grid">
+        <div class="why-highlight">
+          <strong>Yük veren için</strong>
+          <span>Yükünü paylaş, uygun taşıyıcıdan teklif al, süreci daha kontrollü takip et.</span>
+        </div>
+        <div class="why-highlight">
+          <strong>Nakliyeci için</strong>
+          <span>Boş dönüşleri azalt, yeni yüklere ulaş, hizmetini daha görünür hale getir.</span>
+        </div>
+        <div class="why-highlight">
+          <strong>Kurye / kargo için</strong>
+          <span>Şehir içi teslimat, paket taşıma ve hızlı gönderi hizmetlerini duyur.</span>
+        </div>
+      </div>
+
       <div class="reason-grid">
-        <article class="reason-card"><h3>Platform içi teklif akışı</h3><p>Teklif ve pazarlık süreci platform içinde yürür. Karar zinciri daha düzenli ve kayıtlı ilerler.</p></article>
-        <article class="reason-card"><h3>Ticari koruma mantığı</h3><p>Telefon, e-posta ve WhatsApp gibi bilgiler açık alanda görünmez.</p></article>
-        <article class="reason-card"><h3>Hızlı hizmet yaklaşımı</h3><p>İhtiyaca uygun taşıma ve teslimat çözümleri daha hızlı ve düzenli biçimde yönlendirilir.</p></article>
-        <article class="reason-card"><h3>Yönetilebilir büyüme zemini</h3><p>İlan, teklif, pazarlık, kurye, kargo ve kurumsal içerik tek merkezli mantıkla büyütülmeye uygundur.</p></article>
+        <article class="reason-card why-card">
+          <div class="why-icon">🚚</div>
+          <h3>Nakliyeciler için yeni iş görünürlüğü</h3>
+          <p>SEVRA, araç sahiplerinin ve nakliye firmalarının kendini duyurabileceği daha düzenli bir alan sunar.</p>
+          <ul>
+            <li>Araç, güzergâh ve hizmet paylaşımı</li>
+            <li>Açık yük ilanlarına ulaşma imkânı</li>
+            <li>Boş dönüşleri azaltmaya yardımcı görünürlük</li>
+          </ul>
+        </article>
+
+        <article class="reason-card why-card">
+          <div class="why-icon">📦</div>
+          <h3>Yük veren için daha hızlı teklif akışı</h3>
+          <p>Yükünü taşıtmak isteyen kişi veya firma, ihtiyacını daha net duyurabilir ve daha hızlı dönüş alabilir.</p>
+          <ul>
+            <li>Yük ilanı verme</li>
+            <li>Uygun araç ve taşıyıcı arama</li>
+            <li>Teklifleri daha düzenli değerlendirme</li>
+          </ul>
+        </article>
+
+        <article class="reason-card why-card">
+          <div class="why-icon">🛡️</div>
+          <h3>Kontrollü iletişim ve ticari koruma</h3>
+          <p>Telefon ve özel iletişim bilgilerinin hemen açıkta paylaşılmaması, platform dışı kaçışı ve karmaşayı azaltır.</p>
+          <ul>
+            <li>Görüşme ve teklif akışını düzenleme</li>
+            <li>Platform içinde daha kontrollü pazarlık</li>
+            <li>İleride komisyon ve güvenli işlem altyapısına hazır yapı</li>
+          </ul>
+        </article>
+
+        <article class="reason-card why-card">
+          <div class="why-icon">🏍️</div>
+          <h3>Kurye, kargo ve ambar hizmetleri aynı yerde</h3>
+          <p>SEVRA sadece tır/nakliye odaklı değil; kurye, paket, kargo, ambar ve parsiyel taşıma ihtiyaçlarını da kapsar.</p>
+          <ul>
+            <li>Kurye hizmeti duyurma</li>
+            <li>Paket / kargo taşıma görünürlüğü</li>
+            <li>Ambar ve parsiyel taşıma alanı</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="why-cta">
+        <div>
+          <strong>SEVRA’ya erken katılanlar daha önce görünür olur.</strong>
+          <span>Topluluk büyüdükçe yük ilanları, araç paylaşımları, kurye ve ambar hizmetleri daha güçlü bir ağa dönüşür.</span>
+        </div>
+        <div class="why-cta-actions">
+          <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Üyelik / Teklif Al</a>
+          <a class="btn btn-secondary" href="nakliye-ilani-ver.html">Nakliye İlanı Ver</a>
+          <a class="btn btn-secondary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
+        </div>
       </div>
     </div>
   </section>
