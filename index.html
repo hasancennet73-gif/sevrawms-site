@@ -589,6 +589,111 @@
       .services-card-grid{grid-template-columns:1fr}
     }
 
+
+    .seo-hero{
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .seo-hero h2{
+      font-size:clamp(32px,4vw,54px);
+      line-height:1.05;
+      margin:0 0 12px;
+      color:#0b1930;
+      letter-spacing:-.035em;
+    }
+    .seo-hero p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:980px;
+      margin:0;
+    }
+    .seo-card-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+      margin-top:18px;
+    }
+    .seo-pro-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      min-height:210px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .seo-pro-card h3{
+      color:#0b1930;
+      font-size:22px;
+      line-height:1.15;
+      margin:0 0 8px;
+    }
+    .seo-pro-card p{
+      color:#526174;
+      font-size:14px;
+      line-height:1.48;
+      margin:0;
+    }
+    .seo-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin:13px 0 16px;
+    }
+    .seo-tags span{
+      padding:7px 9px;
+      border-radius:999px;
+      background:#fff4d8;
+      color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);
+      font-size:12px;
+      font-weight:900;
+    }
+    .seo-pro-action{
+      margin-top:auto;
+    }
+    .seo-bottom-note{
+      margin-top:18px;
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+    .seo-bottom-note strong{
+      display:block;
+      font-size:23px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+    .seo-bottom-note span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+    .seo-bottom-note .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+    @media(max-width:1100px){
+      .seo-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:720px){
+      .seo-card-grid{grid-template-columns:1fr}
+    }
+
     .whatsapp-fab{
       position:fixed;
       right:22px;
@@ -958,20 +1063,157 @@
 
   <section id="seo-sayfalari" class="section">
     <div class="container">
-      <div class="section-head">
-        <div><div class="section-kicker">SEO Sayfaları</div><h2>Google görünürlüğü için hazırlanan özel sayfalar</h2></div>
-        <p>Bu alan kullanıcıyı ilgili çözüme yönlendirir ve Google’a sitenin konu başlıklarını daha net anlatır.</p>
+      <div class="seo-hero">
+        <div class="section-kicker">SEO Sayfaları</div>
+        <h2>SEVRA’nın lojistik görünürlük sayfaları</h2>
+        <p>
+          Nakliye, ambar, yük bulma, araç bulma, kurye ve kargo aramalarında daha görünür olmak için özel sayfalar hazırlandı. Bu sayfalar hem Google’a sitenin hangi alanlarda hizmet verdiğini anlatır hem de ziyaretçiyi doğru çözüme yönlendirir.
+        </p>
       </div>
-      <div class="reason-grid">
-        <article class="reason-card"><h3>Ambar Hizmeti</h3><p>Ambar taşımacılığı, parsiyel yük ve operasyon planlama için hazırlanan özel sayfadır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="ambar-hizmeti.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Nakliye Platformu</h3><p>Nakliye platformu, yük bulma ve araç bulma mantığını anlatan özel SEO sayfasıdır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="nakliye-platformu.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Nakliye İlanı Ver</h3><p>Ücretsiz nakliye ilanı vermek, yük ilanı paylaşmak ve araç arayanlarla taşıma hizmeti verenleri buluşturmak için hazırlanan özel SEO sayfasıdır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="nakliye-ilani-ver.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Ücretsiz Nakliye İlanı</h3><p>Ücretsiz yük ilanı ver, ücretsiz araç ilanı paylaş ve nakliye ilanı sitesi aramalarına yönelik hazırlanan özel SEO sayfasıdır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="ucretsiz-nakliye-ilani.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Yük Bulma Sistemi</h3><p>Taşıyıcıların açık yük ilanlarını incelemesi ve teklif vermesi için hazırlanan özel sayfadır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="yuk-bulma-sistemi.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Araç Bulma Sistemi</h3><p>Yük verenlerin uygun taşıyıcıya ulaşması için hazırlanan özel sayfadır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="arac-bulma-sistemi.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Kurye Hizmeti</h3><p>Kurye ve şehir içi hızlı teslimat hizmeti için hazırlanan özel sayfadır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="kurye-hizmeti.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Kurye Bulma Sistemi</h3><p>Kurye arayanlar için görünürlük sağlayan özel sayfadır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Aç</a></p></article>
-        <article class="reason-card"><h3>Paket / Kargo Taşıma</h3><p>Paket, kargo ve küçük gönderi taşıma ihtiyacı için hazırlanan özel sayfadır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="paket-kargo-tasima.html">Aç</a></p></article>
+
+      <div class="seo-card-grid">
+        <article class="seo-pro-card">
+          <div>
+            <h3>Ambar Hizmeti</h3>
+            <p>Parsiyel yük, ambar taşımacılığı ve şehirler arası toplama/dağıtım ihtiyaçları için özel görünürlük sayfasıdır.</p>
+            <div class="seo-tags">
+              <span>Parsiyel yük</span>
+              <span>Ambar</span>
+              <span>Teklif</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="ambar-hizmeti.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Nakliye Platformu</h3>
+            <p>Yük verenler, taşıyıcılar, nakliyeciler ve araç sahipleri için platform mantığını anlatan ana görünürlük sayfasıdır.</p>
+            <div class="seo-tags">
+              <span>Yük veren</span>
+              <span>Taşıyıcı</span>
+              <span>Platform</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="nakliye-platformu.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Nakliye İlanı Ver</h3>
+            <p>Yük göndermek isteyenlerin ilan açması, araç araması ve taşıma hizmeti verenlerle buluşması için hazırlanmıştır.</p>
+            <div class="seo-tags">
+              <span>İlan ver</span>
+              <span>Araç bul</span>
+              <span>Yük gönder</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="nakliye-ilani-ver.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Ücretsiz Nakliye İlanı</h3>
+            <p>Ücretsiz yük ilanı, araç ilanı ve nakliye hizmeti duyuruları için arama odaklı özel sayfadır.</p>
+            <div class="seo-tags">
+              <span>Ücretsiz ilan</span>
+              <span>Yük ilanı</span>
+              <span>Nakliye</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="ucretsiz-nakliye-ilani.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Yük Bulma Sistemi</h3>
+            <p>Nakliyecilerin, araç sahiplerinin ve taşıyıcıların uygun yük ilanlarına ulaşması için hazırlanmıştır.</p>
+            <div class="seo-tags">
+              <span>Nakliyeci</span>
+              <span>Boş dönüş</span>
+              <span>Güzergâh</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="yuk-bulma-sistemi.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Araç Bulma Sistemi</h3>
+            <p>Yük verenlerin uygun araç, nakliyeci, taşıyıcı ve güzergâh çözümü bulmasına yardımcı olan özel sayfadır.</p>
+            <div class="seo-tags">
+              <span>Araç ara</span>
+              <span>Taşıyıcı</span>
+              <span>Teklif al</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="arac-bulma-sistemi.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Kurye Hizmeti</h3>
+            <p>Moto kurye, şehir içi teslimat, acil gönderi ve hızlı paket taşıma ihtiyaçları için hazırlanmıştır.</p>
+            <div class="seo-tags">
+              <span>Moto kurye</span>
+              <span>Şehir içi</span>
+              <span>Hızlı teslimat</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="kurye-hizmeti.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Kurye Bulma Sistemi</h3>
+            <p>Kurye arayan kişi ve firmalarla kurye hizmeti veren yapıların görünürlüğünü artıran sayfadır.</p>
+            <div class="seo-tags">
+              <span>Kurye bul</span>
+              <span>Paket</span>
+              <span>Teslimat</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Sayfayı Aç</a>
+          </div>
+        </article>
+
+        <article class="seo-pro-card">
+          <div>
+            <h3>Paket / Kargo Taşıma</h3>
+            <p>Koli, küçük paket, kargo ve bireysel/kurumsal gönderi taşıma ihtiyaçlarına yönelik özel görünürlük sayfasıdır.</p>
+            <div class="seo-tags">
+              <span>Kargo</span>
+              <span>Koli</span>
+              <span>Paket taşıma</span>
+            </div>
+          </div>
+          <div class="seo-pro-action">
+            <a class="btn btn-secondary" href="paket-kargo-tasima.html">Sayfayı Aç</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="seo-bottom-note">
+        <div>
+          <strong>Bu sayfalar SEVRA’nın Google’da daha doğru anlaşılması için önemli.</strong>
+          <span>Her başlık ayrı bir arama niyetini karşılar: yük bulmak, araç bulmak, ilan vermek, kurye çağırmak veya ambar hizmeti almak.</span>
+        </div>
+        <a class="btn btn-secondary" href="nakliye-ilani-ver.html">İlan Vermeye Başla</a>
       </div>
     </div>
   </section>
