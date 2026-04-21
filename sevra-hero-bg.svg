@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="900" viewBox="0 0 1800 900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071326"/>
+      <stop offset="45%" stop-color="#0b3f78"/>
+      <stop offset="100%" stop-color="#061226"/>
+    </linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#f6a400"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="900" fill="url(#sky)"/>
+  <circle cx="210" cy="150" r="230" fill="#f6a400" opacity="0.13"/>
+  <circle cx="1510" cy="130" r="270" fill="#2f9bff" opacity="0.16"/>
+  <circle cx="1420" cy="690" r="180" fill="#f6a400" opacity="0.10"/>
+
+  <path d="M0 710 C360 570 640 545 920 620 C1160 685 1390 700 1800 585 L1800 900 L0 900 Z" fill="url(#road)" opacity="0.92"/>
+  <path d="M150 820 C465 670 760 650 1040 716 C1260 768 1500 770 1760 690" fill="none" stroke="#ffffff" stroke-width="10" opacity="0.22"/>
+  <path d="M215 845 C520 715 755 700 1015 748 C1210 785 1450 788 1690 733" fill="none" stroke="#f6a400" stroke-width="8" opacity="0.62" stroke-dasharray="55 42"/>
+
+  <!-- Main truck -->
+  <g transform="translate(845 360)" filter="url(#shadow)">
+    <rect x="210" y="105" width="430" height="185" rx="20" fill="#f8fafc"/>
+    <rect x="20" y="155" width="250" height="135" rx="24" fill="#e2e8f0"/>
+    <path d="M20 155 L95 80 L205 80 L270 155 Z" fill="#f8fafc"/>
+    <rect x="92" y="102" width="86" height="48" rx="8" fill="#0b3f78"/>
+    <rect x="205" y="175" width="52" height="50" rx="8" fill="#0b3f78"/>
+    <rect x="260" y="130" width="400" height="18" rx="9" fill="#0b3f78" opacity="0.25"/>
+    <rect x="260" y="164" width="370" height="14" rx="7" fill="#0b3f78" opacity="0.18"/>
+    <circle cx="120" cy="306" r="46" fill="#111827"/>
+    <circle cx="120" cy="306" r="20" fill="#94a3b8"/>
+    <circle cx="480" cy="306" r="46" fill="#111827"/>
+    <circle cx="480" cy="306" r="20" fill="#94a3b8"/>
+    <circle cx="595" cy="306" r="46" fill="#111827"/>
+    <circle cx="595" cy="306" r="20" fill="#94a3b8"/>
+    <rect x="58" y="235" width="180" height="20" rx="10" fill="#f6a400"/>
+  </g>
+
+  <!-- Van -->
+  <g transform="translate(365 485)" filter="url(#shadow)">
+    <rect x="0" y="70" width="260" height="120" rx="20" fill="#f8fafc"/>
+    <path d="M0 70 L52 25 L150 25 L210 70 Z" fill="#e2e8f0"/>
+    <rect x="64" y="42" width="76" height="42" rx="7" fill="#0b3f78"/>
+    <rect x="26" y="115" width="210" height="18" rx="9" fill="#f6a400"/>
+    <circle cx="55" cy="204" r="34" fill="#111827"/>
+    <circle cx="55" cy="204" r="14" fill="#94a3b8"/>
+    <circle cx="210" cy="204" r="34" fill="#111827"/>
+    <circle cx="210" cy="204" r="14" fill="#94a3b8"/>
+  </g>
+
+  <!-- Courier -->
+  <g transform="translate(650 535)" filter="url(#shadow)">
+    <circle cx="92" cy="150" r="34" fill="#111827"/>
+    <circle cx="224" cy="150" r="34" fill="#111827"/>
+    <path d="M92 150 L142 88 L205 150" fill="none" stroke="#f6a400" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M140 88 L172 88 L196 112" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="156" cy="48" r="22" fill="#f8fafc"/>
+    <path d="M155 70 L128 105 L170 118" fill="none" stroke="#f8fafc" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="190" y="70" width="48" height="38" rx="7" fill="#f6a400"/>
+  </g>
+
+  <!-- Logo text -->
+  <g transform="translate(130 145)">
+    <rect x="0" y="0" width="560" height="245" rx="34" fill="rgba(7,19,38,0.62)" stroke="#ffffff" stroke-opacity="0.13"/>
+    <text x="34" y="82" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="900" fill="#ffffff">SEVRA</text>
+    <text x="38" y="128" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800" fill="#ffd166">Nakliye • Kurye • Kargo • Ambar</text>
+    <text x="38" y="178" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#dbeafe">Yükünü güvenle taşıt, aracına yük bul</text>
+  </g>
+
+  <g opacity="0.58">
+    <path d="M80 610 C300 505 460 485 620 530" fill="none" stroke="#ffffff" stroke-width="4" stroke-dasharray="16 16"/>
+    <path d="M1230 300 C1435 230 1580 250 1740 335" fill="none" stroke="#f6a400" stroke-width="5" stroke-dasharray="18 18"/>
+  </g>
+</svg>
