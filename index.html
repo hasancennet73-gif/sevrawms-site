@@ -447,6 +447,148 @@
       .why-cta{align-items:flex-start}
     }
 
+
+    .services-hero{
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .services-hero h2{
+      font-size:clamp(32px,4vw,54px);
+      line-height:1.05;
+      margin:0 0 12px;
+      color:#0b1930;
+      letter-spacing:-.035em;
+    }
+    .services-hero p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:980px;
+      margin:0;
+    }
+    .services-card-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+      margin-top:18px;
+    }
+    .service-pro-card{
+      position:relative;
+      overflow:hidden;
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      min-height:270px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .service-pro-card::after{
+      content:"";
+      position:absolute;
+      right:-42px;
+      top:-42px;
+      width:132px;
+      height:132px;
+      border-radius:999px;
+      background:rgba(246,164,0,.12);
+    }
+    .service-pro-top{
+      position:relative;
+      z-index:2;
+    }
+    .service-pro-icon{
+      width:50px;
+      height:50px;
+      border-radius:17px;
+      display:grid;
+      place-items:center;
+      background:#fff4d8;
+      color:#8a5a00;
+      font-size:24px;
+      margin-bottom:14px;
+      font-weight:900;
+    }
+    .service-pro-card h3{
+      color:#0b1930;
+      font-size:24px;
+      line-height:1.12;
+      margin:0 0 9px;
+    }
+    .service-pro-card p{
+      color:#526174;
+      font-size:15px;
+      line-height:1.5;
+      margin:0;
+    }
+    .service-pro-list{
+      list-style:none;
+      display:grid;
+      gap:7px;
+      margin:14px 0 18px;
+      color:#526174;
+      font-size:14px;
+    }
+    .service-pro-list li{
+      position:relative;
+      padding-left:18px;
+    }
+    .service-pro-list li::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:8px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+    .service-pro-action{
+      position:relative;
+      z-index:2;
+      margin-top:auto;
+    }
+    .services-bottom-note{
+      margin-top:18px;
+      background:#0b1930;
+      color:#fff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+    .services-bottom-note strong{
+      display:block;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+    .services-bottom-note span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+    .services-bottom-note .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+    @media(max-width:1100px){
+      .services-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:720px){
+      .services-card-grid{grid-template-columns:1fr}
+    }
+
     .whatsapp-fab{
       position:fixed;
       right:22px;
@@ -613,24 +755,118 @@
 
   <section id="hizmetler" class="section">
     <div class="container">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">Hizmet Çerçevesi</div>
-          <h2>Ana hizmet omurgası</h2>
-        </div>
-        <p>Lojistik, kurye ve kargo başlıkları daha net karar akışıyla sunulur.</p>
+      <div class="services-hero">
+        <div class="section-kicker">Hizmetler</div>
+        <h2>SEVRA’da hangi hizmetler var?</h2>
+        <p>
+          SEVRA; yük ilanı, araç bulma, yük bulma, ambar, kurye, kargo ve parsiyel taşıma ihtiyaçlarını tek platformda toplar. Her hizmet alanı, yük veren ile taşıyıcıyı daha hızlı ve daha düzenli buluşturmak için tasarlanır.
+        </p>
       </div>
 
-      <div class="service-stack">
-        <article class="service-wide"><div class="service-index">01</div><div class="service-copy"><h3>Yük İlanı ve Teklif Toplama</h3><p>Yük veren firmalar için ilan açma, teklif alma ve uygun taşıyıcıya ulaşma süreci daha kurumsal biçimde yönetilir.</p></div></article>
-        <article class="service-wide"><div class="service-index">02</div><div class="service-copy"><h3>Ambar Hizmeti ve Parsiyel Yük</h3><p>Ambar hizmeti ve parsiyel yük taşımacılığı için ayrı görünürlük ve teklif zemini sunulur.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="ambar-hizmeti.html">Ambar Hizmeti</a></p></div></article>
-        <article class="service-wide"><div class="service-index">03</div><div class="service-copy"><h3>Nakliye Platformu</h3><p>Yük veren ve taşıyıcıları tek dijital zeminde buluşturan kurumsal platform yapısıdır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="nakliye-platformu.html">Nakliye Platformu</a></p></div></article>
-        <article class="service-wide"><div class="service-index">04</div><div class="service-copy"><h3>Nakliye İlanı Ver</h3><p>Yük göndermek isteyenler, araç arayanlar, taşıma hizmeti verenler ve nakliyeciler için ilan verme görünürlüğü sağlayan özel alandır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="nakliye-ilani-ver.html">Nakliye İlanı Ver</a></p></div></article>
-        <article class="service-wide"><div class="service-index">05</div><div class="service-copy"><h3>Ücretsiz Nakliye İlanı</h3><p>Ücretsiz yük ilanı vermek, araç ilanı paylaşmak ve nakliye hizmeti verenlerle görünür olmak için hazırlanan özel SEO alanıdır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="ucretsiz-nakliye-ilani.html">Ücretsiz Nakliye İlanı</a></p></div></article>
-        <article class="service-wide"><div class="service-index">06</div><div class="service-copy"><h3>Yük Bulma ve Araç Bulma</h3><p>Taşıyıcıların açık yük ilanlarını görmesi ve yük verenlerin uygun araç bulması için iki ayrı SEO ve hizmet alanı vardır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="yuk-bulma-sistemi.html">Yük Bulma</a> <a class="btn btn-secondary" href="arac-bulma-sistemi.html">Araç Bulma</a></p></div></article>
-        <article class="service-wide"><div class="service-index">07</div><div class="service-copy"><h3>Kurye Hizmeti</h3><p>Şehir içi ve hızlı teslimat ihtiyacı için kurye hizmeti görünürlüğü oluşturulur.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="kurye-hizmeti.html">Kurye Hizmeti</a></p></div></article>
-        <article class="service-wide"><div class="service-index">08</div><div class="service-copy"><h3>Kurye Bulma Sistemi</h3><p>Kurye arayan kullanıcı ile kurye hizmeti veren yapıların dijital eşleşmesini destekleyen özel sayfadır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Kurye Bulma</a></p></div></article>
-        <article class="service-wide"><div class="service-index">09</div><div class="service-copy"><h3>Paket / Kargo Taşıma</h3><p>Küçük paket, kargo ve şehir içi taşıma ihtiyacı için ayrı görünürlük başlığıdır.</p><p style="margin-top:12px;"><a class="btn btn-secondary" href="paket-kargo-tasima.html">Paket / Kargo</a></p></div></article>
+      <div class="services-card-grid">
+        <article class="service-pro-card">
+          <div class="service-pro-top">
+            <div class="service-pro-icon">📦</div>
+            <h3>Yük İlanı ve Teklif Toplama</h3>
+            <p>Yük veren kişi veya firmalar taşıma ihtiyacını ilan olarak paylaşır, uygun taşıyıcılardan teklif alır.</p>
+            <ul class="service-pro-list">
+              <li>Yük bilgisi paylaşımı</li>
+              <li>Taşıyıcıdan teklif alma</li>
+              <li>Daha düzenli karar süreci</li>
+            </ul>
+          </div>
+          <div class="service-pro-action">
+            <a class="btn btn-primary" href="nakliye-ilani-ver.html">Yük / Nakliye İlanı Ver</a>
+          </div>
+        </article>
+
+        <article class="service-pro-card">
+          <div class="service-pro-top">
+            <div class="service-pro-icon">🚛</div>
+            <h3>Araç Bulma Sistemi</h3>
+            <p>Yük sahipleri, taşıma ihtiyacına uygun araç, nakliyeci, güzergâh ve hizmet sağlayıcıya ulaşabilir.</p>
+            <ul class="service-pro-list">
+              <li>Uygun araç arama</li>
+              <li>Nakliyeci ve taşıyıcı görünürlüğü</li>
+              <li>Hızlı teklif yönlendirme</li>
+            </ul>
+          </div>
+          <div class="service-pro-action">
+            <a class="btn btn-secondary" href="arac-bulma-sistemi.html">Araç Bul</a>
+          </div>
+        </article>
+
+        <article class="service-pro-card">
+          <div class="service-pro-top">
+            <div class="service-pro-icon">🛣️</div>
+            <h3>Yük Bulma Sistemi</h3>
+            <p>Araç sahipleri ve nakliyeciler, boş dönüşte veya mevcut güzergâhta taşıyabilecekleri yükleri görebilir.</p>
+            <ul class="service-pro-list">
+              <li>Boş dönüşleri azaltma</li>
+              <li>Güzergâha uygun yük arama</li>
+              <li>Nakliyeci için yeni iş fırsatı</li>
+            </ul>
+          </div>
+          <div class="service-pro-action">
+            <a class="btn btn-secondary" href="yuk-bulma-sistemi.html">Yük Bul</a>
+          </div>
+        </article>
+
+        <article class="service-pro-card">
+          <div class="service-pro-top">
+            <div class="service-pro-icon">🏢</div>
+            <h3>Ambar ve Parsiyel Taşıma</h3>
+            <p>Komple araç gerektirmeyen yükler için ambar, parsiyel yük ve şehirler arası toplama/dağıtım görünürlüğü sağlar.</p>
+            <ul class="service-pro-list">
+              <li>Parsiyel yük duyurusu</li>
+              <li>Ambar hizmeti görünürlüğü</li>
+              <li>Küçük ve orta hacimli yükler</li>
+            </ul>
+          </div>
+          <div class="service-pro-action">
+            <a class="btn btn-secondary" href="ambar-hizmeti.html">Ambar Hizmeti</a>
+          </div>
+        </article>
+
+        <article class="service-pro-card">
+          <div class="service-pro-top">
+            <div class="service-pro-icon">🏍️</div>
+            <h3>Kurye ve Şehir İçi Teslimat</h3>
+            <p>Moto kurye, şehir içi hızlı teslimat, evrak, paket ve acil gönderiler için ayrı hizmet görünürlüğü oluşturur.</p>
+            <ul class="service-pro-list">
+              <li>Kurye hizmeti duyurma</li>
+              <li>Şehir içi teslimat talepleri</li>
+              <li>Hızlı ve esnek gönderi yapısı</li>
+            </ul>
+          </div>
+          <div class="service-pro-action">
+            <a class="btn btn-secondary" href="kurye-hizmeti.html">Kurye Hizmeti</a>
+          </div>
+        </article>
+
+        <article class="service-pro-card">
+          <div class="service-pro-top">
+            <div class="service-pro-icon">📮</div>
+            <h3>Paket / Kargo Taşıma</h3>
+            <p>Koli, küçük paket, kargo ve gönderi taşıma ihtiyaçları için yük veren ve hizmet sağlayıcıları bir araya getirir.</p>
+            <ul class="service-pro-list">
+              <li>Paket ve koli taşıma</li>
+              <li>Kargo hizmeti görünürlüğü</li>
+              <li>Bireysel ve kurumsal gönderiler</li>
+            </ul>
+          </div>
+          <div class="service-pro-action">
+            <a class="btn btn-secondary" href="paket-kargo-tasima.html">Paket / Kargo</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="services-bottom-note">
+        <div>
+          <strong>Her hizmet alanı büyüdükçe ayrı bir iş ağına dönüşür.</strong>
+          <span>SEVRA, nakliye, kurye, kargo ve ambar tarafını tek topluluk altında toplayarak görünürlüğü artırmayı hedefler.</span>
+        </div>
+        <a class="btn btn-secondary" href="platform-kayit-secimi.html?redirect=ilan-teklif">SEVRA’ya Katıl</a>
       </div>
     </div>
   </section>
