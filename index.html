@@ -45,7 +45,7 @@
       inset:0;
       background:
         linear-gradient(90deg, rgba(5,14,28,.94), rgba(5,14,28,.70), rgba(5,14,28,.86)),
-        url("https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1800&auto=format&fit=crop");
+        url("assets/sevra-hero-bg.svg");
       background-size:cover;
       background-position:center;
       opacity:.45;
@@ -114,11 +114,17 @@
     }
     .visual-card-main{
       min-height:255px;
-      background:
-        linear-gradient(135deg,rgba(7,19,38,.72),rgba(7,19,38,.25)),
-        url("https://images.unsplash.com/photo-1568301830820-55c3c6f3f1e9?q=80&w=1400&auto=format&fit=crop");
+      background:linear-gradient(135deg,rgba(7,19,38,.90),rgba(7,19,38,.42));
       background-size:cover;
       background-position:center;
+    }
+    .sevra-hero-img{
+      width:100%;
+      display:block;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 18px 45px rgba(0,0,0,.35);
+      margin-bottom:18px;
     }
     .visual-card h3{
       color:#fff;
@@ -358,6 +364,7 @@
           <div class="hero-right">
             <div class="hero-right-shell visual-hero-board">
               <div class="visual-card visual-card-main">
+                <img class="sevra-hero-img" src="assets/sevra-hero-card.svg" alt="SEVRA nakliye kurye kargo ambar topluluğu görseli">
                 <span class="hero-label">SEVRA Canlı Topluluk Alanı</span>
                 <h3>Yük, araç, kurye ve paket taşıma tek platformda</h3>
                 <p>
