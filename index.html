@@ -49,7 +49,7 @@
       color:var(--text);
     }
     a{color:inherit}
-    .container{width:min(1280px,calc(100% - 28px));margin:0 auto}
+    .container{width:min(1440px,calc(100% - 18px));margin:0 auto}
 
     .utility-bar{
       background:#ffffff;
@@ -149,7 +149,7 @@
     }
 
     .hero{
-      padding:24px 0 34px;
+      padding:18px 0 30px;
       background:
         radial-gradient(circle at 12% 10%, rgba(11,93,184,.12), transparent 30%),
         radial-gradient(circle at 88% 12%, rgba(246,164,0,.12), transparent 28%),
@@ -172,12 +172,13 @@
     .sevra-full-banner img{
       display:block;
       width:100%;
-      height:auto;
-      object-fit:contain;
+      height:clamp(310px, 34vw, 470px);
+      object-fit:cover;
+      object-position:center bottom;
     }
 
     .hero-content{
-      padding:28px;
+      padding:24px 28px 28px;
     }
     .hero-grid{
       display:grid;
