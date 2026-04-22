@@ -13,11 +13,200 @@
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Kurye Hizmeti ve Şehir İçi Hızlı Teslimat</title>
-  <meta name="description" content="SEVRA ile kurye hizmeti, şehir içi hızlı teslimat, evrak, küçük paket ve acil gönderi süreçlerini dijital görünürlükle yönetin." />
-  <meta name="keywords" content="kurye hizmeti, şehir içi kurye, acil kurye, hızlı teslimat, sevra kurye" />
+  <title>SEVRA | Kurye Hizmeti, Moto Kurye ve Şehir İçi Hızlı Teslimat</title>
+  <meta name="description" content="SEVRA ile kurye hizmeti, kurye bul, moto kurye, şehir içi teslimat, paket teslimatı, hızlı teslimat ve kargo taşıma ihtiyaçlarını tek dijital lojistik topluluğunda görünür hale getirin." />
+  <meta name="keywords" content="kurye hizmeti, kurye bul, moto kurye, şehir içi teslimat, paket teslimatı, hızlı teslimat, kargo taşıma, acil kurye, şehir içi kurye, sevra kurye" />
   <meta name="robots" content="index, follow" />
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1240px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+
+    .utility-bar{background:#fff;border-bottom:1px solid var(--line);color:#526174;font-size:12px}
+    .utility-inner{min-height:40px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .utility-left,.utility-right{display:flex;gap:18px;flex-wrap:wrap}
+    .utility-right strong{color:#a46b00}
+
+    .topbar{
+      position:sticky;top:0;z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+    .topbar-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:54px;height:54px;border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;font-size:26px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+    .brand-text strong{display:block;font-size:32px;color:#0b1930;line-height:1}
+    .brand-text span{display:block;font-size:12px;color:#637083;margin-top:4px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:#132238;font-size:14px;font-weight:800}
+    .nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08);color:#132238}
+    .nav a:hover{background:#edf5ff}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    .btn{
+      min-height:44px;padding:0 16px;border-radius:13px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:900;border:1px solid transparent;transition:.2s ease;
+      cursor:pointer;text-decoration:none;font-size:14px;
+    }
+    .btn-primary{background:#0b5db8;color:#fff;border-color:#0b5db8;box-shadow:0 10px 22px rgba(11,93,184,.18)}
+    .btn-primary:hover{background:#084c96}
+    .btn-secondary{background:#fff;color:#132238;border-color:var(--line)}
+    .btn-secondary:hover{background:#edf5ff}
+    .btn-gold{background:var(--yellow);color:#111;border-color:var(--yellow)}
+
+    .hero{padding:30px 0 22px}
+    .hero-shell{
+      border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      display:grid;grid-template-columns:1.05fr .95fr;gap:24px;padding:34px;align-items:center;
+    }
+    .hero-badge{
+      display:inline-flex;min-height:38px;padding:0 14px;align-items:center;border-radius:999px;
+      background:#fff4d8;border:1px solid rgba(246,164,0,.26);color:#8a5a00;
+      font-size:13px;font-weight:900;margin-bottom:12px;
+    }
+    .hero h1{
+      font-size:clamp(36px,4.4vw,64px);line-height:1;letter-spacing:-.05em;
+      color:#0b1930;margin:0 0 16px;max-width:920px;
+    }
+    .hero p{color:#526174;font-size:18px;line-height:1.55;max-width:820px;margin:0 0 20px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .hero-panel{
+      border:1px solid var(--line);border-radius:26px;background:#fff;padding:24px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+    .panel-kicker{color:#a46b00;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+    .hero-panel h3{color:#0b1930;font-size:30px;line-height:1.12;margin:0 0 12px}
+    .hero-panel ul{list-style:none;display:grid;gap:10px;padding:0;margin:0}
+    .hero-panel li{position:relative;color:#526174;padding-left:20px;font-size:15px}
+    .hero-panel li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:999px;background:var(--yellow)}
+
+    .quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px}
+    .quick-card{
+      background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);min-height:142px;
+    }
+    .quick-card span{
+      width:44px;height:44px;display:grid;place-items:center;border-radius:15px;
+      background:#fff4d8;color:#8a5a00;font-size:22px;margin-bottom:12px;
+    }
+    .quick-card strong{display:block;color:#0b1930;font-size:19px;margin-bottom:6px}
+    .quick-card p{color:#526174;font-size:14px;line-height:1.45;margin:0}
+
+    .section{padding:28px 0}
+    .section-head{margin-bottom:18px}
+    .section-kicker{color:#a46b00;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+    .section h2{color:#0b1930;font-size:clamp(30px,3.2vw,46px);line-height:1.08;margin:0 0 10px;letter-spacing:-.035em}
+    .section-head p{color:#637083;max-width:860px;margin:0;font-size:17px}
+
+    .request-panel{
+      background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+    .form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    input,textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:13px;
+      border:1px solid var(--line);
+      background:#f7faff;
+      color:#172033;
+      font-family:inherit;
+      font-size:14px;
+      outline:none;
+    }
+    input:focus,textarea:focus{border-color:rgba(11,93,184,.38);box-shadow:0 0 0 4px rgba(11,93,184,.08)}
+    textarea{margin-top:12px;min-height:92px;resize:vertical}
+    .form-actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+
+    .request-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .request-card{
+      background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);position:relative;overflow:hidden;
+    }
+    .request-card:before{
+      content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+      background:linear-gradient(180deg,#f1c84d,#0b5db8);
+    }
+    .request-type{
+      display:inline-flex;align-items:center;min-height:30px;padding:0 11px;border-radius:999px;
+      background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24);
+      font-size:12px;font-weight:900;margin-bottom:14px;
+    }
+    .request-card h3{color:#0b1930;font-size:22px;line-height:1.15;margin:0 0 12px}
+    .request-card p{color:#526174;margin:0 0 8px}
+    .request-card b{color:#0b1930}
+
+    .reason-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .reason-card{
+      background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+    .reason-card h3{color:#0b1930;font-size:24px;line-height:1.12;margin:0 0 10px}
+    .reason-card p{color:#526174;margin:0}
+
+    .cta-band{
+      background:#0b1930;color:#fff;border-radius:24px;padding:22px;
+      display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+    .cta-band strong{display:block;font-size:24px;line-height:1.15;margin-bottom:5px}
+    .cta-band span{color:rgba(255,255,255,.76);line-height:1.45}
+    .cta-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .cta-band .btn-secondary{background:rgba(255,255,255,.10);color:#fff;border-color:rgba(255,255,255,.18)}
+
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .tag-row span{
+      padding:8px 10px;border-radius:999px;background:#fff4d8;color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);font-size:12px;font-weight:900;
+    }
+
+    footer{text-align:center;padding:28px;color:#637083;border-top:1px solid var(--line);margin-top:28px;background:#fff}
+
+    @media(max-width:1100px){
+      .hero-shell{grid-template-columns:1fr}
+      .quick-grid{grid-template-columns:repeat(2,1fr)}
+      .form-grid{grid-template-columns:repeat(2,1fr)}
+      .request-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:760px){
+      .topbar-inner{align-items:flex-start}
+      .nav,.top-actions{width:100%}
+      .hero-shell{padding:22px}
+      .hero h1{font-size:34px}
+      .quick-grid,.reason-grid,.form-grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
 <div class="utility-bar">
@@ -28,7 +217,7 @@
     </div>
     <div class="utility-right">
       <span>SEVRA Kurye Hizmeti</span>
-      <strong>Kurye · Hızlı Teslimat · Şehir İçi</strong>
+      <strong>Kurye · Moto Kurye · Hızlı Teslimat</strong>
     </div>
   </div>
 </div>
@@ -47,10 +236,11 @@
       <a href="index.html">Ana Sayfa</a>
       <a href="kurye-bulma-sistemi.html">Kurye Bulma</a>
       <a href="paket-kargo-tasima.html">Paket / Kargo</a>
+      <a href="nakliye-ilani-ver.html">İlan Ver</a>
     </nav>
 
     <div class="top-actions">
-      <a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Kurye Bulma</a>
+      <a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Kurye Bul</a>
       <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Üyelik</a>
     </div>
   </div>
@@ -59,66 +249,79 @@
 <section class="hero">
   <div class="container">
     <div class="hero-shell">
-      <div class="hero-grid">
-        <div class="hero-left">
-          <div class="hero-badge">Kurye ve Hızlı Teslimat</div>
-          <h1>Kurye hizmeti ile şehir içi teslimat sürecini daha hızlı ve daha görünür yönetin</h1>
-          <p>SEVRA, kurye hizmeti arayan kullanıcılar ile teslimat yapan yapıları dijital görünürlükte buluşturur. Şehir içi hızlı teslimat, evrak ve küçük paket gönderileri için kurye hizmeti ayrı başlık olarak sunulur.</p>
+      <div>
+        <div class="hero-badge">Kurye, Moto Kurye ve Hızlı Teslimat</div>
+        <h1>Kurye hizmetiyle şehir içi paket, evrak ve acil teslimat ihtiyaçlarını görünür hale getir</h1>
+        <p>
+          SEVRA; kurye hizmeti, kurye bulma, moto kurye, şehir içi teslimat, paket teslimatı, hızlı teslimat ve kargo taşıma ihtiyaçlarını tek dijital lojistik topluluğunda buluşturur.
+        </p>
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#kurye-talep-alani">Kurye Talebi Bırak</a>
-            <a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Kurye Bulma Sayfası</a>
-          </div>
-        </div>
-
-        <div class="hero-right">
-          <div class="hero-right-shell">
-            <div class="hero-main-card">
-              <span class="hero-label">SEVRA Kurye Mantığı</span>
-              <h3>Kurye hizmetini ayrı görünürlük alanına taşır</h3>
-              <p>Acil teslimat, şehir içi gönderi ve küçük paket süreçleri için daha net SEO ve hizmet yapısı sunar.</p>
-              <ul class="hero-main-list">
-                <li>Şehir içi kurye</li>
-                <li>Acil teslimat</li>
-                <li>Küçük paket gönderisi</li>
-              </ul>
-            </div>
-          </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#kurye-talep-alani">Kurye Talebi Bırak</a>
+          <a class="btn btn-gold" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
+          <a class="btn btn-secondary" href="paket-kargo-tasima.html">Paket / Kargo</a>
         </div>
       </div>
 
-      <div class="hero-band">
-        <div>Kurye hizmeti</div>
-        <div>Şehir içi kurye</div>
-        <div>Acil teslimat</div>
-        <div>Hızlı kurye</div>
-        <div>Küçük paket</div>
+      <div class="hero-panel">
+        <div class="panel-kicker">SEVRA Kurye Mantığı</div>
+        <h3>Küçük gönderiler için ayrı görünürlük</h3>
+        <ul>
+          <li>Evrak, dosya, küçük paket ve koli gönderilerini duyur</li>
+          <li>Şehir içi hızlı teslimat ve moto kurye ihtiyacını paylaş</li>
+          <li>Kurye, kargo ve paket taşıma hizmetlerini tek çatı altında göster</li>
+        </ul>
       </div>
+    </div>
+
+    <div class="quick-grid">
+      <article class="quick-card">
+        <span>🏍️</span>
+        <strong>Moto kurye</strong>
+        <p>Şehir içi hızlı teslimat ve küçük gönderiler için kurye görünürlüğü.</p>
+      </article>
+
+      <article class="quick-card">
+        <span>📄</span>
+        <strong>Evrak teslimatı</strong>
+        <p>Dosya, sözleşme ve kurumsal evrakların hızlı teslimat ihtiyacı.</p>
+      </article>
+
+      <article class="quick-card">
+        <span>📦</span>
+        <strong>Paket teslimatı</strong>
+        <p>Küçük paket, koli, numune ürün ve kargo taşıma talepleri.</p>
+      </article>
+
+      <article class="quick-card">
+        <span>⚡</span>
+        <strong>Hızlı teslimat</strong>
+        <p>Aynı gün, acil veya saatli şehir içi teslimat ihtiyaçları.</p>
+      </article>
     </div>
   </div>
 </section>
 
 <section id="kurye-talep-alani" class="section">
   <div class="container">
-    <div style="padding:22px; border:1px solid rgba(255,255,255,.08); border-radius:18px; background:rgba(7,15,32,.72);">
-      <div class="section-head" style="margin-bottom:18px;">
-        <div>
-          <div class="section-kicker">Kurye Talep Alanı</div>
-          <h2>Kurye ihtiyacınızı hızlıca bırakın</h2>
-        </div>
-        <p>Bu alan vitrin görünümünü güçlendirir. Talep formu ile kurye ihtiyacı net biçimde toplanır.</p>
+    <div class="request-panel">
+      <div class="section-head">
+        <div class="section-kicker">Kurye Talep Alanı</div>
+        <h2>Kurye ihtiyacınızı hızlıca bırakın</h2>
+        <p>Bu alan ziyaretçiye gerçek talep akışı hissi verir. Talep formu vitrin olarak çalışır; ileride üyelik ve teklif sistemiyle bağlanabilir.</p>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;">
-        <input placeholder="Şehir / İlçe" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
-        <input placeholder="Gönderi türü" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
-        <input placeholder="Teslimat süresi" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
-        <input placeholder="İletişim telefonu" style="padding:12px;border-radius:12px;border:1px solid #24314d;background:#0d1730;color:#fff;">
+      <div class="form-grid">
+        <input placeholder="Şehir / İlçe">
+        <input placeholder="Gönderi türü">
+        <input placeholder="Teslimat süresi">
+        <input placeholder="İletişim telefonu">
       </div>
-      <textarea placeholder="Kısa açıklama" style="margin-top:12px; width:100%; min-height:84px; padding:12px; border-radius:12px; border:1px solid #24314d; background:#0d1730; color:#fff;"></textarea>
-      <div style="margin-top:14px; display:flex; gap:12px; flex-wrap:wrap;">
+      <textarea placeholder="Kısa açıklama"></textarea>
+      <div class="form-actions">
         <button class="btn btn-primary" type="button">Talep Gönder</button>
         <a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Kurye Bulma Sayfasına Git</a>
+        <a class="btn btn-secondary" href="paket-kargo-tasima.html">Paket / Kargo Sayfası</a>
       </div>
     </div>
   </div>
@@ -127,54 +330,58 @@
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <div>
-        <div class="section-kicker">Aktif Kurye Talepleri</div>
-        <h2>Canlı görünümlü kurye akışı</h2>
-      </div>
-      <p>Sayfayı boş göstermemek ve hizmet alanını daha güçlü göstermek için örnek talep akışı sunulur.</p>
+      <div class="section-kicker">Örnek Kurye Talepleri</div>
+      <h2>Şehir içi kurye ve hızlı teslimat örnekleri</h2>
+      <p>Sayfayı canlı ve anlaşılır göstermek için örnek kurye talepleri kartlı yapı ile sunulur.</p>
     </div>
 
-    <div class="reason-grid">
-      <article class="reason-card">
+    <div class="request-grid">
+      <article class="request-card">
+        <span class="request-type">Evrak Teslimatı</span>
         <h3>İstanbul Kadıköy → Ataşehir</h3>
-        <p><strong>Gönderi:</strong> Evrak teslimatı</p>
-        <p><strong>Süre:</strong> Aynı gün</p>
-        <p><strong>Not:</strong> Kurumsal evrak teslimatı için hızlı kurye talebi.</p>
+        <p><b>Gönderi:</b> Kurumsal evrak teslimatı</p>
+        <p><b>Süre:</b> Aynı gün</p>
+        <p><b>Not:</b> İmza süreci için hızlı kurye talebi.</p>
       </article>
 
-      <article class="reason-card">
+      <article class="request-card">
+        <span class="request-type">Küçük Paket</span>
         <h3>İzmir Bornova → Karşıyaka</h3>
-        <p><strong>Gönderi:</strong> Küçük paket</p>
-        <p><strong>Süre:</strong> 2 saat içinde</p>
-        <p><strong>Not:</strong> Şehir içi hızlı dağıtım için uygun kurye arayışı.</p>
+        <p><b>Gönderi:</b> Küçük paket</p>
+        <p><b>Süre:</b> 2 saat içinde</p>
+        <p><b>Not:</b> Şehir içi hızlı dağıtım için uygun kurye arayışı.</p>
       </article>
 
-      <article class="reason-card">
+      <article class="request-card">
+        <span class="request-type">Acil Teslimat</span>
         <h3>Ankara Çankaya → Ostim</h3>
-        <p><strong>Gönderi:</strong> Teknik parça</p>
-        <p><strong>Süre:</strong> Acil teslimat</p>
-        <p><strong>Not:</strong> İş yeri teslimli, dikkatli taşıma gerektiren gönderi.</p>
+        <p><b>Gönderi:</b> Teknik parça</p>
+        <p><b>Süre:</b> Acil teslimat</p>
+        <p><b>Not:</b> İş yeri teslimli, dikkatli taşıma gerektiren gönderi.</p>
       </article>
 
-      <article class="reason-card">
+      <article class="request-card">
+        <span class="request-type">Dosya / Sözleşme</span>
         <h3>Bursa Nilüfer → Osmangazi</h3>
-        <p><strong>Gönderi:</strong> Dosya / sözleşme</p>
-        <p><strong>Süre:</strong> Aynı gün</p>
-        <p><strong>Not:</strong> Kurumsal imza süreci için evrak teslim ihtiyacı.</p>
+        <p><b>Gönderi:</b> Dosya / sözleşme</p>
+        <p><b>Süre:</b> Aynı gün</p>
+        <p><b>Not:</b> Kurumsal imza süreci için evrak teslim ihtiyacı.</p>
       </article>
 
-      <article class="reason-card">
+      <article class="request-card">
+        <span class="request-type">Koli Taşıma</span>
         <h3>Antalya Muratpaşa → Kepez</h3>
-        <p><strong>Gönderi:</strong> Koli</p>
-        <p><strong>Süre:</strong> Gün içi</p>
-        <p><strong>Not:</strong> Küçük koli taşıması için şehir içi kurye talebi.</p>
+        <p><b>Gönderi:</b> Küçük koli</p>
+        <p><b>Süre:</b> Gün içi</p>
+        <p><b>Not:</b> Şehir içi paket teslimatı için kurye talebi.</p>
       </article>
 
-      <article class="reason-card">
+      <article class="request-card">
+        <span class="request-type">Numune Ürün</span>
         <h3>Gaziantep Şehitkamil → Şahinbey</h3>
-        <p><strong>Gönderi:</strong> Numune ürün</p>
-        <p><strong>Süre:</strong> Hızlı teslimat</p>
-        <p><strong>Not:</strong> Ticari numune teslimi için kontrollü kurye ihtiyacı.</p>
+        <p><b>Gönderi:</b> Ticari numune</p>
+        <p><b>Süre:</b> Hızlı teslimat</p>
+        <p><b>Not:</b> Numune ürün teslimi için kontrollü kurye ihtiyacı.</p>
       </article>
     </div>
   </div>
@@ -183,73 +390,66 @@
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <div>
-        <div class="section-kicker">Kurye Hizmeti Nedir?</div>
-        <h2>SEVRA ile kurye hizmeti nasıl çalışır?</h2>
-      </div>
-      <p>Bu sayfa Google ve ziyaretçi için hizmeti net biçimde açıklar.</p>
+      <div class="section-kicker">Kurye Hizmeti Nedir?</div>
+      <h2>SEVRA ile kurye hizmeti nasıl görünür hale gelir?</h2>
+      <p>Kurye hizmeti, küçük gönderilerin şehir içinde hızlı taşınması için kullanılır. SEVRA bu ihtiyacı nakliye, kargo ve paket taşıma başlıklarıyla birlikte daha görünür hale getirir.</p>
     </div>
 
     <div class="reason-grid">
       <article class="reason-card">
         <h3>Şehir içi teslimat</h3>
-        <p>Şehir içi acil teslimat ve küçük gönderi ihtiyaçları için ayrı görünürlük alanı sunulur.</p>
+        <p>Şehir içi acil teslimat, aynı gün teslim ve kısa mesafe gönderiler için kurye hizmeti ayrı bir çözüm alanı oluşturur.</p>
       </article>
 
       <article class="reason-card">
         <h3>Evrak ve küçük paket</h3>
-        <p>Evrak, dosya, küçük koli ve hızlı gönderi işlemleri için kurye hizmeti daha net anlatılır.</p>
+        <p>Evrak, dosya, sözleşme, küçük koli, numune ürün ve paket teslimatı gibi gönderiler daha net şekilde duyurulabilir.</p>
       </article>
 
       <article class="reason-card">
-        <h3>Kurumsal görünürlük</h3>
-        <p>Kurye hizmeti de nakliye ve ambar kadar sistem içinde ayrı başlık olarak güçlendirilir.</p>
+        <h3>Kurye ve kargo ayrımı</h3>
+        <p>Kurye hizmeti hızlı ve şehir içi teslimata odaklanırken, paket/kargo taşıma daha geniş gönderi ihtiyaçları için kullanılabilir.</p>
       </article>
 
       <article class="reason-card">
-        <h3>Hızlı teklif mantığı</h3>
-        <p>Kullanıcı, kurye ve teslimat ihtiyacını daha net tanımlayarak doğru hizmete yönlenir.</p>
+        <h3>Topluluk görünürlüğü</h3>
+        <p>Kurye hizmeti verenler, yük verenler ve küçük gönderi ihtiyacı olanlar SEVRA topluluğu içinde daha görünür hale gelir.</p>
       </article>
+    </div>
+
+    <div class="tag-row">
+      <span>kurye hizmeti</span>
+      <span>kurye bul</span>
+      <span>moto kurye</span>
+      <span>şehir içi teslimat</span>
+      <span>paket teslimatı</span>
+      <span>hızlı teslimat</span>
+      <span>kargo taşıma</span>
     </div>
   </div>
 </section>
 
-<section class="section contact-section">
+<section class="section">
   <div class="container">
-    <div class="section-head">
+    <div class="cta-band">
       <div>
-        <div class="section-kicker">SEVRA ile Devam Edin</div>
-        <h2>Kurye ve hızlı teslimat sürecini başlatın</h2>
+        <strong>Kurye, paket veya hızlı teslimat ihtiyacını SEVRA’da görünür hale getir.</strong>
+        <span>Kurye talebi bırak, kurye bulma sayfasına geç veya Facebook grubunda gönderi ihtiyacını paylaş.</span>
       </div>
-      <p>Sorularınız, teklif talepleriniz ve teslimat ihtiyaçlarınız için hızlı dönüş sağlanır. Kurye bulma ve paket / kargo çözümlerine kolayca geçebilirsiniz.</p>
-    </div>
-
-    <div class="contact-grid">
-      <article class="contact-card">
-        <span>Kurye Bulma</span>
-        <strong>Uygun çözümü inceleyin</strong>
-        <p>Kurye arama ve hızlı teslimat süreçlerini tek ekranda değerlendirebilirsiniz.</p>
-      </article>
-
-      <article class="contact-card">
-        <span>Paket / Kargo</span>
-        <strong>Küçük gönderi çözümleri</strong>
-        <p>Paket ve kargo taşıma ihtiyaçları için ilgili sayfaya geçebilirsiniz.</p>
-      </article>
-
-      <article class="contact-card">
-        <span>Kurumsal Destek</span>
-        <strong>Hızlı dönüş ve planlama</strong>
-        <p>Kurye, teslimat ve küçük gönderi ihtiyaçlarınız için uygun çözüm hızlı şekilde değerlendirilir.</p>
-      </article>
-    </div>
-
-    <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
-      <a class="btn btn-primary" href="kurye-bulma-sistemi.html">Kurye Bulma Sayfasına Git</a>
-      <a class="btn btn-secondary" href="paket-kargo-tasima.html">Paket / Kargo Sayfasına Git</a>
-      <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="#kurye-talep-alani">Kurye Talebi Bırak</a>
+        <a class="btn btn-secondary" href="kurye-bulma-sistemi.html">Kurye Bulma</a>
+        <a class="btn btn-secondary" href="paket-kargo-tasima.html">Paket / Kargo</a>
+        <a class="btn btn-secondary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubu</a>
+      </div>
     </div>
   </div>
 </section>
+
+<footer>
+  SEVRA | Kurye Hizmeti, Moto Kurye ve Şehir İçi Hızlı Teslimat<br>
+  sevrawms.com.tr
+</footer>
+
 </body>
 </html>
