@@ -13,11 +13,598 @@
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yük Bulma Sistemi ve Açık Yük İlanları</title>
-  <meta name="description" content="SEVRA ile yük bulma sistemi, açık yük ilanları, taşıma işi bulma ve kurumsal nakliye operasyon süreçlerini tek dijital platformda yönetin." />
-  <meta name="keywords" content="yük bulma sistemi, yük bul, açık yük ilanları, taşıma işi bul, nakliye işi, lojistik platformu, sevra" />
+  <title>SEVRA | Yük Bulma Sistemi - Aracına Yük Bul, Boş Dönüş Yükü Ara</title>
+  <meta name="description" content="SEVRA yük bulma sistemi ile aracına yük bul, açık yük ilanlarını incele, boş dönüş yükü ara, parsiyel yük ve şehirler arası taşıma işi fırsatlarını gör." />
+  <meta name="keywords" content="yük bulma sistemi, yük bul, araca yük bul, aracına yük bul, boş dönüş yükü, açık yük ilanları, parsiyel yük, şehirler arası yük, taşıma işi bul, nakliye işi, lojistik platformu, sevra" />
   <meta name="robots" content="index, follow" />
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --surface2:#f7faff;
+      --text:#172033;
+      --muted:#59687d;
+      --navy:#071326;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --yellow2:#ffd166;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .container{
+      width:min(var(--max),calc(100% - 28px));
+      margin:0 auto;
+    }
+
+    .utility-bar{
+      background:#ffffff;
+      border-bottom:1px solid var(--line);
+      color:#526174;
+      font-size:12px;
+    }
+
+    .utility-inner{
+      min-height:40px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .utility-left,.utility-right{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .utility-right strong{color:#a46b00}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+
+    .topbar-inner{
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:26px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:32px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:#132238;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .nav a{
+      padding:9px 11px;
+      border-radius:11px;
+      background:#f7faff;
+      border:1px solid rgba(15,35,65,.08);
+      color:#132238;
+    }
+
+    .nav a:hover{background:#edf5ff}
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:44px;
+      padding:0 16px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid transparent;
+      transition:.2s ease;
+      cursor:pointer;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .btn-primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn-primary:hover{background:#084c96}
+
+    .btn-secondary{
+      background:#ffffff;
+      color:#132238;
+      border-color:var(--line);
+    }
+
+    .btn-secondary:hover{background:#edf5ff}
+
+    .btn-gold{
+      background:var(--yellow);
+      color:#111;
+      border-color:var(--yellow);
+    }
+
+    .hero{
+      padding:30px 0 22px;
+    }
+
+    .hero-shell{
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      padding:34px;
+      align-items:center;
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      min-height:38px;
+      padding:0 14px;
+      align-items:center;
+      border-radius:999px;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.26);
+      color:#8a5a00;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      font-size:clamp(36px,4.4vw,64px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin:0 0 16px;
+      max-width:920px;
+    }
+
+    .hero p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:820px;
+      margin:0 0 20px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .hero-panel{
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:#ffffff;
+      padding:24px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .panel-kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .hero-panel h3{
+      color:#0b1930;
+      font-size:30px;
+      line-height:1.12;
+      margin:0 0 12px;
+    }
+
+    .hero-panel ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      padding:0;
+      margin:0;
+    }
+
+    .hero-panel li{
+      position:relative;
+      color:#526174;
+      padding-left:20px;
+      font-size:15px;
+    }
+
+    .hero-panel li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .quick-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+      min-height:142px;
+    }
+
+    .quick-card span{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:#fff4d8;
+      color:#8a5a00;
+      font-size:22px;
+      margin-bottom:12px;
+    }
+
+    .quick-card strong{
+      display:block;
+      color:#0b1930;
+      font-size:19px;
+      margin-bottom:6px;
+    }
+
+    .quick-card p{
+      color:#526174;
+      font-size:14px;
+      line-height:1.45;
+      margin:0;
+    }
+
+    .section{
+      padding:28px 0;
+    }
+
+    .section-head{
+      margin-bottom:18px;
+    }
+
+    .section-kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .section h2{
+      color:#0b1930;
+      font-size:clamp(30px,3.2vw,46px);
+      line-height:1.08;
+      margin:0 0 10px;
+      letter-spacing:-.035em;
+    }
+
+    .section-head p{
+      color:#637083;
+      max-width:860px;
+      margin:0;
+      font-size:17px;
+    }
+
+    .reason-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .reason-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .reason-card h3{
+      color:#0b1930;
+      font-size:24px;
+      line-height:1.12;
+      margin:0 0 10px;
+    }
+
+    .reason-card p{
+      color:#526174;
+      margin:0;
+    }
+
+    .example-loads{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .load-example{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .load-example:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:5px;
+      background:linear-gradient(180deg,#f1c84d,#0b5db8);
+    }
+
+    .load-type{
+      display:inline-flex;
+      align-items:center;
+      min-height:30px;
+      padding:0 11px;
+      border-radius:999px;
+      background:#fff4d8;
+      color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+
+    .route-box{
+      background:#f4f8ff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:14px;
+    }
+
+    .route-line{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:10px;
+      align-items:center;
+    }
+
+    .place small{
+      display:block;
+      color:#637083;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      margin-bottom:5px;
+    }
+
+    .place strong{
+      display:block;
+      color:#0b1930;
+      font-size:18px;
+      line-height:1.2;
+    }
+
+    .arrow{
+      width:36px;
+      height:36px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff4d8;
+      color:#7a5100;
+      font-weight:900;
+      border:1px solid rgba(246,164,0,.24);
+    }
+
+    .load-example h3{
+      color:#0b1930;
+      font-size:21px;
+      line-height:1.15;
+      margin:0 0 12px;
+    }
+
+    .meta-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin:12px 0;
+    }
+
+    .meta-box{
+      background:#f7faff;
+      border:1px solid var(--line);
+      border-radius:13px;
+      padding:10px;
+    }
+
+    .meta-box small{
+      display:block;
+      color:#637083;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      margin-bottom:4px;
+    }
+
+    .meta-box strong{
+      color:#0b1930;
+      font-size:14px;
+    }
+
+    .load-example p{
+      color:#526174;
+      margin:12px 0 0;
+    }
+
+    .cta-band{
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+
+    .cta-band strong{
+      display:block;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+
+    .cta-band span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .cta-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .cta-band .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+
+    .tag-row span{
+      padding:8px 10px;
+      border-radius:999px;
+      background:#fff4d8;
+      color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    footer{
+      text-align:center;
+      padding:28px;
+      color:#637083;
+      border-top:1px solid var(--line);
+      margin-top:28px;
+      background:#ffffff;
+    }
+
+    @media(max-width:1050px){
+      .hero-shell{grid-template-columns:1fr}
+      .quick-grid{grid-template-columns:repeat(2,1fr)}
+      .example-loads{grid-template-columns:1fr}
+    }
+
+    @media(max-width:760px){
+      .topbar-inner{align-items:flex-start}
+      .nav,.top-actions{width:100%}
+      .hero-shell{padding:22px}
+      .hero h1{font-size:34px}
+      .quick-grid,.reason-grid{grid-template-columns:1fr}
+      .route-line{grid-template-columns:1fr}
+      .arrow{width:100%;height:34px}
+    }
+  </style>
 </head>
 <body>
   <div class="utility-bar">
@@ -28,7 +615,7 @@
       </div>
       <div class="utility-right">
         <span>SEVRA Yük Bulma Sistemi</span>
-        <strong>Yük Bul · Teklif Ver · Operasyon</strong>
+        <strong>Yük Bul · Boş Dönüş · Parsiyel</strong>
       </div>
     </div>
   </div>
@@ -46,13 +633,13 @@
       <nav class="nav">
         <a href="index.html">Ana Sayfa</a>
         <a href="yuk-ilanlari.html">Yük İlanları</a>
-        <a href="ambar-hizmeti.html">Ambar Hizmeti</a>
+        <a href="nakliye-ilani-ver.html">İlan Ver</a>
+        <a href="arac-bulma-sistemi.html">Araç Bul</a>
         <a href="nakliye-platformu.html">Nakliye Platformu</a>
       </nav>
 
       <div class="top-actions">
-        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
-        <a class="btn btn-secondary" href="nakliye-platformu.html">Nakliye Platformu</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Açık Yükler</a>
         <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Üyelik</a>
       </div>
     </div>
@@ -61,41 +648,142 @@
   <section class="hero">
     <div class="container">
       <div class="hero-shell">
-        <div class="hero-grid">
-          <div class="hero-left">
-            <div class="hero-badge">Yük Bulma ve Açık İlan Sistemi</div>
-            <h1>Yük bulma sistemi ile açık yük ilanlarını inceleyin, uygun işe teklif verin ve taşıma sürecini dijital yönetin</h1>
-            <p>SEVRA, taşıyıcı firmalar için yük bulma sistemini daha görünür hale getirir. Açık yük ilanları, teklif verme, taşıma işi bulma ve kurumsal operasyon akışı tek dijital zeminde yönetilir.</p>
+        <div>
+          <div class="hero-badge">Nakliyeci ve Araç Sahibi İçin</div>
+          <h1>Aracına yük bul, boş dönüşleri azalt, açık yük ilanlarını takip et</h1>
+          <p>
+            SEVRA yük bulma sistemi; nakliyeci, araç sahibi ve taşıyıcıların açık yük ilanlarını görmesi, boş dönüşte yük araması ve şehirler arası taşıma işi bulması için hazırlanmıştır.
+          </p>
 
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="yuk-ilanlari.html">Açık Yükleri İncele</a>
-              <a class="btn btn-secondary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Üyelik</a>
-            </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="yuk-ilanlari.html">Açık Yükleri İncele</a>
+            <a class="btn btn-gold" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
+            <a class="btn btn-secondary" href="arac-bulma-sistemi.html">Araç Bulma Sayfası</a>
           </div>
+        </div>
 
-          <div class="hero-right">
-            <div class="hero-right-shell">
-              <div class="hero-main-card">
-                <span class="hero-label">SEVRA Yük Bulma Mantığı</span>
-                <h3>Taşıyıcı için daha görünür iş akışı</h3>
-                <p>Açık yük kayıtlarını inceleyin, uygun işlere teklif verin ve taşıma operasyonunu daha kurumsal bir dijital sistem içinde yönetin.</p>
-                <ul class="hero-main-list">
-                  <li>Açık yükleri görme</li>
-                  <li>Teklif verme</li>
-                  <li>Kurumsal operasyon takibi</li>
-                </ul>
+        <div class="hero-panel">
+          <div class="panel-kicker">SEVRA Yük Bulma Mantığı</div>
+          <h3>Boş araç değil, fırsat görünürlüğü</h3>
+          <ul>
+            <li>Güzergâhına uygun açık yükleri takip et</li>
+            <li>Parsiyel veya komple taşıma işlerini değerlendir</li>
+            <li>Yük verenlerle daha düzenli teklif akışına geç</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+        <article class="quick-card">
+          <span>🚚</span>
+          <strong>Aracına yük bul</strong>
+          <p>Boş dönüşte veya güzergâhında taşıyabileceğin yükleri takip et.</p>
+        </article>
+
+        <article class="quick-card">
+          <span>📦</span>
+          <strong>Parsiyel yük ara</strong>
+          <p>Koli, palet, paket ve ticari ürün gibi parsiyel yükleri gör.</p>
+        </article>
+
+        <article class="quick-card">
+          <span>🛣️</span>
+          <strong>Şehirler arası yük</strong>
+          <p>İstanbul, Bursa, Ankara, İzmir ve Türkiye geneli güzergâhları takip et.</p>
+        </article>
+
+        <article class="quick-card">
+          <span>💬</span>
+          <strong>Teklif akışına geç</strong>
+          <p>Uygun işlerde teklif ve iletişim sürecini daha düzenli yürüt.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Örnek Açık Yükler</div>
+        <h2>Taşıyıcının görmek istediği yük kartları</h2>
+        <p>Gerçek ilan akışı Yük İlanları sayfasından takip edilir. Aşağıdaki örnekler, SEVRA’da hangi tarz yüklerin görünür olacağını anlatır.</p>
+      </div>
+
+      <div class="example-loads">
+        <article class="load-example">
+          <span class="load-type">Parsiyel Yük</span>
+          <div class="route-box">
+            <div class="route-line">
+              <div class="place">
+                <small>Nereden</small>
+                <strong>İstanbul</strong>
+              </div>
+              <div class="arrow">→</div>
+              <div class="place">
+                <small>Nereye</small>
+                <strong>Ankara</strong>
               </div>
             </div>
           </div>
-        </div>
+          <h3>12 koli ticari ürün | Kapalı kasa</h3>
+          <div class="meta-grid">
+            <div class="meta-box"><small>Araç</small><strong>Kamyonet</strong></div>
+            <div class="meta-box"><small>Zaman</small><strong>Bu hafta</strong></div>
+            <div class="meta-box"><small>Durum</small><strong>Teklif bekliyor</strong></div>
+            <div class="meta-box"><small>Tip</small><strong>Parsiyel</strong></div>
+          </div>
+          <p>Boş dönüşte veya güzergâhında uygun aracı olan taşıyıcılar için örnek yük.</p>
+        </article>
 
-        <div class="hero-band">
-          <div>Yük bulma</div>
-          <div>Açık yük ilanları</div>
-          <div>Teklif verme</div>
-          <div>Taşıma işi bulma</div>
-          <div>Kurumsal lojistik</div>
-        </div>
+        <article class="load-example">
+          <span class="load-type">Boş Dönüş Fırsatı</span>
+          <div class="route-box">
+            <div class="route-line">
+              <div class="place">
+                <small>Nereden</small>
+                <strong>Bursa</strong>
+              </div>
+              <div class="arrow">→</div>
+              <div class="place">
+                <small>Nereye</small>
+                <strong>İzmir</strong>
+              </div>
+            </div>
+          </div>
+          <h3>Paletli parça yük | Panelvan / Kamyonet</h3>
+          <div class="meta-grid">
+            <div class="meta-box"><small>Araç</small><strong>Panelvan</strong></div>
+            <div class="meta-box"><small>Zaman</small><strong>Yarın</strong></div>
+            <div class="meta-box"><small>Durum</small><strong>Uygun araç aranıyor</strong></div>
+            <div class="meta-box"><small>Tip</small><strong>Parça yük</strong></div>
+          </div>
+          <p>Bursa çıkışlı, İzmir hattında boş dönüş yapan araçlar için örnek taşıma fırsatı.</p>
+        </article>
+
+        <article class="load-example">
+          <span class="load-type">Komple / Şehirler Arası</span>
+          <div class="route-box">
+            <div class="route-line">
+              <div class="place">
+                <small>Nereden</small>
+                <strong>Ankara</strong>
+              </div>
+              <div class="arrow">→</div>
+              <div class="place">
+                <small>Nereye</small>
+                <strong>Kayseri</strong>
+              </div>
+            </div>
+          </div>
+          <h3>Paletli ürün | Kamyon / Kapalı kasa</h3>
+          <div class="meta-grid">
+            <div class="meta-box"><small>Araç</small><strong>Kamyon</strong></div>
+            <div class="meta-box"><small>Zaman</small><strong>Hafta içi</strong></div>
+            <div class="meta-box"><small>Durum</small><strong>Fiyat bekliyor</strong></div>
+            <div class="meta-box"><small>Tip</small><strong>Komple</strong></div>
+          </div>
+          <p>Ankara-Kayseri hattında şehirler arası yük arayan taşıyıcılar için örnek kayıt.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -103,107 +791,63 @@
   <section class="section">
     <div class="container">
       <div class="section-head">
-        <div>
-          <div class="section-kicker">Yük Bulma Sistemi Nedir?</div>
-          <h2>SEVRA ile taşıyıcı için yük bulma süreci nasıl çalışır?</h2>
-        </div>
-        <p>Bu sayfa, Google ve ziyaretçi için konuyu açık biçimde anlatır.</p>
+        <div class="section-kicker">Yük Bulma Sistemi Nedir?</div>
+        <h2>SEVRA ile taşıyıcı için yük bulma süreci nasıl çalışır?</h2>
+        <p>Bu sayfa, nakliyeci ve araç sahibi tarafına açık yük ilanı, boş dönüş yükü, parsiyel taşıma ve şehirler arası taşıma işi mantığını anlatır.</p>
       </div>
 
       <div class="reason-grid">
         <article class="reason-card">
-          <h3>Açık yük ilanları</h3>
-          <p>SEVRA üzerinde yayınlanan açık yük ilanları sayesinde taşıyıcı firmalar uygun işleri hızlı şekilde görebilir. Bu yapı, yük bulma sürecini telefon trafiğinden çıkararak dijital zemine taşır.</p>
+          <h3>Açık yük ilanlarını görme</h3>
+          <p>SEVRA üzerinde yayınlanan açık yük ilanları sayesinde taşıyıcılar uygun işleri daha hızlı görebilir. Bu yapı, yük bulma sürecini dağınık telefon trafiğinden çıkarıp dijital zemine taşır.</p>
         </article>
 
         <article class="reason-card">
-          <h3>Teklif verme sistemi</h3>
-          <p>Taşıyıcı taraf, ilgilendiği işe sistem üzerinden teklif verebilir. Böylece yük veren ve taşıyıcı arasında daha düzenli, daha takip edilebilir bir karar akışı oluşur.</p>
+          <h3>Boş dönüş yükü arama</h3>
+          <p>Boş dönen araçlar için güzergâha uygun yük bulmak maliyeti azaltır. SEVRA, boş dönüşte yük arayan taşıyıcılar için görünürlük oluşturmayı hedefler.</p>
         </article>
 
         <article class="reason-card">
-          <h3>Taşıma işi bulma</h3>
-          <p>Yeni iş arayan nakliyeciler için taşıma işi bulma süreci daha görünür hale gelir. Açık kayıtlar, teklif ve pazarlık mantığı sayesinde daha profesyonel bir yapı oluşur.</p>
+          <h3>Parsiyel ve komple işler</h3>
+          <p>Taşıyıcılar hem parsiyel yükleri hem de komple araç gerektiren işleri takip edebilir. Böylece farklı araç tipleri için daha esnek iş fırsatları oluşur.</p>
         </article>
 
         <article class="reason-card">
-          <h3>Kurumsal dijital altyapı</h3>
-          <p>SEVRA yalnızca bir listeleme sayfası değil, aynı zamanda yük, teklif ve operasyon akışını kayıtlı şekilde yöneten bir lojistik altyapısıdır.</p>
+          <h3>Teklif ve iletişim akışı</h3>
+          <p>Uygun işlerde teklif sürecine geçilir. Yük veren ve taşıyıcı tarafı daha düzenli bir karar akışı içinde buluşur.</p>
         </article>
+      </div>
+
+      <div class="tag-row">
+        <span>yük bul</span>
+        <span>aracına yük bul</span>
+        <span>boş dönüş yükü</span>
+        <span>parsiyel yük</span>
+        <span>şehirler arası yük</span>
+        <span>açık yük ilanları</span>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
+      <div class="cta-band">
         <div>
-          <div class="section-kicker">Kimler Kullanır?</div>
-          <h2>SEVRA yük bulma sistemi kimler için uygundur?</h2>
+          <strong>Aracına yük bulmak için açık ilanları takip et.</strong>
+          <span>Yük İlanları sayfasından güncel kayıtları inceleyebilir, Facebook grubunda paylaşımları takip edebilir ve uygun işlere teklif verebilirsin.</span>
         </div>
-        <p>Gerçek kullanım alanlarını açıklayan SEO destekli bölüm.</p>
-      </div>
-
-      <div class="reason-grid">
-        <article class="reason-card">
-          <h3>Nakliye firmaları</h3>
-          <p>Açık yükleri takip ederek yeni taşıma işleri bulmak isteyen firmalar için uygundur.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Bireysel ve kurumsal taşıyıcılar</h3>
-          <p>Yük ilanlarına ulaşmak, fiyat vermek ve yeni müşteri kazanmak isteyen taşıyıcılar için güçlü bir başlangıçtır.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Operasyonunu dijitalleştirmek isteyen yapılar</h3>
-          <p>Dağınık telefon ve mesaj trafiği yerine daha düzenli teklif akışı isteyen firmalar bu sistemi kullanabilir.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Parsiyel ve komple çalışan taşımacılar</h3>
-          <p>Hem parsiyel hem komple taşıma işi arayan firmalar için açık yük ilanı mantığı daha düzenli iş fırsatı sunar.</p>
-        </article>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="yuk-ilanlari.html">Yük İlanlarına Git</a>
+          <a class="btn btn-secondary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubu</a>
+          <a class="btn btn-secondary" href="arac-bulma-sistemi.html">Araç Bul</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section contact-section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">SEVRA ile Devam Edin</div>
-          <h2>Doğru ekrana geçin ve açık yükleri inceleyin</h2>
-        </div>
-        <p>Sorularınız, teklif talepleriniz ve operasyon ihtiyaçlarınız için hızlı dönüş sağlanır. Yük ilanları ekranına geçebilir, nakliye platformu sayfasını inceleyebilir ve teklif sürecini platform içinde başlatabilirsiniz.</p>
-      </div>
-
-      <div class="contact-grid">
-        <article class="contact-card">
-          <span>Yük İlanları</span>
-          <strong>Açık yükleri inceleyin</strong>
-          <p>Aktif yük kayıtlarına giderek uygun iş fırsatlarını görebilir ve taşıma işi bulabilirsiniz.</p>
-        </article>
-
-        <article class="contact-card">
-          <span>Nakliye Platformu</span>
-          <strong>Kurumsal sistem mantığı</strong>
-          <p>Nakliye platformu sayfasından sistemin genel çalışma yapısını inceleyebilirsiniz.</p>
-        </article>
-
-        <article class="contact-card">
-          <span>Kurumsal Destek</span>
-          <strong>Hızlı dönüş ve planlama</strong>
-          <p>Taşıma, teklif ve operasyon ihtiyaçlarınız için uygun çözüm hızlı şekilde değerlendirilir.</p>
-        </article>
-      </div>
-
-      <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
-        <a class="btn btn-primary" href="yuk-ilanlari.html">Yük İlanlarına Git</a>
-        <a class="btn btn-secondary" href="nakliye-platformu.html">Nakliye Platformuna Git</a>
-        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
-      </div>
-    </div>
-  </section>
+  <footer>
+    SEVRA | Yük Bulma Sistemi ve Açık Yük İlanları<br>
+    sevrawms.com.tr
+  </footer>
 </body>
 </html>
