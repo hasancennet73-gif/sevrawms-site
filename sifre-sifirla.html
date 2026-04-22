@@ -2,9 +2,370 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Yeni Şifre Belirle</title>
-  <link rel="stylesheet" href="uye-auth.css" />
+  <meta name="description" content="SEVRA yeni şifre belirleme ekranı. Şifre sıfırlama bağlantınız ile yeni şifrenizi oluşturun." />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --green:#17965a;
+      --red:#c93838;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+      min-height:100vh;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 24px 46px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:28px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:34px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:46px;
+      padding:0 18px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#ffffff;
+      color:#132238;
+      transition:.2s ease;
+      cursor:pointer;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    .btn:hover{background:#edf5ff}
+
+    .btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn.primary:hover{background:#084c96}
+
+    .btn:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+    }
+
+    .stack{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .panel{
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:#ffffff;
+      box-shadow:var(--shadow);
+      padding:30px;
+      overflow:hidden;
+    }
+
+    .main-panel{
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+    }
+
+    .kicker{
+      display:inline-flex;
+      min-height:38px;
+      padding:0 14px;
+      align-items:center;
+      border-radius:999px;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.26);
+      color:#8a5a00;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+
+    h1{
+      font-size:clamp(36px,4vw,58px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin-bottom:16px;
+    }
+
+    h2{
+      color:#0b1930;
+      font-size:clamp(28px,3vw,42px);
+      line-height:1.08;
+      margin-bottom:16px;
+      letter-spacing:-.035em;
+    }
+
+    .panel p{
+      color:#526174;
+      font-size:17px;
+      max-width:760px;
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:14px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    label{
+      color:#0b1930;
+      font-weight:900;
+      font-size:13px;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#ffffff;
+      color:#172033;
+      font-family:inherit;
+      font-size:15px;
+      outline:none;
+    }
+
+    input:focus{
+      border-color:rgba(11,93,184,.38);
+      box-shadow:0 0 0 4px rgba(11,93,184,.08);
+    }
+
+    .actions-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+
+    .note{
+      margin-top:16px;
+      border-radius:16px;
+      padding:14px 16px;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#ffffff;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+    }
+
+    .hidden{display:none !important}
+
+    .note.ok{
+      color:#0c6b40;
+      background:#eefaf4;
+      border-color:rgba(23,150,90,.25);
+    }
+
+    .note.err{
+      color:#9f2525;
+      background:#fff1f1;
+      border-color:rgba(201,56,56,.25);
+    }
+
+    .info-box{
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:#ffffff;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      margin-top:18px;
+    }
+
+    .info-box h3{
+      color:#0b1930;
+      font-size:24px;
+      margin-bottom:12px;
+    }
+
+    .info-box ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .info-box li{
+      position:relative;
+      padding-left:20px;
+      color:#526174;
+    }
+
+    .info-box li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .security-card{
+      background:#0b1930;
+      color:#fff;
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+      margin-top:18px;
+    }
+
+    .security-card strong{
+      display:block;
+      font-size:22px;
+      line-height:1.15;
+      margin-bottom:8px;
+    }
+
+    .security-card span{
+      display:block;
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .password-rules{
+      margin-top:14px;
+      display:grid;
+      gap:8px;
+    }
+
+    .password-rules span{
+      display:block;
+      padding:10px 12px;
+      border-radius:13px;
+      background:#f7faff;
+      border:1px solid var(--line);
+      color:#637083;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    @media(max-width:900px){
+      .stack{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .wrap{
+        padding:20px 14px 36px;
+      }
+
+      .top{
+        align-items:flex-start;
+      }
+
+      .actions{
+        width:100%;
+      }
+
+      .panel{
+        padding:24px;
+      }
+
+      h1{
+        font-size:34px;
+      }
+
+      .brand-text strong{
+        font-size:30px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -17,25 +378,29 @@
         </div>
       </a>
       <div class="actions">
-        <a class="btn" href="uye-login.html">Üye Girişi</a>
+        <a class="btn primary" href="uye-login.html">Üye Girişi</a>
+        <a class="btn" href="sifremi-unuttum.html">Tekrar Bağlantı Al</a>
+        <a class="btn" href="index.html">Ana Sayfa</a>
       </div>
     </header>
 
     <main class="stack">
-      <section class="panel">
+      <section class="panel main-panel">
         <div class="kicker">Şifre Sıfırlama</div>
         <h1>Yeni şifre oluştur</h1>
-        <p>Geçerli sıfırlama bağlantısı ile yeni şifrenizi belirleyin.</p>
+        <p>Geçerli sıfırlama bağlantısı ile yeni şifrenizi belirleyin. İşlem başarılı olunca giriş ekranına yönlendirileceksiniz.</p>
 
         <form id="resetForm" class="form-grid" autocomplete="off">
           <div class="field full">
             <label for="newPassword">Yeni Şifre</label>
             <input id="newPassword" name="newPassword" type="password" placeholder="Yeni şifre" autocomplete="new-password" />
           </div>
+
           <div class="field full">
             <label for="newPassword2">Yeni Şifre Tekrar</label>
             <input id="newPassword2" name="newPassword2" type="password" placeholder="Yeni şifre tekrar" autocomplete="new-password" />
           </div>
+
           <div class="actions-row full">
             <button id="resetBtn" type="submit" class="btn primary">Şifreyi Güncelle</button>
             <a class="btn" href="uye-login.html">Üye Girişine Dön</a>
@@ -43,6 +408,34 @@
         </form>
 
         <div id="resetMsg" class="note hidden"></div>
+      </section>
+
+      <section class="panel">
+        <div class="kicker">Güvenli Yenileme</div>
+        <h2>Şifre sıfırlama süreci</h2>
+        <p>Bu ekran yalnızca geçerli ve kullanılmamış şifre sıfırlama bağlantılarıyla çalışır. Bağlantı bir kez kullanıldıktan sonra kapatılır.</p>
+
+        <div class="info-box">
+          <h3>Kontrol adımları</h3>
+          <ul>
+            <li>Bağlantıdaki token kontrol edilir</li>
+            <li>Kullanılmamış reset kaydı aranır</li>
+            <li>Üye şifresi güncellenir</li>
+            <li>Reset kaydı kullanıldı olarak işaretlenir</li>
+            <li>Başarılı işlemden sonra giriş ekranına dönülür</li>
+          </ul>
+        </div>
+
+        <div class="security-card">
+          <strong>Yeni şifrenizi güvenli seçin.</strong>
+          <span>Kolay tahmin edilen şifreler yerine, harf ve rakam içeren daha güçlü bir şifre kullanmanız önerilir.</span>
+        </div>
+
+        <div class="password-rules">
+          <span>En az 4 karakter olmalıdır.</span>
+          <span>Yeni şifre ve tekrar alanı aynı olmalıdır.</span>
+          <span>İşlem sonrası yeni şifreyle giriş yapabilirsiniz.</span>
+        </div>
       </section>
     </main>
   </div>
@@ -159,7 +552,12 @@ document.getElementById('resetForm').addEventListener('submit', async function(e
   }
 
   if(!p1 || !p2){
-    show(msg, 'Lütfen tüm alanları doldur.', false);
+    show(msg, 'Lütfen tüm alanları doldurun.', false);
+    return;
+  }
+
+  if(p1.length < 4){
+    show(msg, 'Şifre en az 4 karakter olmalıdır.', false);
     return;
   }
 
@@ -174,7 +572,7 @@ document.getElementById('resetForm').addEventListener('submit', async function(e
     const resetRow = await supabaseFindReset(token);
 
     if(!resetRow){
-      show(msg, 'Geçerli bir sıfırlama kaydı bulunamadı.', false);
+      show(msg, 'Geçerli bir sıfırlama kaydı bulunamadı. Bağlantı daha önce kullanılmış veya geçersiz olabilir.', false);
       setBusy(false);
       return;
     }
@@ -182,7 +580,11 @@ document.getElementById('resetForm').addEventListener('submit', async function(e
     await supabaseUpdateMemberPassword(resetRow.email, p1);
     await supabaseMarkResetUsed(resetRow.id);
 
-    show(msg, 'Şifreniz güncellendi. Artık yeni şifrenizle giriş yapabilirsiniz.', true);
+    show(msg, 'Şifreniz güncellendi. Giriş ekranına yönlendiriliyorsunuz.', true);
+
+    setTimeout(function(){
+      window.location.href = 'uye-login.html';
+    }, 1000);
   } catch (err) {
     show(msg, 'İşlem başarısız: ' + err.message, false);
     setBusy(false);
