@@ -2,10 +2,483 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | İlan Detayı</title>
-  <meta name="description" content="SEVRA yük ilanı detay ekranı. Güzergâh, yük bilgisi, araç tipi ve teklif verme akışını inceleyin." />
-  <link rel="stylesheet" href="ilan-detay.css" />
+  <meta name="description" content="SEVRA yük ilanı detay ekranı. Güzergâh, yük bilgisi, araç tipi, ağırlık, tarih, durum ve teklif verme akışını inceleyin." />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+    }
+
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+
+    .topbar-inner{
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:26px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:32px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:#132238;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .nav a{
+      padding:9px 11px;
+      border-radius:11px;
+      background:#f7faff;
+      border:1px solid rgba(15,35,65,.08);
+      color:#132238;
+    }
+
+    .nav a:hover{background:#edf5ff}
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:44px;
+      padding:0 16px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid transparent;
+      transition:.2s ease;
+      cursor:pointer;
+      text-decoration:none;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    .btn-primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn-primary:hover{background:#084c96}
+
+    .btn-secondary{
+      background:#fff;
+      color:#132238;
+      border-color:var(--line);
+    }
+
+    .btn-secondary:hover{background:#edf5ff}
+
+    .detail-hero{
+      padding:30px 0 22px;
+    }
+
+    .detail-hero-shell{
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      padding:34px;
+      align-items:center;
+    }
+
+    .detail-badge{
+      display:inline-flex;
+      min-height:38px;
+      padding:0 14px;
+      align-items:center;
+      border-radius:999px;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.26);
+      color:#8a5a00;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+
+    .detail-left h1{
+      font-size:clamp(36px,4.4vw,64px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin:0 0 16px;
+      max-width:920px;
+    }
+
+    .detail-left p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:820px;
+      margin:0 0 20px;
+    }
+
+    .detail-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .summary-card{
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:#ffffff;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .summary-row{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 0;
+      border-bottom:1px solid rgba(15,35,65,.09);
+    }
+
+    .summary-row:first-child{padding-top:0}
+    .summary-row:last-child{border-bottom:0;padding-bottom:0}
+
+    .summary-row span{
+      color:#637083;
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .summary-row strong{
+      color:#0b1930;
+      text-align:right;
+      font-size:16px;
+    }
+
+    .route-panel{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:14px;
+      align-items:center;
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .route-place small{
+      display:block;
+      color:#637083;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      margin-bottom:6px;
+    }
+
+    .route-place strong{
+      display:block;
+      color:#0b1930;
+      font-size:25px;
+      line-height:1.1;
+    }
+
+    .route-arrow{
+      width:48px;
+      height:48px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:#fff4d8;
+      color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);
+      font-weight:900;
+      font-size:22px;
+    }
+
+    .detail-section{
+      padding:24px 0 60px;
+    }
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .detail-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:26px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      padding:24px;
+    }
+
+    .main-card{
+      grid-row:span 2;
+    }
+
+    .section-kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .detail-card h2{
+      color:#0b1930;
+      font-size:clamp(27px,2.8vw,40px);
+      line-height:1.08;
+      margin:0 0 16px;
+      letter-spacing:-.035em;
+    }
+
+    .detail-card p{
+      color:#526174;
+      margin:0;
+      font-size:16px;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .info-box{
+      background:#f7faff;
+      border:1px solid var(--line);
+      border-radius:17px;
+      padding:14px;
+      min-height:86px;
+    }
+
+    .info-box span{
+      display:block;
+      color:#637083;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      margin-bottom:7px;
+    }
+
+    .info-box strong{
+      display:block;
+      color:#0b1930;
+      font-size:18px;
+      line-height:1.2;
+      word-break:break-word;
+    }
+
+    .step-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:grid;
+      gap:10px;
+    }
+
+    .step-list li{
+      position:relative;
+      padding-left:22px;
+      color:#526174;
+    }
+
+    .step-list li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .accent-card{
+      background:#0b1930;
+      color:#fff;
+    }
+
+    .accent-card .section-kicker{
+      color:#ffd166;
+    }
+
+    .accent-card h2{
+      color:#fff;
+    }
+
+    .accent-card p{
+      color:rgba(255,255,255,.78);
+    }
+
+    .card-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .accent-card .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .warning-box{
+      margin-top:18px;
+      border:1px solid rgba(246,164,0,.28);
+      background:#fff4d8;
+      color:#7a5100;
+      border-radius:18px;
+      padding:14px;
+      font-weight:800;
+      display:none;
+    }
+
+    @media(max-width:1050px){
+      .detail-hero-shell,
+      .detail-grid{
+        grid-template-columns:1fr;
+      }
+
+      .main-card{
+        grid-row:auto;
+      }
+
+      .info-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:700px){
+      .topbar-inner{
+        align-items:flex-start;
+      }
+
+      .nav,.top-actions{
+        width:100%;
+      }
+
+      .detail-hero-shell{
+        padding:24px;
+      }
+
+      .detail-left h1{
+        font-size:34px;
+      }
+
+      .route-panel{
+        grid-template-columns:1fr;
+      }
+
+      .route-arrow{
+        width:100%;
+        height:38px;
+      }
+
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -21,13 +494,13 @@
       <nav class="nav">
         <a href="index.html">Ana Sayfa</a>
         <a href="yuk-ilanlari.html">Yük İlanları</a>
-        <a href="index.html#neden-biz">Neden Biz</a>
-        <a href="yonetici-giris.html">Yönetici Girişi</a>
+        <a href="nakliye-ilani-ver.html">İlan Ver</a>
+        <a href="mesajlasma.html">Mesajlaşma</a>
       </nav>
 
       <div class="top-actions">
         <a class="btn btn-secondary" href="yuk-ilanlari.html">Listeye Dön</a>
-        <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver / Giriş</a>
+        <a id="topOfferBtn" class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver / Giriş</a>
       </div>
     </div>
   </header>
@@ -37,34 +510,49 @@
       <div class="detail-hero-shell">
         <div class="detail-left">
           <div class="detail-badge">Kurumsal İlan Detayı</div>
-          <h1>İstanbul → Ankara</h1>
-          <p>Kurumsal sevkiyat akışına uygun, teklif toplanan açık yük ilanı.</p>
+          <h1 id="detailTitle">İstanbul → Ankara</h1>
+          <p id="detailDesc">Kurumsal sevkiyat akışına uygun, teklif toplanan açık yük ilanı.</p>
 
           <div class="detail-actions">
-            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Bu İlana Teklif Ver</a>
-            <a class="btn btn-secondary" href="yuk-ilanlari.html">Geri Dön</a>
+            <a id="offerBtn" class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Bu İlana Teklif Ver</a>
+            <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanlarına Dön</a>
+            <a class="btn btn-secondary" href="mesajlasma.html">Mesajlaşma</a>
           </div>
+
+          <div id="missingBox" class="warning-box">Seçili ilan bulunamadı. Güvenli örnek ilan bilgileri gösteriliyor.</div>
         </div>
 
         <div class="detail-right">
           <div class="summary-card">
             <div class="summary-row">
               <span>İlan No</span>
-              <strong>SVR-1001</strong>
+              <strong id="sumRef">SVR-1001</strong>
             </div>
             <div class="summary-row">
               <span>Yük Tipi</span>
-              <strong>Parsiyel</strong>
+              <strong id="sumType">Parsiyel</strong>
             </div>
             <div class="summary-row">
               <span>Araç Tipi</span>
-              <strong>Kamyon</strong>
+              <strong id="sumVehicle">Kamyon</strong>
             </div>
             <div class="summary-row">
               <span>Yükleme Tarihi</span>
-              <strong>12.04.2026</strong>
+              <strong id="sumDate">12.04.2026</strong>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="route-panel">
+        <div class="route-place">
+          <small>Nereden</small>
+          <strong id="fromPlace">İstanbul</strong>
+        </div>
+        <div class="route-arrow">→</div>
+        <div class="route-place">
+          <small>Nereye</small>
+          <strong id="toPlace">Ankara</strong>
         </div>
       </div>
     </div>
@@ -79,28 +567,40 @@
 
           <div class="info-grid">
             <div class="info-box">
-              <span>Çıkış İli</span>
-              <strong>İstanbul</strong>
+              <span>Çıkış</span>
+              <strong id="infoFrom">İstanbul</strong>
             </div>
             <div class="info-box">
-              <span>Varış İli</span>
-              <strong>Ankara</strong>
+              <span>Varış</span>
+              <strong id="infoTo">Ankara</strong>
             </div>
             <div class="info-box">
               <span>Yük Cinsi</span>
-              <strong>Ambalajlı ürün</strong>
+              <strong id="infoLoad">Ambalajlı ürün</strong>
             </div>
             <div class="info-box">
               <span>Ağırlık</span>
-              <strong>2.400 kg</strong>
+              <strong id="infoWeight">2.400 kg</strong>
             </div>
             <div class="info-box">
               <span>Araç Tipi</span>
-              <strong>Kamyon</strong>
+              <strong id="infoVehicle">Kamyon</strong>
             </div>
             <div class="info-box">
-              <span>Yük Tipi</span>
-              <strong>Parsiyel</strong>
+              <span>Durum</span>
+              <strong id="infoStatus">Açık</strong>
+            </div>
+            <div class="info-box">
+              <span>Tarih</span>
+              <strong id="infoDate">12.04.2026</strong>
+            </div>
+            <div class="info-box">
+              <span>İlan Türü</span>
+              <strong id="infoType">Parsiyel</strong>
+            </div>
+            <div class="info-box">
+              <span>Referans</span>
+              <strong id="infoRef">SVR-1001</strong>
             </div>
           </div>
         </article>
@@ -108,7 +608,7 @@
         <article class="detail-card">
           <div class="section-kicker">Operasyon Notu</div>
           <h2>Yük açıklaması</h2>
-          <p>Bu ilan, kurumsal sevkiyat planlamasına uygun şekilde teklif toplanan açık yük kaydıdır. Uygun araç ve zaman planı ile hızlı teklif verilmesi beklenir.</p>
+          <p id="operationNote">Bu ilan, kurumsal sevkiyat planlamasına uygun şekilde teklif toplanan açık yük kaydıdır. Uygun araç ve zaman planı ile hızlı teklif verilmesi beklenir.</p>
         </article>
 
         <article class="detail-card">
@@ -118,7 +618,7 @@
             <li>İlan bilgilerini inceleyin</li>
             <li>Giriş yapın veya kayıt olun</li>
             <li>Teklif tutarını ve notunuzu girin</li>
-            <li>Yük veren değerlendirmesini bekleyin</li>
+            <li>Pazarlık veya mesajlaşma ekranından devam edin</li>
           </ul>
         </article>
 
@@ -127,12 +627,144 @@
           <h2>İşe geçin</h2>
           <p>Uygun görüyorsanız doğrudan teklif ekranına geçin ve bu ilana teklifinizi gönderin.</p>
           <div class="card-actions">
-            <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
+            <a id="cardOfferBtn" class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Ver</a>
             <a class="btn btn-secondary" href="yuk-ilanlari.html">Listeye Dön</a>
           </div>
         </article>
       </div>
     </div>
   </section>
+
+  <script>
+    function q(name){
+      return new URLSearchParams(location.search).get(name) || '';
+    }
+
+    function readJson(key, fallback){
+      try{
+        var raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){
+        return fallback;
+      }
+    }
+
+    function clean(value, fallback){
+      var v = String(value || '').trim();
+      return v || fallback || '-';
+    }
+
+    function parseRoute(route){
+      var txt = clean(route, '');
+      if(!txt) return { from:'İstanbul', to:'Ankara' };
+      var parts = txt.split('→').map(function(x){ return x.trim(); });
+      if(parts.length >= 2){
+        return {
+          from: clean(parts[0].split('/')[0], parts[0]),
+          to: clean(parts[1].split('/')[0], parts[1])
+        };
+      }
+      return { from: txt, to:'-' };
+    }
+
+    function routeText(load){
+      var from = [load.neredenIl, load.neredenIlce].filter(Boolean).join(' / ');
+      var to = [load.nereyeIl, load.nereyeIlce].filter(Boolean).join(' / ');
+      if(from && to) return from + ' → ' + to;
+      return clean(load.route || load.title, 'İstanbul → Ankara');
+    }
+
+    function setText(id, value){
+      var el = document.getElementById(id);
+      if(el) el.textContent = value;
+    }
+
+    var defaultLoad = {
+      id:'SVR-1001',
+      code:'SVR-1001',
+      title:'İstanbul → Ankara',
+      route:'İstanbul → Ankara',
+      type:'Parsiyel',
+      vehicle:'Kamyon',
+      load:'Ambalajlı ürün',
+      weight:'2.400 kg',
+      date:'12.04.2026',
+      status:'Açık',
+      desc:'Bu ilan, kurumsal sevkiyat planlamasına uygun şekilde teklif toplanan açık yük kaydıdır.'
+    };
+
+    var loads = Array.isArray(readJson('sevra_loads', [])) ? readJson('sevra_loads', []) : [];
+    var selectedLoad = readJson('sevra_selected_load', null);
+    var queryId = q('id') || q('load_id');
+
+    if(queryId && loads.length){
+      var found = loads.find(function(item){ return item.id === queryId; });
+      if(found) selectedLoad = found;
+    }
+
+    var load = selectedLoad || defaultLoad;
+    if(!selectedLoad){
+      document.getElementById('missingBox').style.display = 'block';
+    }
+
+    var route = routeText(load);
+    var r = routeParts(load);
+
+    function routeParts(load){
+      var hasNew = load.neredenIl || load.neredenIlce || load.nereyeIl || load.nereyeIlce;
+      if(hasNew){
+        return {
+          from: [load.neredenIl, load.neredenIlce].filter(Boolean).join(' / ') || 'Nereden',
+          to: [load.nereyeIl, load.nereyeIlce].filter(Boolean).join(' / ') || 'Nereye'
+        };
+      }
+      return parseRoute(route);
+    }
+
+    var ref = clean(load.code || load.id, 'SVR-1001');
+    var type = clean(load.type, 'Parsiyel');
+    var vehicle = clean(load.vehicle, 'Kamyon');
+    var loadName = clean(load.load, 'Ambalajlı ürün');
+    var weight = clean(load.weight, '2.400 kg');
+    var date = clean(load.date, '12.04.2026');
+    var status = clean(load.status, 'Açık');
+    var desc = clean(load.desc, 'Kurumsal sevkiyat akışına uygun, teklif toplanan açık yük ilanı.');
+
+    setText('detailTitle', route);
+    setText('detailDesc', desc);
+
+    setText('sumRef', ref);
+    setText('sumType', type);
+    setText('sumVehicle', vehicle);
+    setText('sumDate', date);
+
+    setText('fromPlace', r.from);
+    setText('toPlace', r.to);
+
+    setText('infoFrom', r.from);
+    setText('infoTo', r.to);
+    setText('infoLoad', loadName);
+    setText('infoWeight', weight);
+    setText('infoVehicle', vehicle);
+    setText('infoStatus', status);
+    setText('infoDate', date);
+    setText('infoType', type);
+    setText('infoRef', ref);
+
+    setText('operationNote', desc);
+
+    var offerHref = 'platform-kayit-secimi.html?redirect=ilan-teklif';
+    if(load && load.id){
+      offerHref += '&load_id=' + encodeURIComponent(load.id);
+    }
+
+    document.getElementById('offerBtn').href = offerHref;
+    document.getElementById('topOfferBtn').href = offerHref;
+    document.getElementById('cardOfferBtn').href = offerHref;
+
+    try{
+      localStorage.setItem('sevra_selected_load', JSON.stringify(load));
+    }catch(e){}
+  </script>
 </body>
 </html>
