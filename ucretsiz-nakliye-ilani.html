@@ -15,225 +15,684 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Ücretsiz Nakliye İlanı | Ücretsiz Yük ve Araç İlanı Ver | SEVRA</title>
-  <meta name="description" content="SEVRA ile ücretsiz nakliye ilanı ver, ücretsiz yük ilanı paylaş, araç ilanı oluştur ve nakliye, kurye, kargo, ambar topluluğunda görünür ol." />
-  <meta name="keywords" content="ücretsiz nakliye ilanı, ücretsiz yük ilanı ver, ücretsiz araç ilanı ver, nakliye ilanı sitesi, yük taşıma ilanı, nakliye ilanı ver, sevra" />
+  <meta name="description" content="SEVRA ile ücretsiz nakliye ilanı ver, ücretsiz yük ilanı paylaş, araç ilanı oluştur ve nakliye, kurye, kargo, ambar topluluğunda görünür ol. İstanbul, Bursa, Ankara ve Türkiye geneli ilan paylaşımı." />
+  <meta name="keywords" content="ücretsiz nakliye ilanı, ücretsiz yük ilanı ver, ücretsiz araç ilanı ver, nakliye ilanı sitesi, yük taşıma ilanı, nakliye ilanı ver, İstanbul ücretsiz nakliye ilanı, Bursa yük ilanı, Ankara araç ilanı, sevra" />
   <meta name="robots" content="index, follow" />
 
   <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --surface2:#f7faff;
+      --text:#172033;
+      --muted:#59687d;
+      --navy:#071326;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --yellow2:#ffd166;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box}
+
     body{
       margin:0;
-      font-family:Arial, sans-serif;
-      background:#f5f7fb;
-      color:#102033;
-      line-height:1.6;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
     }
 
-    header{
-      background:linear-gradient(135deg,#071326,#0b3f78);
-      color:white;
-      padding:44px 18px;
-      text-align:center;
-    }
+    a{text-decoration:none;color:inherit}
 
-    header h1{
-      margin:0;
-      font-size:34px;
-      line-height:1.2;
-    }
-
-    header p{
-      max-width:860px;
-      margin:16px auto 0;
-      font-size:18px;
-      color:#e6eef8;
-    }
-
-    nav{
-      background:white;
-      border-bottom:1px solid #dde6f0;
-      padding:12px 16px;
-      text-align:center;
-    }
-
-    nav a{
-      display:inline-block;
-      margin:6px 8px;
-      color:#082f63;
-      text-decoration:none;
-      font-weight:bold;
-    }
-
-    .wrap{
-      max-width:1080px;
+    .container{
+      width:min(var(--max),calc(100% - 28px));
       margin:0 auto;
-      padding:24px 16px 60px;
     }
 
-    .card{
-      background:white;
-      border:1px solid #dde6f0;
-      border-radius:16px;
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+
+    .topbar-inner{
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:26px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:32px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:#132238;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .nav a{
+      padding:9px 11px;
+      border-radius:11px;
+      background:#f7faff;
+      border:1px solid rgba(15,35,65,.08);
+      color:#132238;
+    }
+
+    .nav a:hover{background:#edf5ff}
+
+    .btn{
+      min-height:44px;
+      padding:0 16px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid transparent;
+      transition:.2s ease;
+      cursor:pointer;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .btn-primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn-primary:hover{background:#084c96}
+
+    .btn-secondary{
+      background:#ffffff;
+      color:#132238;
+      border-color:var(--line);
+    }
+
+    .btn-secondary:hover{background:#edf5ff}
+
+    .btn-gold{
+      background:var(--yellow);
+      color:#111;
+      border-color:var(--yellow);
+    }
+
+    .hero{
+      padding:30px 0 22px;
+    }
+
+    .hero-shell{
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      padding:34px;
+      align-items:center;
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      min-height:38px;
+      padding:0 14px;
+      align-items:center;
+      border-radius:999px;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.26);
+      color:#8a5a00;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      font-size:clamp(36px,4.4vw,64px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin:0 0 16px;
+      max-width:920px;
+    }
+
+    .hero p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:820px;
+      margin:0 0 20px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .hero-panel{
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:#ffffff;
       padding:24px;
-      margin:18px 0;
-      box-shadow:0 8px 25px rgba(0,0,0,.07);
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
     }
 
-    h2{
-      color:#082f63;
-      margin-top:0;
-      line-height:1.25;
+    .panel-kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .hero-panel h3{
+      color:#0b1930;
+      font-size:30px;
+      line-height:1.12;
+      margin:0 0 12px;
+    }
+
+    .hero-panel ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      padding:0;
+      margin:0;
+    }
+
+    .hero-panel li{
+      position:relative;
+      color:#526174;
+      padding-left:20px;
+      font-size:15px;
+    }
+
+    .hero-panel li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .section{
+      padding:28px 0;
+    }
+
+    .section-head{
+      margin-bottom:18px;
+    }
+
+    .section-kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .section h2{
+      color:#0b1930;
+      font-size:clamp(30px,3.2vw,46px);
+      line-height:1.08;
+      margin:0 0 10px;
+      letter-spacing:-.035em;
+    }
+
+    .section-head p{
+      color:#637083;
+      max-width:860px;
+      margin:0;
+      font-size:17px;
     }
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-      gap:14px;
-      margin-top:14px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
     }
 
-    .box{
-      background:#eef5ff;
-      border:1px solid #cfe0f5;
-      border-radius:14px;
-      padding:16px;
-      font-weight:bold;
+    .card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
     }
 
-    .cta{
-      display:inline-block;
-      background:#f6a400;
-      color:#111;
-      text-decoration:none;
-      font-weight:bold;
-      padding:14px 20px;
-      border-radius:12px;
-      margin-top:10px;
+    .card h3{
+      color:#0b1930;
+      font-size:24px;
+      line-height:1.12;
+      margin:0 0 10px;
     }
 
-    .dark{
-      background:#071326;
-      color:white;
+    .card p{
+      color:#526174;
+      margin:0;
     }
 
-    .dark h2{
-      color:white;
+    .icon{
+      width:50px;
+      height:50px;
+      border-radius:17px;
+      display:grid;
+      place-items:center;
+      background:#fff4d8;
+      color:#8a5a00;
+      font-size:24px;
+      margin-bottom:14px;
+      font-weight:900;
     }
 
-    .dark p{
-      color:#e6eef8;
+    .share-panel{
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:26px;
+      padding:26px;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+      align-items:start;
     }
 
-    ul{
-      padding-left:22px;
+    .share-panel h2{
+      color:#ffffff;
+      margin-top:0;
+    }
+
+    .share-panel p{
+      color:rgba(255,255,255,.76);
+    }
+
+    .sample-box{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:20px;
+      padding:20px;
+    }
+
+    .sample-box strong{
+      display:block;
+      color:#ffd166;
+      margin-bottom:10px;
+      font-size:18px;
+    }
+
+    .sample-box p{
+      margin:0 0 8px;
+      color:#ffffff;
+    }
+
+    .sample-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .step-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      min-height:220px;
+    }
+
+    .step-no{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:22px;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+
+    .step-card h3{
+      color:#0b1930;
+      font-size:21px;
+      line-height:1.12;
+      margin:0 0 10px;
+    }
+
+    .step-card p{
+      color:#526174;
+      margin:0;
+      font-size:15px;
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+
+    .tag-row span{
+      padding:8px 10px;
+      border-radius:999px;
+      background:#fff4d8;
+      color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .cta-band{
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+
+    .cta-band strong{
+      display:block;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+
+    .cta-band span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .cta-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .cta-band .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
     }
 
     footer{
       text-align:center;
-      padding:26px;
-      background:#071326;
-      color:white;
+      padding:28px;
+      color:#637083;
+      border-top:1px solid var(--line);
+      margin-top:28px;
+      background:#ffffff;
+    }
+
+    @media(max-width:1050px){
+      .hero-shell,
+      .share-panel,
+      .sample-grid{
+        grid-template-columns:1fr;
+      }
+
+      .grid,
+      .steps{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:650px){
+      .topbar-inner{align-items:flex-start}
+      .nav{width:100%}
+      .hero-shell{padding:22px}
+      .hero h1{font-size:34px}
+      .grid,
+      .steps{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Ücretsiz Nakliye İlanı Ver</h1>
-  <p>
-    SEVRA ile ücretsiz nakliye ilanı, ücretsiz yük ilanı ve araç ilanı paylaşarak nakliye, kurye, kargo, ambar ve parsiyel taşıma topluluğunda görünür olun.
-  </p>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>Dijital Lojistik ve Tedarik Platformu</span>
+      </div>
+    </a>
+
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="nakliye-ilani-ver.html">Nakliye İlanı Ver</a>
+      <a href="yuk-ilanlari.html">Yük İlanları</a>
+      <a href="yuk-bulma-sistemi.html">Yük Bul</a>
+      <a href="arac-bulma-sistemi.html">Araç Bul</a>
+    </nav>
+  </div>
 </header>
 
-<nav>
-  <a href="/">Ana Sayfa</a>
-  <a href="/nakliye-ilani-ver.html">Nakliye İlanı Ver</a>
-  <a href="/nakliye-platformu.html">Nakliye Platformu</a>
-  <a href="/yuk-bulma-sistemi.html">Yük Bulma</a>
-  <a href="/arac-bulma-sistemi.html">Araç Bulma</a>
-  <a href="/kurye-bulma-sistemi.html">Kurye Bulma</a>
-</nav>
+<section class="hero">
+  <div class="container">
+    <div class="hero-shell">
+      <div>
+        <div class="hero-badge">Ücretsiz İlan Paylaşımı</div>
+        <h1>Ücretsiz nakliye ilanı paylaş, yükünü veya aracını görünür hale getir</h1>
+        <p>
+          SEVRA; ücretsiz yük ilanı, araç ilanı, kurye/kargo duyurusu, ambar ve parsiyel taşıma paylaşımı yapmak isteyenleri aynı dijital lojistik topluluğunda buluşturur.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubunda Paylaş</a>
+          <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanlarını Gör</a>
+          <a class="btn btn-gold" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Üyelik</a>
+        </div>
+      </div>
 
-<div class="wrap">
-
-  <section class="card">
-    <h2>SEVRA’da Ücretsiz Nakliye İlanı Nedir?</h2>
-    <p>
-      SEVRA, yük göndermek isteyenler, araç arayanlar, nakliyeciler, araç sahipleri, kuryeler, kargo ve ambar hizmeti verenler için oluşturulan yeni dijital lojistik topluluğudur.
-    </p>
-    <p>
-      Platformun amacı; nakliye, kurye, kargo, ambar ve parsiyel taşıma ihtiyaçlarını daha düzenli bir dijital alanda bir araya getirmektir.
-    </p>
-  </section>
-
-  <section class="card">
-    <h2>Kimler Ücretsiz İlan Paylaşabilir?</h2>
-    <div class="grid">
-      <div class="box">🚚 Nakliye işi yapanlar</div>
-      <div class="box">📦 Yük göndermek isteyenler</div>
-      <div class="box">🚛 Boş aracı olanlar</div>
-      <div class="box">🏍️ Kurye hizmeti verenler</div>
-      <div class="box">🏢 Ambar ve kargo firmaları</div>
-      <div class="box">📍 Parsiyel taşıma yapanlar</div>
+      <div class="hero-panel">
+        <div class="panel-kicker">Ücretsiz ilan ne işe yarar?</div>
+        <h3>İlk amaç görünürlük kazanmak</h3>
+        <ul>
+          <li>Yükünü taşıtmak isteyenler ilan paylaşabilir</li>
+          <li>Boş aracı olanlar güzergâhını duyurabilir</li>
+          <li>Kurye, kargo ve ambar hizmetleri kendini gösterebilir</li>
+        </ul>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="card">
-    <h2>Ücretsiz Nakliye İlanında Hangi Bilgiler Olmalı?</h2>
-    <p>
-      İlanın daha hızlı anlaşılması ve doğru kişilerden dönüş alması için aşağıdaki bilgiler açık şekilde yazılmalıdır:
-    </p>
-    <ul>
-      <li>Çıkış şehri ve ilçe bilgisi</li>
-      <li>Varış şehri ve ilçe bilgisi</li>
-      <li>Yük türü ve yaklaşık miktarı</li>
-      <li>İstenen araç tipi</li>
-      <li>Taşıma tarihi</li>
-      <li>İletişim veya teklif bilgisi</li>
-    </ul>
-  </section>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">İlan Türleri</div>
+      <h2>Ücretsiz paylaşılabilecek ilanlar</h2>
+      <p>Bu sayfa özellikle ücretsiz görünürlük arayan yük verenler, nakliyeciler, araç sahipleri, kuryeler ve ambar hizmetleri için hazırlanmıştır.</p>
+    </div>
 
-  <section class="card">
-    <h2>Örnek Ücretsiz Yük İlanı</h2>
-    <p><strong>Çıkış:</strong> İstanbul / Esenyurt</p>
-    <p><strong>Varış:</strong> Ankara / Ostim</p>
-    <p><strong>Yük:</strong> 12 koli ticari ürün</p>
-    <p><strong>Araç tipi:</strong> Kapalı kasa kamyonet</p>
-    <p><strong>Tarih:</strong> Bu hafta içi</p>
-    <p><strong>Not:</strong> Uygun araç ve fiyat bilgisi bekleniyor.</p>
-  </section>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">📦</div>
+        <h3>Ücretsiz yük ilanı</h3>
+        <p>Yük göndermek isteyenler çıkış, varış, yük türü ve tarih bilgisiyle ilan paylaşabilir.</p>
+      </article>
 
-  <section class="card">
-    <h2>Ücretsiz Araç İlanı Örneği</h2>
-    <p><strong>Araç:</strong> Panelvan / kamyonet</p>
-    <p><strong>Çıkış:</strong> Bursa</p>
-    <p><strong>Güzergâh:</strong> Bursa → İzmir / Manisa hattı</p>
-    <p><strong>Durum:</strong> Dönüş aracı boş</p>
-    <p><strong>Hizmet:</strong> Parsiyel yük, koli, paket ve ticari ürün taşıma</p>
-  </section>
+      <article class="card">
+        <div class="icon">🚛</div>
+        <h3>Ücretsiz araç ilanı</h3>
+        <p>Boş aracı olanlar, dönüş güzergâhını veya hizmet verdiği hatları duyurabilir.</p>
+      </article>
 
-  <section class="card">
-    <h2>SEVRA Hangi Aramalar İçin Hazırlandı?</h2>
-    <p>
-      Bu sayfa; ücretsiz nakliye ilanı, ücretsiz yük ilanı ver, ücretsiz araç ilanı ver, nakliye ilanı sitesi, yük taşıma ilanı, nakliye ilanı ver ve yük bulma platformu gibi aramalarda SEVRA’nın daha net anlaşılması için hazırlanmıştır.
-    </p>
-  </section>
+      <article class="card">
+        <div class="icon">🏍️</div>
+        <h3>Kurye / kargo duyurusu</h3>
+        <p>Kurye, küçük paket, koli, kargo ve şehir içi teslimat hizmetleri için duyuru yapılabilir.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-  <section class="card dark">
-    <h2>SEVRA Topluluğuna Katıl</h2>
-    <p>
-      Nakliye, kurye, kargo, ambar ve parsiyel taşıma paylaşımlarını daha düzenli bir alanda buluşturmak için SEVRA topluluğunu büyütüyoruz.
-    </p>
-    <p>
-      Facebook grup adı: <strong>Nakliye Kurye Kargo Türkiye | SEVRA</strong>
-    </p>
-    <a class="cta" href="https://www.sevrawms.com.tr/">Ana Sayfaya Git</a>
-  </section>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">Nasıl Paylaşılır?</div>
+      <h2>Ücretsiz ilanı net yazmak daha hızlı dönüş sağlar</h2>
+      <p>İlan ne kadar açık olursa, doğru taşıyıcı veya yük sahibiyle bağlantı kurmak o kadar kolay olur.</p>
+    </div>
 
-</div>
+    <div class="steps">
+      <article class="step-card">
+        <div class="step-no">1</div>
+        <h3>Rota yaz</h3>
+        <p>Çıkış ve varış şehir/ilçe bilgisini net belirt.</p>
+      </article>
+
+      <article class="step-card">
+        <div class="step-no">2</div>
+        <h3>Yük veya araç detayını ekle</h3>
+        <p>Koli, palet, kamyonet, panelvan, kurye veya ambar bilgilerini yaz.</p>
+      </article>
+
+      <article class="step-card">
+        <div class="step-no">3</div>
+        <h3>Tarih ve not gir</h3>
+        <p>Ne zaman çıkacağı, acil olup olmadığı ve özel şartları belirt.</p>
+      </article>
+
+      <article class="step-card">
+        <div class="step-no">4</div>
+        <h3>Paylaş ve takip et</h3>
+        <p>Facebook grubunda paylaş, Yük İlanları sayfasını takip et, uygun dönüşleri değerlendir.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="share-panel">
+      <div>
+        <div class="section-kicker">Örnek Ücretsiz İlanlar</div>
+        <h2>Yük ilanı ve araç ilanı için hazır formatlar</h2>
+        <p>Aşağıdaki örnekler, ziyaretçinin nasıl ilan paylaşacağını hızlı anlaması için hazırlanmıştır. Metni kendine göre değiştirip kullanabilir.</p>
+        <div class="tag-row">
+          <span>ücretsiz nakliye ilanı</span>
+          <span>ücretsiz yük ilanı ver</span>
+          <span>ücretsiz araç ilanı ver</span>
+          <span>nakliye ilanı sitesi</span>
+          <span>yük taşıma ilanı</span>
+        </div>
+      </div>
+
+      <div class="sample-grid">
+        <div class="sample-box">
+          <strong>Örnek ücretsiz yük ilanı</strong>
+          <p><b>Çıkış:</b> İstanbul / Esenyurt</p>
+          <p><b>Varış:</b> Ankara / Ostim</p>
+          <p><b>Yük:</b> 12 koli ticari ürün</p>
+          <p><b>Araç tipi:</b> Kapalı kasa kamyonet</p>
+          <p><b>Tarih:</b> Bu hafta içi</p>
+          <p><b>Not:</b> Uygun araç ve fiyat bilgisi bekleniyor.</p>
+        </div>
+
+        <div class="sample-box">
+          <strong>Örnek ücretsiz araç ilanı</strong>
+          <p><b>Araç:</b> Panelvan / kamyonet</p>
+          <p><b>Çıkış:</b> Bursa</p>
+          <p><b>Güzergâh:</b> Bursa → İzmir / Manisa hattı</p>
+          <p><b>Durum:</b> Dönüş aracı boş</p>
+          <p><b>Hizmet:</b> Parsiyel yük, koli ve ticari ürün taşıma</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <strong>Ücretsiz ilanını şimdi paylaşmaya başla.</strong>
+        <span>Yükünü, aracını, kurye/kargo veya ambar hizmetini SEVRA topluluğunda görünür hale getir.</span>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
+        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
-  SEVRA | Ücretsiz Nakliye İlanı ve Dijital Lojistik Topluluğu <br>
+  SEVRA | Ücretsiz Nakliye İlanı ve Dijital Lojistik Topluluğu<br>
   sevrawms.com.tr
 </footer>
 
