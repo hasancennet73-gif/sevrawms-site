@@ -13,104 +13,703 @@
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yük İlanları</title>
+  <title>SEVRA | Yük İlanları - Açık Yükler, Araç Arayanlar, Boş Araçlar</title>
+  <meta name="description" content="SEVRA Yük İlanları ile açık yükleri inceleyin, aracınıza yük bulun, nakliye ilanlarına teklif verin. İstanbul, Bursa, Ankara ve Türkiye geneli yük ilanları." />
+  <meta name="keywords" content="yük ilanları, açık yükler, yük bul, araç bul, nakliye ilanı, İstanbul yük ilanı, Bursa yük ilanı, Ankara yük ilanı, parsiyel yük, boş araç" />
   <link rel="stylesheet" href="yuk-ilanlari.css" />
+
   <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --surface2:#f7faff;
+      --text:#172033;
+      --muted:#59687d;
+      --navy:#071326;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --yellow2:#ffd166;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1380px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.12), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%) !important;
+      line-height:1.5;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .container{
+      width:min(var(--max),calc(100% - 28px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.96) !important;
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line) !important;
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+
+    .topbar-inner{
+      min-height:86px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      text-decoration:none;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89) !important;
+      color:#0b1830 !important;
+      font-size:26px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:32px;
+      color:#0b1930 !important;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083 !important;
+      margin-top:4px;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:#132238 !important;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .nav a{
+      padding:9px 11px;
+      border-radius:11px;
+      background:#f7faff;
+      border:1px solid rgba(15,35,65,.08);
+      color:#132238 !important;
+    }
+
+    .nav a:hover{
+      background:#edf5ff;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:44px;
+      padding:0 16px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid transparent;
+      transition:.2s ease;
+      cursor:pointer;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    .btn-primary{
+      background:#0b5db8 !important;
+      color:#fff !important;
+      border-color:#0b5db8 !important;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn-primary:hover{
+      background:#084c96 !important;
+    }
+
+    .btn-secondary{
+      background:#ffffff !important;
+      color:#132238 !important;
+      border-color:var(--line) !important;
+    }
+
+    .btn-secondary:hover{
+      background:#edf5ff !important;
+    }
+
+    .btn-gold{
+      background:var(--yellow) !important;
+      color:#101010 !important;
+      border-color:var(--yellow) !important;
+    }
+
+    .hero{
+      padding:30px 0 22px;
+      background:transparent !important;
+    }
+
+    .hero-shell{
+      border:1px solid var(--line) !important;
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%) !important;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      padding:34px;
+      align-items:center;
+    }
+
+    .hero-copy h1{
+      font-size:clamp(36px,4.4vw,64px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930 !important;
+      margin:16px 0 16px;
+      max-width:900px;
+    }
+
+    .hero-copy p{
+      color:#526174 !important;
+      font-size:18px;
+      line-height:1.55;
+      max-width:780px;
+      margin:0 0 20px;
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      min-height:38px;
+      padding:0 14px;
+      align-items:center;
+      border-radius:999px;
+      background:#fff4d8 !important;
+      border:1px solid rgba(246,164,0,.26) !important;
+      color:#8a5a00 !important;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:4px;
+    }
+
+    .hero-cta-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .hero-panel{
+      border:1px solid var(--line) !important;
+      border-radius:26px;
+      background:#ffffff !important;
+      padding:24px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .panel-topline{
+      color:#a46b00 !important;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .hero-panel h3{
+      color:#0b1930 !important;
+      font-size:30px;
+      line-height:1.12;
+      margin:0 0 12px;
+    }
+
+    .hero-panel ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      padding:0;
+      margin:0;
+    }
+
+    .hero-panel li{
+      position:relative;
+      color:#526174 !important;
+      padding-left:20px;
+      font-size:15px;
+    }
+
+    .hero-panel li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .category-strip{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .category-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+      min-height:142px;
+    }
+
+    .category-card span{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:#fff4d8;
+      color:#8a5a00;
+      font-size:22px;
+      margin-bottom:12px;
+    }
+
+    .category-card strong{
+      display:block;
+      color:#0b1930;
+      font-size:19px;
+      margin-bottom:6px;
+    }
+
+    .category-card p{
+      color:#526174;
+      font-size:14px;
+      line-height:1.45;
+      margin:0;
+    }
+
+    .list-section{
+      padding:28px 0 60px;
+      background:transparent !important;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:22px;
+    }
+
+    .section-kicker{
+      color:#a46b00 !important;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .section-head h2{
+      color:#0b1930 !important;
+      font-size:clamp(30px,3vw,46px);
+      line-height:1.08;
+      margin:0;
+      letter-spacing:-.035em;
+    }
+
+    .section-head p{
+      color:#637083 !important;
+      max-width:540px;
+      margin:0;
+    }
+
     .sevra-summary-bar{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:12px;
       margin:0 0 20px;
     }
+
     .sevra-summary-item{
-      border:1px solid rgba(255,255,255,.08);
+      border:1px solid var(--line) !important;
       border-radius:18px;
-      background:rgba(255,255,255,.025);
-      padding:14px 16px;
-      min-height:82px;
+      background:#ffffff !important;
+      padding:16px;
+      min-height:86px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
     }
-    .sevra-summary-item small{display:block;color:#aebcd0;font-size:12px;margin-bottom:8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
-    .sevra-summary-item strong{display:block;color:#fff;font-size:22px;line-height:1.1}
+
+    .sevra-summary-item small{
+      display:block;
+      color:#637083 !important;
+      font-size:12px;
+      margin-bottom:8px;
+      font-weight:900;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .sevra-summary-item strong{
+      display:block;
+      color:#0b1930 !important;
+      font-size:26px;
+      line-height:1.1;
+    }
+
+    #loadingBox{
+      padding:18px !important;
+      border:1px solid var(--line) !important;
+      border-radius:18px !important;
+      margin-bottom:18px !important;
+      background:#ffffff !important;
+      color:#526174 !important;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+    }
+
+    .load-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
     .load-card.sevra-pro-card{
       position:relative;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.09);
-      background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.022));
-      box-shadow:0 22px 46px rgba(0,0,0,.24);
+      border:1px solid var(--line) !important;
+      background:#ffffff !important;
+      box-shadow:0 14px 36px rgba(10,35,66,.08);
+      border-radius:24px;
+      padding:22px;
+      color:var(--text);
     }
+
     .load-card.sevra-pro-card:before{
       content:"";
       position:absolute;
-      left:0;top:0;bottom:0;width:4px;
-      background:linear-gradient(180deg,#f1c84d,#977928);
+      left:0;
+      top:0;
+      bottom:0;
+      width:5px;
+      background:linear-gradient(180deg,#f1c84d,#0b5db8);
     }
+
     .load-card-top.sevra-pro-top{
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap:10px;
       margin-bottom:12px;
+      position:relative;
+      z-index:2;
     }
+
+    .load-tag{
+      display:inline-flex;
+      align-items:center;
+      min-height:30px;
+      padding:0 11px;
+      border-radius:999px;
+      background:#fff4d8 !important;
+      color:#7a5100 !important;
+      border:1px solid rgba(246,164,0,.24);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .load-ref{
+      color:#637083 !important;
+      font-size:12px;
+      font-weight:900;
+    }
+
     .sevra-route-box{
       display:grid;
       gap:10px;
-      padding:14px;
+      padding:15px;
       border-radius:18px;
-      background:rgba(13,23,48,.56);
-      border:1px solid rgba(255,255,255,.07);
+      background:#f4f8ff !important;
+      border:1px solid var(--line) !important;
       margin:10px 0 14px;
     }
+
     .sevra-route-line{
       display:grid;
       grid-template-columns:1fr auto 1fr;
       gap:12px;
       align-items:center;
     }
-    .sevra-place small{display:block;color:#9fb0c7;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
-    .sevra-place strong{display:block;color:#fff;font-size:18px;line-height:1.2}
-    .sevra-place span{display:block;color:#d6e0ef;font-size:13px;margin-top:3px}
-    .sevra-arrow{
-      width:42px;height:42px;border-radius:999px;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(241,200,77,.14);color:#ffe08a;font-weight:900;
-      border:1px solid rgba(241,200,77,.22);
+
+    .sevra-place small{
+      display:block;
+      color:#637083 !important;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      margin-bottom:5px;
     }
+
+    .sevra-place strong{
+      display:block;
+      color:#0b1930 !important;
+      font-size:19px;
+      line-height:1.2;
+    }
+
+    .sevra-place span{
+      display:block;
+      color:#526174 !important;
+      font-size:13px;
+      margin-top:3px;
+    }
+
+    .sevra-arrow{
+      width:42px;
+      height:42px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff4d8 !important;
+      color:#7a5100 !important;
+      font-weight:900;
+      border:1px solid rgba(246,164,0,.24);
+    }
+
+    .load-card h3{
+      color:#0b1930 !important;
+      font-size:22px;
+      line-height:1.15;
+      margin:0 0 12px;
+    }
+
     .sevra-info-grid{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:10px;
       margin:12px 0;
     }
+
     .sevra-info-box{
-      border:1px solid rgba(255,255,255,.07);
-      background:rgba(255,255,255,.025);
+      border:1px solid var(--line) !important;
+      background:#f7faff !important;
       border-radius:14px;
       padding:11px 12px;
       min-height:66px;
     }
-    .sevra-info-box small{display:block;color:#aebcd0;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
-    .sevra-info-box strong{display:block;color:#f7fbff;font-size:14px;line-height:1.24;word-break:break-word}
+
+    .sevra-info-box small{
+      display:block;
+      color:#637083 !important;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      margin-bottom:6px;
+    }
+
+    .sevra-info-box strong{
+      display:block;
+      color:#0b1930 !important;
+      font-size:14px;
+      line-height:1.24;
+      word-break:break-word;
+    }
+
+    .load-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:12px 0;
+    }
+
+    .load-meta span{
+      display:inline-flex;
+      min-height:28px;
+      align-items:center;
+      padding:0 10px;
+      border-radius:999px;
+      background:#eef4fb !important;
+      color:#526174 !important;
+      font-size:12px;
+      font-weight:800;
+    }
+
     .sevra-desc{
-      color:#d5dfec;
+      color:#526174 !important;
       line-height:1.55;
       margin-top:12px;
       min-height:44px;
     }
-    .sevra-empty-box{
-      padding:24px;
-      border:1px dashed rgba(255,255,255,.12);
-      border-radius:20px;
-      background:rgba(255,255,255,.02);
-      color:#d6e0ef;
+
+    .load-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
     }
-    @media (max-width:1000px){
+
+    .sevra-empty-box{
+      padding:26px;
+      border:1px dashed rgba(15,35,65,.22) !important;
+      border-radius:20px;
+      background:#ffffff !important;
+      color:#526174 !important;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+    }
+
+    .example-section{
+      margin-top:30px;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:#ffffff;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .example-section h2{
+      color:#0b1930;
+      font-size:32px;
+      line-height:1.1;
+      margin:0 0 8px;
+    }
+
+    .example-section p{
+      color:#526174;
+      margin:0 0 18px;
+    }
+
+    .example-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .example-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#f7faff;
+      padding:18px;
+    }
+
+    .example-card small{
+      display:block;
+      color:#a46b00;
+      font-weight:900;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .example-card strong{
+      display:block;
+      color:#0b1930;
+      font-size:18px;
+      margin-bottom:6px;
+    }
+
+    .example-card span{
+      color:#526174;
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .bottom-cta{
+      margin-top:24px;
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+
+    .bottom-cta strong{
+      display:block;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+
+    .bottom-cta span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .bottom-cta-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .bottom-cta .btn-secondary{
+      background:rgba(255,255,255,.10) !important;
+      color:#fff !important;
+      border-color:rgba(255,255,255,.18) !important;
+    }
+
+    @media (max-width:1100px){
+      .hero-shell{grid-template-columns:1fr}
+      .category-strip{grid-template-columns:repeat(2,1fr)}
       .sevra-summary-bar{grid-template-columns:repeat(2,1fr)}
       .sevra-info-grid{grid-template-columns:repeat(2,1fr)}
+      .load-grid{grid-template-columns:1fr}
+      .example-grid{grid-template-columns:1fr}
     }
+
     @media (max-width:650px){
-      .sevra-summary-bar,.sevra-info-grid{grid-template-columns:1fr}
+      .topbar-inner{align-items:flex-start}
+      .nav,.top-actions{width:100%}
+      .hero-shell{padding:22px}
+      .category-strip,.sevra-summary-bar,.sevra-info-grid{grid-template-columns:1fr}
       .sevra-route-line{grid-template-columns:1fr;gap:8px}
       .sevra-arrow{width:100%;height:34px}
+      .hero-copy h1{font-size:34px}
     }
   </style>
 </head>
@@ -124,14 +723,20 @@
           <span>Dijital Lojistik ve Tedarik Platformu</span>
         </div>
       </a>
+
       <nav class="nav">
         <a href="index.html">Ana Sayfa</a>
         <a href="index.html#hizmetler">Hizmetler</a>
+        <a href="index.html#nasil-calisir">Nasıl Çalışır?</a>
         <a href="index.html#neden-biz">Neden Biz</a>
-        <a href="yonetici-giris.html">Yönetici Girişi</a>
+        <a href="nakliye-ilani-ver.html">İlan Ver</a>
+        <a href="yuk-bulma-sistemi.html">Yük Bul</a>
+        <a href="arac-bulma-sistemi.html">Araç Bul</a>
       </nav>
+
       <div class="top-actions">
         <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışı</a>
+        <a class="btn btn-primary" href="nakliye-ilani-ver.html">İlan Ver</a>
       </div>
     </div>
   </header>
@@ -142,17 +747,50 @@
         <div class="hero-copy">
           <div class="hero-badge">Kurumsal Yük Akışı</div>
           <h1>Açık yük ilanlarını inceleyin, uygun işe kontrollü teklif verin</h1>
-          <p>SEVRA yük ilanları ekranı; yük veren ve taşıyıcı tarafı daha düzenli, daha profesyonel ve daha okunur bir teklif akışında buluşturur.</p>
+          <p>SEVRA yük ilanları ekranı; yük veren, nakliyeci, araç sahibi, kurye ve ambar hizmetlerini daha düzenli, daha okunur ve daha profesyonel bir ilan akışında buluşturur.</p>
+
+          <div class="hero-cta-row">
+            <a class="btn btn-primary" href="nakliye-ilani-ver.html">Yük / Nakliye İlanı Ver</a>
+            <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışına Git</a>
+            <a class="btn btn-secondary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
+          </div>
         </div>
+
         <div class="hero-panel">
-          <div class="panel-topline">Operasyon Mantığı</div>
-          <h3>İlanlar teklif akışına taşınır</h3>
+          <div class="panel-topline">SEVRA İlan Mantığı</div>
+          <h3>Yük, araç ve kurye talepleri tek akışta görünür</h3>
           <ul>
-            <li>Detay veya Teklif Ver seçildiğinde ilgili ilan akış ekranına taşınır</li>
-            <li>İlan detayları teklif sürecinde otomatik görünür</li>
-            <li>Süreç kurumsal karar akışı mantığıyla ilerler</li>
+            <li>İlan detayları teklif sürecinde daha düzenli görünür</li>
+            <li>Yük veren ve taşıyıcı tarafı aynı platformda buluşur</li>
+            <li>İleride üyelik, teklif ve güvenli işlem akışına hazır yapı sunar</li>
           </ul>
         </div>
+      </div>
+
+      <div class="category-strip">
+        <article class="category-card">
+          <span>📦</span>
+          <strong>Açık Yükler</strong>
+          <p>Taşınmayı bekleyen yükleri, güzergâh ve araç ihtiyacına göre inceleyin.</p>
+        </article>
+
+        <article class="category-card">
+          <span>🚛</span>
+          <strong>Araç Arayanlar</strong>
+          <p>Yük sahibi firmaların araç ve taşıyıcı aradığı talepleri takip edin.</p>
+        </article>
+
+        <article class="category-card">
+          <span>🛣️</span>
+          <strong>Boş Araçlar</strong>
+          <p>Boş dönüş yapan veya güzergâhında yük arayan araçlar için görünürlük oluşturun.</p>
+        </article>
+
+        <article class="category-card">
+          <span>🏍️</span>
+          <strong>Kurye / Kargo Talepleri</strong>
+          <p>Şehir içi hızlı teslimat, paket, koli ve kargo taleplerini ayrı görünür hale getirin.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -164,7 +802,7 @@
           <div class="section-kicker">Açık İlanlar</div>
           <h2>Kurumsal yük listesi</h2>
         </div>
-        <p>Detay veya teklif aksiyonunda ilgili ilan akış ekranına geçilir.</p>
+        <p>Detay veya teklif aksiyonunda ilgili ilan akış ekranına geçilir. İlanlar Firebase üzerinden canlı okunur.</p>
       </div>
 
       <div class="sevra-summary-bar" id="summaryBar">
@@ -174,8 +812,45 @@
         <div class="sevra-summary-item"><small>Son Güncelleme</small><strong id="sumDate">-</strong></div>
       </div>
 
-      <div id="loadingBox" style="padding:16px;border:1px solid rgba(255,255,255,.06);border-radius:16px;margin-bottom:18px;background:rgba(255,255,255,.02);">İlanlar yükleniyor...</div>
+      <div id="loadingBox">İlanlar yükleniyor...</div>
       <div class="load-grid" id="loadGrid"></div>
+
+      <div class="example-section">
+        <h2>Örnek ilan görünümü</h2>
+        <p>Gerçek ilan olmadığında bile ziyaretçi SEVRA’da hangi tarz yük ve araç taleplerinin paylaşılacağını net şekilde görür.</p>
+
+        <div class="example-grid">
+          <article class="example-card">
+            <small>Açık Yük</small>
+            <strong>İstanbul → Ankara | 12 koli | Kapalı kasa</strong>
+            <span>Parsiyel yük, şehirler arası nakliye, teklif bekleniyor.</span>
+          </article>
+
+          <article class="example-card">
+            <small>Boş Araç</small>
+            <strong>Bursa çıkışlı kamyonet | İzmir güzergâhı</strong>
+            <span>Boş dönüşte yük aranıyor, aynı gün çıkış uygun.</span>
+          </article>
+
+          <article class="example-card">
+            <small>Kurye / Kargo</small>
+            <strong>Ankara şehir içi | Paket teslimatı</strong>
+            <span>Küçük paket, hızlı teslimat, kurye talebi.</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="bottom-cta">
+        <div>
+          <strong>Yük ilanı vermek veya aracına yük bulmak için SEVRA’ya katıl.</strong>
+          <span>İlanını paylaş, teklifleri değerlendir, uygun taşıyıcı veya yük bağlantısına daha hızlı ulaş.</span>
+        </div>
+        <div class="bottom-cta-actions">
+          <a class="btn btn-primary" href="nakliye-ilani-ver.html">İlan Ver</a>
+          <a class="btn btn-secondary" href="yuk-bulma-sistemi.html">Yük Bul</a>
+          <a class="btn btn-secondary" href="arac-bulma-sistemi.html">Araç Bul</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -308,7 +983,7 @@
 
           <div class="load-meta">
             <span>Durum: ${esc(status)}</span>
-            <span>Güzergah: ${esc(route)}</span>
+            <span>Güzergâh: ${esc(route)}</span>
           </div>
 
           <p class="sevra-desc">${esc(desc)}</p>
@@ -346,7 +1021,7 @@
         updateSummary(loads);
 
         if(!loads.length){
-          loadGrid.innerHTML = '<div class="sevra-empty-box">Henüz ilan bulunmuyor.</div>';
+          loadGrid.innerHTML = '<div class="sevra-empty-box">Henüz canlı ilan bulunmuyor. İlk ilanı paylaşmak için “İlan Ver” butonunu kullanabilir veya Facebook grubuna katılabilirsiniz.</div>';
           return;
         }
 
