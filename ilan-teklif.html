@@ -2,9 +2,522 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Ilan ve Teklif Yonetimi</title>
-  <link rel="stylesheet" href="ilan-teklif.css" />
+  <title>SEVRA | İlan ve Teklif Yönetimi</title>
+  <meta name="description" content="SEVRA ilan ve teklif yönetimi ekranı ile yük, araç, kurye, kargo ve ambar talepleri için teklif oluşturun, ilan seçin ve pazarlık akışına geçin." />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --green:#17965a;
+      --red:#c93838;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1380px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+    }
+
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+
+    .topbar-inner{
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:26px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:32px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:44px;
+      padding:0 16px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid transparent;
+      transition:.2s ease;
+      cursor:pointer;
+      text-decoration:none;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    .btn-primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn-primary:hover{background:#084c96}
+
+    .btn-secondary{
+      background:#fff;
+      color:#132238;
+      border-color:var(--line);
+    }
+
+    .btn-secondary:hover{background:#edf5ff}
+
+    .page{
+      padding:30px 0 60px;
+    }
+
+    .hero-card{
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:22px;
+      padding:34px;
+      align-items:center;
+      margin-bottom:22px;
+    }
+
+    .section-kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .hero-copy h1{
+      font-size:clamp(36px,4vw,60px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin:0 0 14px;
+    }
+
+    .hero-copy p{
+      color:#526174;
+      font-size:18px;
+      max-width:820px;
+      margin:0;
+    }
+
+    .user-badge{
+      min-height:48px;
+      padding:0 16px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.28);
+      color:#7a5100;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .flow-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:22px;
+    }
+
+    .flow-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+      min-height:128px;
+    }
+
+    .flow-card span{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:#fff4d8;
+      color:#8a5a00;
+      font-size:21px;
+      margin-bottom:12px;
+    }
+
+    .flow-card strong{
+      display:block;
+      color:#0b1930;
+      font-size:18px;
+      margin-bottom:6px;
+    }
+
+    .flow-card p{
+      color:#526174;
+      font-size:14px;
+      margin:0;
+      line-height:1.45;
+    }
+
+    .status-box{
+      border-radius:16px;
+      padding:14px 16px;
+      margin-bottom:18px;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#ffffff;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+    }
+
+    .hidden{display:none !important}
+    .status-success{color:#0c6b40;background:#eefaf4;border-color:rgba(23,150,90,.25)}
+    .status-error{color:#9f2525;background:#fff1f1;border-color:rgba(201,56,56,.25)}
+
+    .offer-entry-card,
+    .table-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:26px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      padding:24px;
+    }
+
+    .offer-entry-card{
+      margin-bottom:22px;
+    }
+
+    .card-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .card-head h2{
+      color:#0b1930;
+      font-size:clamp(27px,2.8vw,40px);
+      line-height:1.08;
+      margin:0;
+      letter-spacing:-.035em;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      min-height:30px;
+      padding:0 11px;
+      border-radius:999px;
+      background:#fff4d8;
+      color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .offer-form{
+      margin:0;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:14px;
+    }
+
+    .form-group{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .form-group.full{
+      grid-column:1 / -1;
+    }
+
+    label{
+      color:#0b1930;
+      font-weight:900;
+      font-size:13px;
+    }
+
+    input,select,textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:13px;
+      border:1px solid var(--line);
+      background:#f7faff;
+      color:#172033;
+      font-family:inherit;
+      font-size:14px;
+      outline:none;
+    }
+
+    textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(11,93,184,.38);
+      box-shadow:0 0 0 4px rgba(11,93,184,.08);
+    }
+
+    .action-row{
+      margin-top:14px;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .table-shell{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .table-wrap{
+      width:100%;
+      overflow:auto;
+      border-radius:18px;
+      border:1px solid var(--line);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:680px;
+      background:#ffffff;
+    }
+
+    th,td{
+      text-align:left;
+      padding:13px 12px;
+      border-bottom:1px solid rgba(15,35,65,.09);
+      vertical-align:top;
+      font-size:14px;
+    }
+
+    th{
+      background:#f4f8ff;
+      color:#0b1930;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    td{
+      color:#526174;
+    }
+
+    tr:last-child td{
+      border-bottom:0;
+    }
+
+    .mini-pill{
+      display:inline-flex;
+      min-height:28px;
+      align-items:center;
+      padding:0 10px;
+      border-radius:999px;
+      background:#eef4fb;
+      color:#526174;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .mini-btn{
+      min-height:34px;
+      padding:0 11px;
+      border-radius:11px;
+      background:#ffffff;
+      color:#132238;
+      border:1px solid var(--line);
+      font-weight:900;
+      cursor:pointer;
+      font-family:inherit;
+    }
+
+    .mini-btn:hover{
+      background:#edf5ff;
+    }
+
+    .mini-btn.green{
+      background:#eaf8f1;
+      color:#0c6b40;
+      border-color:rgba(23,150,90,.25);
+    }
+
+    .table-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .note-panel{
+      margin-top:22px;
+      background:#0b1930;
+      color:#fff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+
+    .note-panel strong{
+      display:block;
+      font-size:23px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+
+    .note-panel span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .note-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .note-panel .btn-secondary{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+
+    @media(max-width:1050px){
+      .hero-card{
+        grid-template-columns:1fr;
+      }
+
+      .flow-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .table-shell{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .topbar-inner{
+        align-items:flex-start;
+      }
+
+      .top-actions{
+        width:100%;
+      }
+
+      .hero-card{
+        padding:24px;
+      }
+
+      .hero-copy h1{
+        font-size:34px;
+      }
+
+      .flow-grid,
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .action-row{
+        justify-content:flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -16,9 +529,11 @@
           <span>Dijital Lojistik ve Tedarik Platformu</span>
         </div>
       </a>
+
       <div class="top-actions">
-        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yuk Ilanlarina Don</a>
-        <a class="btn btn-secondary" href="mesajlasma.html">Mesajlasma</a>
+        <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanlarına Dön</a>
+        <a class="btn btn-secondary" href="mesajlasma.html">Mesajlaşma</a>
+        <a class="btn btn-primary" href="nakliye-ilani-ver.html">Yeni İlan Ver</a>
       </div>
     </div>
   </header>
@@ -28,10 +543,36 @@
       <section class="hero-card">
         <div class="hero-copy">
           <div class="section-kicker">Kurumsal Teklif Merkezi</div>
-          <h1>Ilan ve teklif akisi</h1>
-          <p>Secilen yuk ilanlarini tek ekranda inceleyin, teklif olusturun ve pazarlik akisina kontrollu sekilde gecin.</p>
+          <h1>İlan ve teklif akışı</h1>
+          <p>Seçilen yük ilanlarını tek ekranda inceleyin, teklif oluşturun ve pazarlık akışına kontrollü şekilde geçin. Bu ekran yük, araç, kurye, kargo ve ambar teklif süreçlerinin merkezidir.</p>
         </div>
-        <div id="userBadge" class="user-badge">Uye kontrol ediliyor</div>
+        <div id="userBadge" class="user-badge">Üye kontrol ediliyor</div>
+      </section>
+
+      <section class="flow-grid">
+        <article class="flow-card">
+          <span>📦</span>
+          <strong>İlanı seç</strong>
+          <p>Yük, araç, kurye veya ambar kaydını listeden seç.</p>
+        </article>
+
+        <article class="flow-card">
+          <span>💰</span>
+          <strong>Teklif gir</strong>
+          <p>Fiyatı ve teslimat / araç notunu yaz.</p>
+        </article>
+
+        <article class="flow-card">
+          <span>💬</span>
+          <strong>Pazarlığa geç</strong>
+          <p>Teklif üzerinden mesajlaşma akışını başlat.</p>
+        </article>
+
+        <article class="flow-card">
+          <span>✅</span>
+          <strong>Karar ver</strong>
+          <p>Uygun taşıyıcı veya hizmet kararını kayıtlı takip et.</p>
+        </article>
       </section>
 
       <div id="statusBox" class="status-box hidden"></div>
@@ -40,25 +581,26 @@
         <div class="card-head">
           <div>
             <div class="section-kicker">Yeni Teklif</div>
-            <h2>Teklif olustur</h2>
+            <h2>Teklif oluştur</h2>
           </div>
+          <span class="pill">Yük · Araç · Kurye · Ambar</span>
         </div>
 
         <form id="offerForm" class="offer-form">
           <div class="form-grid">
             <div class="form-group">
-              <label for="offerLoadSelect">Ilan secin</label>
+              <label for="offerLoadSelect">İlan seçin</label>
               <select id="offerLoadSelect" required></select>
             </div>
 
             <div class="form-group">
-              <label for="offerPrice">Teklif fiyati</label>
-              <input id="offerPrice" type="number" placeholder="Orn: 18500" required />
+              <label for="offerPrice">Teklif fiyatı</label>
+              <input id="offerPrice" type="number" placeholder="Örn: 18500" required />
             </div>
 
             <div class="form-group full">
               <label for="offerNote">Teklif notu</label>
-              <textarea id="offerNote" placeholder="Teslim suresi, arac durumu veya aciklama girin"></textarea>
+              <textarea id="offerNote" placeholder="Teslim süresi, araç durumu, kurye/kargo notu veya açıklama girin"></textarea>
             </div>
           </div>
 
@@ -71,19 +613,19 @@
       <section class="table-shell">
         <article class="table-card">
           <div class="card-head">
-            <h2>Aktif Ilanlar</h2>
-            <span class="pill">Secilebilir kayitlar</span>
+            <h2>Aktif İlanlar</h2>
+            <span class="pill">Seçilebilir kayıtlar</span>
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Baslik</th>
-                  <th>Guzergah</th>
-                  <th>Agirlik</th>
+                  <th>Başlık</th>
+                  <th>Güzergâh</th>
+                  <th>Ağırlık</th>
                   <th>Durum</th>
-                  <th>Islem</th>
+                  <th>İşlem</th>
                 </tr>
               </thead>
               <tbody id="loadsTbody"></tbody>
@@ -94,18 +636,18 @@
         <article class="table-card">
           <div class="card-head">
             <h2>Verilen Teklifler</h2>
-            <span class="pill">Pazarlik baglantili</span>
+            <span class="pill">Pazarlık bağlantılı</span>
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Ilan</th>
-                  <th>Uye</th>
+                  <th>İlan</th>
+                  <th>Üye</th>
                   <th>Fiyat</th>
                   <th>Durum</th>
-                  <th>Islem</th>
+                  <th>İşlem</th>
                 </tr>
               </thead>
               <tbody id="offersTbody"></tbody>
@@ -113,6 +655,17 @@
           </div>
         </article>
       </section>
+
+      <div class="note-panel">
+        <div>
+          <strong>Tekliften sonra pazarlık ekranına geçebilirsiniz.</strong>
+          <span>Teklif kaydedildikten sonra “Pazarlık Yap” butonu ile mesajlaşma ekranına bağlanır.</span>
+        </div>
+        <div class="note-actions">
+          <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
+          <a class="btn btn-secondary" href="mesajlasma.html">Mesajlaşma</a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -158,7 +711,7 @@
     var threads = Array.isArray(readJson('sevra_threads', [])) ? readJson('sevra_threads', []) : [];
     var selectedLoad = readJson('sevra_selected_load', null);
 
-    userBadge.textContent = 'Uye: ' + (session.companyName || session.contactName || session.email);
+    userBadge.textContent = 'Üye: ' + (session.companyName || session.contactName || session.email);
 
     function showStatus(message, isError) {
       statusBox.textContent = message;
@@ -186,7 +739,7 @@
       if (!loads.length) {
         var op = document.createElement('option');
         op.value = '';
-        op.textContent = 'Ilan bulunmuyor';
+        op.textContent = 'İlan bulunmuyor';
         offerLoadSelect.appendChild(op);
         return;
       }
@@ -216,14 +769,14 @@
           '<td>' + (load.title || '-') + '</td>' +
           '<td>' + (load.route || '-') + '</td>' +
           '<td>' + (load.weight || '-') + '</td>' +
-          '<td><span class="mini-pill">' + (load.status || 'Acik') + '</span></td>' +
-          '<td><button class="mini-btn" type="button">Sec</button></td>';
+          '<td><span class="mini-pill">' + (load.status || 'Açık') + '</span></td>' +
+          '<td><button class="mini-btn" type="button">Seç</button></td>';
 
         tr.querySelector('button').addEventListener('click', function() {
           selectedLoad = load;
           localStorage.setItem('sevra_selected_load', JSON.stringify(load));
           offerLoadSelect.value = load.id;
-          showStatus('Ilan secildi.', false);
+          showStatus('İlan seçildi.', false);
         });
 
         loadsTbody.appendChild(tr);
@@ -256,7 +809,7 @@
         offerHistory: [{ role: offer.member, value: numericPrice }],
         messages: [{
           role: 'Sistem',
-          text: 'Teklif uzerinden pazarlik ekrani acildi.',
+          text: 'Teklif üzerinden pazarlık ekranı açıldı.',
           time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
         }]
       };
@@ -271,7 +824,7 @@
       offersTbody.innerHTML = '';
 
       if (!offers.length) {
-        offersTbody.innerHTML = '<tr><td colspan="5">Henuz teklif bulunmuyor.</td></tr>';
+        offersTbody.innerHTML = '<tr><td colspan="5">Henüz teklif bulunmuyor.</td></tr>';
         return;
       }
 
@@ -283,7 +836,7 @@
           '<td>' + offer.price + '</td>' +
           '<td><span class="mini-pill">' + offer.status + '</span></td>' +
           '<td><div class="table-actions">' +
-          '<button class="mini-btn green js-chat" type="button">Pazarlik Yap</button>' +
+          '<button class="mini-btn green js-chat" type="button">Pazarlık Yap</button>' +
           '<button class="mini-btn js-delete" type="button">Sil</button>' +
           '</div></td>';
 
@@ -310,12 +863,12 @@
       var note = (offerNote.value || '').trim();
 
       if (!loadId) {
-        showStatus('Once ilan secin.', true);
+        showStatus('Önce ilan seçin.', true);
         return;
       }
 
       if (!price) {
-        showStatus('Teklif fiyatini girin.', true);
+        showStatus('Teklif fiyatını girin.', true);
         return;
       }
 
@@ -324,7 +877,7 @@
       });
 
       if (!load) {
-        showStatus('Secilen ilan bulunamadi.', true);
+        showStatus('Seçilen ilan bulunamadı.', true);
         return;
       }
 
@@ -348,7 +901,7 @@
       offerNote.value = '';
 
       renderOffers();
-      showStatus('Teklif kaydedildi. Pazarlik Yap butonundan devam edebilirsiniz.', false);
+      showStatus('Teklif kaydedildi. Pazarlık Yap butonundan devam edebilirsiniz.', false);
     }
 
     offerForm.addEventListener('submit', function(event) {
@@ -369,7 +922,7 @@
     renderOffers();
 
     if (!loads.length) {
-      showStatus('Henuz ilan bulunmuyor. Once Yuk Ilanlari ekranindan bir kayit secin.', true);
+      showStatus('Henüz ilan bulunmuyor. Önce Yük İlanları ekranından bir kayıt seçin.', true);
     }
   </script>
 </body>
