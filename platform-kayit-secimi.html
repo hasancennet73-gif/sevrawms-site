@@ -2,67 +2,409 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Kayıt Seçimi</title>
-  <meta name="description" content="SEVRA platformunda rolünüzü seçin, ardından kurumsal üyelik oluşturun veya mevcut hesabınızla giriş yapın." />
+  <title>SEVRA | Kayıt ve Giriş Seçimi</title>
+  <meta name="description" content="SEVRA platformunda rolünüzü seçin. Yük veren, taşıyıcı, nakliyeci, kurye, kargo, ambar veya standart üye olarak kayıt olun ya da giriş yapın." />
+
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#071425;--bg2:#08111b;--bg3:#040912;
-      --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.06);
-      --text:#eef4ff;--muted:#aebcd3;--yellow:#f1c84d;--yellow2:#f7dc89;
-      --shadow:0 18px 38px rgba(0,0,0,.22);--max:1280px;
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1280px;
     }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
     body{
-      font-family:Arial,Helvetica,sans-serif;color:var(--text);
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(circle at top right, rgba(241,200,77,.08), transparent 18%),
-        radial-gradient(circle at left top, rgba(44,89,179,.16), transparent 24%),
-        linear-gradient(180deg,var(--bg),var(--bg2) 74%,var(--bg3));
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+      min-height:100vh;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 24px 46px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:28px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:34px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:46px;
+      padding:0 18px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#ffffff;
+      color:#132238;
+      transition:.2s ease;
+      cursor:pointer;
+      font-size:14px;
+    }
+
+    .btn:hover{
+      background:#edf5ff;
+    }
+
+    .btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn.primary:hover{
+      background:#084c96;
+    }
+
+    .btn.gold{
+      background:var(--yellow);
+      color:#111;
+      border-color:var(--yellow);
+    }
+
+    .hero{
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      box-shadow:var(--shadow);
+      padding:34px;
+      margin-bottom:20px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+      align-items:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:38px;
+      padding:0 14px;
+      border-radius:999px;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.26);
+      color:#8a5a00;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+
+    .hero h1{
+      font-size:clamp(36px,4.3vw,62px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin-bottom:14px;
+    }
+
+    .hero p{
+      color:#526174;
+      max-width:880px;
+      font-size:18px;
+    }
+
+    .hero-panel{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .hero-panel h2{
+      color:#0b1930;
+      font-size:28px;
+      line-height:1.12;
+      margin-bottom:10px;
+    }
+
+    .hero-panel ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .hero-panel li{
+      position:relative;
+      padding-left:20px;
+      color:#526174;
+      font-size:15px;
+    }
+
+    .hero-panel li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .panel{
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:#ffffff;
+      padding:24px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      position:relative;
+      overflow:hidden;
+      min-height:275px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .panel:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:5px;
+      background:linear-gradient(180deg,#f1c84d,#0b5db8);
+    }
+
+    .role-icon{
+      width:50px;
+      height:50px;
+      border-radius:17px;
+      display:grid;
+      place-items:center;
+      background:#fff4d8;
+      color:#8a5a00;
+      font-size:24px;
+      margin-bottom:12px;
+    }
+
+    .panel h2{
+      font-size:27px;
+      color:#0b1930;
+      line-height:1.12;
+      margin-bottom:8px;
+    }
+
+    .panel p{
+      color:#526174;
+      font-size:15px;
       line-height:1.5;
     }
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:var(--max);margin:0 auto;padding:26px 24px 40px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .brand-mark{
-      width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,var(--yellow),var(--yellow2));
-      color:#0b1830;font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center
+
+    .panel small{
+      display:inline-flex;
+      width:max-content;
+      margin-top:12px;
+      min-height:28px;
+      align-items:center;
+      padding:0 10px;
+      border-radius:999px;
+      background:#f7faff;
+      border:1px solid var(--line);
+      color:#637083;
+      font-weight:900;
+      font-size:12px;
     }
-    .brand-text strong{display:block;font-size:34px}
-    .brand-text span{display:block;font-size:12px;color:#d7e1ef}
-    .actions{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{
-      min-height:46px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
-      font-weight:700;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff
-    }
-    .btn.primary{background:var(--yellow);color:#0b1830;border-color:transparent}
-    .hero{
-      border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
-      box-shadow:var(--shadow);padding:28px;margin-bottom:18px
-    }
-    .badge{
-      display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:999px;
-      background:rgba(241,200,77,.14);color:#ffe08a;font-size:12px;font-weight:700;margin-bottom:14px
-    }
-    .hero h1{font-size:42px;line-height:1.04;margin-bottom:12px}
-    .hero p{color:var(--muted);max-width:860px}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .panel{
-      border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.03);padding:24px;
-      box-shadow:var(--shadow)
-    }
-    .panel h2{font-size:28px;margin-bottom:10px}
-    .panel p{color:var(--muted);margin-bottom:18px;min-height:72px}
+
     .note{
-      margin-top:18px;border:1px solid var(--line2);border-radius:18px;background:rgba(8,18,34,.72);padding:18px
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:#ffffff;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
     }
-    .note h3{font-size:20px;margin-bottom:10px}
-    .note ul{list-style:none;display:grid;gap:10px}
-    .note li{position:relative;padding-left:18px;color:#d9e4f2}
-    .note li::before{content:"";position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:999px;background:var(--yellow)}
-    @media (max-width:980px){.cards{grid-template-columns:1fr}.hero h1{font-size:34px}}
-    @media (max-width:760px){.brand-text strong{font-size:30px}}
+
+    .note h3{
+      font-size:24px;
+      color:#0b1930;
+      margin-bottom:12px;
+    }
+
+    .note ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .note li{
+      position:relative;
+      padding-left:20px;
+      color:#526174;
+    }
+
+    .note li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .login-band{
+      margin-top:18px;
+      background:#0b1930;
+      color:#fff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+
+    .login-band strong{
+      display:block;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+
+    .login-band span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .login-band .btn{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .login-band .btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+    }
+
+    @media (max-width:1050px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .cards{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width:760px){
+      .wrap{
+        padding:20px 14px 36px;
+      }
+
+      .top{
+        align-items:flex-start;
+      }
+
+      .actions{
+        width:100%;
+      }
+
+      .hero{
+        padding:24px;
+      }
+
+      .hero h1{
+        font-size:34px;
+      }
+
+      .cards{
+        grid-template-columns:1fr;
+      }
+
+      .brand-text strong{
+        font-size:30px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -73,34 +415,41 @@
       <div class="brand-mark">S</div>
       <div class="brand-text">
         <strong>SEVRA</strong>
-        <span>Kayıt Seçimi</span>
+        <span>Kayıt ve Giriş Seçimi</span>
       </div>
     </a>
     <div class="actions">
       <a class="btn" href="index.html">Ana Sayfa</a>
-      <a class="btn" href="uye-login.html">Üye Girişi</a>
+      <a id="topLogin" class="btn primary" href="uye-login.html">Üye Girişi</a>
     </div>
   </header>
 
   <section class="hero">
-    <div class="badge">Kurumsal Erişim Akışı</div>
-    <h1>Rolünüzü seçin, ardından kayıt olun veya mevcut hesabınızla giriş yapın</h1>
-    <p>SEVRA içinde nakliyeci, yük veren veya standart üye olarak ilerleyebilirsiniz. Seçtiğiniz role göre aynı güvenli üyelik ve giriş akışı üzerinden devam edersiniz.</p>
+    <div>
+      <div class="badge">Kurumsal Erişim Akışı</div>
+      <h1>SEVRA’ya hangi rol ile katılacağınızı seçin</h1>
+      <p>Yük veren, taşıyıcı, kurye/kargo, ambar veya standart üye olarak devam edebilirsiniz. Seçtiğiniz role göre kayıt ve giriş akışı aynı yönlendirme bilgilerini koruyarak devam eder.</p>
+    </div>
+
+    <aside class="hero-panel">
+      <h2>Doğru rolü seçmek neden önemli?</h2>
+      <ul>
+        <li>Yük verenler araç ve taşıyıcı arar</li>
+        <li>Taşıyıcılar açık yük ve iş fırsatı arar</li>
+        <li>Kurye/kargo tarafı küçük gönderi ve hızlı teslimat görünürlüğü sağlar</li>
+        <li>Ambar/parsiyel tarafı koli, parça yük ve şehirler arası taşımayı öne çıkarır</li>
+      </ul>
+    </aside>
   </section>
 
   <section class="cards">
     <article class="panel">
-      <h2>Nakliyeci</h2>
-      <p>Taşıma kapasitesi sunan, yük inceleyen ve teklif akışına katılan firmalar için giriş noktasıdır.</p>
-      <div class="actions">
-        <a id="carrierReg" class="btn primary" href="uye-ol.html?role=carrier">Kayıt Ol</a>
-        <a id="carrierLog" class="btn" href="uye-login.html?role=carrier">Giriş Yap</a>
+      <div>
+        <div class="role-icon">📦</div>
+        <h2>Yük Veren</h2>
+        <p>Yük ilanı oluşturan, araç arayan, teklif toplayan ve taşıma organizasyonunu yönetmek isteyen firmalar için giriş noktasıdır.</p>
+        <small>Yük ilanı · Araç bul · Teklif al</small>
       </div>
-    </article>
-
-    <article class="panel">
-      <h2>Yük Veren</h2>
-      <p>Yük ilanı oluşturan, teklif toplayan ve taşıma organizasyonunu yöneten firmalar için giriş noktasıdır.</p>
       <div class="actions">
         <a id="shipperReg" class="btn primary" href="uye-ol.html?role=shipper">Kayıt Ol</a>
         <a id="shipperLog" class="btn" href="uye-login.html?role=shipper">Giriş Yap</a>
@@ -108,11 +457,66 @@
     </article>
 
     <article class="panel">
-      <h2>Standart Üye</h2>
-      <p>Platformu genel erişimle kullanacak, temel üyelik akışına dahil olacak kullanıcılar için giriş noktasıdır.</p>
+      <div>
+        <div class="role-icon">🚛</div>
+        <h2>Taşıyıcı / Nakliyeci</h2>
+        <p>Taşıma kapasitesi sunan, açık yükleri inceleyen, aracına yük bulmak ve teklif akışına katılmak isteyenler için giriş noktasıdır.</p>
+        <small>Yük bul · Boş dönüş · Teklif ver</small>
+      </div>
+      <div class="actions">
+        <a id="carrierReg" class="btn primary" href="uye-ol.html?role=carrier">Kayıt Ol</a>
+        <a id="carrierLog" class="btn" href="uye-login.html?role=carrier">Giriş Yap</a>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div>
+        <div class="role-icon">🏍️</div>
+        <h2>Kurye / Kargo</h2>
+        <p>Kurye hizmeti, moto kurye, şehir içi teslimat, paket, kargo ve hızlı teslimat hizmeti sunmak isteyenler için giriş noktasıdır.</p>
+        <small>Kurye · Paket · Hızlı teslimat</small>
+      </div>
+      <div class="actions">
+        <a id="courierReg" class="btn primary" href="uye-ol.html?role=courier">Kayıt Ol</a>
+        <a id="courierLog" class="btn" href="uye-login.html?role=courier">Giriş Yap</a>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div>
+        <div class="role-icon">🏢</div>
+        <h2>Ambar / Parsiyel</h2>
+        <p>Ambar hizmeti, parsiyel yük, şehirler arası ambar, parça yük, koli taşıma ve küçük yük taşıma hizmeti sunan yapılar için giriş noktasıdır.</p>
+        <small>Ambar · Parsiyel · Koli taşıma</small>
+      </div>
+      <div class="actions">
+        <a id="warehouseReg" class="btn primary" href="uye-ol.html?role=warehouse">Kayıt Ol</a>
+        <a id="warehouseLog" class="btn" href="uye-login.html?role=warehouse">Giriş Yap</a>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div>
+        <div class="role-icon">👤</div>
+        <h2>Standart Üye</h2>
+        <p>Platformu genel erişimle kullanacak, ilanları inceleyecek veya temel üyelik akışına dahil olacak kullanıcılar için giriş noktasıdır.</p>
+        <small>Genel erişim · İnceleme · Üyelik</small>
+      </div>
       <div class="actions">
         <a id="memberReg" class="btn primary" href="uye-ol.html?role=member">Kayıt Ol</a>
         <a id="memberLog" class="btn" href="uye-login.html?role=member">Giriş Yap</a>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div>
+        <div class="role-icon">💬</div>
+        <h2>Mevcut Üyeyim</h2>
+        <p>Daha önce kayıt olduysanız doğrudan üye girişi yaparak ilan, teklif ve mesajlaşma akışına devam edebilirsiniz.</p>
+        <small>Giriş · Teklif · Mesajlaşma</small>
+      </div>
+      <div class="actions">
+        <a id="directLogin" class="btn primary" href="uye-login.html">Üye Girişi Yap</a>
       </div>
     </article>
   </section>
@@ -120,28 +524,58 @@
   <section class="note">
     <h3>Süreç nasıl işler?</h3>
     <ul>
-      <li>Önce rolünüzü seçersiniz.</li>
+      <li>Önce platformdaki rolünüzü seçersiniz.</li>
       <li>Kayıt oluşturur veya mevcut hesabınızla giriş yaparsınız.</li>
-      <li>Teklif, ilan ve platform içi akışlara kontrollü biçimde yönlendirilirsiniz.</li>
+      <li>Yönlendirme bilgisi korunur; örneğin teklif ekranından geldiyseniz giriş sonrası tekrar o akışa dönebilirsiniz.</li>
+      <li>Teklif, ilan, mesajlaşma ve platform içi işlemlere kontrollü biçimde geçersiniz.</li>
     </ul>
+  </section>
+
+  <section class="login-band">
+    <div>
+      <strong>Rolünüzden emin değilseniz standart üye olarak başlayabilirsiniz.</strong>
+      <span>Daha sonra ilan, teklif veya hizmet türüne göre platform içindeki akışları kullanabilirsiniz.</span>
+    </div>
+    <div class="actions">
+      <a id="bandMemberReg" class="btn primary" href="uye-ol.html?role=member">Standart Üye Kayıt</a>
+      <a id="bandLogin" class="btn" href="uye-login.html">Üye Girişi</a>
+    </div>
   </section>
 </div>
 
 <script src="kimlik-dogrulama.js"></script>
 <script>
 function q(n){return new URLSearchParams(location.search).get(n)||'';}
+
 function build(base,role){
-  var p=['role='+encodeURIComponent(role)];
-  if(q('redirect')) p.push('redirect='+encodeURIComponent(q('redirect')));
-  if(q('load_id')) p.push('load_id='+encodeURIComponent(q('load_id')));
-  return base+'?'+p.join('&');
+  var p = [];
+  if(role) p.push('role=' + encodeURIComponent(role));
+  if(q('redirect')) p.push('redirect=' + encodeURIComponent(q('redirect')));
+  if(q('load_id')) p.push('load_id=' + encodeURIComponent(q('load_id')));
+  if(q('id')) p.push('id=' + encodeURIComponent(q('id')));
+  return base + (p.length ? '?' + p.join('&') : '');
 }
-document.getElementById('carrierReg').href=build('uye-ol.html','carrier');
-document.getElementById('carrierLog').href=build('uye-login.html','carrier');
-document.getElementById('shipperReg').href=build('uye-ol.html','shipper');
-document.getElementById('shipperLog').href=build('uye-login.html','shipper');
-document.getElementById('memberReg').href=build('uye-ol.html','member');
-document.getElementById('memberLog').href=build('uye-login.html','member');
+
+var roles = [
+  ['carrier','carrierReg','carrierLog'],
+  ['shipper','shipperReg','shipperLog'],
+  ['member','memberReg','memberLog'],
+  ['courier','courierReg','courierLog'],
+  ['warehouse','warehouseReg','warehouseLog']
+];
+
+roles.forEach(function(item){
+  var role = item[0];
+  var reg = document.getElementById(item[1]);
+  var log = document.getElementById(item[2]);
+  if(reg) reg.href = build('uye-ol.html', role);
+  if(log) log.href = build('uye-login.html', role);
+});
+
+document.getElementById('topLogin').href = build('uye-login.html','');
+document.getElementById('directLogin').href = build('uye-login.html','');
+document.getElementById('bandLogin').href = build('uye-login.html','');
+document.getElementById('bandMemberReg').href = build('uye-ol.html','member');
 </script>
 
 </body>
