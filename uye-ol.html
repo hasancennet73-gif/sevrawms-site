@@ -2,9 +2,422 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SEVRA | Kurumsal Üyelik Başvurusu</title>
-  <link rel="stylesheet" href="uye-auth.css" />
+  <meta name="description" content="SEVRA kurumsal üyelik başvurusu. Yük veren, taşıyıcı, kurye, kargo, ambar ve standart üye olarak kayıt oluşturun." />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --green:#17965a;
+      --red:#c93838;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+      min-height:100vh;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 24px 46px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:28px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:34px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      min-height:46px;
+      padding:0 18px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#ffffff;
+      color:#132238;
+      transition:.2s ease;
+      cursor:pointer;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    .btn:hover{
+      background:#edf5ff;
+    }
+
+    .btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn.primary:hover{
+      background:#084c96;
+    }
+
+    .btn:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+    }
+
+    .stack{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .panel{
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:#ffffff;
+      box-shadow:var(--shadow);
+      padding:30px;
+      overflow:hidden;
+    }
+
+    .main-panel{
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+    }
+
+    .kicker{
+      display:inline-flex;
+      min-height:38px;
+      padding:0 14px;
+      align-items:center;
+      border-radius:999px;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.26);
+      color:#8a5a00;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:14px;
+    }
+
+    h1{
+      font-size:clamp(36px,4vw,58px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin-bottom:16px;
+    }
+
+    h2{
+      color:#0b1930;
+      font-size:clamp(28px,3vw,42px);
+      line-height:1.08;
+      margin-bottom:16px;
+      letter-spacing:-.035em;
+    }
+
+    .panel p{
+      color:#526174;
+      font-size:17px;
+      max-width:820px;
+      margin-bottom:18px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    label{
+      color:#0b1930;
+      font-weight:900;
+      font-size:13px;
+    }
+
+    input,select{
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#ffffff;
+      color:#172033;
+      font-family:inherit;
+      font-size:15px;
+      outline:none;
+    }
+
+    input:focus,select:focus{
+      border-color:rgba(11,93,184,.38);
+      box-shadow:0 0 0 4px rgba(11,93,184,.08);
+    }
+
+    .role-note{
+      margin:0 0 18px;
+      border-radius:18px;
+      padding:14px 16px;
+      border:1px solid rgba(246,164,0,.28);
+      background:#fff4d8;
+      color:#7a5100;
+      font-weight:900;
+      display:none;
+    }
+
+    .actions-row{
+      grid-column:1 / -1;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+
+    .note{
+      margin-top:16px;
+      border-radius:16px;
+      padding:14px 16px;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#ffffff;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+    }
+
+    .hidden{display:none !important}
+
+    .note.ok{
+      color:#0c6b40;
+      background:#eefaf4;
+      border-color:rgba(23,150,90,.25);
+    }
+
+    .note.err{
+      color:#9f2525;
+      background:#fff1f1;
+      border-color:rgba(201,56,56,.25);
+    }
+
+    .info-box{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:#ffffff;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .info-box h3{
+      color:#0b1930;
+      font-size:24px;
+      margin-bottom:12px;
+    }
+
+    .info-box ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .info-box li{
+      position:relative;
+      padding-left:20px;
+      color:#526174;
+    }
+
+    .info-box li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .role-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .role-chip{
+      border:1px solid var(--line);
+      border-radius:17px;
+      background:#f7faff;
+      padding:14px;
+    }
+
+    .role-chip strong{
+      display:block;
+      color:#0b1930;
+      font-size:15px;
+      margin-bottom:4px;
+    }
+
+    .role-chip span{
+      display:block;
+      color:#637083;
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .login-band{
+      margin-top:18px;
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+
+    .login-band strong{
+      display:block;
+      font-size:22px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+
+    .login-band span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .login-band .btn{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .login-band .btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+    }
+
+    @media(max-width:980px){
+      .stack{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .wrap{
+        padding:20px 14px 36px;
+      }
+
+      .top{
+        align-items:flex-start;
+      }
+
+      .actions{
+        width:100%;
+      }
+
+      .panel{
+        padding:24px;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      h1{
+        font-size:34px;
+      }
+
+      .brand-text strong{
+        font-size:30px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -17,49 +430,61 @@
         </div>
       </a>
       <div class="actions">
-        <a class="btn" href="uye-login.html">Üye Girişi</a>
+        <a id="loginTop" class="btn primary" href="uye-login.html">Üye Girişi</a>
+        <a class="btn" href="platform-kayit-secimi.html">Rol Seçimi</a>
         <a class="btn" href="index.html">Ana Sayfa</a>
       </div>
     </header>
 
     <main class="stack">
-      <section class="panel">
-        <div class="kicker">Kurumsal Kayıt</div>
+      <section class="panel main-panel">
+        <div class="kicker" id="roleKicker">Kurumsal Kayıt</div>
         <h1>Yeni üyelik oluştur</h1>
-        <p>Kurumsal kullanıcılar aşağıdaki bilgilerle başvuru oluşturur. Başvuru kaydı sistemde açılır ve kayıtlı e-posta ile giriş / şifre sıfırlama akışı kullanılabilir.</p>
+        <p>Kurumsal kullanıcılar aşağıdaki bilgilerle başvuru oluşturur. Seçilen rol, üyelik kaydına işlenir ve giriş sonrası ilgili ilan, teklif veya platform akışına yönlendirme korunur.</p>
+
+        <div id="roleNote" class="role-note"></div>
 
         <form id="registerForm" class="form-grid" autocomplete="off">
           <div class="field">
             <label for="companyName">Firma Adı</label>
             <input id="companyName" name="companyName" type="text" placeholder="Firma adı" autocomplete="organization" />
           </div>
+
           <div class="field">
             <label for="contactName">Yetkili Kişi</label>
             <input id="contactName" name="contactName" type="text" placeholder="Yetkili kişi" autocomplete="name" />
           </div>
+
           <div class="field">
             <label for="email">E-Posta</label>
             <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="email" autocapitalize="none" spellcheck="false" />
           </div>
+
           <div class="field">
             <label for="phone">Telefon</label>
             <input id="phone" name="phone" type="text" placeholder="Telefon" autocomplete="tel" />
           </div>
+
           <div class="field">
             <label for="role">Rol</label>
             <select id="role" name="role">
-              <option>Taşıyıcı</option>
-              <option>Yük Veren</option>
-              <option>Tedarikçi</option>
+              <option value="shipper">Yük Veren</option>
+              <option value="carrier">Taşıyıcı / Nakliyeci</option>
+              <option value="courier">Kurye / Kargo</option>
+              <option value="warehouse">Ambar / Parsiyel</option>
+              <option value="member">Standart Üye</option>
             </select>
           </div>
+
           <div class="field">
             <label for="password">Şifre</label>
             <input id="password" name="password" type="password" placeholder="Şifre" autocomplete="new-password" />
           </div>
+
           <div class="actions-row full">
             <button id="registerBtn" type="submit" class="btn primary">Başvuru Oluştur</button>
-            <a class="btn" href="uye-login.html">Giriş Ekranına Dön</a>
+            <a id="loginBtnLink" class="btn" href="uye-login.html">Giriş Ekranına Dön</a>
+            <a id="roleSelectBtn" class="btn" href="platform-kayit-secimi.html">Rol Seçimine Dön</a>
           </div>
         </form>
 
@@ -69,16 +494,44 @@
       <section class="panel">
         <div class="kicker">Kurumsal Bilgi</div>
         <h2>Başvuru sonrası süreç</h2>
-        <p>Başvurun kayıt altına alınır. Bu kayıt ile giriş, şifre sıfırlama ve sonraki üye akışları aynı veritabanı üzerinden çalışır.</p>
+        <p>Başvurunuz kayıt altına alınır. Bu kayıt ile giriş, şifre sıfırlama ve sonraki üye akışları aynı veritabanı üzerinden çalışır.</p>
 
         <div class="info-box">
           <h3>Başvuru adımları</h3>
           <ul>
             <li>Kurumsal bilgilerle kayıt oluşturulur</li>
-            <li>Üyelik kaydı veritabanına yazılır</li>
+            <li>Rol bilgisi üyelik kaydına işlenir</li>
+            <li>Üyelik kaydı Supabase veritabanına yazılır</li>
             <li>Aynı e-posta ile giriş ve şifre sıfırlama kullanılabilir</li>
-            <li>Platform akışına kontrollü erişim sağlanır</li>
+            <li>Teklif, ilan ve platform akışına kontrollü erişim sağlanır</li>
           </ul>
+        </div>
+
+        <div class="role-grid">
+          <div class="role-chip">
+            <strong>Yük Veren</strong>
+            <span>Yük ilanı verir, araç arar, teklif toplar.</span>
+          </div>
+          <div class="role-chip">
+            <strong>Taşıyıcı / Nakliyeci</strong>
+            <span>Açık yükleri inceler, araca yük bulur, teklif verir.</span>
+          </div>
+          <div class="role-chip">
+            <strong>Kurye / Kargo</strong>
+            <span>Paket, kargo, moto kurye ve hızlı teslimat hizmeti sunar.</span>
+          </div>
+          <div class="role-chip">
+            <strong>Ambar / Parsiyel</strong>
+            <span>Parça yük, koli, küçük yük ve şehirler arası ambar hizmeti sunar.</span>
+          </div>
+        </div>
+
+        <div class="login-band">
+          <div>
+            <strong>Zaten hesabınız var mı?</strong>
+            <span>Üye girişi yaparak ilan, teklif ve mesajlaşma akışına dönebilirsiniz.</span>
+          </div>
+          <a id="loginBand" class="btn primary" href="uye-login.html">Üye Girişi</a>
         </div>
       </section>
     </main>
@@ -87,6 +540,43 @@
 <script>
 const SUPABASE_URL = 'https://yyiphivbdsjsuxyaihnf.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_SCFO1g9veclYKqCI3pw7Eg_dE1bhyLR';
+
+function q(name) {
+  return new URLSearchParams(window.location.search).get(name) || '';
+}
+
+function buildUrl(base) {
+  var params = new URLSearchParams(window.location.search);
+  var p = [];
+  if (params.get('role')) p.push('role=' + encodeURIComponent(params.get('role')));
+  if (params.get('redirect')) p.push('redirect=' + encodeURIComponent(params.get('redirect')));
+  if (params.get('load_id')) p.push('load_id=' + encodeURIComponent(params.get('load_id')));
+  if (params.get('id')) p.push('id=' + encodeURIComponent(params.get('id')));
+  return base + (p.length ? '?' + p.join('&') : '');
+}
+
+function roleLabel(roleValue) {
+  var role = String(roleValue || '').toLowerCase();
+  if (role === 'shipper') return 'Yük Veren';
+  if (role === 'carrier') return 'Taşıyıcı / Nakliyeci';
+  if (role === 'courier') return 'Kurye / Kargo';
+  if (role === 'warehouse') return 'Ambar / Parsiyel';
+  if (role === 'member') return 'Standart Üye';
+  if (role === 'tedarikçi' || role === 'tedarikci') return 'Tedarikçi';
+  if (role === 'taşıyıcı' || role === 'tasiyici') return 'Taşıyıcı / Nakliyeci';
+  if (role === 'yük veren' || role === 'yuk veren') return 'Yük Veren';
+  return 'Standart Üye';
+}
+
+function normalizeRole(roleValue) {
+  var role = String(roleValue || '').toLowerCase();
+  if (role === 'shipper' || role === 'yük veren' || role === 'yuk veren') return 'shipper';
+  if (role === 'carrier' || role === 'taşıyıcı' || role === 'tasiyici' || role === 'nakliyeci') return 'carrier';
+  if (role === 'courier' || role === 'kurye' || role === 'kargo') return 'courier';
+  if (role === 'warehouse' || role === 'ambar' || role === 'parsiyel') return 'warehouse';
+  if (role === 'member') return 'member';
+  return 'member';
+}
 
 function show(el, text, ok){
   el.className = 'note ' + (ok ? 'ok' : 'err');
@@ -97,6 +587,28 @@ function setBusy(isBusy){
   const btn = document.getElementById('registerBtn');
   btn.disabled = isBusy;
   btn.textContent = isBusy ? 'Kaydediliyor...' : 'Başvuru Oluştur';
+}
+
+function setupContext(){
+  var roleFromQuery = normalizeRole(q('role'));
+  var roleSelect = document.getElementById('role');
+  var roleNote = document.getElementById('roleNote');
+
+  roleSelect.value = roleFromQuery;
+  document.getElementById('roleKicker').textContent = roleLabel(roleFromQuery) + ' Kaydı';
+
+  roleNote.textContent = 'Seçilen rol: ' + roleLabel(roleFromQuery) + '. Bu bilgi üyelik kaydınıza işlenecek.';
+  roleNote.style.display = 'block';
+
+  document.getElementById('loginTop').href = buildUrl('uye-login.html');
+  document.getElementById('loginBtnLink').href = buildUrl('uye-login.html');
+  document.getElementById('loginBand').href = buildUrl('uye-login.html');
+  document.getElementById('roleSelectBtn').href = buildUrl('platform-kayit-secimi.html');
+
+  roleSelect.addEventListener('change', function(){
+    roleNote.textContent = 'Seçilen rol: ' + roleLabel(roleSelect.value) + '. Bu bilgi üyelik kaydınıza işlenecek.';
+    document.getElementById('roleKicker').textContent = roleLabel(roleSelect.value) + ' Kaydı';
+  });
 }
 
 async function supabaseCheckMemberByEmail(email){
@@ -146,6 +658,8 @@ async function supabaseInsertMember(payload){
   return await response.json();
 }
 
+setupContext();
+
 document.getElementById('registerForm').addEventListener('submit', async function(e){
   e.preventDefault();
 
@@ -183,6 +697,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
       password: password,
       company_name: companyName,
       contact_name: contactName,
+      phone: phone,
       role: role,
       status: 'Aktif',
       created_at: new Date().toISOString(),
@@ -193,7 +708,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     document.getElementById('registerForm').reset();
 
     setTimeout(function(){
-      window.location.href = 'uye-login.html';
+      window.location.href = buildUrl('uye-login.html');
     }, 1000);
   } catch (err) {
     show(msg, 'İşlem başarısız: ' + err.message, false);
