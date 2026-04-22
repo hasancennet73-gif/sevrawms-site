@@ -13,11 +13,181 @@
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Nakliye Platformu, Yük Bulma ve Araç Bulma Sistemi</title>
-  <meta name="description" content="SEVRA ile nakliye platformu, yük bulma, araç bulma, ambar ve kurumsal lojistik operasyon süreçlerini tek dijital sistemde yönetin." />
-  <meta name="keywords" content="nakliye platformu, yük bulma, araç bulma, lojistik platformu, türkiye nakliye, ambar, parsiyel yük, sevra" />
+  <title>SEVRA | Türkiye Nakliye Platformu, Yük Bulma ve Araç Bulma Sistemi</title>
+  <meta name="description" content="SEVRA nakliye platformu; yük veren, taşıyıcı, kurye, kargo, ambar ve parsiyel yük ihtiyaçlarını tek dijital lojistik topluluğunda buluşturur." />
+  <meta name="keywords" content="nakliye platformu, lojistik platformu, yük veren, taşıyıcı, yük bul, araç bul, kurye, kargo, ambar, parsiyel yük, Türkiye nakliye, sevra" />
   <meta name="robots" content="index, follow" />
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1240px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+
+    .utility-bar{background:#fff;border-bottom:1px solid var(--line);color:#526174;font-size:12px}
+    .utility-inner{min-height:40px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .utility-left,.utility-right{display:flex;gap:18px;flex-wrap:wrap}
+    .utility-right strong{color:#a46b00}
+
+    .topbar{
+      position:sticky;top:0;z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+    .topbar-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:54px;height:54px;border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;font-size:26px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+    .brand-text strong{display:block;font-size:32px;color:#0b1930;line-height:1}
+    .brand-text span{display:block;font-size:12px;color:#637083;margin-top:4px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:#132238;font-size:14px;font-weight:800}
+    .nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08);color:#132238}
+    .nav a:hover{background:#edf5ff}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    .btn{
+      min-height:44px;padding:0 16px;border-radius:13px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:900;border:1px solid transparent;transition:.2s ease;
+      cursor:pointer;text-decoration:none;font-size:14px;
+    }
+    .btn-primary{background:#0b5db8;color:#fff;border-color:#0b5db8;box-shadow:0 10px 22px rgba(11,93,184,.18)}
+    .btn-primary:hover{background:#084c96}
+    .btn-secondary{background:#fff;color:#132238;border-color:var(--line)}
+    .btn-secondary:hover{background:#edf5ff}
+    .btn-gold{background:var(--yellow);color:#111;border-color:var(--yellow)}
+
+    .hero{padding:30px 0 22px}
+    .hero-shell{
+      border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      display:grid;grid-template-columns:1.05fr .95fr;gap:24px;padding:34px;align-items:center;
+    }
+    .hero-badge{
+      display:inline-flex;min-height:38px;padding:0 14px;align-items:center;border-radius:999px;
+      background:#fff4d8;border:1px solid rgba(246,164,0,.26);color:#8a5a00;
+      font-size:13px;font-weight:900;margin-bottom:12px;
+    }
+    .hero h1{
+      font-size:clamp(36px,4.4vw,64px);line-height:1;letter-spacing:-.05em;
+      color:#0b1930;margin:0 0 16px;max-width:920px;
+    }
+    .hero p{color:#526174;font-size:18px;line-height:1.55;max-width:820px;margin:0 0 20px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .hero-panel{
+      border:1px solid var(--line);border-radius:26px;background:#fff;padding:24px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+    .panel-kicker{color:#a46b00;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+    .hero-panel h3{color:#0b1930;font-size:30px;line-height:1.12;margin:0 0 12px}
+    .hero-panel ul{list-style:none;display:grid;gap:10px;padding:0;margin:0}
+    .hero-panel li{position:relative;color:#526174;padding-left:20px;font-size:15px}
+    .hero-panel li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:999px;background:var(--yellow)}
+
+    .quick-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:22px}
+    .quick-card{
+      background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);min-height:150px;
+    }
+    .quick-card span{
+      width:44px;height:44px;display:grid;place-items:center;border-radius:15px;
+      background:#fff4d8;color:#8a5a00;font-size:22px;margin-bottom:12px;
+    }
+    .quick-card strong{display:block;color:#0b1930;font-size:18px;margin-bottom:6px}
+    .quick-card p{color:#526174;font-size:14px;line-height:1.45;margin:0}
+
+    .section{padding:28px 0}
+    .section-head{margin-bottom:18px}
+    .section-kicker{color:#a46b00;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+    .section h2{color:#0b1930;font-size:clamp(30px,3.2vw,46px);line-height:1.08;margin:0 0 10px;letter-spacing:-.035em}
+    .section-head p{color:#637083;max-width:860px;margin:0;font-size:17px}
+
+    .platform-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .platform-card{
+      background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);position:relative;overflow:hidden;
+    }
+    .platform-card:before{
+      content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+      background:linear-gradient(180deg,#f1c84d,#0b5db8);
+    }
+    .platform-type{
+      display:inline-flex;align-items:center;min-height:30px;padding:0 11px;border-radius:999px;
+      background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24);
+      font-size:12px;font-weight:900;margin-bottom:14px;
+    }
+    .platform-card h3{color:#0b1930;font-size:23px;line-height:1.15;margin:0 0 12px}
+    .platform-card p{color:#526174;margin:0 0 14px}
+    .mini-list{list-style:none;display:grid;gap:8px;margin:14px 0 0;padding:0;color:#526174;font-size:14px}
+    .mini-list li{position:relative;padding-left:18px}
+    .mini-list li:before{content:"";position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:999px;background:var(--yellow)}
+
+    .reason-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .reason-card{
+      background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+    .reason-card h3{color:#0b1930;font-size:24px;line-height:1.12;margin:0 0 10px}
+    .reason-card p{color:#526174;margin:0}
+
+    .cta-band{
+      background:#0b1930;color:#fff;border-radius:24px;padding:22px;
+      display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+    .cta-band strong{display:block;font-size:24px;line-height:1.15;margin-bottom:5px}
+    .cta-band span{color:rgba(255,255,255,.76);line-height:1.45}
+    .cta-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .cta-band .btn-secondary{background:rgba(255,255,255,.10);color:#fff;border-color:rgba(255,255,255,.18)}
+
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .tag-row span{
+      padding:8px 10px;border-radius:999px;background:#fff4d8;color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);font-size:12px;font-weight:900;
+    }
+
+    footer{text-align:center;padding:28px;color:#637083;border-top:1px solid var(--line);margin-top:28px;background:#fff}
+
+    @media(max-width:1100px){
+      .hero-shell{grid-template-columns:1fr}
+      .quick-grid{grid-template-columns:repeat(2,1fr)}
+      .platform-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:760px){
+      .topbar-inner{align-items:flex-start}
+      .nav,.top-actions{width:100%}
+      .hero-shell{padding:22px}
+      .hero h1{font-size:34px}
+      .quick-grid,.reason-grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
   <div class="utility-bar">
@@ -28,7 +198,7 @@
       </div>
       <div class="utility-right">
         <span>SEVRA Nakliye Platformu</span>
-        <strong>Yük Bul · Araç Bul · Operasyon</strong>
+        <strong>Yük Veren · Taşıyıcı · Kurye · Ambar</strong>
       </div>
     </div>
   </div>
@@ -45,14 +215,15 @@
 
       <nav class="nav">
         <a href="index.html">Ana Sayfa</a>
+        <a href="nakliye-ilani-ver.html">İlan Ver</a>
         <a href="yuk-ilanlari.html">Yük İlanları</a>
-        <a href="ambar-hizmeti.html">Ambar Hizmeti</a>
-        <a href="index.html#iletisim">İletişim</a>
+        <a href="yuk-bulma-sistemi.html">Yük Bul</a>
+        <a href="arac-bulma-sistemi.html">Araç Bul</a>
+        <a href="ambar-hizmeti.html">Ambar</a>
       </nav>
 
       <div class="top-actions">
         <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
-        <a class="btn btn-secondary" href="ambar-hizmeti.html">Ambar Hizmeti</a>
         <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Üyelik</a>
       </div>
     </div>
@@ -61,41 +232,61 @@
   <section class="hero">
     <div class="container">
       <div class="hero-shell">
-        <div class="hero-grid">
-          <div class="hero-left">
-            <div class="hero-badge">Türkiye Nakliye Platformu</div>
-            <h1>Nakliye platformu ile yük bulma, araç bulma ve lojistik operasyon sürecini daha kurumsal yönetin</h1>
-            <p>SEVRA, yük veren ve taşıyıcı firmaları aynı dijital sistemde buluşturur. Yük bulma, araç bulma, teklif alma, ambar ve parsiyel yük süreçleri daha kayıtlı, daha görünür ve daha profesyonel hale gelir.</p>
+        <div>
+          <div class="hero-badge">Türkiye Nakliye ve Lojistik Platformu</div>
+          <h1>Yük veren, taşıyıcı, kurye, kargo ve ambar hizmetleri SEVRA’da buluşur</h1>
+          <p>
+            SEVRA; nakliye platformu, lojistik platformu, yük bulma, araç bulma, kurye/kargo ve ambar-parsiyel ihtiyaçlarını tek dijital topluluk altında birleştirir.
+          </p>
 
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Üyelik</a>
-              <a class="btn btn-secondary" href="yuk-ilanlari.html">Açık Yükleri İncele</a>
-            </div>
-          </div>
-
-          <div class="hero-right">
-            <div class="hero-right-shell">
-              <div class="hero-main-card">
-                <span class="hero-label">SEVRA Nakliye Mantığı</span>
-                <h3>Yük veren ve taşıyıcıyı aynı sistemde buluşturur</h3>
-                <p>SEVRA, klasik telefon ve dağınık teklif akışı yerine daha kontrollü, daha şeffaf ve daha yönetilebilir bir nakliye platformu yapısı sunar.</p>
-                <ul class="hero-main-list">
-                  <li>Yük bulma sistemi</li>
-                  <li>Araç bulma ve teklif yönetimi</li>
-                  <li>Kurumsal lojistik operasyon takibi</li>
-                </ul>
-              </div>
-            </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="nakliye-ilani-ver.html">İlan Ver</a>
+            <a class="btn btn-gold" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
+            <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanlarını Gör</a>
           </div>
         </div>
 
-        <div class="hero-band">
-          <div>Nakliye platformu</div>
-          <div>Yük bulma</div>
-          <div>Araç bulma</div>
-          <div>Ambar sistemi</div>
-          <div>Kurumsal lojistik</div>
+        <div class="hero-panel">
+          <div class="panel-kicker">SEVRA Platform Mantığı</div>
+          <h3>Sadece ilan değil, lojistik görünürlük merkezi</h3>
+          <ul>
+            <li>Yük verenler taşıma ihtiyacını paylaşır</li>
+            <li>Taşıyıcılar ve araç sahipleri açık yükleri görür</li>
+            <li>Kurye, kargo, ambar ve parsiyel hizmetleri aynı çatı altında görünür olur</li>
+          </ul>
         </div>
+      </div>
+
+      <div class="quick-grid">
+        <article class="quick-card">
+          <span>📦</span>
+          <strong>Yük ilanı</strong>
+          <p>Yük verenler taşıma ihtiyacını ilan olarak paylaşabilir.</p>
+        </article>
+
+        <article class="quick-card">
+          <span>🚚</span>
+          <strong>Yük bul</strong>
+          <p>Nakliyeci ve araç sahipleri açık yükleri takip edebilir.</p>
+        </article>
+
+        <article class="quick-card">
+          <span>🚛</span>
+          <strong>Araç bul</strong>
+          <p>Yük sahipleri uygun araç ve taşıyıcı arayabilir.</p>
+        </article>
+
+        <article class="quick-card">
+          <span>🏍️</span>
+          <strong>Kurye / kargo</strong>
+          <p>Şehir içi teslimat ve küçük paket hizmetleri duyurulabilir.</p>
+        </article>
+
+        <article class="quick-card">
+          <span>🏢</span>
+          <strong>Ambar / parsiyel</strong>
+          <p>Komple araç gerektirmeyen yükler için görünürlük sağlanır.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -103,107 +294,111 @@
   <section class="section">
     <div class="container">
       <div class="section-head">
-        <div>
-          <div class="section-kicker">Nakliye Platformu Nedir?</div>
-          <h2>SEVRA ile dijital taşıma ve teklif akışı nasıl çalışır?</h2>
-        </div>
-        <p>Bu sayfa Google ve ziyaretçiye sistemin ne yaptığını açık şekilde anlatır.</p>
+        <div class="section-kicker">Platform Kullanım Alanları</div>
+        <h2>SEVRA’da hangi taraf ne yapar?</h2>
+        <p>SEVRA’nın amacı, yük veren ile taşıyıcıyı, kurye/kargo hizmetini ve ambar-parsiyel ihtiyaçlarını daha düzenli bir dijital zeminde buluşturmaktır.</p>
+      </div>
+
+      <div class="platform-grid">
+        <article class="platform-card">
+          <span class="platform-type">Yük Veren</span>
+          <h3>Yükünü paylaş, uygun taşıyıcıya ulaş</h3>
+          <p>Yük göndermek isteyenler çıkış, varış, yük türü, tarih ve araç ihtiyacını paylaşabilir.</p>
+          <ul class="mini-list">
+            <li>Nakliye ilanı ver</li>
+            <li>Araç bul</li>
+            <li>Teklifleri değerlendir</li>
+          </ul>
+        </article>
+
+        <article class="platform-card">
+          <span class="platform-type">Taşıyıcı / Araç Sahibi</span>
+          <h3>Açık yükleri gör, araca yük bul</h3>
+          <p>Nakliyeciler ve araç sahipleri açık yük ilanlarını takip ederek uygun işlere yönelebilir.</p>
+          <ul class="mini-list">
+            <li>Yük bul</li>
+            <li>Boş dönüşü değerlendir</li>
+            <li>Parsiyel veya komple iş takip et</li>
+          </ul>
+        </article>
+
+        <article class="platform-card">
+          <span class="platform-type">Kurye / Kargo / Ambar</span>
+          <h3>Hizmetini görünür hale getir</h3>
+          <p>Kurye, kargo, ambar ve parsiyel taşıma hizmetleri SEVRA içinde ayrı başlıklarla görünür olur.</p>
+          <ul class="mini-list">
+            <li>Kurye hizmeti duyur</li>
+            <li>Ambar-parsiyel talep topla</li>
+            <li>Küçük yük ve koli taşıma görünürlüğü oluştur</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Nakliye Platformu Nedir?</div>
+        <h2>SEVRA ile dijital taşıma ve teklif akışı nasıl çalışır?</h2>
+        <p>SEVRA, klasik telefon ve dağınık mesaj trafiği yerine daha görünür, daha düzenli ve büyümeye uygun bir lojistik topluluk yapısı sunar.</p>
       </div>
 
       <div class="reason-grid">
         <article class="reason-card">
           <h3>Yük bulma</h3>
-          <p>Taşıyıcı firmalar, sistem içindeki açık yük kayıtlarını inceleyerek uygun işe teklif verebilir. Böylece yük bulma süreci daha görünür ve daha hızlı hale gelir.</p>
+          <p>Taşıyıcı firmalar, sistem içindeki açık yük kayıtlarını inceleyerek uygun işe teklif verebilir. Böylece yük bulma süreci daha görünür hale gelir.</p>
         </article>
 
         <article class="reason-card">
           <h3>Araç bulma</h3>
-          <p>Yük veren firmalar için uygun taşıyıcıya ulaşma, teklif toplama ve fiyat karşılaştırma süreci tek platform içinde yönetilir. Bu yapı araç bulma sürecini daha kurumsal hale getirir.</p>
+          <p>Yük veren firmalar için uygun taşıyıcıya ulaşma ve araç arama süreci tek platform içinde daha anlaşılır hale gelir.</p>
         </article>
 
         <article class="reason-card">
-          <h3>Teklif ve pazarlık yönetimi</h3>
-          <p>Telefon trafiği yerine kayıtlı teklif akışı kullanılır. Böylece teklif, pazarlık ve operasyon kararları sistem içinde tutulur.</p>
+          <h3>Kurye, kargo ve ambar</h3>
+          <p>SEVRA sadece tır/nakliye değil; kurye, kargo, ambar, parsiyel yük ve küçük taşıma ihtiyaçlarını da kapsar.</p>
         </article>
 
         <article class="reason-card">
-          <h3>Kurumsal lojistik altyapısı</h3>
-          <p>SEVRA yalnızca bir ilan alanı değil; yük, araç, ambar ve teklif mantığını bir araya getiren büyüyebilir bir lojistik platformudur.</p>
+          <h3>Kurumsal büyüme zemini</h3>
+          <p>SEVRA, ilan, teklif, üyelik, topluluk ve operasyon akışının ileride daha güçlü bir platforma dönüşmesi için temel oluşturur.</p>
         </article>
+      </div>
+
+      <div class="tag-row">
+        <span>nakliye platformu</span>
+        <span>lojistik platformu</span>
+        <span>yük veren</span>
+        <span>taşıyıcı</span>
+        <span>yük bul</span>
+        <span>araç bul</span>
+        <span>kurye</span>
+        <span>ambar</span>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
+      <div class="cta-band">
         <div>
-          <div class="section-kicker">Kimler İçin Uygun?</div>
-          <h2>SEVRA nakliye platformunu kimler kullanabilir?</h2>
+          <strong>SEVRA’da lojistik bağlantını büyüt.</strong>
+          <span>Yük ilanı ver, açık yükleri incele, araç bul, kurye-kargo veya ambar hizmetini görünür hale getir.</span>
         </div>
-        <p>Gerçek kullanım alanlarını net biçimde açıklar.</p>
-      </div>
-
-      <div class="reason-grid">
-        <article class="reason-card">
-          <h3>Yük veren firmalar</h3>
-          <p>Taşıma ihtiyacı olan işletmeler, yük açabilir, teklif toplayabilir ve uygun taşıyıcıyı sistem üzerinden değerlendirebilir.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Taşıyıcı firmalar</h3>
-          <p>Uygun yükleri bulmak, fiyat vermek ve yeni iş bağlantıları kurmak isteyen nakliyeciler için uygundur.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Ambar ve parsiyel çalışan yapılar</h3>
-          <p>Parsiyel ve ambar mantığında çalışan işletmeler, yük akışını daha profesyonel zeminde büyütebilir.</p>
-        </article>
-
-        <article class="reason-card">
-          <h3>Kurumsal büyüme hedefleyen firmalar</h3>
-          <p>Dağınık iletişim yerine dijital kayıtlı bir operasyon akışı kurmak isteyen işletmeler için güçlü bir başlangıçtır.</p>
-        </article>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="nakliye-ilani-ver.html">İlan Ver</a>
+          <a class="btn btn-secondary" href="yuk-ilanlari.html">Yük İlanları</a>
+          <a class="btn btn-secondary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubu</a>
+          <a class="btn btn-secondary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section contact-section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">SEVRA ile Devam Edin</div>
-          <h2>Türkiye nakliye platformu içinde doğru ekrana geçin</h2>
-        </div>
-        <p>Sorularınız, teklif talepleriniz ve operasyon ihtiyaçlarınız için hızlı dönüş sağlanır. Yük ilanlarını inceleyebilir, ambar hizmeti sayfasına geçebilir ve teklif sürecini platform içinde başlatabilirsiniz.</p>
-      </div>
-
-      <div class="contact-grid">
-        <article class="contact-card">
-          <span>Yük İlanları</span>
-          <strong>Açık yükleri inceleyin</strong>
-          <p>Aktif taşıma ihtiyaçlarını tek ekranda görebilir ve uygun iş fırsatlarını değerlendirebilirsiniz.</p>
-        </article>
-
-        <article class="contact-card">
-          <span>Ambar Hizmeti</span>
-          <strong>Parsiyel yük çözümleri</strong>
-          <p>Ambar ve parsiyel yük taşımacılığı için hazırlanan özel sayfaya geçebilirsiniz.</p>
-        </article>
-
-        <article class="contact-card">
-          <span>Kurumsal Destek</span>
-          <strong>Hızlı dönüş ve planlama</strong>
-          <p>Nakliye, ambar ve taşıma ihtiyaçlarınız için uygun çözüm hızlı şekilde değerlendirilir.</p>
-        </article>
-      </div>
-
-      <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
-        <a class="btn btn-primary" href="yuk-ilanlari.html">Yük İlanlarına Git</a>
-        <a class="btn btn-secondary" href="ambar-hizmeti.html">Ambar Hizmetine Git</a>
-        <a class="btn btn-secondary" href="index.html">Ana Sayfaya Dön</a>
-      </div>
-    </div>
-  </section>
+  <footer>
+    SEVRA | Nakliye Platformu, Yük Bulma ve Araç Bulma Sistemi<br>
+    sevrawms.com.tr
+  </footer>
 </body>
 </html>
