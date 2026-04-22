@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Facebook Grubu Üyeliğini Siteye Taşı</title>
+  <meta name="description" content="SEVRA Facebook grubundan gelen kullanıcılar için ücretsiz platform üyeliği. Yük veren, taşıyıcı, kurye, kargo ve ambar üyeliğinizi tamamlayın." />
+  <meta name="keywords" content="SEVRA Facebook üyelik, nakliye grubu üyelik, yük ilanı ver, aracına yük bul, kurye kargo üyelik, ambar parsiyel üyelik" />
+  <meta name="robots" content="index, follow" />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --blue:#0b5db8;
+      --yellow:#f1c84d;
+      --green:#17965a;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1280px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11,93,184,.10), transparent 24%),
+        radial-gradient(circle at left top, rgba(241,200,77,.13), transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 50%,#edf3f9 100%);
+      line-height:1.55;
+      min-height:100vh;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .container{
+      width:min(var(--max),calc(100% - 28px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+
+    .topbar-inner{
+      min-height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:17px;
+      background:linear-gradient(135deg,var(--yellow),#f7dc89);
+      color:#0b1830;
+      font-size:26px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:32px;
+      color:#0b1930;
+      line-height:1;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:12px;
+      color:#637083;
+      margin-top:4px;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .nav a{
+      padding:9px 11px;
+      border-radius:11px;
+      background:#f7faff;
+      border:1px solid rgba(15,35,65,.08);
+      color:#132238;
+    }
+
+    .nav a:hover{background:#edf5ff}
+
+    .btn{
+      min-height:46px;
+      padding:0 18px;
+      border-radius:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      border:1px solid var(--line);
+      background:#ffffff;
+      color:#132238;
+      transition:.2s ease;
+      cursor:pointer;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    .btn:hover{background:#edf5ff}
+
+    .btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+      box-shadow:0 10px 22px rgba(11,93,184,.18);
+    }
+
+    .btn.primary:hover{background:#084c96}
+
+    .btn.gold{
+      background:var(--yellow);
+      color:#111;
+      border-color:var(--yellow);
+    }
+
+    .hero{
+      padding:30px 0 22px;
+    }
+
+    .hero-shell{
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:24px;
+      padding:34px;
+      align-items:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      min-height:38px;
+      padding:0 14px;
+      align-items:center;
+      border-radius:999px;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.26);
+      color:#8a5a00;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      font-size:clamp(36px,4.5vw,64px);
+      line-height:1;
+      letter-spacing:-.05em;
+      color:#0b1930;
+      margin:0 0 16px;
+      max-width:940px;
+    }
+
+    .hero p{
+      color:#526174;
+      font-size:18px;
+      line-height:1.55;
+      max-width:840px;
+      margin:0 0 20px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .hero-panel{
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:#ffffff;
+      padding:24px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .hero-panel h2{
+      color:#0b1930;
+      font-size:30px;
+      line-height:1.12;
+      margin-bottom:12px;
+    }
+
+    .hero-panel ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .hero-panel li{
+      position:relative;
+      padding-left:20px;
+      color:#526174;
+      font-size:15px;
+    }
+
+    .hero-panel li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .section{
+      padding:28px 0;
+    }
+
+    .section-head{
+      margin-bottom:18px;
+    }
+
+    .section-kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .section h2{
+      color:#0b1930;
+      font-size:clamp(30px,3.2vw,46px);
+      line-height:1.08;
+      margin:0 0 10px;
+      letter-spacing:-.035em;
+    }
+
+    .section-head p{
+      color:#637083;
+      max-width:860px;
+      margin:0;
+      font-size:17px;
+    }
+
+    .role-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .role-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      position:relative;
+      overflow:hidden;
+      min-height:310px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .role-card:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:5px;
+      background:linear-gradient(180deg,#f1c84d,#0b5db8);
+    }
+
+    .role-icon{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:#fff4d8;
+      border:1px solid rgba(246,164,0,.24);
+      color:#8a5a00;
+      font-size:26px;
+      margin-bottom:12px;
+    }
+
+    .role-card h3{
+      color:#0b1930;
+      font-size:25px;
+      line-height:1.12;
+      margin-bottom:10px;
+    }
+
+    .role-card p{
+      color:#526174;
+      margin:0;
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    .role-card small{
+      display:inline-flex;
+      width:max-content;
+      max-width:100%;
+      margin-top:12px;
+      min-height:28px;
+      align-items:center;
+      padding:0 10px;
+      border-radius:999px;
+      background:#f7faff;
+      border:1px solid var(--line);
+      color:#637083;
+      font-weight:900;
+      font-size:12px;
+    }
+
+    .trust-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .trust-card{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .trust-card h3{
+      color:#0b1930;
+      font-size:23px;
+      margin-bottom:8px;
+    }
+
+    .trust-card p{
+      color:#526174;
+      margin:0;
+    }
+
+    .cta-band{
+      background:#0b1930;
+      color:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+    }
+
+    .cta-band strong{
+      display:block;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:5px;
+    }
+
+    .cta-band span{
+      color:rgba(255,255,255,.76);
+      line-height:1.45;
+    }
+
+    .cta-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .cta-band .btn{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .cta-band .btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+    }
+
+    .copy-box{
+      margin-top:16px;
+      background:#ffffff;
+      border:1px dashed rgba(15,35,65,.22);
+      border-radius:18px;
+      padding:16px;
+      color:#526174;
+      font-size:14px;
+      word-break:break-word;
+    }
+
+    .copy-box strong{
+      display:block;
+      color:#0b1930;
+      margin-bottom:6px;
+      font-size:16px;
+    }
+
+    footer{
+      text-align:center;
+      padding:28px;
+      color:#637083;
+      border-top:1px solid var(--line);
+      margin-top:28px;
+      background:#ffffff;
+    }
+
+    @media(max-width:1100px){
+      .hero-shell{
+        grid-template-columns:1fr;
+      }
+
+      .role-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .trust-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .topbar-inner{
+        align-items:flex-start;
+      }
+
+      .nav{
+        width:100%;
+      }
+
+      .hero-shell{
+        padding:24px;
+      }
+
+      .hero h1{
+        font-size:34px;
+      }
+
+      .role-grid{
+        grid-template-columns:1fr;
+      }
+
+      .brand-text strong{
+        font-size:30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Facebook Üyelik Köprüsü</span>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="yuk-ilanlari.html">Yük İlanları</a>
+        <a href="nakliye-platformu.html">Nakliye Platformu</a>
+        <a href="uye-login.html">Üye Girişi</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-shell">
+        <div>
+          <div class="badge">Facebook Grubundan Gelenler İçin</div>
+          <h1>SEVRA Facebook üyeliğinizi site üyeliğine çevirin</h1>
+          <p>
+            Facebook grubunda olmak ilk adımdır. SEVRA sitesine ücretsiz üye olarak yük ilanı verebilir, aracınıza yük bulabilir, kurye/kargo veya ambar hizmetinizi platformda görünür hale getirebilirsiniz.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#rol-secimi">Üyeliğimi Tamamla</a>
+            <a class="btn gold" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Git</a>
+            <a class="btn" href="uye-login.html">Zaten Üyeyim</a>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <h2>Neden site üyeliği gerekli?</h2>
+          <ul>
+            <li>Facebook grubu sohbet ve duyuru alanıdır</li>
+            <li>SEVRA site üyeliği ilan, teklif ve kayıtlı akış içindir</li>
+            <li>Site üyeliğiyle yük, araç, kurye ve ambar bilgileri daha düzenli tutulur</li>
+            <li>İleride teklif, mesajlaşma ve panel işlemleri site üyeliğiyle çalışır</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rol-secimi" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Rol Seçimi</div>
+        <h2>SEVRA’ya hangi rol ile katılacaksınız?</h2>
+        <p>Size uygun kartı seçin. Kayıt sayfasına Facebook kaynak bilgisiyle yönlendirileceksiniz.</p>
+      </div>
+
+      <div class="role-grid">
+        <article class="role-card">
+          <div>
+            <div class="role-icon">📦</div>
+            <h3>Yük Veren</h3>
+            <p>Yükünüz var, araç veya taşıyıcı arıyorsunuz. Yük ilanı oluşturup teklif toplamak için bu seçeneği kullanın.</p>
+            <small>Yük ilanı ver · Araç bul · Teklif al</small>
+          </div>
+          <a class="btn primary" href="uye-ol.html?role=shipper&source=facebook">Yük Veren Olarak Katıl</a>
+        </article>
+
+        <article class="role-card">
+          <div>
+            <div class="role-icon">🚛</div>
+            <h3>Taşıyıcı / Nakliyeci</h3>
+            <p>Aracınıza yük bulmak, açık yük ilanlarını incelemek ve taşıma işi fırsatlarına ulaşmak için bu seçeneği kullanın.</p>
+            <small>Yük bul · Boş dönüş · Teklif ver</small>
+          </div>
+          <a class="btn primary" href="uye-ol.html?role=carrier&source=facebook">Taşıyıcı Olarak Katıl</a>
+        </article>
+
+        <article class="role-card">
+          <div>
+            <div class="role-icon">🏍️</div>
+            <h3>Kurye / Kargo</h3>
+            <p>Kurye, moto kurye, paket, kargo, koli veya hızlı teslimat hizmetinizi duyurmak için bu seçeneği kullanın.</p>
+            <small>Kurye · Kargo · Hızlı teslimat</small>
+          </div>
+          <a class="btn primary" href="uye-ol.html?role=courier&source=facebook">Kurye / Kargo Olarak Katıl</a>
+        </article>
+
+        <article class="role-card">
+          <div>
+            <div class="role-icon">🏢</div>
+            <h3>Ambar / Parsiyel</h3>
+            <p>Ambar hizmeti, parsiyel yük, küçük yük, koli taşıma veya parça yük taşıma hizmetiniz varsa bu seçeneği kullanın.</p>
+            <small>Ambar · Parsiyel · Koli taşıma</small>
+          </div>
+          <a class="btn primary" href="uye-ol.html?role=warehouse&source=facebook">Ambar Olarak Katıl</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Üyelik Faydası</div>
+        <h2>Site üyeliği size ne kazandırır?</h2>
+        <p>Facebook grubu görünürlük sağlar; SEVRA site üyeliği ise ilan, teklif ve platform akışı için temel oluşturur.</p>
+      </div>
+
+      <div class="trust-grid">
+        <article class="trust-card">
+          <h3>İlan ve teklif akışı</h3>
+          <p>Yük ilanı, araç arama, kurye/kargo ve ambar ihtiyaçları daha düzenli bir platform yapısında ilerler.</p>
+        </article>
+
+        <article class="trust-card">
+          <h3>Rol bazlı üyelik</h3>
+          <p>Yük veren, taşıyıcı, kurye/kargo ve ambar tarafları ayrı ayrı tanımlanır. Kullanıcı ne olarak katıldığını net görür.</p>
+        </article>
+
+        <article class="trust-card">
+          <h3>Facebook kaynak takibi</h3>
+          <p>Bu sayfadan kayıt olan kullanıcılar ileride sistemde Facebook kaynaklı üye olarak ayrıştırılabilir.</p>
+        </article>
+      </div>
+
+      <div class="copy-box">
+        <strong>Facebook grubunda paylaşılacak kısa metin:</strong>
+        SEVRA platform üyeliğinizi ücretsiz tamamlayın. Yük ilanı verin, aracınıza yük bulun, kurye/kargo veya ambar hizmetinizi görünür hale getirin: https://www.sevrawms.com.tr/facebook-uyelik.html
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <strong>Facebook grubunda kalmayın, SEVRA site üyeliğinizi tamamlayın.</strong>
+          <span>Site üyeliğiyle ilan, teklif ve platform akışına gerçek kayıtlı kullanıcı olarak katılabilirsiniz.</span>
+        </div>
+        <div class="cta-actions">
+          <a class="btn primary" href="#rol-secimi">Rolümü Seçip Üye Ol</a>
+          <a class="btn" href="uye-login.html">Zaten Üyeyim</a>
+          <a class="btn" href="index.html">Ana Sayfa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    SEVRA | Facebook Grubu Üyeliğini Site Üyeliğine Tamamlama<br>
+    sevrawms.com.tr
+  </footer>
+</body>
+</html>
