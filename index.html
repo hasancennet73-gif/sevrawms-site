@@ -880,6 +880,13 @@
       padding-bottom:28px;
     }
 
+
+    .contact-card span,
+    .contact-card strong,
+    .contact-card p{
+      display:block;
+    }
+
     .whatsapp-fab{
       position:fixed;
       right:22px;
@@ -955,19 +962,13 @@
         <div class="shortcut-row">
           <a href="#hero">Ana Sayfa</a>
           <a href="#hizmetler">Hizmetler</a>
-          <a href="#neden-biz">Neden Biz</a>
           <a href="#nasil-calisir">Nasıl Çalışır?</a>
+          <a href="#neden-biz">Neden Biz</a>
           <a href="#seo-sayfalari">SEO Sayfaları</a>
           <a href="#iletisim">İletişim</a>
-          <a href="yuk-ilanlari.html">Yük İlanları</a>
-          <a href="ambar-hizmeti.html">Ambar Hizmeti</a>
-          <a href="nakliye-platformu.html">Nakliye Platformu</a>
-          <a href="nakliye-ilani-ver.html">Nakliye İlanı Ver</a>
-          <a href="ucretsiz-nakliye-ilani.html">Ücretsiz Nakliye İlanı</a>
-          <a href="yuk-bulma-sistemi.html">Yük Bulma</a>
-          <a href="arac-bulma-sistemi.html">Araç Bulma</a>
-          <a href="kurye-hizmeti.html">Kurye Hizmeti</a>
-          <a href="yonetici-giris.html">Yönetici Girişi</a>
+          <a href="nakliye-ilani-ver.html">İlan Ver</a>
+          <a href="yuk-bulma-sistemi.html">Yük Bul</a>
+          <a href="arac-bulma-sistemi.html">Araç Bul</a>
           <a class="primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Teklif Al / Üyelik</a>
         </div>
       </div>
@@ -1210,7 +1211,7 @@
 
       <div class="how-cta">
         <div>
-          <strong>SEVRA’da süreç basit: paylaş, gör, anlaş.</strong>
+          <strong>SEVRA’da süreç basit: ilan ver, teklifleri gör, uygun taşıyıcıyla anlaş.</strong>
           <span>Yük verenler için daha hızlı teklif; nakliyeciler ve kuryeler için daha fazla görünürlük hedeflenir.</span>
         </div>
         <div class="how-cta-actions">
@@ -1230,7 +1231,6 @@
         <p>
           SEVRA; İstanbul nakliye, Bursa nakliye, Ankara nakliye, İzmir nakliye, şehirler arası nakliye ve parsiyel yük taşıma aramalarında yük verenlerle taşıyıcıların daha kolay buluşmasına destek olur.
         </p>
-
         <div class="coverage-tags">
           <span>İstanbul nakliye</span>
           <span>Bursa nakliye</span>
@@ -1494,11 +1494,35 @@
         <p id="contactIntro">Sorularınız, teklif talepleriniz ve operasyon ihtiyaçlarınız için hızlı dönüş sağlanır.</p>
       </div>
       <div class="contact-grid">
-        <article class="contact-card"><span>E-Posta</span><strong id="contactEmailLabel">Kurumsal destek hattı</strong><p id="contactEmailText">Bilgi, teklif ve operasyon talepleriniz için iletişim kanalları aktif olarak kullanılabilir.</p></article>
-        <article class="contact-card"><span>Instagram</span><strong><a href="https://www.instagram.com/sevrawms/" target="_blank" rel="noopener">@sevrawms</a></strong><p>SEVRA duyuruları, görselleri ve topluluk paylaşımları için Instagram hesabımızı takip edebilirsiniz.</p></article>
-        <article class="contact-card"><span>Facebook Grup</span><strong><a href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Nakliye Kurye Kargo Türkiye | SEVRA</a></strong><p>Nakliye, kurye, kargo, ambar, yük ilanı ve araç paylaşımı için Facebook grubumuza katılabilirsiniz.</p></article>
-        <article class="contact-card"><span>İletişim Süreci</span><strong id="contactPolicyLabel">Hızlı dönüş ve planlama</strong><p id="contactPolicyText">Nakliye, ambar, kurye ve kargo ihtiyaçlarınız için uygun çözüm hızlı şekilde değerlendirilir.</p></article>
-        <article class="contact-card"><span>WhatsApp</span><strong id="contactWhatsappLabel">Hızlı iletişim hattı</strong><p id="contactWhatsappText">WhatsApp üzerinden hızlı ön bilgi ve yönlendirme sağlanabilir.</p></article>
+        <article class="contact-card">
+          <span>E-Posta</span>
+          <strong id="contactEmailLabel">Kurumsal destek hattı</strong>
+          <p id="contactEmailText">Bilgi, teklif ve operasyon talepleriniz için iletişim kanalları aktif olarak kullanılabilir.</p>
+        </article>
+
+        <article class="contact-card">
+          <span>Instagram</span>
+          <strong><a href="https://www.instagram.com/sevrawms/" target="_blank" rel="noopener">@sevrawms</a></strong>
+          <p>SEVRA duyuruları, görselleri ve topluluk paylaşımları için Instagram hesabımızı takip edebilirsiniz.</p>
+        </article>
+
+        <article class="contact-card">
+          <span>Facebook Grup</span>
+          <strong><a href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Nakliye Kurye Kargo Türkiye | SEVRA</a></strong>
+          <p>Nakliye, kurye, kargo, ambar, yük ilanı ve araç paylaşımı için Facebook grubumuza katılabilirsiniz.</p>
+        </article>
+
+        <article class="contact-card">
+          <span>İletişim Süreci</span>
+          <strong id="contactPolicyLabel">Hızlı dönüş ve planlama</strong>
+          <p id="contactPolicyText">Nakliye, ambar, kurye ve kargo ihtiyaçlarınız için uygun çözüm hızlı şekilde değerlendirilir.</p>
+        </article>
+
+        <article class="contact-card">
+          <span>WhatsApp</span>
+          <strong id="contactWhatsappLabel">Hızlı iletişim hattı</strong>
+          <p id="contactWhatsappText">WhatsApp üzerinden hızlı ön bilgi ve yönlendirme sağlanabilir.</p>
+        </article>
       </div>
     </div>
   </section>
