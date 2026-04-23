@@ -932,6 +932,45 @@
       line-height:1.5 !important;
     }
 
+
+
+    .live-market-section{padding-top:10px;padding-bottom:18px}
+    .live-market-shell{background:linear-gradient(135deg,#ffffff 0%,#f5f9ff 100%);border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:var(--shadow)}
+    .live-market-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+    .live-market-head h2{margin:0;font-size:clamp(28px,3.5vw,42px);line-height:1.08;color:#0b1930}
+    .live-market-head p{margin:8px 0 0;color:#5a687b;max-width:760px;line-height:1.55}
+    .live-market-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#fff4d8;border:1px solid rgba(246,164,0,.26);color:#8a5a00;font-weight:900;font-size:12px}
+    .live-metrics-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+    .live-metric-card,.live-panel{background:#ffffff;border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 28px rgba(10,35,66,.06)}
+    .live-metric-card{padding:18px}
+    .live-metric-card strong{display:block;font-size:32px;line-height:1;color:#0b1930;margin-bottom:8px}
+    .live-metric-card span{display:block;color:#5c6b7f;font-size:14px;font-weight:700}
+    .live-metric-card small{display:block;color:#8a96a6;font-size:12px;margin-top:6px}
+    .live-panels-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+    .live-panel{padding:20px}
+    .live-panel h3{margin:0 0 12px;color:#0b1930;font-size:24px}
+    .live-list{display:grid;gap:10px}
+    .live-list-item{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px 16px;border-radius:16px;background:#f7faff;border:1px solid rgba(13,44,80,.08)}
+    .live-list-item strong{display:block;color:#0b1930;font-size:16px;margin-bottom:4px}
+    .live-list-item span{display:block;color:#607085;font-size:13px;line-height:1.4}
+    .live-list-item time{align-self:center;color:#0b5db8;font-weight:900;font-size:12px;white-space:nowrap}
+    .live-mini-grid{display:grid;gap:10px}
+    .live-mini-card{padding:15px 16px;border-radius:16px;background:#f7faff;border:1px solid rgba(13,44,80,.08)}
+    .live-mini-card strong{display:block;font-size:26px;color:#0b1930;margin-bottom:5px}
+    .live-mini-card span{display:block;color:#607085;font-size:13px;font-weight:700}
+    .live-note{margin-top:14px;padding:16px 18px;border-radius:18px;background:#0b1930;color:#fff;display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+    .live-note strong{display:block;font-size:20px;line-height:1.12;margin-bottom:4px}
+    .live-note span{color:rgba(255,255,255,.78);font-size:14px;line-height:1.45}
+    @media(max-width:980px){
+      .live-metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .live-panels-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:560px){
+      .live-market-shell{padding:18px}
+      .live-metrics-grid{grid-template-columns:1fr}
+      .live-list-item{grid-template-columns:1fr}
+    }
+
     .whatsapp-fab{
       position:fixed;
       right:22px;
@@ -1092,6 +1131,78 @@
       </div>
     </div>
   </section>
+
+  <section id="canli-pazar" class="section live-market-section">
+    <div class="container">
+      <div class="live-market-shell">
+        <div class="live-market-head">
+          <div>
+            <div class="live-market-badge">Canlı platform özeti</div>
+            <h2>SEVRA’da bugün ne kadar hareket var?</h2>
+            <p>Siteyi ziyaret eden kullanıcı ilk bakışta platformun boş mu dolu mu olduğunu görsün diye bu bölüm, JSON verisinden otomatik beslenir. Üye, ilan ve günlük hareket özeti burada görünür.</p>
+          </div>
+          <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Ücretsiz kayıt ol</a>
+        </div>
+
+        <div class="live-metrics-grid">
+          <article class="live-metric-card">
+            <strong id="sumActiveLoads">0</strong>
+            <span>Aktif yük ilanı</span>
+            <small>Şu an yayında olan yük kayıtları</small>
+          </article>
+          <article class="live-metric-card">
+            <strong id="sumActiveVehicles">0</strong>
+            <span>Aktif araç ilanı</span>
+            <small>Boş araç ve taşıyıcı bildirimleri</small>
+          </article>
+          <article class="live-metric-card">
+            <strong id="sumTotalMembers">0</strong>
+            <span>Toplam üye</span>
+            <small>Platforma kayıtlı kullanıcılar</small>
+          </article>
+          <article class="live-metric-card">
+            <strong id="sumNewMembers7d">0</strong>
+            <span>Son 7 gün yeni üye</span>
+            <small>Yeni katılan firma ve kullanıcılar</small>
+          </article>
+        </div>
+
+        <div class="live-panels-grid">
+          <div class="live-panel">
+            <h3>Son eklenen yük ilanları</h3>
+            <div id="latestLoadList" class="live-list"></div>
+          </div>
+
+          <div class="live-panel">
+            <h3>Bugünkü hareket özeti</h3>
+            <div class="live-mini-grid">
+              <div class="live-mini-card">
+                <strong id="sumTodayLoads">0</strong>
+                <span>Bugün yeni yük ilanı</span>
+              </div>
+              <div class="live-mini-card">
+                <strong id="sumTodayOffers">0</strong>
+                <span>Bugün yeni teklif / talep</span>
+              </div>
+              <div class="live-mini-card">
+                <strong id="sumTodayMessages">0</strong>
+                <span>Bugün yeni mesaj / başvuru</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="live-note">
+          <div>
+            <strong>Bu bölüm vitrini pazaryeri gibi hissettirmek için eklendi.</strong>
+            <span>Rakamları ve son ilanları <code>public-summary.json</code> dosyasından güncelleyebilirsin.</span>
+          </div>
+          <a class="btn btn-secondary" href="nakliye-ilani-ver.html">Hemen ilan ver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <section id="hizmetler" class="section">
     <div class="container">
@@ -1590,6 +1701,67 @@
       try{ const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
       catch(e){ return fallback; }
     }
+
+    function setText(id, value){
+      const el = document.getElementById(id);
+      if(el) el.textContent = value;
+    }
+
+    function renderLatestLoads(items){
+      const box = document.getElementById('latestLoadList');
+      if(!box) return;
+      const rows = Array.isArray(items) && items.length ? items : [
+        { route:'İstanbul → Ankara', detail:'Parsiyel yük · Tenteli araç', time:'Bugün' },
+        { route:'Bursa → İzmir', detail:'Komple yük · Tır ihtiyacı', time:'Bugün' },
+        { route:'Gebze → Adana', detail:'Paletli ürün · Hızlı teklif', time:'Bugün' }
+      ];
+      box.innerHTML = rows.map(function(item){
+        return '<article class="live-list-item">'
+          + '<div><strong>' + (item.route || 'Yeni ilan') + '</strong><span>' + (item.detail || '') + '</span></div>'
+          + '<time>' + (item.time || 'Yeni') + '</time>'
+          + '</article>';
+      }).join('');
+    }
+
+    async function loadPublicSummary(){
+      const fallback = {
+        active_loads: 12,
+        active_vehicle_posts: 5,
+        total_members: 27,
+        new_members_7d: 8,
+        today_new_loads: 3,
+        today_new_offers: 4,
+        today_new_messages: 2,
+        latest_loads: [
+          { route:'İstanbul → Ankara', detail:'Parsiyel yük · Tenteli araç', time:'14 dk önce' },
+          { route:'Bursa → İzmir', detail:'Komple yük · Frigo / tenteli', time:'38 dk önce' },
+          { route:'Gebze → Adana', detail:'Paletli ürün · Hızlı teklif', time:'1 saat önce' }
+        ]
+      };
+      try{
+        const res = await fetch('public-summary.json?v=' + Date.now(), { cache:'no-store' });
+        if(!res.ok) throw new Error('summary fetch failed');
+        const data = Object.assign({}, fallback, await res.json());
+        setText('sumActiveLoads', data.active_loads);
+        setText('sumActiveVehicles', data.active_vehicle_posts);
+        setText('sumTotalMembers', data.total_members);
+        setText('sumNewMembers7d', data.new_members_7d);
+        setText('sumTodayLoads', data.today_new_loads);
+        setText('sumTodayOffers', data.today_new_offers);
+        setText('sumTodayMessages', data.today_new_messages);
+        renderLatestLoads(data.latest_loads);
+      }catch(e){
+        setText('sumActiveLoads', fallback.active_loads);
+        setText('sumActiveVehicles', fallback.active_vehicle_posts);
+        setText('sumTotalMembers', fallback.total_members);
+        setText('sumNewMembers7d', fallback.new_members_7d);
+        setText('sumTodayLoads', fallback.today_new_loads);
+        setText('sumTodayOffers', fallback.today_new_offers);
+        setText('sumTodayMessages', fallback.today_new_messages);
+        renderLatestLoads(fallback.latest_loads);
+      }
+    }
+
     const defaults = {
       contact_email:'hasancennet73@gmail.com',
       whatsapp_number:'',
@@ -1612,6 +1784,7 @@
       fab.classList.remove('hidden');
       fab.href = 'https://wa.me/' + clean;
     }
+    loadPublicSummary();
   </script>
   <script src="/pwa-install.js"></script>
 </body>
