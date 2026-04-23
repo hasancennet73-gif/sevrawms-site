@@ -1,26 +1,111 @@
 {
-  "active_loads": 12,
-  "active_vehicle_posts": 5,
-  "total_members": 27,
-  "new_members_7d": 8,
-  "today_new_loads": 3,
-  "today_new_offers": 4,
-  "today_new_messages": 2,
+  "active_loads": 20,
+  "active_vehicle_posts": 9,
+  "total_members": 46,
+  "new_members_7d": 14,
+  "today_new_loads": 6,
+  "today_new_offers": 9,
+  "today_new_messages": 5,
   "latest_loads": [
     {
       "route": "İstanbul → Ankara",
-      "detail": "Parsiyel yük · Tenteli araç",
-      "time": "14 dk önce"
+      "detail": "Parsiyel yük · Tenteli araç · 2 palet",
+      "time": "12 dk önce"
     },
     {
       "route": "Bursa → İzmir",
-      "detail": "Komple yük · Frigo / tenteli",
-      "time": "38 dk önce"
+      "detail": "Komple yük · Frigo / tenteli · Acil çıkış",
+      "time": "19 dk önce"
     },
     {
       "route": "Gebze → Adana",
-      "detail": "Paletli ürün · Hızlı teklif",
+      "detail": "Paletli ürün · Hızlı teklif · Aynı gün yükleme",
+      "time": "27 dk önce"
+    },
+    {
+      "route": "İzmir → Antalya",
+      "detail": "Kurye dağıtım talebi · Hafif ticari araç",
+      "time": "34 dk önce"
+    },
+    {
+      "route": "Ankara → Konya",
+      "detail": "Yük veren firma · 4 palet · Tenteli araç",
+      "time": "41 dk önce"
+    },
+    {
+      "route": "Kocaeli → Gaziantep",
+      "detail": "Sanayi yükü · Komple araç ihtiyacı",
+      "time": "56 dk önce"
+    },
+    {
+      "route": "Mersin → Kayseri",
+      "detail": "Gıda sevkiyatı · Frigo araç talebi",
       "time": "1 saat önce"
+    },
+    {
+      "route": "Samsun → İstanbul",
+      "detail": "Parsiyel yük · Hızlı teklif bekleniyor",
+      "time": "1 saat önce"
+    },
+    {
+      "route": "Tekirdağ → Bursa",
+      "detail": "Ambar çıkışı · 3 palet · Uygun araç aranıyor",
+      "time": "1 saat önce"
+    },
+    {
+      "route": "Adana → Mersin",
+      "detail": "Moto kurye hizmet ilanı · Aynı gün teslim",
+      "time": "2 saat önce"
+    },
+    {
+      "route": "Denizli → İstanbul",
+      "detail": "Tekstil yükü · Tenteli / kapalı kasa",
+      "time": "2 saat önce"
+    },
+    {
+      "route": "Eskişehir → Ankara",
+      "detail": "Kurumsal yük veren · Parsiyel sevkiyat",
+      "time": "2 saat önce"
+    },
+    {
+      "route": "Balıkesir → İzmir",
+      "detail": "Hızlı kurye hattı · Evrak / küçük paket",
+      "time": "3 saat önce"
+    },
+    {
+      "route": "Sakarya → Gebze",
+      "detail": "Otomotiv yan sanayi · 6 palet",
+      "time": "3 saat önce"
+    },
+    {
+      "route": "Hatay → Ankara",
+      "detail": "Komple yük · Tenteli araç · Ertesi gün çıkış",
+      "time": "4 saat önce"
+    },
+    {
+      "route": "Antalya → İstanbul",
+      "detail": "Soğuk zincir yükü · Frigo araç aranıyor",
+      "time": "4 saat önce"
+    },
+    {
+      "route": "Trabzon → Samsun",
+      "detail": "Bölgesel dağıtım · Kargo / hafif ticari",
+      "time": "5 saat önce"
+    },
+    {
+      "route": "Manisa → Bursa",
+      "detail": "Depo çıkışı · Paletli ürün · Hızlı teklif",
+      "time": "5 saat önce"
+    },
+    {
+      "route": "Şanlıurfa → Gaziantep",
+      "detail": "Yük veren ilanı · Tarım ürünü sevkiyatı",
+      "time": "6 saat önce"
+    },
+    {
+      "route": "İstanbul → Kocaeli",
+      "detail": "Şehir içi ekspres kurye · Acil evrak teslimi",
+      "time": "6 saat önce"
     }
   ]
 }
