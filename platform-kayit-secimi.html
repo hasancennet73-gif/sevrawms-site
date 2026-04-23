@@ -179,6 +179,13 @@
       font-size:18px;
     }
 
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
     .hero-panel{
       background:#ffffff;
       border:1px solid var(--line);
@@ -219,6 +226,33 @@
       background:var(--yellow);
     }
 
+    .benefits{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .benefit{
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:#ffffff;
+      padding:18px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .benefit strong{
+      display:block;
+      color:#0b1930;
+      font-size:18px;
+      margin-bottom:6px;
+    }
+
+    .benefit span{
+      color:#526174;
+      font-size:14px;
+    }
+
     .cards{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
@@ -234,7 +268,7 @@
       box-shadow:0 12px 32px rgba(10,35,66,.07);
       position:relative;
       overflow:hidden;
-      min-height:275px;
+      min-height:310px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
@@ -274,6 +308,31 @@
       color:#526174;
       font-size:15px;
       line-height:1.5;
+    }
+
+    .panel ul{
+      list-style:none;
+      display:grid;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .panel li{
+      position:relative;
+      padding-left:18px;
+      color:#526174;
+      font-size:14px;
+    }
+
+    .panel li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:8px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
     }
 
     .panel small{
@@ -371,6 +430,10 @@
         grid-template-columns:1fr;
       }
 
+      .benefits{
+        grid-template-columns:repeat(2,1fr);
+      }
+
       .cards{
         grid-template-columns:1fr 1fr;
       }
@@ -397,6 +460,7 @@
         font-size:34px;
       }
 
+      .benefits,
       .cards{
         grid-template-columns:1fr;
       }
@@ -427,19 +491,42 @@
   <section class="hero">
     <div>
       <div class="badge">Kurumsal Erişim Akışı</div>
-      <h1>SEVRA’ya hangi rol ile katılacağınızı seçin</h1>
-      <p>Yük veren, taşıyıcı, kurye/kargo, ambar veya standart üye olarak devam edebilirsiniz. Seçtiğiniz role göre kayıt ve giriş akışı aynı yönlendirme bilgilerini koruyarak devam eder.</p>
+      <h1>SEVRA’ya ücretsiz katılın, ilan verin ve teklif almaya başlayın</h1>
+      <p>Yük veren, taşıyıcı, kurye/kargo, ambar veya standart üye olarak devam edebilirsiniz. Size uygun rolü seçin; yüklerinizi, boş araçlarınızı veya hizmetlerinizi daha düzenli şekilde görünür hale getirin.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="nakliye-ilani-ver.html">Ücretsiz ilan ver</a>
+        <a id="heroLogin" class="btn" href="uye-login.html">Üye girişi</a>
+      </div>
     </div>
 
     <aside class="hero-panel">
-      <h2>Doğru rolü seçmek neden önemli?</h2>
+      <h2>Neden kayıt olmalısınız?</h2>
       <ul>
-        <li>Yük verenler araç ve taşıyıcı arar</li>
-        <li>Taşıyıcılar açık yük ve iş fırsatı arar</li>
-        <li>Kurye/kargo tarafı küçük gönderi ve hızlı teslimat görünürlüğü sağlar</li>
-        <li>Ambar/parsiyel tarafı koli, parça yük ve şehirler arası taşımayı öne çıkarır</li>
+        <li>İlanınız grup paylaşımları arasında kaybolmadan daha düzenli görünür</li>
+        <li>Yük, araç, kurye ve ambar taleplerinizi tek platformda yayınlayabilirsiniz</li>
+        <li>Teklif, ilan ve mesajlaşma akışına daha kontrollü şekilde geçebilirsiniz</li>
+        <li>Rolünüze uygun giriş ile size uygun ekranlara daha hızlı ulaşabilirsiniz</li>
       </ul>
     </aside>
+  </section>
+
+  <section class="benefits">
+    <article class="benefit">
+      <strong>Ücretsiz ilan verin</strong>
+      <span>Yükünüzü, hizmetinizi veya boş aracınızı platforma hızlıca ekleyin.</span>
+    </article>
+    <article class="benefit">
+      <strong>Daha görünür olun</strong>
+      <span>Grup içi paylaşıma ek olarak daha düzenli bir dijital vitrinde yer alın.</span>
+    </article>
+    <article class="benefit">
+      <strong>Teklif toplamaya başlayın</strong>
+      <span>Uygun taşıyıcı, kurye veya ambar tarafı ile teklif akışına geçin.</span>
+    </article>
+    <article class="benefit">
+      <strong>Rolünüze göre ilerleyin</strong>
+      <span>Yük veren, nakliyeci, kurye veya ambar olarak size özel giriş yapın.</span>
+    </article>
   </section>
 
   <section class="cards">
@@ -448,6 +535,11 @@
         <div class="role-icon">📦</div>
         <h2>Yük Veren</h2>
         <p>Yük ilanı oluşturan, araç arayan, teklif toplayan ve taşıma organizasyonunu yönetmek isteyen firmalar için giriş noktasıdır.</p>
+        <ul>
+          <li>Yük ilanı yayınla</li>
+          <li>Uygun araç ve taşıyıcı bul</li>
+          <li>Teklif topla ve karşılaştır</li>
+        </ul>
         <small>Yük ilanı · Araç bul · Teklif al</small>
       </div>
       <div class="actions">
@@ -461,6 +553,11 @@
         <div class="role-icon">🚛</div>
         <h2>Taşıyıcı / Nakliyeci</h2>
         <p>Taşıma kapasitesi sunan, açık yükleri inceleyen, aracına yük bulmak ve teklif akışına katılmak isteyenler için giriş noktasıdır.</p>
+        <ul>
+          <li>Açık yükleri incele</li>
+          <li>Boş araç kapasiteni değerlendir</li>
+          <li>Teklif ver ve pazarlık akışına katıl</li>
+        </ul>
         <small>Yük bul · Boş dönüş · Teklif ver</small>
       </div>
       <div class="actions">
@@ -474,6 +571,11 @@
         <div class="role-icon">🏍️</div>
         <h2>Kurye / Kargo</h2>
         <p>Kurye hizmeti, moto kurye, şehir içi teslimat, paket, kargo ve hızlı teslimat hizmeti sunmak isteyenler için giriş noktasıdır.</p>
+        <ul>
+          <li>Kurye ve teslimat hizmetini duyur</li>
+          <li>Şehir içi gönderi taleplerine ulaş</li>
+          <li>Hızlı teslimat görünürlüğü kazan</li>
+        </ul>
         <small>Kurye · Paket · Hızlı teslimat</small>
       </div>
       <div class="actions">
@@ -487,6 +589,11 @@
         <div class="role-icon">🏢</div>
         <h2>Ambar / Parsiyel</h2>
         <p>Ambar hizmeti, parsiyel yük, şehirler arası ambar, parça yük, koli taşıma ve küçük yük taşıma hizmeti sunan yapılar için giriş noktasıdır.</p>
+        <ul>
+          <li>Ambar ve parsiyel hizmetini öne çıkar</li>
+          <li>Parça yük taleplerini değerlendir</li>
+          <li>Koli ve şehirler arası taşıma görünürlüğü kazan</li>
+        </ul>
         <small>Ambar · Parsiyel · Koli taşıma</small>
       </div>
       <div class="actions">
@@ -499,7 +606,12 @@
       <div>
         <div class="role-icon">👤</div>
         <h2>Standart Üye</h2>
-        <p>Platformu genel erişimle kullanacak, ilanları inceleyecek veya temel üyelik akışına dahil olacak kullanıcılar için giriş noktasıdır.</p>
+        <p>Platformu genel erişimle kullanacak, ilanları inceleyecek veya temel üyelik akışına dahil olacak kullanıcılar için başlangıç noktasıdır.</p>
+        <ul>
+          <li>Platformu inceleyerek başla</li>
+          <li>Daha sonra rolüne göre ilerle</li>
+          <li>Temel üyelikle sisteme giriş yap</li>
+        </ul>
         <small>Genel erişim · İnceleme · Üyelik</small>
       </div>
       <div class="actions">
@@ -512,7 +624,12 @@
       <div>
         <div class="role-icon">💬</div>
         <h2>Mevcut Üyeyim</h2>
-        <p>Daha önce kayıt olduysanız doğrudan üye girişi yaparak ilan, teklif ve mesajlaşma akışına devam edebilirsiniz.</p>
+        <p>Daha önce kayıt olduysanız doğrudan üye girişi yaparak ilan, teklif ve mesajlaşma akışına kaldığınız yerden devam edebilirsiniz.</p>
+        <ul>
+          <li>Mevcut hesabınla giriş yap</li>
+          <li>Teklif ve mesajlaşma akışını aç</li>
+          <li>İlan ve kayıtlarını yönet</li>
+        </ul>
         <small>Giriş · Teklif · Mesajlaşma</small>
       </div>
       <div class="actions">
@@ -522,19 +639,19 @@
   </section>
 
   <section class="note">
-    <h3>Süreç nasıl işler?</h3>
+    <h3>Kayıt olduktan sonra ne olur?</h3>
     <ul>
       <li>Önce platformdaki rolünüzü seçersiniz.</li>
       <li>Kayıt oluşturur veya mevcut hesabınızla giriş yaparsınız.</li>
       <li>Yönlendirme bilgisi korunur; örneğin teklif ekranından geldiyseniz giriş sonrası tekrar o akışa dönebilirsiniz.</li>
-      <li>Teklif, ilan, mesajlaşma ve platform içi işlemlere kontrollü biçimde geçersiniz.</li>
+      <li>İlan, teklif, mesajlaşma ve platform içi işlemlere daha kontrollü biçimde geçersiniz.</li>
     </ul>
   </section>
 
   <section class="login-band">
     <div>
       <strong>Rolünüzden emin değilseniz standart üye olarak başlayabilirsiniz.</strong>
-      <span>Daha sonra ilan, teklif veya hizmet türüne göre platform içindeki akışları kullanabilirsiniz.</span>
+      <span>Önce giriş yapın, sonra yük, araç, kurye veya ambar tarafına göre platform içi akışınızı genişletin.</span>
     </div>
     <div class="actions">
       <a id="bandMemberReg" class="btn primary" href="uye-ol.html?role=member">Standart Üye Kayıt</a>
@@ -573,6 +690,7 @@ roles.forEach(function(item){
 });
 
 document.getElementById('topLogin').href = build('uye-login.html','');
+document.getElementById('heroLogin').href = build('uye-login.html','');
 document.getElementById('directLogin').href = build('uye-login.html','');
 document.getElementById('bandLogin').href = build('uye-login.html','');
 document.getElementById('bandMemberReg').href = build('uye-ol.html','member');
