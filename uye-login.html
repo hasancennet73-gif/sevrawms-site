@@ -28,7 +28,7 @@
       --red:#c93838;
       --line:rgba(15,35,65,.12);
       --shadow:0 18px 42px rgba(9,31,66,.10);
-      --max:1240px;
+      --max:1280px;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -119,45 +119,27 @@
       font-family:inherit;
     }
 
-    .btn:hover{
-      background:#edf5ff;
-    }
-
+    .btn:hover{background:#edf5ff}
     .btn.primary{
       background:#0b5db8;
       color:#fff;
       border-color:#0b5db8;
       box-shadow:0 10px 22px rgba(11,93,184,.18);
     }
+    .btn.primary:hover{background:#084c96}
+    .btn:disabled{opacity:.65;cursor:not-allowed}
 
-    .btn.primary:hover{
-      background:#084c96;
-    }
-
-    .btn:disabled{
-      opacity:.65;
-      cursor:not-allowed;
-    }
-
-    .auth-grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:22px;
-      align-items:start;
-    }
-
-    .panel{
+    .hero{
       border:1px solid var(--line);
       border-radius:30px;
-      background:#ffffff;
-      box-shadow:var(--shadow);
-      padding:30px;
-      overflow:hidden;
-    }
-
-    .intro{
       background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
-      min-height:100%;
+      box-shadow:var(--shadow);
+      padding:32px;
+      margin-bottom:18px;
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:22px;
+      align-items:start;
     }
 
     .kicker{
@@ -190,11 +172,68 @@
       letter-spacing:-.035em;
     }
 
-    .intro p{
+    .hero p,.panel p{
       color:#526174;
       font-size:18px;
-      max-width:740px;
       margin-bottom:18px;
+    }
+
+    .hero-side{
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:#ffffff;
+      padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+
+    .hero-side h3,.info-box h3{
+      color:#0b1930;
+      font-size:24px;
+      margin-bottom:12px;
+    }
+
+    .hero-side ul,.info-box ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .hero-side li,.info-box li{
+      position:relative;
+      padding-left:20px;
+      color:#526174;
+    }
+
+    .hero-side li:before,.info-box li:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:var(--yellow);
+    }
+
+    .auth-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .panel{
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:#ffffff;
+      box-shadow:var(--shadow);
+      padding:30px;
+      overflow:hidden;
+    }
+
+    .intro{
+      background:linear-gradient(135deg,#ffffff 0%,#f4f8ff 100%);
+      min-height:100%;
     }
 
     .info-box{
@@ -204,35 +243,6 @@
       background:#ffffff;
       padding:22px;
       box-shadow:0 12px 32px rgba(10,35,66,.07);
-    }
-
-    .info-box h3{
-      color:#0b1930;
-      font-size:24px;
-      margin-bottom:12px;
-    }
-
-    .info-box ul{
-      list-style:none;
-      display:grid;
-      gap:10px;
-    }
-
-    .info-box li{
-      position:relative;
-      padding-left:20px;
-      color:#526174;
-    }
-
-    .info-box li:before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:9px;
-      width:7px;
-      height:7px;
-      border-radius:999px;
-      background:var(--yellow);
     }
 
     .form-grid{
@@ -287,17 +297,44 @@
     }
 
     .hidden{display:none !important}
-
     .note.ok{
       color:#0c6b40;
       background:#eefaf4;
       border-color:rgba(23,150,90,.25);
     }
-
     .note.err{
       color:#9f2525;
       background:#fff1f1;
       border-color:rgba(201,56,56,.25);
+    }
+
+    .role-row{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .role-chip{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#ffffff;
+      padding:13px;
+      box-shadow:0 8px 20px rgba(10,35,66,.05);
+    }
+
+    .role-chip strong{
+      display:block;
+      color:#0b1930;
+      font-size:14px;
+      margin-bottom:3px;
+    }
+
+    .role-chip span{
+      color:#637083;
+      font-size:12px;
+      line-height:1.35;
+      display:block;
     }
 
     .quick-panel{
@@ -332,69 +369,18 @@
       border-color:rgba(255,255,255,.18);
     }
 
-    .role-row{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;
-      margin-top:18px;
-    }
-
-    .role-chip{
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:#ffffff;
-      padding:13px;
-      box-shadow:0 8px 20px rgba(10,35,66,.05);
-    }
-
-    .role-chip strong{
-      display:block;
-      color:#0b1930;
-      font-size:14px;
-      margin-bottom:3px;
-    }
-
-    .role-chip span{
-      color:#637083;
-      font-size:12px;
-      line-height:1.35;
-      display:block;
-    }
-
-    @media(max-width:980px){
-      .auth-grid{
-        grid-template-columns:1fr;
-      }
-
-      .role-row{
-        grid-template-columns:1fr;
-      }
+    @media(max-width:1050px){
+      .hero,.auth-grid{grid-template-columns:1fr}
     }
 
     @media(max-width:700px){
-      .wrap{
-        padding:20px 14px 36px;
-      }
-
-      .top{
-        align-items:flex-start;
-      }
-
-      .actions{
-        width:100%;
-      }
-
-      .panel{
-        padding:24px;
-      }
-
-      h1{
-        font-size:34px;
-      }
-
-      .brand-text strong{
-        font-size:30px;
-      }
+      .wrap{padding:20px 14px 36px}
+      .top{align-items:flex-start}
+      .actions{width:100%}
+      .panel,.hero{padding:24px}
+      h1{font-size:34px}
+      .brand-text strong{font-size:30px}
+      .role-row{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -415,11 +401,28 @@
       </div>
     </header>
 
+    <section class="hero">
+      <div>
+        <div class="kicker" id="roleKickerHero">Üye Girişi</div>
+        <h1>Hesabınızla giriş yapın ve kaldığınız yerden devam edin</h1>
+        <p id="formText">Kayıtlı hesabınızla giriş yaparak ilan, teklif, pazarlık ve mesajlaşma akışına güvenli şekilde geri dönebilirsiniz.</p>
+      </div>
+      <aside class="hero-side">
+        <h3>Giriş sonrası nereye gidersiniz?</h3>
+        <ul>
+          <li>Teklif ekranından geldiyseniz aynı akışa geri dönersiniz</li>
+          <li>Standart girişte üye paneline geçersiniz</li>
+          <li>Rolünüz korunur, üyelik yapınız bozulmaz</li>
+          <li>İlan, teklif ve mesajlaşma adımları kaldığı yerden açılır</li>
+        </ul>
+      </aside>
+    </section>
+
     <main class="auth-grid">
       <section class="panel intro">
         <div class="kicker" id="roleKicker">Üye Girişi</div>
-        <h1>SEVRA üye girişi</h1>
-        <p id="formText">Kayıtlı hesabınızla sisteme giriş yaparak ilan, teklif ve pazarlık akışına devam edebilirsiniz.</p>
+        <h2>SEVRA üye girişi</h2>
+        <p id="introText">Kayıtlı hesabınızla sisteme giriş yaparak ilan, teklif ve pazarlık akışına devam edebilirsiniz.</p>
         <div id="redirectInfo" class="note ok hidden"></div>
 
         <div class="info-box">
@@ -453,17 +456,17 @@
         <h2>Hesabınızla giriş yapın</h2>
 
         <form id="loginForm" class="form-grid" autocomplete="off">
-          <div class="field full">
+          <div class="field">
             <label for="email">E-Posta</label>
             <input id="email" name="email" type="email" placeholder="ornek@firma.com" autocomplete="off" autocapitalize="none" spellcheck="false" />
           </div>
 
-          <div class="field full">
+          <div class="field">
             <label for="password">Şifre</label>
             <input id="password" name="password" type="password" placeholder="Şifre" autocomplete="new-password" />
           </div>
 
-          <div class="actions-row full">
+          <div class="actions-row">
             <button id="loginBtn" type="submit" class="btn primary">Giriş Yap</button>
             <a id="registerBtn" class="btn" href="uye-ol.html">Üyelik Oluştur</a>
             <a class="btn" href="sifremi-unuttum.html">Şifremi Unuttum</a>
@@ -518,12 +521,9 @@ function nextUrl() {
 
   if (redirectValue === 'ilan-teklif') {
     var url = 'ilan-teklif.html';
-    if (loadId) {
-      url += '?load_id=' + encodeURIComponent(loadId);
-    }
+    if (loadId) url += '?load_id=' + encodeURIComponent(loadId);
     return url;
   }
-
   return 'uye-panel.html';
 }
 
@@ -562,6 +562,7 @@ function setupPageContext() {
   var selectedLoad = readJson('sevra_selected_load', null);
 
   document.getElementById('roleKicker').textContent = roleLabel(role);
+  document.getElementById('roleKickerHero').textContent = roleLabel(role);
   document.getElementById('registerBtn').href = buildUrl('uye-ol.html');
   document.getElementById('registerTop').href = buildUrl('uye-ol.html');
   document.getElementById('roleSelectBtn').href = buildUrl('platform-kayit-secimi.html');
@@ -585,13 +586,7 @@ function setupPageContext() {
 }
 
 async function supabaseFindMember(email, password) {
-  const url =
-    SUPABASE_URL +
-    '/rest/v1/members?email=eq.' +
-    encodeURIComponent(email) +
-    '&password=eq.' +
-    encodeURIComponent(password) +
-    '&select=id,email,company_name,contact_name,role,status';
+  const url = SUPABASE_URL + '/rest/v1/members?email=eq.' + encodeURIComponent(email) + '&password=eq.' + encodeURIComponent(password) + '&select=id,email,company_name,contact_name,role,status';
 
   const response = await fetch(url, {
     method: 'GET',
