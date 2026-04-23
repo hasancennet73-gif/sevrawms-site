@@ -1,0 +1,26 @@
+{
+  "active_loads": 12,
+  "active_vehicle_posts": 5,
+  "total_members": 27,
+  "new_members_7d": 8,
+  "today_new_loads": 3,
+  "today_new_offers": 4,
+  "today_new_messages": 2,
+  "latest_loads": [
+    {
+      "route": "İstanbul → Ankara",
+      "detail": "Parsiyel yük · Tenteli araç",
+      "time": "14 dk önce"
+    },
+    {
+      "route": "Bursa → İzmir",
+      "detail": "Komple yük · Frigo / tenteli",
+      "time": "38 dk önce"
+    },
+    {
+      "route": "Gebze → Adana",
+      "detail": "Paletli ürün · Hızlı teklif",
+      "time": "1 saat önce"
+    }
+  ]
+}
