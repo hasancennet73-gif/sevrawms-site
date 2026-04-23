@@ -257,8 +257,193 @@ button{cursor:pointer}
   border-radius:18px !important;
   font-size:16px;
 }
+
+/* uye panel */
+.hero-block{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:18px;
+  margin-bottom:18px;
+}
+.hero-text,.hero-side-card,.stat-card-mini,.quick-link-box{
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+}
+.hero-text{
+  background:linear-gradient(135deg,var(--panel2),var(--bg));
+  padding:28px;
+}
+.hero-text h1{
+  font-size:56px;
+  line-height:1.02;
+  margin:10px 0 14px;
+}
+.hero-text p{
+  color:#d6e0ef;
+  max-width:900px;
+  font-size:16px;
+}
+.hero-action-row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.hero-side-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
+  padding:24px;
+}
+.hero-side-label{
+  display:inline-flex;
+  min-height:30px;
+  padding:0 12px;
+  align-items:center;
+  border-radius:999px;
+  background:rgba(241,200,77,.14);
+  color:#ffe08a;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:14px;
+}
+.hero-side-card h3{
+  font-size:32px;
+  line-height:1.08;
+  margin-bottom:12px;
+}
+.hero-side-card ul{
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.hero-side-card li{
+  position:relative;
+  padding-left:18px;
+  color:#d6e0ef;
+}
+.hero-side-card li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:9px;
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:var(--yellow);
+}
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+  margin-bottom:18px;
+}
+.stat-card-mini{
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
+  padding:22px;
+}
+.stat-card-mini strong{
+  display:block;
+  font-size:38px;
+  line-height:1;
+  margin-bottom:8px;
+}
+.stat-card-mini span{
+  color:#c5d2e2;
+  font-size:14px;
+}
+.panel-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  margin-bottom:18px;
+}
+.content-card p{
+  color:#d6e0ef;
+  font-size:15px;
+  margin-bottom:16px;
+}
+.card-action-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.two-col-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-bottom:18px;
+}
+.timeline-list{
+  display:grid;
+  gap:12px;
+}
+.timeline-item{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+  padding:16px;
+}
+.timeline-item strong{
+  display:block;
+  font-size:16px;
+  margin-bottom:6px;
+}
+.timeline-item span{
+  color:#c5d2e2;
+  font-size:13px;
+}
+.quick-links{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.quick-link-box{
+  background:rgba(255,255,255,.03);
+  padding:18px;
+}
+.quick-link-box strong{
+  display:block;
+  font-size:18px;
+  margin-bottom:6px;
+}
+.quick-link-box span{
+  display:block;
+  color:#c5d2e2;
+  font-size:13px;
+}
+.member-note-band{
+  margin-top:4px;
+  background:linear-gradient(135deg,var(--panel2),var(--bg));
+  border:1px solid rgba(255,255,255,.07);
+  color:#fff;
+  border-radius:28px;
+  padding:24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+  box-shadow:var(--shadow);
+}
+.member-note-band strong{
+  display:block;
+  font-size:24px;
+  line-height:1.15;
+  margin-bottom:6px;
+}
+.member-note-band span{
+  color:#d6e0ef;
+  line-height:1.45;
+}
+.member-note-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
 @media (max-width:1200px){
-  .entry-shell{grid-template-columns:1fr}
+  .entry-shell,.hero-block,.two-col-grid{grid-template-columns:1fr}
+  .panel-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:760px){
   .hero-mini h1,
@@ -266,11 +451,14 @@ button{cursor:pointer}
   .brand-text strong,
   .entry-info h1,
   .entry-card h2,
-  .entry-note-card h3{
+  .entry-note-card h3,
+  .hero-text h1,
+  .hero-side-card h3{
     font-size:34px;
   }
   .chat-form{grid-template-columns:1fr}
   .chat-send-btn{min-height:54px !important}
   .msg{max-width:100%}
   .chat-messages{min-height:340px}
+  .panel-grid,.quick-links,.stat-grid{grid-template-columns:1fr}
 }
