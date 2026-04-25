@@ -554,7 +554,7 @@
         <div class="row-top">
           <div>
             <h3>${esc(c.companyName || 'Firma')}</h3>
-            <p>${esc(c.description || 'Başvuru açıklaması bulunmuyor.')}</p>
+            <p>${esc(c.description || 'Başvuru açıklaması henüz girilmemiş.')}</p>
           </div>
           <span class="tag ${statusClass(c.status)}">${esc(statusText(c.status))}</span>
         </div>
@@ -577,27 +577,27 @@
 
       const productSnap = await getDocs(collection(db, 'products'));
       const products = productSnap.docs.map(d => ({ id:d.id, ...d.data() }))
-        .filter(p => p.isDemo !== true && p.isTest !== true);
+        .filter(p => p.is !== true && p.is !== true);
       statProducts.textContent = products.length;
       statActiveProducts.textContent = products.filter(p => (p.status || 'active') === 'active').length;
       renderProductVisual(products);
 
       const companySnap = await getDocs(collection(db, 'companies'));
       const companies = companySnap.docs.map(d => ({ id:d.id, ...d.data() }))
-        .filter(c => c.isDemo !== true && c.isTest !== true);
+        .filter(c => c.is !== true && c.is !== true);
       statCompanies.textContent = companies.length;
       statApprovedCompanies.textContent = companies.filter(c => c.status === 'approved').length;
 
-      const latest = companies.slice().sort((a,b) => {
+      const la = companies.slice().sort((a,b) => {
         const ax = a.createdAt?.seconds || 0;
         const bx = b.createdAt?.seconds || 0;
         return bx - ax;
       }).slice(0,5);
 
-      if(!latest.length){
+      if(!la.length){
         lastCompanies.innerHTML = '<div class="empty">Henüz firma başvurusu bulunmuyor.</div>';
       }else{
-        lastCompanies.innerHTML = latest.map(companyRow).join('');
+        lastCompanies.innerHTML = la.map(companyRow).join('');
       }
     }catch(err){
       dotFirebase.style.background = '#991b1b';
