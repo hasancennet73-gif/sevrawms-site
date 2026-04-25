@@ -223,7 +223,7 @@
   }
 
   function render(products){
-    const active = products.filter(p => (p.status||'active') === 'active' && p.isDemo !== true && p.isTest !== true);
+    const active = products.filter(p => (p.status||'active') === 'active' && p.is !== true && p.isTest !== true);
     statTotal.textContent = active.length;
     heroProductCount.textContent = active.length;
 
