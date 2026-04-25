@@ -305,6 +305,19 @@
     }
 
   </style>
+
+  <script>
+    (function(){
+      const ok = localStorage.getItem('sevra_admin_ok') === '1';
+      const exp = Number(localStorage.getItem('sevra_admin_exp') || '0');
+      if(!ok || Date.now() > exp){
+        localStorage.removeItem('sevra_admin_ok');
+        localStorage.removeItem('sevra_admin_exp');
+        window.location.href = 'yonetim-giris.html?redirect=' + encodeURIComponent(location.pathname.split('/').pop() || 'admin-panel.html');
+      }
+    })();
+  </script>
+
 </head>
 <body>
 <header class="topbar">
@@ -322,7 +335,7 @@
       <a href="firma-katalog.html">Firma Kataloğu</a>
       <a class="active" href="admin-panel.html">Yönetim Merkezi</a>
       <a class="primary" href="firma-basvuru.html">Firma Başvurusu</a>
-    </nav>
+    <a href="#" data-admin-logout>Yönetim Çıkış</a></nav>
   </div>
 </header>
 
