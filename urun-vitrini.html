@@ -184,6 +184,66 @@
       text-align:center;
     }
 
+  
+    /* KESIN FIX: URUN KARTLARI DAR SUTUN SORUNU */
+    .product-grid.fallback-mode{
+      display:grid !important;
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+      gap:18px !important;
+      align-items:stretch !important;
+    }
+    .product-grid.fallback-mode .catalog-fill-note{
+      grid-column:1 / -1 !important;
+    }
+    .product-grid.fallback-mode .catalog-fill-card{
+      width:100% !important;
+      min-width:0 !important;
+      max-width:none !important;
+      border-radius:22px !important;
+      overflow:hidden !important;
+    }
+    .product-grid.fallback-mode .catalog-fill-body{
+      min-width:0 !important;
+      padding:18px !important;
+    }
+    .product-grid.fallback-mode .catalog-fill-body h3{
+      font-size:21px !important;
+      line-height:1.18 !important;
+      word-break:normal !important;
+      overflow-wrap:anywhere !important;
+    }
+    .product-grid.fallback-mode .catalog-fill-body p{
+      font-size:15px !important;
+      line-height:1.5 !important;
+      overflow-wrap:anywhere !important;
+    }
+    .product-grid.fallback-mode .catalog-fill-body .product-actions{
+      margin-top:auto !important;
+      padding-top:14px !important;
+    }
+    .product-grid.fallback-mode .catalog-fill-body .btn{
+      width:100% !important;
+      justify-content:center !important;
+      white-space:normal !important;
+      text-align:center !important;
+      line-height:1.2 !important;
+      padding:10px 12px !important;
+      min-height:44px !important;
+    }
+    @media(max-width:760px){
+      .product-grid.fallback-mode{
+        grid-template-columns:1fr !important;
+      }
+      .product-grid.fallback-mode .catalog-fill-img{
+        height:135px !important;
+      }
+    }
+    @media(min-width:761px) and (max-width:1120px){
+      .product-grid.fallback-mode{
+        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -277,14 +337,12 @@
       <div class="catalog-fill-note">
         Ürün kataloğu gerçek kayıtlarla çalışır. Henüz aktif ürün kaydı yoksa, aşağıdaki alanlar platformda yayınlanabilecek ürün gruplarını gösterir.
       </div>
-      <div class="catalog-fill-grid">
-        <article class="catalog-fill-card"><div class="catalog-fill-img">⚙️</div><div class="catalog-fill-body"><small>Araç Parçaları</small><h3>Fren diski, rulman, filtre ve bakım parçaları</h3><p>Ticari araç, kamyon, dorse ve kasa ekipmanlarına yakın ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">📦</div><div class="catalog-fill-body"><small>Ambalaj / Koli</small><h3>Koli, streç film, palet ve paketleme sarfları</h3><p>Depo, sevkiyat ve e-ticaret operasyonlarında kullanılan ürün alanları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">🏭</div><div class="catalog-fill-body"><small>Depo Ürünleri</small><h3>Etiket, raf, ekipman ve operasyon malzemeleri</h3><p>Depo, barkod, paketleme ve yükleme süreçleri için ürün görünürlüğü.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">🔧</div><div class="catalog-fill-body"><small>Kasa Ekipmanları</small><h3>Kilit, menteşe, bağlantı ve kasa aksesuarları</h3><p>Taşıma kasaları, araç üstü ekipmanlar ve saha kullanımına uygun parçalar.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">🧰</div><div class="catalog-fill-body"><small>Sanayi Ürünleri</small><h3>Bakım, sarf ve yardımcı endüstriyel ürünler</h3><p>Atölye, depo ve lojistik operasyonlarında kullanılan yardımcı ürünler.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">♻️</div><div class="catalog-fill-body"><small>Stok Fazlası</small><h3>Fazla stok ve görünürlük ihtiyacı olan ürünler</h3><p>Firmaların stok fazlası veya görünürlük vermek istediği ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-      </div>
+      <article class="catalog-fill-card"><div class="catalog-fill-img">⚙️</div><div class="catalog-fill-body"><small>Araç Parçaları</small><h3>Fren diski, rulman, filtre ve bakım parçaları</h3><p>Ticari araç, kamyon, dorse ve kasa ekipmanlarına yakın ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+      <article class="catalog-fill-card"><div class="catalog-fill-img">📦</div><div class="catalog-fill-body"><small>Ambalaj / Koli</small><h3>Koli, streç film, palet ve paketleme sarfları</h3><p>Depo, sevkiyat ve e-ticaret operasyonlarında kullanılan ürün alanları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+      <article class="catalog-fill-card"><div class="catalog-fill-img">🏭</div><div class="catalog-fill-body"><small>Depo Ürünleri</small><h3>Etiket, raf, ekipman ve operasyon malzemeleri</h3><p>Depo, barkod, paketleme ve yükleme süreçleri için ürün görünürlüğü.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+      <article class="catalog-fill-card"><div class="catalog-fill-img">🔧</div><div class="catalog-fill-body"><small>Kasa Ekipmanları</small><h3>Kilit, menteşe, bağlantı ve kasa aksesuarları</h3><p>Taşıma kasaları, araç üstü ekipmanlar ve saha kullanımına uygun parçalar.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+      <article class="catalog-fill-card"><div class="catalog-fill-img">🧰</div><div class="catalog-fill-body"><small>Sanayi Ürünleri</small><h3>Bakım, sarf ve yardımcı endüstriyel ürünler</h3><p>Atölye, depo ve lojistik operasyonlarında kullanılan yardımcı ürünler.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+      <article class="catalog-fill-card"><div class="catalog-fill-img">♻️</div><div class="catalog-fill-body"><small>Stok Fazlası</small><h3>Fazla stok ve görünürlük ihtiyacı olan ürünler</h3><p>Firmaların stok fazlası veya görünürlük vermek istediği ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
     `;
   }
 
@@ -301,9 +359,12 @@
     catList.innerHTML = `<a class="cat" href="#urunler">Tüm Kategoriler <span>${active.length}</span></a>` + Object.entries(cats).map(([k,v]) => `<a class="cat" href="#urunler">${esc(k)} <span>${v}</span></a>`).join('');
 
     if(!active.length){
+      grid.className = 'product-grid fallback-mode';
       grid.innerHTML = fallbackCatalogCards();
       return;
     }
+
+    grid.className = 'product-grid';
 
     grid.innerHTML = active.map(card).join('');
   }
