@@ -32,7 +32,7 @@
 </head>
 <body>
 <div class="top-note"><div class="container top-note-inner"><span>SEVRA Ürün Kataloğu · Firma ve ürün listeleme</span><strong>Kurumsal ürün ve firma listeleme modeli</strong></div></div>
-<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div class="brand-text"><strong>SEVRA</strong><span>Lojistik İlan, Firma ve Ürün Görünürlüğü</span></div></a><nav class="nav"><a href="index.html">Ana Sayfa</a><a href="yuk-ilanlari.html">Yük İlanları</a><a href="nakliye-ilani-ver.html">İlan Ver</a><a class="active" href="urun-kataloğu.html">Ürün Kataloğu</a><a class="primary" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a></nav></div></header>
+<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div class="brand-text"><strong>SEVRA</strong><span>Lojistik İlan, Firma ve Ürün Görünürlüğü</span></div></a><nav class="nav"><a href="index.html">Ana Sayfa</a><a href="yuk-ilanlari.html">Yük İlanları</a><a href="nakliye-ilani-ver.html">İlan Ver</a><a class="active" href="urun-vitrini.html">Ürün Kataloğu</a><a class="primary" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a></nav></div></header>
 <section class="page-hero"><div class="container"><div class="hero-box"><div><div class="breadcrumb">SEVRA / Ürün Kataloğu</div><h1>SEVRA Ürün ve Tedarikçi Kataloğu</h1><p>Araç parçaları, kasa ekipmanları, depo ürünleri, ambalaj malzemeleri ve stok fazlası ürünler için kurumsal ürün ve firma listeleme alanı.</p></div><div class="hero-actions"><a class="btn btn-gold" href="#urunler">Kataloğu İncele</a><a class="btn btn-secondary" href="#guvenli-cizgi">Platform Bilgilendirmesi</a></div></div></div></section>
 <main class="container"><div class="stats"><div class="stat"><small>Yayınlanan Ürün</small><strong id="statTotal">0</strong></div><div class="stat"><small>Kategori</small><strong id="statCat">0</strong></div><div class="stat"><small>Listeleme Modeli</small><strong>İlan</strong></div><div class="stat"><small>Platform Rolü</small><strong>Görünürlük</strong></div></div>
 <div class="main-layout"><aside class="sidebar"><div class="sidebar-head"><strong>Kategoriler</strong><span>Lojistik sektörüne yakın ürün alanları</span></div><div class="cat-list" id="catList"><a class="cat" href="#urunler">Tüm Kategoriler <span>0</span></a></div><div class="safe-mini">SEVRA ürün satıcısı değildir. Ürün, ödeme, teslimat, garanti ve iade süreci ilan sahibi ile alıcı arasında yürütülür.</div></aside>
@@ -45,23 +45,27 @@
   function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");}
   function waLink(p){ const w=String(p.whatsapp||'').replace(/\D/g,''); return w ? `https://wa.me/${w}` : 'index.html#iletisim'; }
   function card(p){
-    return `<article class="product"><div class="product-img">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}<span class="badge">${esc(p.category||'Ürün')}</span></div><div class="product-body"><small>${esc(p.category||'Ürün')}</small><h3>${esc(p.name||'Ürün')}</h3><p>${esc(p.description||'')}</p><div class="seller"><span>İlan sahibi</span><strong>${esc(p.seller||'-')}</strong></div><div class="product-actions"><a class="btn btn-primary" href="urun-detay.html?id=${encodeURIComponent(p.id)}">İlan Detayı</a><a class="btn btn-secondary" href="${waLink(p)}" target="_blank" rel="noopener">Bilgi Al</a></div></div></article>`;
+    return `<article class="product"><div class="product-img">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}<span class="badge">${esc(p.category||'Ürün')}</span></div><div class="product-body"><small>${esc(p.category||'Ürün')}</small><h3>${esc(p.name||'Ürün')}</h3><p>${esc(p.description||'')}</p><div class="seller"><span>Firma</span><strong>${esc(p.seller||'-')}</strong></div><div class="product-actions"><a class="btn btn-primary" href="urun-detay.html?id=${encodeURIComponent(p.id)}">Ürün Detayı</a><a class="btn btn-secondary" href="${waLink(p)}" target="_blank" rel="noopener">Bilgi Al</a></div></div></article>`;
   }
-  function demo(){
+  function (){
     return [
-      {id:'demo1',category:'Araç Parçaları',name:'Kamyon Kasa Kilidi',description:'Kapalı kasa ve ticari araçlar için ürün kataloğu örneği.',seller:'Firma bilgisi'},
-      {id:'demo2',category:'Ambalaj / Koli',name:'Endüstriyel Koli ve Ambalaj',description:'Depo ve sevkiyat süreçlerinde kullanılan ambalaj ürünleri.',seller:'Firma bilgisi'},
-      {id:'demo3',category:'Depo Ürünleri',name:'Barkod Etiketi ve Sarf Malzeme',description:'Depo, barkod ve sevkiyat süreçlerinde kullanılan sarf malzemeler.',seller:'Firma bilgisi'}
+      {id:'1',category:'Araç Parçaları',name:'Kamyon Kasa Kilidi',description:'Kapalı kasa ve ticari araçlar için ürün kataloğu örneği.',seller:'Firma bilgisi'},
+      {id:'2',category:'Ambalaj / Koli',name:'Endüstriyel Koli ve Ambalaj',description:'Depo ve sevkiyat süreçlerinde kullanılan ambalaj ürünleri.',seller:'Firma bilgisi'},
+      {id:'3',category:'Depo Ürünleri',name:'Barkod Etiketi ve Sarf Malzeme',description:'Depo, barkod ve sevkiyat süreçlerinde kullanılan sarf malzemeler.',seller:'Firma bilgisi'}
     ];
   }
   function render(products){
     const active = products.filter(p => (p.status||'active') === 'active');
-    const list = active.length ? active : demo();
-    statTotal.textContent = active.length || 0;
+    const list = active.length ? active : ();
+    statTotal.textContent = active.length;
     const cats = {};
     list.forEach(p => cats[p.category||'Diğer'] = (cats[p.category||'Diğer']||0)+1);
     statCat.textContent = Object.keys(cats).length;
     catList.innerHTML = `<a class="cat" href="#urunler">Tüm Kategoriler <span>${list.length}</span></a>` + Object.entries(cats).map(([k,v]) => `<a class="cat" href="#urunler">${esc(k)} <span>${v}</span></a>`).join('');
+    if(!list.length){
+      grid.innerHTML = '<div class="empty">Yayınlanan ürün kaydı bulunmuyor.</div>';
+      return;
+    }
     grid.innerHTML = list.map(card).join('');
   }
   async function load(){
