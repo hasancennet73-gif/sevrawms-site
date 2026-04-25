@@ -13,8 +13,8 @@
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Yük İlanları - Açık Yükler, Araç Arayanlar, Boş Araçlar</title>
-  <meta name="description" content="SEVRA Yük İlanları ile açık yükleri inceleyin, aracınıza yük bulun, nakliye ilanlarına teklif verin. İstanbul, Bursa, Ankara ve Türkiye geneli yük ilanları." />
+  <title>SEVRA | Yük İlanları - Açık Yükler, Araç ve Yük Duyuruları</title>
+  <meta name="description" content="SEVRA Yük İlanları ile açık yük ilanlarını inceleyin, araç ve yük duyurularını görüntüleyin. SEVRA yalnızca ilan ve görünürlük platformudur; taşıma, sözleşme, ödeme veya tahsilat sürecine taraf olmaz." />
   <meta name="keywords" content="yük ilanları, açık yükler, yük bul, araç bul, nakliye ilanı, İstanbul yük ilanı, Bursa yük ilanı, Ankara yük ilanı, parsiyel yük, boş araç" />
   <link rel="stylesheet" href="yuk-ilanlari.css" />
 
@@ -693,6 +693,26 @@
       border-color:rgba(255,255,255,.18) !important;
     }
 
+
+    .safe-notice{
+      margin-top:22px;
+      border:1px solid rgba(11,93,184,.18);
+      background:#ffffff;
+      border-radius:22px;
+      padding:18px 20px;
+      box-shadow:0 10px 28px rgba(10,35,66,.06);
+      color:#526174;
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .safe-notice strong{
+      display:block;
+      color:#0b1930;
+      font-size:17px;
+      margin-bottom:5px;
+    }
+
     @media (max-width:1100px){
       .hero-shell{grid-template-columns:1fr}
       .category-strip{grid-template-columns:repeat(2,1fr)}
@@ -735,7 +755,7 @@
       </nav>
 
       <div class="top-actions">
-        <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışı</a>
+        <a class="btn btn-secondary" href="ilan-teklif.html">İlan Detayları</a>
         <a class="btn btn-primary" href="nakliye-ilani-ver.html">İlan Ver</a>
       </div>
     </div>
@@ -745,13 +765,13 @@
     <div class="container">
       <div class="hero-shell">
         <div class="hero-copy">
-          <div class="hero-badge">Kurumsal Yük Akışı</div>
-          <h1>Açık yük ilanlarını inceleyin, uygun işe kontrollü teklif verin</h1>
-          <p>SEVRA yük ilanları ekranı; yük veren, nakliyeci, araç sahibi, kurye ve ambar hizmetlerini daha düzenli, daha okunur ve daha profesyonel bir ilan akışında buluşturur.</p>
+          <div class="hero-badge">İlan Görünürlüğü</div>
+          <h1>Açık yük ilanlarını inceleyin, ilan sahibiyle doğrudan iletişime geçin</h1>
+          <p>SEVRA yük ilanları ekranı; yük veren, nakliyeci, araç sahibi, kurye ve ambar duyurularını daha düzenli, daha okunur ve daha profesyonel bir ilan akışında gösterir.</p>
 
           <div class="hero-cta-row">
             <a class="btn btn-primary" href="nakliye-ilani-ver.html">Yük / Nakliye İlanı Ver</a>
-            <a class="btn btn-secondary" href="ilan-teklif.html">Teklif Akışına Git</a>
+            <a class="btn btn-secondary" href="ilan-teklif.html">İlan Detaylarına Git</a>
             <a class="btn btn-secondary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
           </div>
         </div>
@@ -760,9 +780,9 @@
           <div class="panel-topline">SEVRA İlan Mantığı</div>
           <h3>Yük, araç ve kurye talepleri tek akışta görünür</h3>
           <ul>
-            <li>İlan detayları teklif sürecinde daha düzenli görünür</li>
-            <li>Yük veren ve taşıyıcı tarafı aynı platformda buluşur</li>
-            <li>İleride üyelik, teklif ve güvenli işlem akışına hazır yapı sunar</li>
+            <li>İlan detayları daha düzenli ve anlaşılır görünür</li>
+            <li>Yük veren ve taşıyıcı tarafı ilanlar üzerinden birbirini görebilir</li>
+            <li>Üyelik, firma vitrini ve ilan görünürlüğü için hazır yapı sunar</li>
           </ul>
         </div>
       </div>
@@ -771,26 +791,31 @@
         <article class="category-card">
           <span>📦</span>
           <strong>Açık Yükler</strong>
-          <p>Taşınmayı bekleyen yükleri, güzergâh ve araç ihtiyacına göre inceleyin.</p>
+          <p>Yayınlanan yük duyurularını güzergâh ve araç ihtiyacına göre inceleyin.</p>
         </article>
 
         <article class="category-card">
           <span>🚛</span>
           <strong>Araç Arayanlar</strong>
-          <p>Yük sahibi firmaların araç ve taşıyıcı aradığı talepleri takip edin.</p>
+          <p>Yük sahibi kişi veya firmaların araç ihtiyacı duyurularını takip edin.</p>
         </article>
 
         <article class="category-card">
           <span>🛣️</span>
           <strong>Boş Araçlar</strong>
-          <p>Boş dönüş yapan veya güzergâhında yük arayan araçlar için görünürlük oluşturun.</p>
+          <p>Boş dönüş yapan veya güzergâhında yük arayan araç ilanları için görünürlük oluşturun.</p>
         </article>
 
         <article class="category-card">
           <span>🏍️</span>
           <strong>Kurye / Kargo Talepleri</strong>
-          <p>Şehir içi hızlı teslimat, paket, koli ve kargo taleplerini ayrı görünür hale getirin.</p>
+          <p>Şehir içi teslimat, paket, koli ve kargo duyurularını ayrı görünür hale getirin.</p>
         </article>
+      </div>
+
+      <div class="safe-notice">
+        <strong>Bilgilendirme</strong>
+        SEVRA yalnızca ilanların ve firma duyurularının görüntülendiği dijital görünürlük platformudur. SEVRA taşıma işi yapmaz, taşıma sözleşmesine taraf olmaz, fiyat/komisyon belirlemez ve ödeme ya da tahsilat sürecini yönetmez.
       </div>
     </div>
   </section>
@@ -802,7 +827,7 @@
           <div class="section-kicker">Açık İlanlar</div>
           <h2>Kurumsal yük listesi</h2>
         </div>
-        <p>Detay veya teklif aksiyonunda ilgili ilan akış ekranına geçilir. İlanlar Firebase üzerinden canlı okunur.</p>
+        <p>Detay aksiyonunda ilgili ilan ekranına geçilir. İlanlar Firebase üzerinden canlı okunur. SEVRA ilanlara taraf olmaz; kullanıcılar iletişim ve anlaşma sürecini kendi sorumluluğunda yürütür.</p>
       </div>
 
       <div class="sevra-summary-bar" id="summaryBar">
@@ -823,7 +848,7 @@
           <article class="example-card">
             <small>Açık Yük</small>
             <strong>İstanbul → Ankara | 12 koli | Kapalı kasa</strong>
-            <span>Parsiyel yük, şehirler arası nakliye, teklif bekleniyor.</span>
+            <span>Parsiyel yük ve şehirler arası ilan örneği.</span>
           </article>
 
           <article class="example-card">
@@ -842,8 +867,8 @@
 
       <div class="bottom-cta">
         <div>
-          <strong>Yük ilanı vermek veya aracına yük bulmak için SEVRA’ya katıl.</strong>
-          <span>İlanını paylaş, teklifleri değerlendir, uygun taşıyıcı veya yük bağlantısına daha hızlı ulaş.</span>
+          <strong>Yük ilanı paylaşmak veya açık ilanları incelemek için SEVRA’ya katıl.</strong>
+          <span>İlanını paylaş, açık ilanları incele ve ilgili kişilerle doğrudan iletişime geç.</span>
         </div>
         <div class="bottom-cta-actions">
           <a class="btn btn-primary" href="nakliye-ilani-ver.html">İlan Ver</a>
@@ -947,7 +972,7 @@
       const weight = clean(load.weight, 'Belirtilmedi');
       const date = clean(load.date, 'Belirtilmedi');
       const status = clean(load.status, 'Açık');
-      const desc = clean(load.desc, 'Kurumsal teklif akışına uygun açık ilan.');
+      const desc = clean(load.desc, 'Açık ilan detayları için hazırlanmış kayıt.');
 
       return `
         <article class="load-card sevra-pro-card" data-id="${esc(load.id)}" data-title="${esc(route)}" data-route="${esc(route)}" data-weight="${esc(weight)}" data-status="${esc(status)}" data-type="${esc(type)}" data-vehicle="${esc(vehicle)}" data-date="${esc(date)}" data-load="${esc(loadName)}">
@@ -990,7 +1015,7 @@
 
           <div class="load-actions">
             <button class="btn btn-secondary js-detay" type="button">Detay Gör</button>
-            <button class="btn btn-primary js-teklif" type="button">Teklif Ver</button>
+            <button class="btn btn-primary js-teklif" type="button">Detay / İletişim</button>
           </div>
         </article>
       `;
