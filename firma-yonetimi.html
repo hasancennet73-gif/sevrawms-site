@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4XD6PKE0RD');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Firma Yönetimi</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root{--bg:#f4f7fb;--surface:#fff;--text:#172033;--muted:#637083;--navy:#071326;--blue:#0b5db8;--gold:#f6a400;--line:rgba(15,35,65,.12);--shadow:0 14px 34px rgba(9,31,66,.09);--max:1360px}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}.container{width:min(var(--max),calc(100% - 28px));margin:0 auto}a{text-decoration:none;color:inherit}
+    .topbar{background:#fff;border-bottom:1px solid var(--line);box-shadow:0 10px 28px rgba(12,35,64,.06);position:sticky;top:0;z-index:40}.topbar-inner{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:48px;height:48px;border-radius:15px;background:#f6a400;color:#071326;font-weight:900;font-size:24px;display:grid;place-items:center}.brand strong{font-size:28px;color:#0b1930}.brand span{display:block;font-size:12px;color:#637083;margin-top:2px}.nav{display:flex;gap:10px;flex-wrap:wrap;font-weight:800;font-size:14px}.nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08)}.nav .primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
+    .head{padding:26px 0 18px}.head-card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:24px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-end}.kicker{color:#a46b00;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}h1{margin:0;color:#0b1930;font-size:clamp(30px,3.5vw,48px);line-height:1.08;letter-spacing:-.035em}.head-card p{margin:8px 0 0;color:#637083}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;font-weight:900;color:#526174;cursor:pointer}.chip.active{background:#0b5db8;color:#fff;border-color:#0b5db8}
+    .grid{display:grid;gap:14px;padding-bottom:36px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px rgba(9,31,66,.07);padding:18px}.card-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.card h3{margin:0 0 6px;color:#0b1930;font-size:22px}.card p{margin:0;color:#637083}.tags{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.tag{border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900;background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24)}.tag.ok{background:#eaf8ef;color:#166534;border-color:rgba(22,101,52,.18)}.tag.err{background:#fff0f0;color:#991b1b;border-color:rgba(153,27,27,.18)}.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.box{background:#f7faff;border:1px solid var(--line);border-radius:13px;padding:10px}.box small{display:block;color:#637083;font-size:11px;font-weight:900;text-transform:uppercase;margin-bottom:4px}.box strong{color:#0b1930;font-size:14px;word-break:break-word}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{min-height:40px;padding:0 13px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;border:1px solid transparent;cursor:pointer}.btn-ok{background:#166534;color:#fff}.btn-warn{background:#f6a400;color:#071326}.btn-danger{background:#991b1b;color:#fff}.btn-secondary{background:#fff;color:#132238;border-color:var(--line)}.empty{padding:24px;background:#fff;border:1px dashed rgba(15,35,65,.22);border-radius:18px;color:#637083}
+    @media(max-width:900px){.meta{grid-template-columns:1fr 1fr}}@media(max-width:560px){.meta{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div><strong>SEVRA</strong><span>Firma Yönetimi</span></div></a><nav class="nav"><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a class="primary" href="firma-yonetimi.html">Firma Yönetimi</a></nav></div></header>
+<section class="head"><div class="container"><div class="head-card"><div><div class="kicker">Admin / Firma Onay</div><h1>Firma başvurularını incele ve onayla</h1><p>Başvurular varsayılan olarak beklemede gelir. Admin onayı olmadan firma aktif görünürlüğe alınmaz.</p></div><button class="btn btn-secondary" id="refreshBtn">Yenile</button></div></div></section>
+<main class="container">
+  <div class="toolbar"><button class="chip active" data-filter="all">Tümü</button><button class="chip" data-filter="pending">Beklemede</button><button class="chip" data-filter="approved">Onaylı</button><button class="chip" data-filter="rejected">Reddedilen</button><button class="chip" data-filter="needs_info">Bilgi İstendi</button></div>
+  <div class="grid" id="list"><div class="empty">Başvurular yükleniyor...</div></div>
+</main>
+<script type="module">
+  import { db } from './firebase-config.js';
+  import { collection, getDocs, query, orderBy, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  const list=document.getElementById('list'); let companies=[]; let current='all';
+  function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");}
+  async function load(){
+    list.innerHTML='<div class="empty">Başvurular yükleniyor...</div>';
+    try{
+      const q=query(collection(db,'companies'), orderBy('createdAt','desc'));
+      const snap=await getDocs(q);
+      companies=snap.docs.map(d=>({id:d.id,...d.data()}));
+      render();
+    }catch(err){list.innerHTML='<div class="empty">Başvurular okunamadı: '+esc(err.message)+'</div>'}
+  }
+  function statusText(s){return {pending:'Beklemede',approved:'Onaylandı',rejected:'Reddedildi',needs_info:'Bilgi İstendi'}[s]||s||'Beklemede'}
+  function render(){
+    const rows=current==='all'?companies:companies.filter(x=>(x.status||'pending')===current);
+    if(!rows.length){list.innerHTML='<div class="empty">Bu filtrede başvuru yok.</div>';return;}
+    list.innerHTML=rows.map(c=>`
+      <article class="card">
+        <div class="card-top"><div><h3>${esc(c.companyName)}</h3><p>${esc(c.description||'Açıklama yok')}</p></div><div><span class="tag ${c.status==='approved'?'ok':c.status==='rejected'?'err':''}">${esc(statusText(c.status))}</span></div></div>
+        <div class="tags"><span class="tag">${esc(c.memberType)}</span><span class="tag">${esc(c.activity)}</span><span class="tag">Vergi: ${c.taxNoValid?'Geçerli':'-'}</span><span class="tag">TC: ${c.tcNoValid?'Geçerli':'-'}</span><span class="tag">Risk: ${esc(c.fraudScore||0)}</span></div>
+        <div class="meta">
+          <div class="box"><small>Yetkili</small><strong>${esc(c.authorizedName)}</strong></div>
+          <div class="box"><small>Vergi No</small><strong>${esc(c.taxNo||'-')}</strong></div>
+          <div class="box"><small>T.C. No</small><strong>${esc(c.tcNo||'-')}</strong></div>
+          <div class="box"><small>Vergi Dairesi</small><strong>${esc(c.taxOffice||'-')}</strong></div>
+          <div class="box"><small>Telefon</small><strong>${esc(c.phone)}</strong></div>
+          <div class="box"><small>E-posta</small><strong>${esc(c.email)}</strong></div>
+          <div class="box"><small>Konum</small><strong>${esc((c.city||'-')+' / '+(c.district||'-'))}</strong></div>
+          <div class="box"><small>MERSİS</small><strong>${esc(c.mersisNo||'-')}</strong></div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ok" data-set="${c.id}" data-status="approved">Onayla</button>
+          <button class="btn btn-warn" data-set="${c.id}" data-status="needs_info">Bilgi İste</button>
+          <button class="btn btn-danger" data-set="${c.id}" data-status="rejected">Reddet</button>
+        </div>
+      </article>`).join('');
+    list.querySelectorAll('[data-set]').forEach(b=>b.addEventListener('click',()=>setStatus(b.dataset.set,b.dataset.status)));
+  }
+  async function setStatus(id,status){
+    try{await updateDoc(doc(db,'companies',id), {status, updatedAt:serverTimestamp()}); await load();}
+    catch(err){alert('Güncelleme hatası: '+err.message)}
+  }
+  document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));ch.classList.add('active');current=ch.dataset.filter;render();}));
+  document.getElementById('refreshBtn').addEventListener('click',load);
+  load();
+</script>
+</body>
+</html>

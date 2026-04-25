@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4XD6PKE0RD');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Firma Kataloğu</title>
+  <meta name="description" content="SEVRA Firma Kataloğu; onaylı firma ve tedarikçilerin listelendiği kurumsal görünürlük alanıdır." />
+  <style>
+    :root{--bg:#f4f7fb;--surface:#fff;--text:#172033;--muted:#637083;--navy:#071326;--blue:#0b5db8;--gold:#f6a400;--line:rgba(15,35,65,.12);--shadow:0 14px 34px rgba(9,31,66,.09);--max:1280px}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}.container{width:min(var(--max),calc(100% - 28px));margin:0 auto}a{text-decoration:none;color:inherit}
+    .topbar{background:#fff;border-bottom:1px solid var(--line);box-shadow:0 10px 28px rgba(12,35,64,.06)}.topbar-inner{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:48px;height:48px;border-radius:15px;background:#f6a400;color:#071326;font-weight:900;font-size:24px;display:grid;place-items:center}.brand strong{font-size:28px;color:#0b1930}.nav{display:flex;gap:10px;flex-wrap:wrap}.nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08);font-weight:800}
+    .hero{padding:28px 0 18px}.hero-card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:26px}.kicker{color:#a46b00;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}h1{margin:0 0 8px;color:#0b1930;font-size:clamp(30px,3.5vw,48px)}p{color:#637083}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-bottom:36px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px rgba(9,31,66,.07);padding:20px}.logo{width:58px;height:58px;border-radius:18px;background:#0b1930;color:#ffd166;display:grid;place-items:center;font-weight:900;font-size:24px;margin-bottom:12px}.card h3{margin:0 0 8px;color:#0b1930}.tags{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.tag{background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24);border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900}.btn{min-height:42px;padding:0 14px;border-radius:11px;background:#0b5db8;color:#fff;display:inline-flex;align-items:center;font-weight:900}.empty{padding:24px;background:#fff;border:1px dashed rgba(15,35,65,.22);border-radius:18px;color:#637083}.notice{margin:0 0 26px;background:#0b1930;color:#fff;border-radius:22px;padding:20px}.notice span{color:rgba(255,255,255,.76)}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><strong>SEVRA</strong></a><nav class="nav"><a href="index.html">Ana Sayfa</a><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-vitrini.html">Ürün Kataloğu</a></nav></div></header>
+<section class="hero"><div class="container"><div class="hero-card"><div class="kicker">Onaylı Firma Kataloğu</div><h1>SEVRA Firma ve Tedarikçi Kataloğu</h1><p>Admin tarafından onaylanan firma kayıtları burada listelenir.</p></div></div></section>
+<main class="container"><div class="notice"><strong>Platform bilgilendirmesi</strong><br><span>SEVRA firma veya ürün satıcısı değildir; firmalar yalnızca görünürlük amacıyla listelenir.</span></div><div class="grid" id="grid"><div class="empty">Firmalar yükleniyor...</div></div></main>
+<script type="module">
+  import { db } from './firebase-config.js';
+  import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  const grid=document.getElementById('grid'); function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");}
+  async function load(){try{const q=query(collection(db,'companies'),orderBy('createdAt','desc'));const snap=await getDocs(q);const rows=snap.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x.status==='approved'); if(!rows.length){grid.innerHTML='<div class="empty">Henüz onaylı firma bulunmuyor.</div>';return;} grid.innerHTML=rows.map(c=>`<article class="card"><div class="logo">${esc((c.companyName||'S')[0]).toUpperCase()}</div><h3>${esc(c.companyName)}</h3><p>${esc(c.description||'Firma açıklaması bulunmuyor.')}</p><div class="tags"><span class="tag">${esc(c.activity||'-')}</span><span class="tag">${esc((c.city||'-')+' / '+(c.district||'-'))}</span></div><a class="btn" href="mailto:${esc(c.email||'')}">Firma ile İletişim</a></article>`).join('');}catch(err){grid.innerHTML='<div class="empty">Firmalar okunamadı: '+esc(err.message)+'</div>'}} load();
+</script>
+</body>
+</html>
