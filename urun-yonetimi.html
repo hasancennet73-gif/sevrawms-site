@@ -52,6 +52,19 @@
     .safe{margin-top:12px;padding:13px;border-radius:16px;background:#fff4d8;color:#5f4300;border:1px solid rgba(246,164,0,.30);font-size:13px}
     @media(max-width:1050px){.layout{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
   </style>
+
+  <script>
+    (function(){
+      const ok = localStorage.getItem('sevra_product_admin_ok') === '1';
+      const exp = Number(localStorage.getItem('sevra_product_admin_exp') || '0');
+      if(!ok || Date.now() > exp){
+        localStorage.removeItem('sevra_product_admin_ok');
+        localStorage.removeItem('sevra_product_admin_exp');
+        window.location.href = 'urun-admin-giris.html?redirect=urun-yonetimi.html';
+      }
+    })();
+  </script>
+
 </head>
 <body>
 <header class="topbar">
@@ -64,7 +77,7 @@
       <a href="index.html">Ana Sayfa</a>
       <a href="urun-vitrini.html">Ürün Vitrini</a>
       <a class="active" href="urun-yonetimi.html">Ürün Yönetimi</a>
-      <a class="primary" href="index.html#iletisim">Vitrin Başvurusu</a>
+      <a class="primary" href="index.html#iletisim">Firma Başvurusu</a><a href="#" id="productAdminLogout">Ürün Admin Çıkış</a><a href="#" id="productAdminLogout">Ürün Admin Çıkış</a>
     </nav>
   </div>
 </header>
@@ -302,5 +315,18 @@
   refreshBtn.addEventListener('click', loadProducts);
   loadProducts();
 </script>
+
+<script>
+  const productAdminLogout = document.getElementById('productAdminLogout');
+  if(productAdminLogout){
+    productAdminLogout.addEventListener('click', function(e){
+      e.preventDefault();
+      localStorage.removeItem('sevra_product_admin_ok');
+      localStorage.removeItem('sevra_product_admin_exp');
+      window.location.href = 'urun-admin-giris.html';
+    });
+  }
+</script>
+
 </body>
 </html>
