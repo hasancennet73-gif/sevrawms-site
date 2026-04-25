@@ -43,13 +43,13 @@
   <div class="container">
     <div class="hero-card">
       <div>
-        <div class="kicker">Firma / Tedarikçi Ön Kayıt</div>
-        <h1>Firma başvurusu ve ilk seviye doğrulama</h1>
-        <p>SEVRA ürün ve firma kataloğuna katılmak isteyen firmalar için başvuru formu. Sistem vergi no / T.C. no format kontrolü, zorunlu alan kontrolü ve admin onay süreciyle çalışır.</p>
+        <div class="kicker">Kurumsal Başvuru Süreci</div>
+        <h1>Kurumsal firma başvuru ve ön doğrulama</h1>
+        <p>SEVRA firma ve tedarikçi kataloğuna katılmak isteyen işletmeler için kurumsal başvuru formudur. Vergi bilgileri, kimlik bilgileri, iletişim alanları ve zorunlu kayıt unsurları sistem tarafından kontrol edilir; başvurular yönetici incelemesi sonrasında değerlendirilir.</p>
       </div>
       <div class="side-note">
-        <strong>Başvuru hemen aktif olmaz</strong>
-        <span>Kayıtlar önce “Beklemede” durumuna alınır. Admin onayı olmadan firma veya ürün görünürlüğü aktif edilmez.</span>
+        <strong>Ön inceleme ve onay süreci</strong>
+        <span>Başvurular önce değerlendirme kuyruğuna alınır. Yönetici onayı tamamlanmadan firma kaydı yayın durumuna geçirilmez.</span>
       </div>
     </div>
   </div>
@@ -57,7 +57,7 @@
 
 <main class="container layout">
   <section class="panel">
-    <div class="panel-head"><strong>Firma Başvuru Formu</strong><span>Vergi no / T.C. no kontrolü + admin onayı</span></div>
+    <div class="panel-head"><strong>Firma Başvuru Formu</strong><span>Vergi ve kimlik bilgisi kontrolü • yönetici değerlendirmesi</span></div>
     <form class="form" id="companyForm">
       <div class="field">
         <label>Üyelik tipi</label>
@@ -70,7 +70,7 @@
       </div>
 
       <div class="row">
-        <div class="field"><label>Firma / İlan Sahibi Ünvanı</label><input id="companyName" required placeholder="Örn: ABC Lojistik San. Tic. Ltd. Şti."></div>
+        <div class="field"><label>Firma / İlan Sahibi Ünvanı</label><input id="companyName" required placeholder="Firma ticari unvanı"></div>
         <div class="field"><label>Yetkili Ad Soyad</label><input id="authorizedName" required placeholder="Yetkili kişi"></div>
       </div>
 
@@ -80,8 +80,8 @@
       </div>
 
       <div class="row">
-        <div class="field"><label>Vergi Dairesi</label><input id="taxOffice" placeholder="Örn: Osmangazi"></div>
-        <div class="field"><label>MERSİS No</label><input id="mersisNo" placeholder="Varsa MERSİS no"></div>
+        <div class="field"><label>Vergi Dairesi</label><input id="taxOffice" placeholder="Vergi dairesi"></div>
+        <div class="field"><label>MERSİS No</label><input id="mersisNo" placeholder="MERSİS numarası"></div>
       </div>
 
       <div class="row">
@@ -90,8 +90,8 @@
       </div>
 
       <div class="row">
-        <div class="field"><label>İl</label><input id="city" required placeholder="Örn: Bursa"></div>
-        <div class="field"><label>İlçe</label><input id="district" required placeholder="Örn: Osmangazi"></div>
+        <div class="field"><label>İl</label><input id="city" required placeholder="İl"></div>
+        <div class="field"><label>İlçe</label><input id="district" required placeholder="Vergi dairesi"></div>
       </div>
 
       <div class="field">
@@ -128,13 +128,13 @@
   </section>
 
   <aside class="panel">
-    <div class="panel-head"><strong>Kontrol Kuralları</strong><span>Sistem sahteyi ilk seviyede eler</span></div>
+    <div class="panel-head"><strong>Başvuru Değerlendirme Kriterleri</strong><span>Veri tutarlılığı ve ön doğrulama kontrolleri</span></div>
     <div class="rules" id="rulesBox">
-      <div class="rule"><strong>Vergi No</strong><span id="ruleTax">Şirket için 10 haneli geçerli vergi no zorunlu.</span></div>
-      <div class="rule"><strong>T.C. No</strong><span id="ruleTc">Şahıs/bireysel için geçerli T.C. no veya vergi no zorunlu.</span></div>
-      <div class="rule"><strong>İletişim</strong><span id="ruleContact">Telefon ve e-posta formatı kontrol edilir.</span></div>
-      <div class="rule"><strong>Admin Onayı</strong><span>Başvuru önce beklemede kalır; admin onayından sonra görünür olur.</span></div>
-      <div class="rule"><strong>Önemli sınır</strong><span>Sistem matematiksel/format kontrolü yapar. Resmi vergi dairesi veya kimlik eşleşmesi için ayrıca resmi servis entegrasyonu gerekir.</span></div>
+      <div class="rule"><strong>Vergi No</strong><span id="ruleTax">Tüzel kişi başvurularında 10 haneli geçerli vergi numarası zorunludur.</span></div>
+      <div class="rule"><strong>T.C. No</strong><span id="ruleTc">Şahıs işletmesi veya bireysel başvurularda geçerli T.C. kimlik numarası ya da vergi numarası aranır.</span></div>
+      <div class="rule"><strong>İletişim</strong><span id="ruleContact">Telefon ve e-posta alanlarında biçim ve temel tutarlılık kontrolü uygulanır.</span></div>
+      <div class="rule"><strong>Admin Onayı</strong><span>Başvurular ilk aşamada incelemede tutulur; yayın görünürlüğü yalnızca yönetici onayı sonrasında açılır.</span></div>
+      <div class="rule"><strong>Önemli sınır</strong><span>Bu aşamada biçimsel ve algoritmik kontroller uygulanır. Resmî kurum eşleştirmesi ve kesin doğrulama için ayrıca yetkili servis entegrasyonu gerekir.</span></div>
     </div>
   </aside>
 </main>
@@ -239,7 +239,7 @@
     const combined = (d.companyName + ' ' + d.authorizedName + ' ' + d.description).toLowerCase();
     if(badWords.some(w => combined.includes(w))){
       fraudScore += 40;
-      errors.push('Başvuru metninde test/deneme gibi geçersiz ifadeler bulunuyor.');
+      errors.push('Başvuru metninde geçersiz kayıt gibi geçersiz ifadeler bulunuyor.');
     }
     if(d.phone && /^(\d)\1{9,}$/.test(digits(d.phone))) {
       fraudScore += 30;
