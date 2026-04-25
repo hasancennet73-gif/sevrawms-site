@@ -136,6 +136,17 @@
       .hero-content{padding:26px}
       .metric{min-width:100%}
     }
+  
+    .catalog-fill-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .catalog-fill-card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 12px 30px rgba(9,31,66,.07);display:flex;flex-direction:column;min-height:100%}
+    .catalog-fill-img{height:180px;background:linear-gradient(135deg,#0b1930,#0b5db8);display:grid;place-items:center;color:#ffd166;font-size:42px;position:relative;overflow:hidden}
+    .catalog-fill-body{padding:17px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .catalog-fill-body small{color:#a46b00;font-weight:900;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
+    .catalog-fill-body h3{margin:0;color:#0b1930;font-size:19px;line-height:1.18}
+    .catalog-fill-body p{margin:0;color:#526174;font-size:14px}
+    .catalog-fill-note{margin:0 0 14px;padding:15px;border-radius:18px;background:#fff4d8;color:#5f4300;border:1px solid rgba(246,164,0,.30);font-size:14px}
+    @media(max-width:900px){.catalog-fill-grid{grid-template-columns:1fr}}
+
   </style>
 </head>
 <body>
@@ -222,6 +233,23 @@
     return `<article class="product"><div class="product-img">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}<span class="badge">${esc(p.category||'Ürün')}</span></div><div class="product-body"><small>${esc(p.category||'Ürün')}</small><h3>${esc(p.name||'Ürün')}</h3><p>${esc(p.description||'')}</p><div class="seller"><span>Firma</span><strong>${esc(p.seller||'-')}</strong></div><div class="product-actions"><a class="btn btn-primary" href="urun-detay.html?id=${encodeURIComponent(p.id)}">Ürün Detayı</a><a class="btn btn-light" href="${waLink(p)}" target="_blank" rel="noopener">Bilgi Al</a></div></div></article>`;
   }
 
+  
+  function fallbackCatalogCards(){
+    return `
+      <div class="catalog-fill-note">
+        Ürün kataloğu gerçek kayıtlarla çalışır. Henüz aktif ürün kaydı yoksa, aşağıdaki alanlar platformda yayınlanabilecek ürün gruplarını gösterir.
+      </div>
+      <div class="catalog-fill-grid">
+        <article class="catalog-fill-card"><div class="catalog-fill-img">⚙️</div><div class="catalog-fill-body"><small>Araç Parçaları</small><h3>Fren diski, rulman, filtre ve bakım parçaları</h3><p>Ticari araç, kamyon, dorse ve kasa ekipmanlarına yakın ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">📦</div><div class="catalog-fill-body"><small>Ambalaj / Koli</small><h3>Koli, streç film, palet ve paketleme sarfları</h3><p>Depo, sevkiyat ve e-ticaret operasyonlarında kullanılan ürün alanları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">🏭</div><div class="catalog-fill-body"><small>Depo Ürünleri</small><h3>Etiket, raf, ekipman ve operasyon malzemeleri</h3><p>Depo, barkod, paketleme ve yükleme süreçleri için ürün görünürlüğü.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">🔧</div><div class="catalog-fill-body"><small>Kasa Ekipmanları</small><h3>Kilit, menteşe, bağlantı ve kasa aksesuarları</h3><p>Taşıma kasaları, araç üstü ekipmanlar ve saha kullanımına uygun parçalar.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">🧰</div><div class="catalog-fill-body"><small>Sanayi Ürünleri</small><h3>Bakım, sarf ve yardımcı endüstriyel ürünler</h3><p>Atölye, depo ve lojistik operasyonlarında kullanılan yardımcı ürünler.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">♻️</div><div class="catalog-fill-body"><small>Stok Fazlası</small><h3>Fazla stok ve görünürlük ihtiyacı olan ürünler</h3><p>Firmaların stok fazlası veya görünürlük vermek istediği ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
+      </div>
+    `;
+  }
+
   function render(products){
     const active = products.filter(p => (p.status||'active') === 'active' && p.is !== true && p.isTest !== true);
     statTotal.textContent = active.length;
@@ -235,7 +263,7 @@
     catList.innerHTML = `<a class="cat" href="#urunler">Tüm Kategoriler <span>${active.length}</span></a>` + Object.entries(cats).map(([k,v]) => `<a class="cat" href="#urunler">${esc(k)} <span>${v}</span></a>`).join('');
 
     if(!active.length){
-      grid.innerHTML = '<div class="empty">Yayınlanan ürün kaydı bulunmuyor. Ürün yönetimi ekranından fotoğraflı ürün eklendiğinde katalog burada listelenecektir.</div>';
+      grid.innerHTML = fallbackCatalogCards();
       return;
     }
 
