@@ -219,7 +219,7 @@
       try{
         const q = query(collection(db, 'companies'), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
-        companies = snap.docs.map(d => ({ id:d.id, ...d.data() })).filter(c => c.status === 'approved' && c.isTest !== true && c.isTest !== true);
+        companies = snap.docs.map(d => ({ id:d.id, ...d.data() })).filter(c => c.status === 'approved');
         fillActivityFilter();
         render();
       }catch(err){
