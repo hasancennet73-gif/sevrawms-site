@@ -16,9 +16,22 @@
     .grid{display:grid;gap:14px;padding-bottom:36px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px rgba(9,31,66,.07);padding:18px}.card-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.card h3{margin:0 0 6px;color:#0b1930;font-size:22px}.card p{margin:0;color:#637083}.tags{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.tag{border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900;background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24)}.tag.ok{background:#eaf8ef;color:#166534;border-color:rgba(22,101,52,.18)}.tag.err{background:#fff0f0;color:#991b1b;border-color:rgba(153,27,27,.18)}.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.box{background:#f7faff;border:1px solid var(--line);border-radius:13px;padding:10px}.box small{display:block;color:#637083;font-size:11px;font-weight:900;text-transform:uppercase;margin-bottom:4px}.box strong{color:#0b1930;font-size:14px;word-break:break-word}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{min-height:40px;padding:0 13px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;border:1px solid transparent;cursor:pointer}.btn-ok{background:#166534;color:#fff}.btn-warn{background:#f6a400;color:#071326}.btn-danger{background:#991b1b;color:#fff}.btn-secondary{background:#fff;color:#132238;border-color:var(--line)}.empty{padding:24px;background:#fff;border:1px dashed rgba(15,35,65,.22);border-radius:18px;color:#637083}
     @media(max-width:900px){.meta{grid-template-columns:1fr 1fr}}@media(max-width:560px){.meta{grid-template-columns:1fr}}
   </style>
+
+  <script>
+    (function(){
+      const ok = localStorage.getItem('sevra_admin_ok') === '1';
+      const exp = Number(localStorage.getItem('sevra_admin_exp') || '0');
+      if(!ok || Date.now() > exp){
+        localStorage.removeItem('sevra_admin_ok');
+        localStorage.removeItem('sevra_admin_exp');
+        window.location.href = 'yonetim-giris.html?redirect=' + encodeURIComponent(location.pathname.split('/').pop() || 'admin-panel.html');
+      }
+    })();
+  </script>
+
 </head>
 <body>
-<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div><strong>SEVRA</strong><span>Firma Yönetimi</span></div></a><nav class="nav"><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a class="primary" href="firma-yonetimi.html">Firma Yönetimi</a><a href="firma-katalog.html">Firma Kataloğu</a></nav></div></header>
+<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div><strong>SEVRA</strong><span>Firma Yönetimi</span></div></a><nav class="nav"><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a class="primary" href="firma-yonetimi.html">Firma Yönetimi</a><a href="firma-katalog.html">Firma Kataloğu</a><a href="#" data-admin-logout>Yönetim Çıkış</a></nav></div></header>
 <section class="head"><div class="container"><div class="head-card"><div><div class="kicker">Admin / Firma Değerlendirme</div><h1>Firma başvurularını değerlendirme paneli</h1><p>Başvurular inceleme kuyruğuna alınır. Yönetici değerlendirmesi tamamlanmadan firma kaydı yayın durumuna geçirilmez.</p></div><button class="btn btn-secondary" id="refreshBtn">Yenile</button></div></div></section>
 <main class="container">
   <div class="toolbar"><button class="chip active" data-filter="all">Tümü</button><button class="chip" data-filter="pending">İncelemede</button><button class="chip" data-filter="approved">Onaylananlar</button><button class="chip" data-filter="rejected">Reddedilenler</button><button class="chip" data-filter="needs_info">Bilgi Talep Edildi</button></div>
