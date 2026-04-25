@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Firma Detayı</title>
+  <meta name="robots" content="index, follow" />
+
+  <style>
+    :root{--bg:#f4f7fb;--surface:#fff;--text:#172033;--muted:#637083;--navy:#071326;--blue:#0b5db8;--gold:#f6a400;--gold2:#ffd166;--line:rgba(15,35,65,.12);--shadow:0 14px 34px rgba(9,31,66,.09);--max:1180px}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}.container{width:min(var(--max),calc(100% - 28px));margin:0 auto}a{text-decoration:none;color:inherit}
+    .topbar{background:#fff;border-bottom:1px solid var(--line);box-shadow:0 10px 28px rgba(12,35,64,.06)}.topbar-inner{min-height:78px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:48px;height:48px;border-radius:15px;background:#f6a400;color:#071326;font-weight:900;font-size:24px;display:grid;place-items:center}.brand strong{font-size:28px;color:#0b1930}.nav{display:flex;gap:10px;flex-wrap:wrap}.nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08);font-weight:800}
+    .detail{padding:28px 0}.card{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:360px 1fr}
+    .side{background:#0b1930;color:#fff;padding:30px;display:flex;flex-direction:column;justify-content:space-between;gap:24px}.logo{width:82px;height:82px;border-radius:24px;background:#f6a400;color:#071326;display:grid;place-items:center;font-weight:900;font-size:36px}.side small{color:#ffd166;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.side h1{margin:10px 0 8px;color:#fff;font-size:34px;line-height:1.05}.side p{color:rgba(255,255,255,.72)}
+    .info{padding:30px}.section-title{color:#0b1930;font-size:24px;margin:0 0 16px}.desc{color:#526174;font-size:17px;margin:0 0 18px}
+    .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.box{background:#f7faff;border:1px solid var(--line);border-radius:14px;padding:12px}.box small{display:block;color:#637083;font-size:11px;font-weight:900;text-transform:uppercase;margin-bottom:4px}.box strong{color:#0b1930;word-break:break-word}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{min-height:46px;padding:0 16px;border-radius:12px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent}.btn-primary{background:#0b5db8;color:#fff}.btn-gold{background:#f6a400;color:#071326}.btn-secondary{background:#fff;color:#132238;border-color:var(--line)}
+    .notice{margin-top:18px;background:#fff4d8;color:#5f4300;border:1px solid rgba(246,164,0,.30);border-radius:18px;padding:16px}.empty{padding:30px;background:#fff;border:1px dashed rgba(15,35,65,.22);border-radius:22px;color:#637083}
+    .products{margin-top:18px}.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.product{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 10px 26px rgba(9,31,66,.06)}.product-img{height:150px;background:#0b1930;color:#ffd166;display:grid;place-items:center;font-size:42px;overflow:hidden}.product-img img{width:100%;height:100%;object-fit:cover}.product-body{padding:14px}.product h3{margin:0 0 8px;color:#0b1930;font-size:17px}.product p{margin:0;color:#637083;font-size:13px}
+    @media(max-width:900px){.card{grid-template-columns:1fr}.meta{grid-template-columns:1fr}.product-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html"><div class="brand-mark">S</div><strong>SEVRA</strong></a>
+    <nav class="nav">
+      <a href="firma-katalog.html">Firma Kataloğu</a>
+      <a href="urun-vitrini.html">Ürün Kataloğu</a>
+      <a href="index.html">Ana Sayfa</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container detail" id="root">
+  <div class="empty">Firma detayı yükleniyor...</div>
+</main>
+
+<script type="module">
+  import { db } from './firebase-config.js';
+  import { doc, getDoc, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const root = document.getElementById('root');
+  const id = new URLSearchParams(location.search).get('id');
+
+  function esc(v){
+    return String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+  }
+
+  function initial(name){
+    return String(name || 'S').trim().slice(0,1).toUpperCase() || 'S';
+  }
+
+  function mailLink(email){ return email ? `mailto:${encodeURIComponent(email)}` : 'index.html#iletisim'; }
+  function phoneLink(phone){ const n = String(phone||'').replace(/\D/g,''); return n ? `tel:${n}` : 'index.html#iletisim'; }
+
+  async function loadProductsForCompany(companyName){
+    try{
+      const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      return snap.docs.map(d => ({ id:d.id, ...d.data() }))
+        .filter(p => (p.status || 'active') === 'active')
+        .filter(p => String(p.seller || '').trim().toLowerCase() === String(companyName || '').trim().toLowerCase())
+        .slice(0, 6);
+    }catch(e){
+      return [];
+    }
+  }
+
+  function productCard(p){
+    return `
+      <article class="product">
+        <div class="product-img">${p.imageData ? `<img src="${p.imageData}" alt="${esc(p.name)}">` : '📦'}</div>
+        <div class="product-body">
+          <h3>${esc(p.name || 'Ürün')}</h3>
+          <p>${esc(p.category || 'Kategori')}</p>
+          <div class="actions">
+            <a class="btn btn-secondary" href="urun-detay.html?id=${encodeURIComponent(p.id)}">Ürün Detayı</a>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  async function load(){
+    if(!id){
+      root.innerHTML = '<div class="empty">Firma kimliği bulunamadı.</div>';
+      return;
+    }
+
+    try{
+      const snap = await getDoc(doc(db, 'companies', id));
+      if(!snap.exists()){
+        root.innerHTML = '<div class="empty">Firma kaydı bulunamadı.</div>';
+        return;
+      }
+
+      const c = { id:snap.id, ...snap.data() };
+      if(c.status !== 'approved'){
+        root.innerHTML = '<div class="empty">Bu firma kaydı yayın için onaylanmamış.</div>';
+        return;
+      }
+
+      document.title = 'SEVRA | ' + (c.companyName || 'Firma Detayı');
+      const products = await loadProductsForCompany(c.companyName);
+
+      root.innerHTML = `
+        <div class="card">
+          <aside class="side">
+            <div>
+              <div class="logo">${esc(initial(c.companyName))}</div>
+              <small>Onaylı firma kaydı</small>
+              <h1>${esc(c.companyName || 'Firma')}</h1>
+              <p>${esc(c.activity || 'Faaliyet alanı')}</p>
+            </div>
+            <div class="notice" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.74);border-color:rgba(255,255,255,.14)">
+              SEVRA firma veya ürün satıcısı değildir. Firma bilgileri listeleme amacıyla yayınlanır.
+            </div>
+          </aside>
+
+          <section class="info">
+            <h2 class="section-title">Firma bilgileri</h2>
+            <p class="desc">${esc(c.description || 'Firma açıklaması bulunmuyor.')}</p>
+
+            <div class="meta">
+              <div class="box"><small>Yetkili</small><strong>${esc(c.authorizedName || '-')}</strong></div>
+              <div class="box"><small>Faaliyet</small><strong>${esc(c.activity || '-')}</strong></div>
+              <div class="box"><small>Konum</small><strong>${esc((c.city || '-') + ' / ' + (c.district || '-'))}</strong></div>
+              <div class="box"><small>Telefon</small><strong>${esc(c.phone || '-')}</strong></div>
+              <div class="box"><small>E-posta</small><strong>${esc(c.email || '-')}</strong></div>
+              <div class="box"><small>Vergi Dairesi</small><strong>${esc(c.taxOffice || '-')}</strong></div>
+            </div>
+
+            <div class="actions">
+              <a class="btn btn-gold" href="${mailLink(c.email)}">E-posta Gönder</a>
+              <a class="btn btn-primary" href="${phoneLink(c.phone)}">Telefonla Ara</a>
+              <a class="btn btn-secondary" href="firma-katalog.html">Kataloğa Dön</a>
+            </div>
+
+            <div class="notice">
+              SEVRA ürün satıcısı, taşıma işi yapan taraf veya ödeme/tahsilat yöneticisi değildir. Görüşme ve karar süreci tarafların kendi sorumluluğundadır.
+            </div>
+
+            <div class="products">
+              <h2 class="section-title">Firmanın ürün kayıtları</h2>
+              <div class="product-grid">
+                ${products.length ? products.map(productCard).join('') : '<div class="empty">Bu firmaya bağlı aktif ürün kaydı bulunmuyor.</div>'}
+              </div>
+            </div>
+          </section>
+        </div>
+      `;
+    }catch(err){
+      root.innerHTML = '<div class="empty">Firma detayı okunamadı: ' + esc(err.message) + '</div>';
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>
