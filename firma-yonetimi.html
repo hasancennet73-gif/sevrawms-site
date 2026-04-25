@@ -19,14 +19,14 @@
 </head>
 <body>
 <header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div><strong>SEVRA</strong><span>Firma Yönetimi</span></div></a><nav class="nav"><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a class="primary" href="firma-yonetimi.html">Firma Yönetimi</a></nav></div></header>
-<section class="head"><div class="container"><div class="head-card"><div><div class="kicker">Admin / Firma Onay</div><h1>Firma başvurularını incele ve onayla</h1><p>Başvurular varsayılan olarak beklemede gelir. Admin onayı olmadan firma aktif görünürlüğe alınmaz.</p></div><button class="btn btn-secondary" id="refreshBtn">Yenile</button></div></div></section>
+<section class="head"><div class="container"><div class="head-card"><div><div class="kicker">Admin / Firma Değerlendirme</div><h1>Firma başvurularını değerlendirme paneli</h1><p>Başvurular inceleme kuyruğuna alınır. Yönetici değerlendirmesi tamamlanmadan firma kaydı yayın durumuna geçirilmez.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btn-secondary" id="refreshBtn">Yenile</button><button class="btn btn-warn" id="demoBtn">Demo Başvuru Oluştur</button></div></div></div></section>
 <main class="container">
-  <div class="toolbar"><button class="chip active" data-filter="all">Tümü</button><button class="chip" data-filter="pending">Beklemede</button><button class="chip" data-filter="approved">Onaylı</button><button class="chip" data-filter="rejected">Reddedilen</button><button class="chip" data-filter="needs_info">Bilgi İstendi</button></div>
+  <div class="toolbar"><button class="chip active" data-filter="all">Tümü</button><button class="chip" data-filter="pending">İncelemede</button><button class="chip" data-filter="approved">Onaylananlar</button><button class="chip" data-filter="rejected">Reddedilenler</button><button class="chip" data-filter="needs_info">Bilgi Talep Edildi</button></div>
   <div class="grid" id="list"><div class="empty">Başvurular yükleniyor...</div></div>
 </main>
 <script type="module">
   import { db } from './firebase-config.js';
-  import { collection, getDocs, query, orderBy, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   const list=document.getElementById('list'); let companies=[]; let current='all';
   function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");}
   async function load(){
@@ -38,10 +38,10 @@
       render();
     }catch(err){list.innerHTML='<div class="empty">Başvurular okunamadı: '+esc(err.message)+'</div>'}
   }
-  function statusText(s){return {pending:'Beklemede',approved:'Onaylandı',rejected:'Reddedildi',needs_info:'Bilgi İstendi'}[s]||s||'Beklemede'}
+  function statusText(s){return {pending:'İncelemede',approved:'Onaylandı',rejected:'Reddedildi',needs_info:'Bilgi Talep Edildi'}[s]||s||'İncelemede'}
   function render(){
     const rows=current==='all'?companies:companies.filter(x=>(x.status||'pending')===current);
-    if(!rows.length){list.innerHTML='<div class="empty">Bu filtrede başvuru yok.</div>';return;}
+    if(!rows.length){list.innerHTML='<div class="empty">Bu filtrede kayıt bulunmuyor.</div>';return;}
     list.innerHTML=rows.map(c=>`
       <article class="card">
         <div class="card-top"><div><h3>${esc(c.companyName)}</h3><p>${esc(c.description||'Açıklama yok')}</p></div><div><span class="tag ${c.status==='approved'?'ok':c.status==='rejected'?'err':''}">${esc(statusText(c.status))}</span></div></div>
@@ -58,7 +58,7 @@
         </div>
         <div class="actions">
           <button class="btn btn-ok" data-set="${c.id}" data-status="approved">Onayla</button>
-          <button class="btn btn-warn" data-set="${c.id}" data-status="needs_info">Bilgi İste</button>
+          <button class="btn btn-warn" data-set="${c.id}" data-status="needs_info">Bilgi Talep Et</button>
           <button class="btn btn-danger" data-set="${c.id}" data-status="rejected">Reddet</button>
         </div>
       </article>`).join('');
@@ -70,6 +70,41 @@
   }
   document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));ch.classList.add('active');current=ch.dataset.filter;render();}));
   document.getElementById('refreshBtn').addEventListener('click',load);
+
+  async function createDemoApplication(){
+    try{
+      await addDoc(collection(db,'companies'), {
+        memberType:'company',
+        companyName:'SEVRA KATALOG DEMO FİRMA AŞ',
+        authorizedName:'Yetkili Kullanıcı',
+        taxNo:'0000000000',
+        tcNo:'',
+        taxOffice:'Demo Vergi Dairesi',
+        mersisNo:'DEMO-KAYIT',
+        phone:'05551234567',
+        email:'demo@sevrawms.com.tr',
+        city:'Bursa',
+        district:'Osmangazi',
+        activity:'Araç Parçaları',
+        description:'Bu kayıt firma onay/red akışını test etmek için yönetim panelinden oluşturulmuş demo başvurudur.',
+        kvkk:true,
+        terms:true,
+        status:'pending',
+        fraudScore:0,
+        taxNoValid:false,
+        tcNoValid:false,
+        verificationLevel:'demo_admin_test_record',
+        isDemo:true,
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp()
+      });
+      await load();
+    }catch(err){
+      alert('Demo başvuru oluşturulamadı: ' + err.message);
+    }
+  }
+  document.getElementById('demoBtn')?.addEventListener('click', createDemoApplication);
+
   load();
 </script>
 </body>
