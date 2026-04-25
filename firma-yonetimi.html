@@ -44,8 +44,8 @@
     if(!rows.length){list.innerHTML='<div class="empty">Bu filtrede kayıt bulunmuyor.</div>';return;}
     list.innerHTML=rows.map(c=>`
       <article class="card">
-        <div class="card-top"><div><h3>${esc(c.companyName)}</h3><p>${esc(c.description||'Açıklama yok')}</p></div><div><span class="tag ${c.status==='approved'?'ok':c.status==='rejected'?'err':''}">${esc(statusText(c.status))}</span></div></div>
-        <div class="tags"><span class="tag">${esc(c.memberType)}</span><span class="tag">${esc(c.activity)}</span><span class="tag">Vergi: ${c.taxNoValid?'Geçerli':'-'}</span><span class="tag">TC: ${c.tcNoValid?'Geçerli':'-'}</span><span class="tag">Risk: ${esc(c.fraudScore||0)}</span></div>
+        <div class="card-top"><div><h3>${esc(c.companyName)}</h3><p>${esc(c.description||'Açıklama bulunmuyor')}</p></div><div><span class="tag ${c.status==='approved'?'ok':c.status==='rejected'?'err':''}">${esc(statusText(c.status))}</span></div></div>
+        <div class="tags"><span class="tag">${esc(c.memberType)}</span><span class="tag">${esc(c.activity)}</span><span class="tag">Vergi: ${c.taxNoValid?'Geçerli':'-'}</span><span class="tag">TC: ${c.tcNoValid?'Geçerli':'-'}</span><span class="tag">Kontrol: ${esc(c.fraudScore||0)}</span></div>
         <div class="meta">
           <div class="box"><small>Yetkili</small><strong>${esc(c.authorizedName)}</strong></div>
           <div class="box"><small>Vergi No</small><strong>${esc(c.taxNo||'-')}</strong></div>
