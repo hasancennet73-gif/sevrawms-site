@@ -966,6 +966,195 @@
       .service-wide{grid-template-columns:1fr}
       .container{width:min(100% - 18px,1280px)}
     }
+  
+    /* SEVRA PREMIUM HERO V2 - UYGULANDI */
+    .topbar{
+      background:#071326 !important;
+      border-bottom:1px solid rgba(255,255,255,.10) !important;
+      box-shadow:0 16px 42px rgba(0,0,0,.18) !important;
+    }
+    .topbar .brand-text strong,
+    .topbar .nav-shortcuts a,
+    .topbar .shortcut-row a{
+      color:#ffffff !important;
+    }
+    .topbar .brand-text span{
+      color:rgba(255,255,255,.68) !important;
+    }
+    .shortcut-row a{
+      background:rgba(255,255,255,.06) !important;
+      border-color:rgba(255,255,255,.10) !important;
+      box-shadow:none !important;
+    }
+    .shortcut-row a:hover{
+      background:rgba(255,255,255,.11) !important;
+    }
+    .shortcut-row .primary{
+      background:transparent !important;
+      border:1px solid rgba(246,164,0,.70) !important;
+      color:#ffd166 !important;
+    }
+    .brand-mark{
+      background:linear-gradient(135deg,#ffd166,#f6a400) !important;
+      color:#061225 !important;
+      box-shadow:0 10px 26px rgba(246,164,0,.25) !important;
+    }
+    .hero{
+      padding:0 0 42px !important;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(246,164,0,.18), transparent 28%),
+        linear-gradient(180deg,#071326 0%,#0b1930 48%,#f3f6fb 48%,#f3f6fb 100%) !important;
+    }
+    .hero-shell{
+      border-radius:0 0 30px 30px !important;
+      border:1px solid rgba(255,255,255,.10) !important;
+      box-shadow:0 28px 80px rgba(0,0,0,.28) !important;
+      background:
+        linear-gradient(90deg,rgba(7,19,38,.97) 0%,rgba(7,19,38,.88) 38%,rgba(7,19,38,.30) 67%,rgba(7,19,38,.12) 100%),
+        url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1800&q=80') center right/cover no-repeat !important;
+      min-height:610px !important;
+      padding:54px 44px 0 !important;
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:space-between !important;
+      overflow:hidden !important;
+      position:relative !important;
+    }
+    .hero-shell::after{
+      content:"";
+      position:absolute;
+      right:-140px;
+      bottom:-160px;
+      width:520px;
+      height:520px;
+      border-radius:999px;
+      background:radial-gradient(circle,rgba(246,164,0,.16),transparent 66%);
+      pointer-events:none;
+    }
+    .sevra-full-banner{
+      display:none !important;
+    }
+    .hero-content{
+      padding:0 !important;
+      position:relative !important;
+      z-index:2 !important;
+    }
+    .hero-grid{
+      display:block !important;
+      max-width:560px !important;
+    }
+    .hero-badge{
+      background:transparent !important;
+      border:none !important;
+      color:#ffd166 !important;
+      padding:0 !important;
+      font-size:18px !important;
+      letter-spacing:.02em !important;
+    }
+    .hero-badge:before{
+      content:"";
+      display:none;
+    }
+    .hero-left h1,
+    h1{
+      color:#ffffff !important;
+      font-size:clamp(42px,5vw,76px) !important;
+      line-height:.98 !important;
+      letter-spacing:-.055em !important;
+      margin:20px 0 18px !important;
+      max-width:700px !important;
+      text-shadow:0 10px 32px rgba(0,0,0,.18);
+    }
+    .hero-left h1 .gold-word,
+    .gold-word{
+      color:#f6a400 !important;
+    }
+    .hero-left p{
+      color:rgba(255,255,255,.78) !important;
+      font-size:18px !important;
+      max-width:520px !important;
+    }
+    .hero-actions .btn-primary{
+      background:#f6a400 !important;
+      border-color:#f6a400 !important;
+      color:#071326 !important;
+      box-shadow:0 16px 34px rgba(246,164,0,.24) !important;
+    }
+    .hero-actions .btn-secondary{
+      background:rgba(255,255,255,.06) !important;
+      border-color:rgba(246,164,0,.55) !important;
+      color:#ffffff !important;
+    }
+    .right-stack,
+    .hero-panel,
+    .info-card,
+    .social-grid{
+      display:none !important;
+    }
+    .stats-grid{
+      display:grid !important;
+      grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+      gap:0 !important;
+      margin-top:46px !important;
+      background:rgba(7,19,38,.72) !important;
+      border:1px solid rgba(255,255,255,.10) !important;
+      border-radius:22px 22px 0 0 !important;
+      backdrop-filter:blur(10px) !important;
+      overflow:hidden !important;
+      max-width:100% !important;
+    }
+    .stat-card{
+      background:transparent !important;
+      border:0 !important;
+      border-right:1px solid rgba(255,255,255,.10) !important;
+      box-shadow:none !important;
+      border-radius:0 !important;
+      padding:20px 22px !important;
+    }
+    .stat-card:last-child{
+      border-right:0 !important;
+    }
+    .stat-card strong{
+      color:#ffffff !important;
+      font-size:17px !important;
+      display:block !important;
+    }
+    .stat-card span{
+      color:rgba(255,255,255,.62) !important;
+      font-size:12px !important;
+    }
+    .community-strip,
+    .hero-band{
+      display:none !important;
+    }
+    @media(max-width:900px){
+      .hero-shell{
+        min-height:680px !important;
+        padding:38px 24px 0 !important;
+        background:
+          linear-gradient(180deg,rgba(7,19,38,.98) 0%,rgba(7,19,38,.86) 52%,rgba(7,19,38,.48) 100%),
+          url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat !important;
+      }
+      .stats-grid{
+        grid-template-columns:1fr 1fr !important;
+      }
+      .stat-card:nth-child(2){
+        border-right:0 !important;
+      }
+    }
+    @media(max-width:560px){
+      .stats-grid{
+        grid-template-columns:1fr !important;
+      }
+      .stat-card{
+        border-right:0 !important;
+        border-bottom:1px solid rgba(255,255,255,.10) !important;
+      }
+      .stat-card:last-child{
+        border-bottom:0 !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -1020,9 +1209,9 @@
         <div class="hero-content">
           <div class="hero-grid">
             <div class="hero-left">
-              <div class="hero-badge">Türkiye Geneli Lojistik Topluluğu</div>
-              <h1>Yük ilanları, araç paylaşımları, kurye duyuruları ve ambar görünürlükleri SEVRA’da buluşuyor</h1>
-              <p>SEVRA; yük, araç, kurye, kargo ve ambar ilanlarını tek dijital toplulukta görünür hale getiren yeni nesil ilan platformudur.</p>
+              <div class="hero-badge">İlan · Üyelik · Görünürlük</div>
+              <h1>Lojistik İlan,<br><span class="gold-word">Firma ve Ürün</span><br>Görünürlüğü<br>Platformu</h1>
+              <p>Lojistik sektöründe doğru firmalarla buluşmanın en kolay yolu. SEVRA; ilan, firma vitrini ve ürün görünürlüğü için güvenli bir dijital platformdur.</p>
 
               <div class="hero-actions">
                 <a class="btn btn-gold" href="nakliye-ilani-ver.html">Nakliye İlanı Ver</a>
@@ -1032,51 +1221,26 @@
                 <a class="btn btn-secondary" href="kurye-hizmeti.html">Kurye İlanlarını İncele</a>
               </div>
 
-              <div class="stats-grid">
-                <div class="stat-card"><strong>Türkiye</strong><span>Geneli paylaşım ağı</span></div>
-                <div class="stat-card"><strong>Yük + Araç</strong><span>İlan ve görünürlük</span></div>
-                <div class="stat-card"><strong>Kurye + Kargo</strong><span>Hızlı teslimat kanalı</span></div>
-              </div>
-
-              <div class="community-strip">
-                <div class="community-item"><strong>🚚 Nakliyeciler</strong><span>Güzergâh ve ilan paylaşımı</span></div>
-                <div class="community-item"><strong>📦 Yük Verenler</strong><span>Yük ilanı ve iletişim talebi</span></div>
-                <div class="community-item"><strong>🏍️ Kuryeler</strong><span>Kurye/kargo duyuruları</span></div>
-                <div class="community-item"><strong>🏢 Ambar</strong><span>Parsiyel yük görünürlüğü</span></div>
-              </div>
-            </div>
-
-            <div class="right-stack">
-              <div class="info-card">
-                <h3>Yük, araç, kurye ve paket ilanları tek platformda</h3>
-                <p>Yük ilanı paylaş, aracına uygun ilanları gör, kurye/kargo duyurularını yayınla, ambar ve parsiyel yük paylaşımlarını görünür hale getir.</p>
-                <div class="pill-row">
-                  <span class="pill">Yük ilanı</span>
-                  <span class="pill">Araç bulma</span>
-                  <span class="pill">Kurye</span>
-                  <span class="pill">Kargo</span>
-                  <span class="pill">Ambar</span>
-                </div>
-              </div>
-
-              <div class="social-grid">
-                <div class="social-item"><span>Instagram</span><strong><a href="https://www.instagram.com/sevrawms/" target="_blank" rel="noopener">@sevrawms</a></strong></div>
-                <div class="social-item"><span>Facebook Grup</span><strong><a href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Nakliye Kurye Kargo Türkiye | SEVRA</a></strong></div>
-                <div class="social-item"><span>Web</span><strong><a href="https://sevrawms.com.tr" target="_blank" rel="noopener">sevrawms.com.tr</a></strong></div>
-              </div>
-            </div>
+              
+        <div class="stats-grid">
+          <div class="stat-card">
+            <strong>Güvenilir</strong>
+            <span>Doğrulanmış firmalar</span>
           </div>
-
-          <div class="hero-band">
-            <div>Nakliye platformu</div>
-            <div>Nakliye ilanı ver</div>
-            <div>Ücretsiz nakliye ilanı</div>
-            <div>Ambar ilanı</div>
-            <div>Yük bulma</div>
-            <div>Kurye ilanı</div>
-            <div>Paket / kargo ilanı</div>
+          <div class="stat-card">
+            <strong>Hızlı</strong>
+            <span>Kolay ilan ve üyelik</span>
+          </div>
+          <div class="stat-card">
+            <strong>Geniş Erişim</strong>
+            <span>Binlerce kullanıcıya ulaşın</span>
+          </div>
+          <div class="stat-card">
+            <strong>7/24 Destek</strong>
+            <span>Her zaman yanınızdayız</span>
           </div>
         </div>
+
       </div>
     </div>
   </section>
