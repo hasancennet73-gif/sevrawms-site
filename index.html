@@ -967,173 +967,166 @@
       .container{width:min(100% - 18px,1280px)}
     }
   
-    /* SEVRA PREMIUM HERO V2 - UYGULANDI */
+    /* SEVRA FINAL HERO IMAGE - LOCAL FILE */
     .topbar{
-      background:#071326 !important;
-      border-bottom:1px solid rgba(255,255,255,.10) !important;
-      box-shadow:0 16px 42px rgba(0,0,0,.18) !important;
+      background:rgba(255,255,255,.96) !important;
+      border-bottom:1px solid var(--line) !important;
+      box-shadow:0 10px 30px rgba(12,35,64,.06) !important;
     }
-    .topbar .brand-text strong,
-    .topbar .nav-shortcuts a,
-    .topbar .shortcut-row a{
-      color:#ffffff !important;
-    }
-    .topbar .brand-text span{
-      color:rgba(255,255,255,.68) !important;
-    }
-    .shortcut-row a{
-      background:rgba(255,255,255,.06) !important;
-      border-color:rgba(255,255,255,.10) !important;
-      box-shadow:none !important;
-    }
-    .shortcut-row a:hover{
-      background:rgba(255,255,255,.11) !important;
-    }
-    .shortcut-row .primary{
-      background:transparent !important;
-      border:1px solid rgba(246,164,0,.70) !important;
-      color:#ffd166 !important;
-    }
-    .brand-mark{
-      background:linear-gradient(135deg,#ffd166,#f6a400) !important;
-      color:#061225 !important;
-      box-shadow:0 10px 26px rgba(246,164,0,.25) !important;
-    }
+
     .hero{
-      padding:0 0 42px !important;
+      padding:24px 0 34px !important;
       background:
-        radial-gradient(circle at 18% 20%, rgba(246,164,0,.18), transparent 28%),
-        linear-gradient(180deg,#071326 0%,#0b1930 48%,#f3f6fb 48%,#f3f6fb 100%) !important;
+        radial-gradient(circle at 12% 10%, rgba(11,93,184,.12), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(246,164,0,.12), transparent 28%),
+        linear-gradient(180deg,#f8fbff 0%,#eef4fb 100%) !important;
     }
+
     .hero-shell{
-      border-radius:0 0 30px 30px !important;
-      border:1px solid rgba(255,255,255,.10) !important;
-      box-shadow:0 28px 80px rgba(0,0,0,.28) !important;
-      background:
-        linear-gradient(90deg,rgba(7,19,38,.97) 0%,rgba(7,19,38,.88) 38%,rgba(7,19,38,.30) 67%,rgba(7,19,38,.12) 100%),
-        url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1800&q=80') center right/cover no-repeat !important;
-      min-height:610px !important;
-      padding:54px 44px 0 !important;
-      display:flex !important;
-      flex-direction:column !important;
-      justify-content:space-between !important;
-      overflow:hidden !important;
       position:relative !important;
+      min-height:620px !important;
+      border-radius:28px !important;
+      overflow:hidden !important;
+      border:1px solid rgba(15,35,65,.12) !important;
+      box-shadow:0 24px 70px rgba(9,31,66,.18) !important;
+      background:
+        linear-gradient(90deg, rgba(7,19,38,.96) 0%, rgba(7,19,38,.88) 34%, rgba(7,19,38,.42) 58%, rgba(7,19,38,.08) 100%),
+        url('sevra-hero-premium.png') center center/cover no-repeat !important;
     }
-    .hero-shell::after{
-      content:"";
-      position:absolute;
-      right:-140px;
-      bottom:-160px;
-      width:520px;
-      height:520px;
-      border-radius:999px;
-      background:radial-gradient(circle,rgba(246,164,0,.16),transparent 66%);
-      pointer-events:none;
-    }
+
     .sevra-full-banner{
       display:none !important;
     }
+
     .hero-content{
-      padding:0 !important;
       position:relative !important;
       z-index:2 !important;
+      padding:54px 34px 0 !important;
+      min-height:620px !important;
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:space-between !important;
     }
+
     .hero-grid{
       display:block !important;
-      max-width:560px !important;
+      max-width:590px !important;
     }
+
     .hero-badge{
       background:transparent !important;
-      border:none !important;
+      border:0 !important;
       color:#ffd166 !important;
       padding:0 !important;
-      font-size:18px !important;
-      letter-spacing:.02em !important;
+      font-size:17px !important;
+      margin-bottom:14px !important;
+      font-weight:900 !important;
     }
+
     .hero-badge:before{
-      content:"";
-      display:none;
+      display:none !important;
+      content:"" !important;
     }
+
     .hero-left h1,
+    .hero h1,
     h1{
       color:#ffffff !important;
-      font-size:clamp(42px,5vw,76px) !important;
-      line-height:.98 !important;
+      font-size:clamp(40px,4.8vw,72px) !important;
+      line-height:1.02 !important;
       letter-spacing:-.055em !important;
-      margin:20px 0 18px !important;
-      max-width:700px !important;
-      text-shadow:0 10px 32px rgba(0,0,0,.18);
+      margin:0 0 18px !important;
+      max-width:720px !important;
+      text-shadow:0 12px 32px rgba(0,0,0,.30) !important;
     }
+
     .hero-left h1 .gold-word,
     .gold-word{
       color:#f6a400 !important;
     }
+
     .hero-left p{
-      color:rgba(255,255,255,.78) !important;
+      color:rgba(255,255,255,.84) !important;
+      max-width:560px !important;
       font-size:18px !important;
-      max-width:520px !important;
+      line-height:1.55 !important;
     }
-    .hero-actions .btn-primary{
+
+    .hero-actions{
+      margin-top:22px !important;
+      gap:12px !important;
+    }
+
+    .hero-actions .btn-primary,
+    .hero-actions .btn-gold{
       background:#f6a400 !important;
       border-color:#f6a400 !important;
       color:#071326 !important;
-      box-shadow:0 16px 34px rgba(246,164,0,.24) !important;
+      box-shadow:0 16px 34px rgba(246,164,0,.25) !important;
     }
+
     .hero-actions .btn-secondary{
-      background:rgba(255,255,255,.06) !important;
-      border-color:rgba(246,164,0,.55) !important;
+      background:rgba(255,255,255,.08) !important;
+      border-color:rgba(255,255,255,.30) !important;
       color:#ffffff !important;
     }
+
     .right-stack,
-    .hero-panel,
     .info-card,
     .social-grid{
       display:none !important;
     }
+
     .stats-grid{
       display:grid !important;
       grid-template-columns:repeat(4,minmax(0,1fr)) !important;
       gap:0 !important;
-      margin-top:46px !important;
+      margin:48px 0 0 !important;
       background:rgba(7,19,38,.72) !important;
-      border:1px solid rgba(255,255,255,.10) !important;
+      border:1px solid rgba(255,255,255,.14) !important;
       border-radius:22px 22px 0 0 !important;
-      backdrop-filter:blur(10px) !important;
       overflow:hidden !important;
-      max-width:100% !important;
+      backdrop-filter:blur(10px) !important;
     }
+
     .stat-card{
       background:transparent !important;
       border:0 !important;
-      border-right:1px solid rgba(255,255,255,.10) !important;
-      box-shadow:none !important;
+      border-right:1px solid rgba(255,255,255,.13) !important;
       border-radius:0 !important;
+      box-shadow:none !important;
       padding:20px 22px !important;
     }
+
     .stat-card:last-child{
       border-right:0 !important;
     }
+
     .stat-card strong{
       color:#ffffff !important;
-      font-size:17px !important;
-      display:block !important;
+      font-size:18px !important;
     }
+
     .stat-card span{
-      color:rgba(255,255,255,.62) !important;
+      color:rgba(255,255,255,.68) !important;
       font-size:12px !important;
     }
+
     .community-strip,
     .hero-band{
       display:none !important;
     }
+
     @media(max-width:900px){
       .hero-shell{
         min-height:680px !important;
-        padding:38px 24px 0 !important;
         background:
-          linear-gradient(180deg,rgba(7,19,38,.98) 0%,rgba(7,19,38,.86) 52%,rgba(7,19,38,.48) 100%),
-          url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat !important;
+          linear-gradient(180deg, rgba(7,19,38,.98) 0%, rgba(7,19,38,.88) 50%, rgba(7,19,38,.38) 100%),
+          url('sevra-hero-premium.png') center center/cover no-repeat !important;
+      }
+      .hero-content{
+        min-height:680px !important;
+        padding:38px 22px 0 !important;
       }
       .stats-grid{
         grid-template-columns:1fr 1fr !important;
@@ -1142,13 +1135,14 @@
         border-right:0 !important;
       }
     }
+
     @media(max-width:560px){
       .stats-grid{
         grid-template-columns:1fr !important;
       }
       .stat-card{
         border-right:0 !important;
-        border-bottom:1px solid rgba(255,255,255,.10) !important;
+        border-bottom:1px solid rgba(255,255,255,.13) !important;
       }
       .stat-card:last-child{
         border-bottom:0 !important;
@@ -1193,7 +1187,7 @@
           <a href="nakliye-ilani-ver.html">İlan Ver</a>
           <a href="yuk-bulma-sistemi.html">Yük Bul</a>
           <a href="arac-bulma-sistemi.html">Araç Bul</a>
-          <a class="primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Üyelik / İlan Paylaş</a>
+          <a class="primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Platformu İncele</a>
         </div>
       </div>
     </div>
@@ -1211,14 +1205,14 @@
             <div class="hero-left">
               <div class="hero-badge">İlan · Üyelik · Görünürlük</div>
               <h1>Lojistik İlan,<br><span class="gold-word">Firma ve Ürün</span><br>Görünürlüğü<br>Platformu</h1>
-              <p>Lojistik sektöründe doğru firmalarla buluşmanın en kolay yolu. SEVRA; ilan, firma vitrini ve ürün görünürlüğü için güvenli bir dijital platformdur.</p>
+              <p>SEVRA; lojistik sektöründe ilan, firma vitrini ve ürün görünürlüğü için güvenli dijital platformdur. Doğru firmalarla doğrudan görüşmenin kolay yolu.</p>
 
               <div class="hero-actions">
                 <a class="btn btn-gold" href="nakliye-ilani-ver.html">Nakliye İlanı Ver</a>
-                <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Üyelik / İlan Paylaş</a>
-                <a class="btn btn-secondary" href="yuk-ilanlari.html">Açık Yükleri İncele</a>
-                <a class="btn btn-secondary" href="ucretsiz-nakliye-ilani.html">Ücretsiz İlan Ver</a>
-                <a class="btn btn-secondary" href="kurye-hizmeti.html">Kurye İlanlarını İncele</a>
+                <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Platformu İncele</a>
+                <a class="btn btn-secondary" href="yuk-ilanlari.html">Platformu İncele</a>
+                <a class="btn btn-secondary" href="ucretsiz-nakliye-ilani.html">İlan Ver</a>
+                <a class="btn btn-secondary" href="kurye-hizmeti.html">Firma Vitrini</a>
               </div>
 
               
@@ -1240,7 +1234,45 @@
             <span>Her zaman yanınızdayız</span>
           </div>
         </div>
+<div class="community-strip">
+                <div class="community-item"><strong>🚚 Nakliyeciler</strong><span>Güzergâh ve ilan paylaşımı</span></div>
+                <div class="community-item"><strong>📦 Yük Verenler</strong><span>Yük ilanı ve iletişim talebi</span></div>
+                <div class="community-item"><strong>🏍️ Kuryeler</strong><span>Kurye/kargo duyuruları</span></div>
+                <div class="community-item"><strong>🏢 Ambar</strong><span>Parsiyel yük görünürlüğü</span></div>
+              </div>
+            </div>
 
+            <div class="right-stack">
+              <div class="info-card">
+                <h3>Yük, araç, kurye ve paket ilanları tek platformda</h3>
+                <p>Yük ilanı paylaş, aracına uygun ilanları gör, kurye/kargo duyurularını yayınla, ambar ve parsiyel yük paylaşımlarını görünür hale getir.</p>
+                <div class="pill-row">
+                  <span class="pill">Yük ilanı</span>
+                  <span class="pill">Araç bulma</span>
+                  <span class="pill">Kurye</span>
+                  <span class="pill">Kargo</span>
+                  <span class="pill">Ambar</span>
+                </div>
+              </div>
+
+              <div class="social-grid">
+                <div class="social-item"><span>Instagram</span><strong><a href="https://www.instagram.com/sevrawms/" target="_blank" rel="noopener">@sevrawms</a></strong></div>
+                <div class="social-item"><span>Facebook Grup</span><strong><a href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Nakliye Kurye Kargo Türkiye | SEVRA</a></strong></div>
+                <div class="social-item"><span>Web</span><strong><a href="https://sevrawms.com.tr" target="_blank" rel="noopener">sevrawms.com.tr</a></strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-band">
+            <div>Nakliye platformu</div>
+            <div>Nakliye ilanı ver</div>
+            <div>Ücretsiz nakliye ilanı</div>
+            <div>Ambar ilanı</div>
+            <div>Yük bulma</div>
+            <div>Kurye ilanı</div>
+            <div>Paket / kargo ilanı</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1582,7 +1614,7 @@
           <span>Topluluk büyüdükçe yük ilanları, araç paylaşımları, kurye ve ambar duyuruları daha güçlü bir görünürlük ağına dönüşür.</span>
         </div>
         <div class="why-cta-actions">
-          <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Üyelik / İlan Paylaş</a>
+          <a class="btn btn-primary" href="platform-kayit-secimi.html?redirect=ilan-teklif">Platformu İncele</a>
           <a class="btn btn-secondary" href="nakliye-ilani-ver.html">Nakliye İlanı Ver</a>
           <a class="btn btn-secondary" href="https://www.facebook.com/share/g/1JCSRPHyzx/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook Grubuna Katıl</a>
         </div>
