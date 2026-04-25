@@ -18,7 +18,7 @@
   </style>
 </head>
 <body>
-<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div><strong>SEVRA</strong><span>Firma Yönetimi</span></div></a><nav class="nav"><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a class="primary" href="firma-yonetimi.html">Firma Yönetimi</a></nav></div></header>
+<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div><strong>SEVRA</strong><span>Firma Yönetimi</span></div></a><nav class="nav"><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a class="primary" href="firma-yonetimi.html">Firma Yönetimi</a><a href="firma-katalog.html">Firma Kataloğu</a></nav></div></header>
 <section class="head"><div class="container"><div class="head-card"><div><div class="kicker">Admin / Firma Değerlendirme</div><h1>Firma başvurularını değerlendirme paneli</h1><p>Başvurular inceleme kuyruğuna alınır. Yönetici değerlendirmesi tamamlanmadan firma kaydı yayın durumuna geçirilmez.</p></div><button class="btn btn-secondary" id="refreshBtn">Yenile</button></div></div></section>
 <main class="container">
   <div class="toolbar"><button class="chip active" data-filter="all">Tümü</button><button class="chip" data-filter="pending">İncelemede</button><button class="chip" data-filter="approved">Onaylananlar</button><button class="chip" data-filter="rejected">Reddedilenler</button><button class="chip" data-filter="needs_info">Bilgi Talep Edildi</button></div>
@@ -59,7 +59,7 @@
         <div class="actions">
           <button class="btn btn-ok" data-set="${c.id}" data-status="approved">Onayla</button>
           <button class="btn btn-warn" data-set="${c.id}" data-status="needs_info">Bilgi Talep Et</button>
-          <button class="btn btn-danger" data-set="${c.id}" data-status="rejected">Reddet</button>
+          <button class="btn btn-danger" data-set="${c.id}" data-status="rejected">Reddet</button>${c.status === "approved" ? `<a class="btn btn-secondary" href="firma-detay.html?id=${encodeURIComponent(c.id)}" target="_blank">Firma Detayı</a>` : ""}
         </div>
       </article>`).join('');
     list.querySelectorAll('[data-set]').forEach(b=>b.addEventListener('click',()=>setStatus(b.dataset.set,b.dataset.status)));
