@@ -177,6 +177,7 @@
     document.getElementById('seller').value = company.companyName || '';
     document.getElementById('location').value = [company.city, company.district].filter(Boolean).join(' / ');
     document.getElementById('phone').value = company.phone || '';
+    document.getElementById('whatsapp').value = String(company.phone || '').replace(/\D/g,'');
   });
 
   let products = [];
@@ -256,7 +257,7 @@
     e.preventDefault();
     const data = getFormData();
     if(!data.name || !data.category || !data.seller || !data.description){
-      showStatus('Ürün adı, kategori, firma ve açıklama zorunlu.', 'err');
+      showStatus('Ürün adı, kategori, firma ve açıklama zorunlu. Onaylı firma seçimi önerilir.', 'err');
       return;
     }
     try{
@@ -302,7 +303,7 @@
           <div class="item-meta">
             <span class="tag">${esc(p.category || '-')}</span>
             <span class="tag">${esc(p.status || '-')}</span>
-            <span class="tag">${esc(p.seller || '-')}</span>
+            <span class="tag">${esc(p.seller || '-')}</span>${p.companyId ? `<span class="tag">Firma Bağlı</span>` : ``}
           </div>
           <div class="item-actions">
             <button class="btn btn-secondary" data-edit="${esc(p.id)}">Düzenle</button>
