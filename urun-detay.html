@@ -30,7 +30,7 @@
         const snap = await getDoc(doc(db, 'companies', p.companyId));
         if(snap.exists()){
           const c = { id:snap.id, ...snap.data() };
-          if(c.status === 'approved' && c.isDemo !== true && c.isTest !== true) return c;
+          if(c.status === 'approved' && c.is !== true && c.is !== true) return c;
         }
       }catch(e){}
     }
@@ -42,20 +42,20 @@
       const q = query(collection(db, 'companies'), orderBy('createdAt', 'desc'));
       const snap = await getDocs(q);
       return snap.docs.map(d => ({ id:d.id, ...d.data() }))
-        .find(c => c.status === 'approved' && c.isTest !== true && c.isTest !== true && String(c.companyName||'').trim().toLowerCase() === String(seller||'').trim().toLowerCase());
+        .find(c => c.status === 'approved' && c.is !== true && c.is !== true && String(c.companyName||'').trim().toLowerCase() === String(seller||'').trim().toLowerCase());
     }catch(e){
       return null;
     }
   }
   async function load(){
-    if(!id || id.startsWith('test')){root.innerHTML='<div class="empty">Bu kayıt test amaçlıdır. Gerçek ürün detayı için ürün yönetimi ekranından ürün ekleyin.</div>';return;}
+    if(!id){root.innerHTML='<div class="empty">Ürün kimliği bulunamadı.</div>';return;}
     try{
       const snap=await getDoc(doc(db,'products',id));
       if(!snap.exists()){root.innerHTML='<div class="empty">Ürün bulunamadı.</div>';return;}
       const p={id:snap.id,...snap.data()};
       const company = await findCompanyForProduct(p);
       document.title='SEVRA | '+(p.name||'Ürün Detayı');
-      root.innerHTML=`<div class="card"><div class="photo">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}</div><div class="info"><div class="kicker">${esc(p.category||'Ürün')}</div><h1>${esc(p.name||'Ürün')}</h1><p class="desc">${esc(p.description||'')}</p><div class="meta"><div class="row"><span>İlan sahibi</span><strong>${company ? `<a href="firma-detay.html?id=${encodeURIComponent(company.id)}">${esc(p.seller||'-')}</a>` : esc(p.seller||'-')}</strong></div><div class="row"><span>Konum</span><strong>${esc(p.location||'-')}</strong></div><div class="row"><span>Telefon</span><strong>${esc(p.phone||'-')}</strong></div><div class="row"><span>Durum</span><strong>${esc(p.status||'active')}</strong></div></div><div class="btns"><a class="btn btn-gold" href="${wa(p)}" target="_blank" rel="noopener">WhatsApp ile Bilgi Al</a>${company ? `<a class="btn btn-primary" href="firma-detay.html?id=${encodeURIComponent(company.id)}">Firma Detayı</a>` : ''}<a class="btn btn-secondary" href="urun-vitrini.html">Kataloğa Dön</a></div><div class="notice">SEVRA ürün satıcısı değildir. Ödeme, teslimat, garanti, iade ve satış sözleşmesi ilan sahibi ile alıcı arasında yürütülür.</div></div></div>`;
+      root.innerHTML=`<div class="card"><div class="photo">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}</div><div class="info"><div class="kicker">${esc(p.category||'Ürün')}</div><h1>${esc(p.name||'Ürün')}</h1><p class="desc">${esc(p.description||'')}</p><div class="meta"><div class="row"><span>Firma</span><strong>${company ? `<a href="firma-detay.html?id=${encodeURIComponent(company.id)}">${esc(p.seller||'-')}</a>` : esc(p.seller||'-')}</strong></div><div class="row"><span>Konum</span><strong>${esc(p.location||'-')}</strong></div><div class="row"><span>Telefon</span><strong>${esc(p.phone||'-')}</strong></div><div class="row"><span>Durum</span><strong>${esc(p.status||'active')}</strong></div></div><div class="btns"><a class="btn btn-gold" href="${wa(p)}" target="_blank" rel="noopener">WhatsApp ile Bilgi Al</a>${company ? `<a class="btn btn-primary" href="firma-detay.html?id=${encodeURIComponent(company.id)}">Firma Detayı</a>` : ''}<a class="btn btn-secondary" href="urun-vitrini.html">Kataloğa Dön</a></div><div class="notice">SEVRA ürün satıcısı değildir. Ödeme, teslimat, garanti, iade ve satış sözleşmesi ilan sahibi ile alıcı arasında yürütülür.</div></div></div>`;
     }catch(err){root.innerHTML='<div class="empty">Detay okunamadı: '+esc(err.message)+'</div>'}
   }
   load();
