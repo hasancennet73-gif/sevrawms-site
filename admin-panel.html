@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Yönetim Merkezi</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root{
+      --bg:#f4f7fb;--surface:#fff;--text:#172033;--muted:#637083;
+      --navy:#071326;--blue:#0b5db8;--gold:#f6a400;--gold2:#ffd166;
+      --line:rgba(15,35,65,.12);--shadow:0 14px 34px rgba(9,31,66,.09);--max:1360px;
+      --green:#166534;--red:#991b1b;--orange:#a46b00;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 12% 6%, rgba(246,164,0,.10), transparent 28%),
+        radial-gradient(circle at 88% 6%, rgba(11,93,184,.10), transparent 28%),
+        var(--bg);
+      line-height:1.55;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.97);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 28px rgba(12,35,64,.06);
+    }
+    .topbar-inner{
+      min-height:82px;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:18px;flex-wrap:wrap;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:52px;height:52px;border-radius:16px;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      color:#071326;font-size:26px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+    .brand-text strong{display:block;font-size:31px;color:#0b1930;line-height:1}
+    .brand-text span{display:block;font-size:12px;color:#637083;margin-top:4px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;font-weight:800}
+    .nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08);color:#132238}
+    .nav a.active,.nav a:hover{background:#edf5ff}
+    .nav .primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
+
+    .hero{padding:28px 0 18px}
+    .hero-card{
+      background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);
+      padding:28px;display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:center;
+    }
+    .kicker{color:#a46b00;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    h1{margin:0 0 10px;color:#0b1930;font-size:clamp(32px,4vw,54px);line-height:1.04;letter-spacing:-.045em}
+    .hero-card p{margin:0;color:#526174;font-size:17px;max-width:820px}
+    .hero-side{background:#0b1930;color:#fff;border-radius:22px;padding:20px}
+    .hero-side strong{display:block;font-size:20px;color:#ffd166;margin-bottom:6px}
+    .hero-side span{color:rgba(255,255,255,.76);font-size:14px}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin:0 0 18px;
+    }
+    .stat{
+      background:#fff;border:1px solid var(--line);border-radius:18px;
+      padding:16px;box-shadow:0 10px 26px rgba(9,31,66,.06);
+    }
+    .stat small{display:block;color:#637083;font-size:12px;font-weight:900;text-transform:uppercase;margin-bottom:6px}
+    .stat strong{display:block;color:#0b1930;font-size:28px;line-height:1.1}
+    .stat span{display:block;color:#637083;font-size:12px;margin-top:5px}
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:18px;
+      align-items:start;
+      padding-bottom:38px;
+    }
+    .panel{
+      background:#fff;border:1px solid var(--line);border-radius:24px;
+      box-shadow:var(--shadow);overflow:hidden;
+    }
+    .panel-head{
+      padding:18px 20px;background:#0b1930;color:#fff;
+      display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;
+    }
+    .panel-head strong{display:block;font-size:20px}
+    .panel-head span{color:rgba(255,255,255,.70);font-size:13px}
+    .panel-body{padding:16px}
+    .module-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    .module{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:20px;
+      padding:18px;
+      min-height:220px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+    }
+    .module:before{
+      content:"";
+      position:absolute;right:-48px;top:-48px;
+      width:140px;height:140px;border-radius:50%;
+      background:rgba(246,164,0,.10);
+    }
+    .module-icon{
+      width:52px;height:52px;border-radius:17px;background:#0b1930;color:#ffd166;
+      display:grid;place-items:center;font-size:26px;margin-bottom:14px;position:relative;z-index:1;
+    }
+    .module h3{margin:0 0 8px;color:#0b1930;font-size:23px;line-height:1.15;position:relative;z-index:1}
+    .module p{margin:0;color:#526174;font-size:14px;position:relative;z-index:1}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1}
+    .btn{
+      min-height:42px;padding:0 14px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;
+      font-weight:900;border:1px solid transparent;text-decoration:none;font-size:14px;cursor:pointer;
+    }
+    .btn-primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
+    .btn-gold{background:#f6a400;color:#071326;border-color:#f6a400}
+    .btn-secondary{background:#fff;color:#132238;border-color:var(--line)}
+    .btn-danger{background:#991b1b;color:#fff;border-color:#991b1b}
+    .btn-green{background:#166534;color:#fff;border-color:#166534}
+
+    .list{display:grid;gap:12px}
+    .row-card{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:17px;
+      padding:14px;
+    }
+    .row-top{
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;
+    }
+    .row-card h3{margin:0;color:#0b1930;font-size:18px;line-height:1.2}
+    .row-card p{margin:6px 0 0;color:#637083;font-size:13px}
+    .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+    .tag{border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24)}
+    .tag.ok{background:#eaf8ef;color:#166534;border-color:rgba(22,101,52,.18)}
+    .tag.err{background:#fff0f0;color:#991b1b;border-color:rgba(153,27,27,.18)}
+    .tag.info{background:#edf5ff;color:#0b5db8;border-color:rgba(11,93,184,.18)}
+    .empty{padding:18px;background:#f7faff;border:1px dashed rgba(15,35,65,.22);border-radius:16px;color:#637083}
+    .notice{
+      margin-top:18px;background:#0b1930;color:#fff;border-radius:22px;padding:20px;
+      display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;
+    }
+    .notice strong{display:block;font-size:22px;margin-bottom:4px}
+    .notice span{color:rgba(255,255,255,.76)}
+    .system{
+      display:grid;
+      gap:12px;
+    }
+    .system-row{
+      background:#f7faff;border:1px solid var(--line);border-radius:16px;padding:14px;
+      display:flex;justify-content:space-between;gap:12px;align-items:center;
+    }
+    .system-row strong{color:#0b1930}
+    .system-dot{width:12px;height:12px;border-radius:50%;background:#166534;box-shadow:0 0 0 4px rgba(22,101,52,.12)}
+    footer{text-align:center;padding:28px;color:#637083;border-top:1px solid var(--line);background:#fff}
+    @media(max-width:1100px){
+      .layout{grid-template-columns:1fr}
+      .module-grid{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .hero-card{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .stats{grid-template-columns:1fr}
+      .topbar-inner{align-items:flex-start}
+      .nav{width:100%}
+    }
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text">
+        <strong>SEVRA</strong>
+        <span>Yönetim Merkezi</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="urun-vitrini.html">Ürün Kataloğu</a>
+      <a href="firma-katalog.html">Firma Kataloğu</a>
+      <a class="active" href="admin-panel.html">Yönetim Merkezi</a>
+      <a class="primary" href="firma-basvuru.html">Firma Başvurusu</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-card">
+      <div>
+        <div class="kicker">SEVRA Admin</div>
+        <h1>Ürün, firma ve başvuru yönetimi tek merkezde</h1>
+        <p>Bu panel; ürün kayıtlarını, firma başvurularını, katalog bağlantılarını ve sistem durumunu tek ekranda takip etmek için hazırlanmıştır.</p>
+      </div>
+      <div class="hero-side">
+        <strong>Yönetim ekranı</strong>
+        <span>Bu alan yalnızca yönetim bağlantılarını ve özet kayıt durumlarını gösterir. Veri kayıtları ilgili yönetim sayfalarında yapılır.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <div class="stats">
+    <div class="stat"><small>Toplam Ürün</small><strong id="statProducts">0</strong><span>products koleksiyonu</span></div>
+    <div class="stat"><small>Aktif Ürün</small><strong id="statActiveProducts">0</strong><span>katalogda yayınlanan</span></div>
+    <div class="stat"><small>Firma Başvurusu</small><strong id="statCompanies">0</strong><span>companies koleksiyonu</span></div>
+    <div class="stat"><small>Onaylı Firma</small><strong id="statApprovedCompanies">0</strong><span>katalogda yayınlanan</span></div>
+  </div>
+
+  <div class="layout">
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <strong>Yönetim Modülleri</strong>
+          <span>Ürün, firma ve katalog yönetimi</span>
+        </div>
+        <a class="btn btn-gold" href="firma-basvuru.html">Yeni Firma Başvurusu</a>
+      </div>
+
+      <div class="panel-body">
+        <div class="module-grid">
+          <article class="module">
+            <div>
+              <div class="module-icon">📦</div>
+              <h3>Ürün Yönetimi</h3>
+              <p>Ürün kaydı oluşturma, fotoğraf ekleme, onaylı firmaya bağlama, düzenleme ve pasife alma işlemleri.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-primary" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimine Gir</a>
+              <a class="btn btn-secondary" href="urun-vitrini.html">Ürün Kataloğu</a>
+            </div>
+          </article>
+
+          <article class="module">
+            <div>
+              <div class="module-icon">🏢</div>
+              <h3>Firma Yönetimi</h3>
+              <p>Firma başvurularını inceleme, onaylama, bilgi talep etme veya reddetme işlemleri.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-primary" href="firma-yonetimi.html">Firma Yönetimine Gir</a>
+              <a class="btn btn-secondary" href="firma-katalog.html">Firma Kataloğu</a>
+            </div>
+          </article>
+
+          <article class="module">
+            <div>
+              <div class="module-icon">✅</div>
+              <h3>Firma Başvurusu</h3>
+              <p>Yeni firma/tüzel kişi başvurusu, vergi ve kimlik bilgisi kontrolü, KVKK ve kullanım şartları onayı.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-gold" href="firma-basvuru.html">Başvuru Formu</a>
+              <a class="btn btn-secondary" href="firma-katalog.html">Onaylı Firmalar</a>
+            </div>
+          </article>
+
+          <article class="module">
+            <div>
+              <div class="module-icon">🔎</div>
+              <h3>Katalog Kontrolü</h3>
+              <p>Halka açık ürün ve firma kataloglarının yayında nasıl göründüğünü kontrol etme alanı.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-secondary" href="urun-vitrini.html">Ürün Kataloğu</a>
+              <a class="btn btn-secondary" href="firma-katalog.html">Firma Kataloğu</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="notice">
+          <div>
+            <strong>Platform bilgilendirmesi</strong>
+            <span>SEVRA ürün satıcısı, taşıma işi yapan taraf, ödeme/tahsilat yöneticisi veya sözleşme tarafı değildir. Yönetim paneli yalnızca kayıt, katalog ve başvuru akışını yönetir.</span>
+          </div>
+          <a class="btn btn-gold" href="index.html">Ana Sayfaya Dön</a>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-head">
+        <div>
+          <strong>Son Başvurular</strong>
+          <span>Firma değerlendirme kuyruğu</span>
+        </div>
+        <button class="btn btn-secondary" id="refreshBtn" type="button">Yenile</button>
+      </div>
+      <div class="panel-body">
+        <div class="list" id="lastCompanies">
+          <div class="empty">Başvurular yükleniyor...</div>
+        </div>
+      </div>
+
+      <div class="panel-head">
+        <div>
+          <strong>Sistem Durumu</strong>
+          <span>Bağlantı ve sayfa erişimleri</span>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="system">
+          <div class="system-row"><strong>Firebase bağlantısı</strong><span class="system-dot" id="dotFirebase"></span></div>
+          <div class="system-row"><strong>Ürün kataloğu</strong><a href="urun-vitrini.html">Aç</a></div>
+          <div class="system-row"><strong>Firma kataloğu</strong><a href="firma-katalog.html">Aç</a></div>
+          <div class="system-row"><strong>Firma başvurusu</strong><a href="firma-basvuru.html">Aç</a></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  SEVRA | Yönetim Merkezi<br>
+  sevrawms.com.tr
+</footer>
+
+<script type="module">
+  import { db } from './firebase-config.js';
+  import { collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const statProducts = document.getElementById('statProducts');
+  const statActiveProducts = document.getElementById('statActiveProducts');
+  const statCompanies = document.getElementById('statCompanies');
+  const statApprovedCompanies = document.getElementById('statApprovedCompanies');
+  const lastCompanies = document.getElementById('lastCompanies');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const dotFirebase = document.getElementById('dotFirebase');
+
+  function esc(v){
+    return String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+  }
+
+  function statusText(s){
+    return {
+      pending:'İncelemede',
+      approved:'Onaylandı',
+      rejected:'Reddedildi',
+      needs_info:'Bilgi Talep Edildi',
+      active:'Aktif',
+      passive:'Pasif'
+    }[s] || s || 'İncelemede';
+  }
+
+  function statusClass(s){
+    if(s === 'approved' || s === 'active') return 'ok';
+    if(s === 'rejected' || s === 'passive') return 'err';
+    return 'info';
+  }
+
+  function companyRow(c){
+    return `
+      <article class="row-card">
+        <div class="row-top">
+          <div>
+            <h3>${esc(c.companyName || 'Firma')}</h3>
+            <p>${esc(c.description || 'Başvuru açıklaması bulunmuyor.')}</p>
+          </div>
+          <span class="tag ${statusClass(c.status)}">${esc(statusText(c.status))}</span>
+        </div>
+        <div class="tags">
+          <span class="tag">${esc(c.activity || 'Faaliyet')}</span>
+          <span class="tag">${esc((c.city || '-') + ' / ' + (c.district || '-'))}</span>
+          <span class="tag">Kontrol: ${esc(c.fraudScore || 0)}</span>
+        </div>
+        <div class="actions">
+          <a class="btn btn-secondary" href="firma-yonetimi.html">Yönetimde Aç</a>
+          ${c.status === 'approved' ? `<a class="btn btn-primary" href="firma-detay.html?id=${encodeURIComponent(c.id)}">Firma Detayı</a>` : ''}
+        </div>
+      </article>
+    `;
+  }
+
+  async function loadDashboard(){
+    try{
+      dotFirebase.style.background = '#166534';
+
+      const productSnap = await getDocs(collection(db, 'products'));
+      const products = productSnap.docs.map(d => ({ id:d.id, ...d.data() }))
+        .filter(p => p.isDemo !== true && p.isTest !== true);
+      statProducts.textContent = products.length;
+      statActiveProducts.textContent = products.filter(p => (p.status || 'active') === 'active').length;
+
+      const companySnap = await getDocs(collection(db, 'companies'));
+      const companies = companySnap.docs.map(d => ({ id:d.id, ...d.data() }))
+        .filter(c => c.isDemo !== true && c.isTest !== true);
+      statCompanies.textContent = companies.length;
+      statApprovedCompanies.textContent = companies.filter(c => c.status === 'approved').length;
+
+      const latest = companies.slice().sort((a,b) => {
+        const ax = a.createdAt?.seconds || 0;
+        const bx = b.createdAt?.seconds || 0;
+        return bx - ax;
+      }).slice(0,5);
+
+      if(!latest.length){
+        lastCompanies.innerHTML = '<div class="empty">Henüz firma başvurusu bulunmuyor.</div>';
+      }else{
+        lastCompanies.innerHTML = latest.map(companyRow).join('');
+      }
+    }catch(err){
+      dotFirebase.style.background = '#991b1b';
+      lastCompanies.innerHTML = '<div class="empty">Veriler okunamadı: ' + esc(err.message) + '</div>';
+    }
+  }
+
+  refreshBtn.addEventListener('click', loadDashboard);
+  loadDashboard();
+</script>
+</body>
+</html>
