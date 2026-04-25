@@ -2,9 +2,223 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Ürün Vitrini</title>
-  <link rel="stylesheet" href="urunler.css" />
+  <title>SEVRA | Ürün Vitrini - Araç Parçaları, Depo Ekipmanları ve Stok Fazlası</title>
+  <meta name="description" content="SEVRA Ürün Vitrini; araç parçaları, kasa ekipmanları, depo ürünleri, ambalaj malzemeleri ve stok fazlası ürünlerin görünür hale geldiği dijital ilan ve firma vitrini platformudur." />
+  <meta name="keywords" content="ürün vitrini, araç parçaları, depo ekipmanları, kasa ekipmanları, ambalaj ürünleri, stok fazlası, sanayi ürünleri, firma vitrini, sevra, sevrawms" />
+  <meta name="robots" content="index, follow" />
+
+  <style>
+    :root{
+      --bg:#f3f6fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#59687d;
+      --navy:#071326;
+      --blue:#0b5db8;
+      --gold:#f6a400;
+      --gold2:#ffd166;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 18px 42px rgba(9,31,66,.10);
+      --max:1280px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right,rgba(11,93,184,.10),transparent 24%),
+        radial-gradient(circle at left top,rgba(246,164,0,.12),transparent 22%),
+        linear-gradient(180deg,#f8fbff 0%,#f3f6fb 55%,#edf3f9 100%);
+      line-height:1.55;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(12,35,64,.06);
+    }
+    .topbar-inner{
+      min-height:84px;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:18px;flex-wrap:wrap;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:54px;height:54px;border-radius:17px;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      color:#071326;font-size:26px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 20px rgba(246,164,0,.22);
+    }
+    .brand-text strong{display:block;font-size:32px;color:#0b1930;line-height:1}
+    .brand-text span{display:block;font-size:12px;color:#637083;margin-top:4px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;font-weight:800}
+    .nav a{
+      padding:9px 11px;border-radius:11px;
+      background:#f7faff;border:1px solid rgba(15,35,65,.08);
+      color:#132238;
+    }
+    .nav a:hover{background:#edf5ff}
+    .btn{
+      min-height:44px;padding:0 16px;border-radius:13px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:900;border:1px solid transparent;
+      text-decoration:none;font-size:14px;
+    }
+    .btn-primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
+    .btn-gold{background:var(--gold);color:#071326;border-color:var(--gold)}
+    .btn-secondary{background:#fff;color:#132238;border-color:var(--line)}
+    .hero{padding:34px 0 24px}
+    .hero-card{
+      overflow:hidden;
+      border-radius:30px;
+      min-height:440px;
+      background:
+        linear-gradient(90deg,rgba(7,19,38,.97) 0%,rgba(7,19,38,.90) 48%,rgba(7,19,38,.76) 100%),
+        radial-gradient(circle at 90% 18%,rgba(246,164,0,.25),transparent 24%);
+      color:#fff;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.10);
+      padding:42px;
+      display:grid;
+      grid-template-columns:1fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
+    .badge{
+      display:inline-flex;align-items:center;
+      color:#ffd166;font-weight:900;margin-bottom:14px;
+      font-size:15px;
+    }
+    h1{
+      font-size:clamp(38px,4.8vw,68px);
+      line-height:1.02;
+      letter-spacing:-.055em;
+      margin:0 0 18px;
+      color:#fff;
+    }
+    h1 span{color:#f6a400}
+    .hero-card p{
+      color:rgba(255,255,255,.80);
+      font-size:18px;
+      max-width:640px;
+      margin:0;
+    }
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+    .hero-note{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:24px;
+      padding:22px;
+    }
+    .hero-note strong{display:block;color:#ffd166;font-size:21px;margin-bottom:8px}
+    .hero-note span{display:block;color:rgba(255,255,255,.78)}
+    .section{padding:30px 0}
+    .section-head{margin-bottom:18px}
+    .section-kicker{
+      color:#a46b00;font-size:12px;font-weight:900;
+      letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;
+    }
+    .section h2{
+      color:#0b1930;
+      font-size:clamp(30px,3.2vw,46px);
+      line-height:1.08;
+      margin:0 0 10px;
+      letter-spacing:-.035em;
+    }
+    .section-head p{color:#637083;max-width:840px;margin:0;font-size:17px}
+    .category-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+    .card{
+      background:#fff;border:1px solid var(--line);
+      border-radius:24px;padding:22px;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+      min-height:230px;
+    }
+    .icon{
+      width:52px;height:52px;border-radius:17px;
+      display:grid;place-items:center;
+      background:#fff4d8;color:#8a5a00;
+      font-size:25px;margin-bottom:14px;
+    }
+    .card h3{color:#0b1930;font-size:24px;line-height:1.12;margin:0 0 10px}
+    .card p{color:#526174;margin:0}
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .tag-row span{
+      padding:8px 10px;border-radius:999px;
+      background:#fff4d8;color:#7a5100;
+      border:1px solid rgba(246,164,0,.24);
+      font-size:12px;font-weight:900;
+    }
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
+    }
+    .product{
+      background:#fff;border:1px solid var(--line);
+      border-radius:22px;overflow:hidden;
+      box-shadow:0 12px 32px rgba(10,35,66,.07);
+    }
+    .product-img{
+      min-height:150px;
+      background:
+        linear-gradient(135deg,#0b1930,#0b5db8);
+      display:grid;place-items:center;
+      color:#ffd166;
+      font-size:42px;
+    }
+    .product-body{padding:17px}
+    .product small{
+      color:#a46b00;font-weight:900;text-transform:uppercase;
+      font-size:11px;letter-spacing:.05em;
+    }
+    .product h3{
+      margin:8px 0 8px;color:#0b1930;
+      font-size:18px;line-height:1.18;
+    }
+    .product p{color:#526174;margin:0 0 12px;font-size:14px}
+    .product .seller{color:#637083;font-size:13px;margin-bottom:12px}
+    .safe-box{
+      background:#0b1930;color:#fff;border-radius:24px;
+      padding:24px;
+      box-shadow:0 18px 44px rgba(9,31,66,.16);
+      display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    }
+    .safe-box strong{display:block;font-size:24px;margin-bottom:6px}
+    .safe-box span{color:rgba(255,255,255,.76)}
+    footer{
+      text-align:center;padding:28px;color:#637083;
+      border-top:1px solid var(--line);margin-top:28px;background:#fff;
+    }
+    @media(max-width:1050px){
+      .hero-card{grid-template-columns:1fr}
+      .category-grid{grid-template-columns:1fr}
+      .product-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:620px){
+      .topbar-inner{align-items:flex-start}
+      .nav{width:100%}
+      .hero-card{padding:26px}
+      .product-grid{grid-template-columns:1fr}
+      h1{font-size:36px}
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -13,71 +227,152 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Dijital Lojistik ve Tedarik Platformu</span>
+          <span>Lojistik İlan, Firma ve Ürün Görünürlüğü</span>
         </div>
       </a>
-      <div class="top-actions">
-        <a class="btn btn-secondary" href="index.html">Ana Sayfa</a>
-      </div>
+      <nav class="nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="yuk-ilanlari.html">Yük İlanları</a>
+        <a href="nakliye-ilani-ver.html">İlan Ver</a>
+        <a href="urun-vitrini.html">Ürün Vitrini</a>
+        <a href="index.html#iletisim">İletişim</a>
+      </nav>
     </div>
   </header>
 
-  <section class="page">
+  <section class="hero">
     <div class="container">
-      <div class="page-head">
+      <div class="hero-card">
         <div>
-          <div class="section-kicker">Ürün Vitrini</div>
-          <h1>Kurumsal ürün alanı</h1>
-          <p>Yönetici tarafından eklenen ürünler ziyaretçilere bu sayfada profesyonel kart yapısıyla sunulur.</p>
+          <div class="badge">SEVRA Ek Gelir Modülü</div>
+          <h1>Ürün,<br><span>Firma ve Stok</span><br>Vitrini</h1>
+          <p>
+            SEVRA Ürün Vitrini; araç parçaları, kasa ekipmanları, depo ürünleri,
+            ambalaj malzemeleri ve stok fazlası ürünlerin görünür hale geldiği dijital ilan alanıdır.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#kategoriler">Kategorileri İncele</a>
+            <a class="btn btn-secondary" href="index.html#iletisim">Vitrin Başvurusu</a>
+          </div>
+        </div>
+        <div class="hero-note">
+          <strong>Satış değil, görünürlük modeli</strong>
+          <span>SEVRA ürün satıcısı değildir. Alıcı ve ilan sahibi kendi arasında doğrudan görüşür. Ödeme, teslimat, garanti, iade ve satış sözleşmesi taraflar arasında yürütülür.</span>
         </div>
       </div>
-
-      <div id="emptyBox" class="card hidden">
-        <h2>Henüz ürün yok</h2>
-        <p>Yönetici panelinden ürün eklediğinde burada listelenecek.</p>
-      </div>
-
-      <div id="productGrid" class="product-grid"></div>
     </div>
   </section>
 
-  <script>
-    function readJson(key, fallback) {
-      try {
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
+  <section class="section" id="kategoriler">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Kategoriler</div>
+        <h2>Lojistik sektörüne yakın ürün ve firma alanları</h2>
+        <p>Nakliye ana kimliği bozulmadan, lojistik sektörüne yakın ürün/firma görünürlüğü ek gelir modeli olarak konumlandırılır.</p>
+      </div>
 
-    const products = readJson('sevra_products', []);
-    const grid = document.getElementById('productGrid');
-    const emptyBox = document.getElementById('emptyBox');
-
-    if (!products.length) {
-      emptyBox.classList.remove('hidden');
-    } else {
-      products.forEach(product => {
-        const card = document.createElement('article');
-        card.className = 'product-card';
-        card.innerHTML = `
-          <div class="product-image-wrap">
-            ${product.image ? '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' : '<div class="img-fallback">Görsel Yok</div>'}
+      <div class="category-grid">
+        <article class="card">
+          <div class="icon">🧩</div>
+          <h3>Araç Parçaları ve Kasa Ekipmanları</h3>
+          <p>Çamurluk, kilit, menteşe, reflektör, kasa aksesuarı ve benzeri ürünler için vitrin alanı.</p>
+          <div class="tag-row">
+            <span>araç parçası</span><span>kasa ekipmanı</span><span>yedek parça</span>
           </div>
+        </article>
+
+        <article class="card">
+          <div class="icon">📦</div>
+          <h3>Depo, Palet ve Ambalaj</h3>
+          <p>Palet, koli, ambalaj, raf, barkod etiketi ve depo yardımcı ürünleri için kategori görünürlüğü.</p>
+          <div class="tag-row">
+            <span>palet</span><span>koli</span><span>ambalaj</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon">🏭</div>
+          <h3>Stok Fazlası ve Sanayi Ürünleri</h3>
+          <p>Firmaların elinde kalan kullanılabilir stoklar, toplu ürünler ve sanayi malzemeleri için ilan alanı.</p>
+          <div class="tag-row">
+            <span>stok fazlası</span><span>sanayi</span><span>toplu ürün</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ornek-urunler">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Örnek Vitrin</div>
+        <h2>Ürün kartları Trendyol gibi görünür, satış SEVRA üzerinden yapılmaz</h2>
+        <p>Bu alan ilk V1 örneğidir. Sonraki adımda admin panelden gerçek ürün ekleme, ürün detay ve firma vitrini sayfaları bağlanacaktır.</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product">
+          <div class="product-img">🚛</div>
           <div class="product-body">
-            <div class="product-meta-row">
-              <span class="product-tag">${product.category || '-'}</span>
-              <span class="product-status">${product.status || 'Aktif'}</span>
-            </div>
-            <h3>${product.name}</h3>
-            <p>${product.desc || ''}</p>
-            <strong class="price">${product.price}</strong>
+            <small>Araç Parçası</small>
+            <h3>Kamyon Kasa Kilidi</h3>
+            <p>Kapalı kasa ve ticari araçlar için ürün vitrini örneği.</p>
+            <div class="seller">İlan sahibi: Örnek Firma</div>
+            <a class="btn btn-primary" href="#guvenli-cizgi">İlan Detayı</a>
           </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-  </script>
+        </article>
+
+        <article class="product">
+          <div class="product-img">📦</div>
+          <div class="product-body">
+            <small>Ambalaj</small>
+            <h3>Endüstriyel Koli / Ambalaj</h3>
+            <p>Depo ve sevkiyat süreçlerinde kullanılan ürünler için vitrin.</p>
+            <div class="seller">İlan sahibi: Örnek Firma</div>
+            <a class="btn btn-primary" href="#guvenli-cizgi">İlan Detayı</a>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">🏷️</div>
+          <div class="product-body">
+            <small>Depo Ekipmanı</small>
+            <h3>Barkod Etiketi / Sarf Malzeme</h3>
+            <p>Depo, WMS ve sevkiyat alanına uygun sarf malzemeler.</p>
+            <div class="seller">İlan sahibi: Örnek Firma</div>
+            <a class="btn btn-primary" href="#guvenli-cizgi">İlan Detayı</a>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-img">🏭</div>
+          <div class="product-body">
+            <small>Stok Fazlası</small>
+            <h3>Toplu Ürün / Firma Stoğu</h3>
+            <p>Firmaların değerlendirmek istediği stok fazlası ürünler.</p>
+            <div class="seller">İlan sahibi: Örnek Firma</div>
+            <a class="btn btn-primary" href="#guvenli-cizgi">İlan Detayı</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guvenli-cizgi">
+    <div class="container">
+      <div class="safe-box">
+        <div>
+          <strong>SEVRA'nın ürün vitrini çalışma çizgisi</strong>
+          <span>SEVRA ürün satıcısı değildir, satış sözleşmesine taraf olmaz, fiyat/komisyon belirlemez, ödeme/tahsilat, teslimat, garanti ve iade süreçlerini yönetmez. Ürün, firma ve ilan bilgileri görünürlük amacıyla yayınlanır; görüşme ve karar süreci tarafların kendi sorumluluğundadır.</span>
+        </div>
+        <a class="btn btn-gold" href="index.html#iletisim">Vitrin Başvurusu</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    SEVRA | Lojistik İlan, Firma ve Ürün Görünürlüğü Platformu<br>
+    sevrawms.com.tr
+  </footer>
 </body>
 </html>
