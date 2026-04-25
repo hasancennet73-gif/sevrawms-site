@@ -10,8 +10,8 @@
     gtag('config', 'G-4XD6PKE0RD');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Firma ve Tedarikçi Kataloğu</title>
-  <meta name="description" content="SEVRA Firma ve Tedarikçi Kataloğu; onaylı firmaların kurumsal olarak listelendiği dijital görünürlük alanıdır." />
+  <title>SEVRA | Firma ve Hizmet Kataloğu</title>
+  <meta name="description" content="SEVRA Firma Kataloğu; lojistik, depo, ambalaj, araç parçası, sanayi ürünü ve stok fazlası alanlarında faaliyet gösteren firmaların görünürlük amacıyla listelendiği kurumsal alandır." />
   <meta name="robots" content="index, follow" />
 
   <style>
@@ -59,7 +59,7 @@
 <body>
   <div class="top-note">
     <div class="container top-note-inner">
-      <span>SEVRA Firma Kataloğu · Onaylı firma ve tedarikçi listeleme</span>
+      <span>SEVRA Firma Kataloğu · Firma ve hizmet listeleme alanı</span>
       <strong>Platform görünürlüğü modeli</strong>
     </div>
   </div>
@@ -70,7 +70,7 @@
         <div class="brand-mark">S</div>
         <div class="brand-text">
           <strong>SEVRA</strong>
-          <span>Firma ve Tedarikçi Kataloğu</span>
+          <span>Firma ve Hizmet Kataloğu</span>
         </div>
       </a>
       <nav class="nav">
@@ -87,12 +87,12 @@
       <div class="hero-card">
         <div>
           <div class="breadcrumb">SEVRA / Firma Kataloğu</div>
-          <h1>Onaylı firma ve tedarikçi kataloğu</h1>
-          <p>SEVRA Firma Kataloğu; lojistik, araç parçası, depo ekipmanı, ambalaj, sanayi ürünü ve stok fazlası alanlarında faaliyet gösteren onaylı firmaları kurumsal biçimde listeler.</p>
+          <h1>Firma ve hizmet kataloğu</h1>
+          <p>SEVRA Firma Kataloğu; lojistik, depo, ambalaj, araç parçası, sanayi ürünü ve stok fazlası alanlarında faaliyet gösteren firmaların görünürlük amacıyla listelendiği kurumsal alandır.</p>
         </div>
         <div class="hero-side">
           <strong>Yayın öncesi değerlendirme</strong>
-          <span>Firma başvuruları yönetim panelinde incelenir. Onaylanan kayıtlar katalogda görünür olur.</span>
+          <span>Firma başvuruları yönetim panelinde incelenir. Uygun bulunan kayıtlar katalogda görünür olur.</span>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
 
   <main class="container">
     <div class="stats">
-      <div class="stat"><small>Onaylı Firma</small><strong id="statCompany">0</strong></div>
+      <div class="stat"><small>Firma Kaydı</small><strong id="statCompany">0</strong></div>
       <div class="stat"><small>Faaliyet Alanı</small><strong id="statActivity">0</strong></div>
       <div class="stat"><small>Model</small><strong>Katalog</strong></div>
       <div class="stat"><small>SEVRA Rolü</small><strong>Görünürlük</strong></div>
@@ -109,7 +109,7 @@
     <div class="notice">
       <div>
         <strong>SEVRA platform bilgilendirmesi</strong>
-        <span>SEVRA firma veya ürün satıcısı değildir; firmalar yalnızca görünürlük ve listeleme amacıyla yayınlanır. Görüşme ve karar süreci tarafların kendi sorumluluğundadır.</span>
+        <span>SEVRA firma veya ürün satıcısı değildir; firma kayıtları yalnızca görünürlük ve listeleme amacıyla yayınlanır. Görüşme ve karar süreci tarafların kendi sorumluluğundadır.</span>
       </div>
       <a class="btn btn-primary" href="firma-basvuru.html">Firma Başvurusu</a>
     </div>
@@ -117,7 +117,7 @@
     <div class="toolbar">
       <div>
         <h2>Firma kayıtları</h2>
-        <p>Onaylanan firma başvuruları burada listelenir.</p>
+        <p>Yayınlanan firma kayıtları burada listelenir.</p>
       </div>
       <div class="search">
         <input id="searchInput" placeholder="Firma, şehir veya faaliyet ara">
@@ -133,7 +133,7 @@
   </main>
 
   <footer>
-    SEVRA | Firma ve Tedarikçi Kataloğu<br>
+    SEVRA | Firma ve Hizmet Kataloğu<br>
     sevrawms.com.tr
   </footer>
 
@@ -168,13 +168,13 @@
             <div class="logo">${esc(initials(c.companyName))}</div>
             <div>
               <h3>${esc(c.companyName || 'Firma')}</h3>
-              <p>${esc(c.description || 'Firma açıklaması henüz girilmemiş.')}</p>
+              <p>${esc(c.description || 'Firma açıklaması bulunmuyor.')}</p>
             </div>
           </div>
           <div class="tags">
             <span class="tag">${esc(c.activity || 'Faaliyet')}</span>
             <span class="tag">${esc((c.city || '-') + ' / ' + (c.district || '-'))}</span>
-            <span class="tag">Onaylı</span>
+            <span class="tag">Yayında</span>
           </div>
           <div class="meta">
             <div class="meta-row"><span>Yetkili</span><strong>${esc(c.authorizedName || '-')}</strong></div>
@@ -203,7 +203,7 @@
       statActivity.textContent = String(new Set(companies.map(c => c.activity).filter(Boolean)).size);
 
       if(!filtered.length){
-        grid.innerHTML = '<div class="empty">Bu filtreye uygun onaylı firma bulunmuyor.</div>';
+        grid.innerHTML = '<div class="empty">Bu filtreye uygun yayınlanan firma kaydı bulunmuyor.</div>';
         return;
       }
 
@@ -219,7 +219,7 @@
       try{
         const q = query(collection(db, 'companies'), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
-        companies = snap.docs.map(d => ({ id:d.id, ...d.data() })).filter(c => c.status === 'approved');
+        companies = snap.docs.map(d => ({ id:d.id, ...d.data() })).filter(c => c.status === 'approved' && c.isTest !== true && c.isDemo !== true);
         fillActivityFilter();
         render();
       }catch(err){
