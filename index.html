@@ -1393,6 +1393,138 @@
       background:rgba(255,255,255,.16);
     }
 
+  
+    /* SEVRA ANA SAYFA FACEBOOK KAPAK STIL HERO */
+    .hero{
+      padding:22px 0 22px !important;
+      background:#f4f7fb !important;
+    }
+    .hero-card,
+    .hero .hero-card,
+    .hero-box,
+    .hero-inner{
+      position:relative !important;
+      overflow:hidden !important;
+      min-height:560px !important;
+      border-radius:30px !important;
+      background:
+        linear-gradient(90deg,rgba(7,19,38,.96) 0%,rgba(7,19,38,.88) 30%,rgba(7,19,38,.55) 52%,rgba(7,19,38,.16) 100%),
+        url('sevra-ana-hero-kapak.png') center right / cover no-repeat !important;
+      border:1px solid rgba(15,35,65,.14) !important;
+      box-shadow:0 24px 70px rgba(9,31,66,.18) !important;
+      color:#fff !important;
+      display:flex !important;
+      align-items:center !important;
+    }
+    .hero-card > *,
+    .hero .hero-card > *,
+    .hero-box > *,
+    .hero-inner > *{
+      position:relative !important;
+      z-index:2 !important;
+    }
+    .hero-content,
+    .hero-copy,
+    .hero-card > div:first-child,
+    .hero-box > div:first-child,
+    .hero-inner > div:first-child{
+      max-width:650px !important;
+      padding:46px !important;
+    }
+    .hero h1,
+    .hero-card h1,
+    .hero-box h1,
+    .hero-inner h1{
+      color:#fff !important;
+      font-size:clamp(42px,5vw,74px) !important;
+      line-height:.98 !important;
+      letter-spacing:-.06em !important;
+      text-shadow:0 5px 18px rgba(0,0,0,.22) !important;
+      margin-bottom:18px !important;
+    }
+    .hero h1 span,
+    .hero-card h1 span,
+    .hero-box h1 span,
+    .hero-inner h1 span{
+      color:#f6a400 !important;
+    }
+    .hero p,
+    .hero-card p,
+    .hero-box p,
+    .hero-inner p{
+      color:rgba(255,255,255,.88) !important;
+      font-size:18px !important;
+      max-width:560px !important;
+      text-shadow:0 4px 12px rgba(0,0,0,.22) !important;
+    }
+    .hero .kicker,
+    .hero-card .kicker,
+    .hero-box .kicker,
+    .hero-inner .kicker{
+      color:#ffd166 !important;
+      font-weight:900 !important;
+      letter-spacing:.08em !important;
+      text-transform:uppercase !important;
+    }
+    .hero .btn,
+    .hero-card .btn,
+    .hero-box .btn,
+    .hero-inner .btn{
+      min-height:48px !important;
+      padding:0 18px !important;
+      border-radius:14px !important;
+      font-weight:900 !important;
+    }
+    .hero .btn-primary,
+    .hero-card .btn-primary,
+    .hero-box .btn-primary,
+    .hero-inner .btn-primary,
+    .hero a[href*="nakliye-ilani-ver"],
+    .hero a[href*="firma-basvuru"]{
+      background:#f6a400 !important;
+      color:#071326 !important;
+      border-color:#f6a400 !important;
+    }
+    .hero .btn-secondary,
+    .hero-card .btn-secondary,
+    .hero-box .btn-secondary,
+    .hero-inner .btn-secondary{
+      background:rgba(255,255,255,.08) !important;
+      color:#fff !important;
+      border-color:rgba(255,255,255,.22) !important;
+    }
+    .hero-card::after,
+    .hero .hero-card::after,
+    .hero-box::after,
+    .hero-inner::after{
+      content:"" !important;
+      position:absolute !important;
+      left:0 !important;
+      right:0 !important;
+      bottom:0 !important;
+      height:6px !important;
+      background:linear-gradient(90deg,#f6a400,rgba(246,164,0,.2),transparent) !important;
+      z-index:3 !important;
+    }
+    @media(max-width:900px){
+      .hero-card,
+      .hero .hero-card,
+      .hero-box,
+      .hero-inner{
+        min-height:520px !important;
+        background:
+          linear-gradient(180deg,rgba(7,19,38,.96) 0%,rgba(7,19,38,.76) 54%,rgba(7,19,38,.28) 100%),
+          url('sevra-ana-hero-kapak.png') center right / cover no-repeat !important;
+      }
+      .hero-content,
+      .hero-copy,
+      .hero-card > div:first-child,
+      .hero-box > div:first-child,
+      .hero-inner > div:first-child{
+        padding:32px !important;
+      }
+    }
+
   </style>
 </head>
 
