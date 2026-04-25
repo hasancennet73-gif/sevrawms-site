@@ -2,224 +2,204 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config','G-4XD6PKE0RD');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Lojistik İlan ve Firma Görünürlüğü Platformu</title>
+  <title>SEVRA | Lojistik İlan, Firma ve Ürün Görünürlüğü Platformu</title>
   <meta name="description" content="SEVRA; yük, araç, firma ve ürün görünürlüğünü tek çatı altında toplayan kurumsal dijital platformdur." />
   <meta name="robots" content="index, follow" />
   <style>
     :root{
       --bg:#f4f7fb;
       --surface:#ffffff;
-      --surface-2:#eef3fb;
-      --navy:#08182f;
-      --navy-2:#10284c;
-      --line:rgba(10,26,49,.10);
-      --text:#16263d;
-      --muted:#5d6d82;
-      --gold:#e0b24d;
-      --gold-2:#f2c95d;
-      --blue:#2e63bb;
-      --shadow:0 18px 44px rgba(9,31,66,.10);
-      --radius:24px;
+      --text:#152238;
+      --muted:#5c6b7f;
+      --line:rgba(15,35,65,.12);
+      --gold:#f6a400;
+      --blue:#0b5db8;
+      --navy:#071326;
+      --shadow:0 18px 48px rgba(9,31,66,.12);
+      --max:1420px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:Arial, Helvetica, sans-serif;
+      font-family:Arial,Helvetica,sans-serif;
       background:var(--bg);
       color:var(--text);
     }
     a{text-decoration:none;color:inherit}
-    .container{width:min(1400px, calc(100% - 28px));margin:0 auto}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
 
     .topbar{
-      position:sticky;top:0;z-index:50;
-      background:rgba(255,255,255,.94);
-      backdrop-filter:blur(10px);
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(12px);
       border-bottom:1px solid var(--line);
+      box-shadow:0 10px 28px rgba(12,35,64,.06);
     }
     .topbar-inner{
-      min-height:86px;
+      min-height:82px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:18px;
-      padding:14px 0;
+      gap:16px;
       flex-wrap:wrap;
+      padding:12px 0;
     }
     .brand{
       display:flex;
       align-items:center;
-      gap:14px;
-      min-width:240px;
+      gap:12px;
+      min-width:230px;
     }
     .brand-mark{
-      width:42px;height:42px;border-radius:12px;
-      display:grid;place-items:center;
-      background:linear-gradient(135deg, var(--gold-2), var(--gold));
-      color:#14223a;
+      width:48px;
+      height:48px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#ffd166,#f6a400);
+      color:#071326;
+      font-size:24px;
       font-weight:900;
-      box-shadow:0 10px 18px rgba(224,178,77,.28);
-      flex:0 0 auto;
+      box-shadow:0 10px 22px rgba(246,164,0,.23);
     }
-    .brand-text strong{display:block;font-size:20px;line-height:1.05;color:#101d30}
-    .brand-text span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
-
+    .brand strong{
+      display:block;
+      font-size:27px;
+      line-height:1;
+      color:#0b1930;
+      letter-spacing:-.03em;
+    }
+    .brand span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-top:4px;
+    }
     .nav{
       display:flex;
-      gap:10px;
+      gap:9px;
       flex-wrap:wrap;
       justify-content:flex-end;
       align-items:center;
+      font-size:14px;
+      font-weight:900;
     }
     .nav a{
-      padding:10px 14px;
+      padding:9px 12px;
       border:1px solid var(--line);
       border-radius:999px;
       background:#fff;
-      color:#24354c;
-      font-weight:700;
-      font-size:14px;
-      transition:.2s ease;
+      color:#132238;
+      white-space:nowrap;
     }
-    .nav a:hover{transform:translateY(-1px);box-shadow:0 8px 16px rgba(8,24,47,.07)}
     .nav a.primary{
-      background:linear-gradient(135deg,#4c82df,#2e63bb);
-      border-color:#2e63bb;
+      background:#0b5db8;
       color:#fff;
+      border-color:#0b5db8;
     }
 
-    .hero-wrap{padding:28px 0 38px}
+    .hero-wrap{padding:22px 0 34px}
     .hero{
-      background:var(--surface);
-      border:1px solid var(--line);
+      position:relative;
+      min-height:620px;
       border-radius:30px;
       overflow:hidden;
+      border:1px solid var(--line);
       box-shadow:var(--shadow);
-      display:grid;
-      grid-template-columns: 1.02fr 1.18fr;
-      min-height:560px;
+      background:#071326;
     }
-    .hero-copy{
-      background:linear-gradient(135deg, #07162c 0%, #0a2042 55%, #0b2f66 100%);
-      color:#fff;
-      padding:54px 44px 46px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+    .hero img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
     }
-    .eyebrow{
-      color:var(--gold-2);
-      font-weight:800;
-      letter-spacing:.08em;
-      font-size:13px;
-      text-transform:uppercase;
-      margin-bottom:20px;
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg,rgba(7,19,38,.05) 0%,rgba(7,19,38,.08) 45%,rgba(7,19,38,.72) 100%),
+        linear-gradient(90deg,rgba(7,19,38,.26),rgba(7,19,38,0) 42%);
+      pointer-events:none;
     }
-    .hero h1{
-      margin:0;
-      font-size:64px;
-      line-height:.98;
-      letter-spacing:-.03em;
-      font-weight:900;
-      max-width:620px;
-    }
-    .hero h1 .gold{color:var(--gold-2)}
-    .hero p{
-      margin:24px 0 0;
-      max-width:560px;
-      font-size:21px;
-      line-height:1.6;
-      color:rgba(255,255,255,.9);
-    }
-    .hero-actions{
+    .hero-buttons{
+      position:absolute;
+      left:34px;
+      bottom:34px;
+      z-index:2;
       display:flex;
       gap:16px;
       flex-wrap:wrap;
-      margin-top:34px;
     }
     .hero-btn{
       min-height:58px;
-      padding:0 26px;
+      padding:0 28px;
       border-radius:18px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      border:2px solid rgba(255,255,255,.14);
-      font-weight:800;
       font-size:22px;
-      transition:.2s ease;
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      font-weight:900;
+      border:2px solid rgba(255,255,255,.20);
+      box-shadow:0 14px 30px rgba(0,0,0,.25);
+      transition:.18s ease;
     }
     .hero-btn:hover{transform:translateY(-2px)}
     .hero-btn.gold{
-      background:linear-gradient(135deg, var(--gold-2), var(--gold));
-      color:#132235;
-      border-color:rgba(224,178,77,.5);
+      background:#f6a400;
+      color:#071326;
+      border-color:#f6a400;
     }
-    .hero-btn.outline{
-      background:rgba(255,255,255,.08);
+    .hero-btn.dark{
+      background:rgba(7,19,38,.72);
       color:#fff;
-      border-color:rgba(255,255,255,.2);
-    }
-    .hero-media{
-      position:relative;
-      background:#d7dce4;
-      min-height:420px;
-    }
-    .hero-media::after{
-      content:"";
-      position:absolute;inset:0;
-      background:linear-gradient(90deg, rgba(7,22,44,.34) 0%, rgba(7,22,44,.08) 18%, rgba(0,0,0,0) 34%);
-      pointer-events:none;
-    }
-    .hero-media img{
-      width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+      backdrop-filter:blur(8px);
     }
 
-    .section{padding:0 0 60px}
+    .section{padding:0 0 58px}
     .cards{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:18px;
     }
     .card{
-      background:var(--surface);
+      background:#fff;
       border:1px solid var(--line);
-      border-radius:22px;
-      padding:26px;
-      box-shadow:0 10px 24px rgba(9,31,66,.06);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 12px 32px rgba(9,31,66,.07);
     }
-    .card h3{margin:0 0 10px;font-size:22px;color:#11233b}
-    .card p{margin:0;color:var(--muted);line-height:1.65;font-size:15px}
-
+    .card h3{margin:0 0 10px;color:#0b1930;font-size:23px}
+    .card p{margin:0;color:#59687d;line-height:1.65}
     footer{
-      padding:26px 0 42px;
-      color:var(--muted);
-      font-size:14px;
+      padding:28px 0 42px;
       text-align:center;
+      color:#637083;
+      font-size:14px;
     }
 
-    @media (max-width:1180px){
-      .hero{grid-template-columns:1fr}
-      .hero-copy{padding:44px 30px 36px}
-      .hero h1{font-size:52px}
-      .hero p{font-size:19px}
-      .hero-media{min-height:420px}
-      .cards{grid-template-columns:1fr}
-    }
-    @media (max-width:760px){
-      .topbar-inner{align-items:flex-start}
-      .nav{justify-content:flex-start}
-      .hero-wrap{padding-top:20px}
-      .hero-copy{padding:34px 22px 30px}
-      .hero h1{font-size:40px}
-      .hero p{font-size:17px}
+    @media(max-width:900px){
+      .hero{min-height:520px}
+      .hero-buttons{left:20px;right:20px;bottom:22px}
       .hero-btn{width:100%;font-size:20px}
-      .hero-actions{gap:12px}
-      .nav a{font-size:13px;padding:9px 12px}
-      .brand-text strong{font-size:18px}
+      .cards{grid-template-columns:1fr}
+      .nav{justify-content:flex-start}
+      .topbar-inner{align-items:flex-start}
     }
   </style>
 </head>
@@ -228,7 +208,7 @@
     <div class="container topbar-inner">
       <a class="brand" href="index.html">
         <div class="brand-mark">S</div>
-        <div class="brand-text">
+        <div>
           <strong>SEVRA</strong>
           <span>Lojistik İlan ve Firma Görünürlüğü Platformu</span>
         </div>
@@ -236,13 +216,13 @@
 
       <nav class="nav">
         <a href="index.html">Ana Sayfa</a>
-        <a href="platform-alanlari.html">Platform Alanları</a>
-        <a href="nasil-calisir.html">Nasıl Çalışır?</a>
-        <a href="neden-biz.html">Neden Biz</a>
+        <a href="#platform">Platform Alanları</a>
+        <a href="#nasil">Nasıl Çalışır?</a>
+        <a href="#neden">Neden Biz</a>
         <a href="yuk-ilanlari.html">Yük İlanları</a>
         <a href="urun-vitrini.html">Ürün Kataloğu</a>
-        <a href="firma-vitrini.html">Firma Kataloğu</a>
-        <a href="platform-kayit-secimi.html" class="primary">Üyelik / İlan Paylaş</a>
+        <a href="firma-katalog.html">Firma Kataloğu</a>
+        <a class="primary" href="platform-kayit-secimi.html">Üyelik / İlan Paylaş</a>
       </nav>
     </div>
   </header>
@@ -251,71 +231,38 @@
     <section class="hero-wrap">
       <div class="container">
         <div class="hero">
-          <div class="hero-copy">
-            <div class="eyebrow">İlan · Üyelik · Görünürlük</div>
-            <h1>
-              Lojistik İlan,<br>
-              <span class="gold">Firma ve Ürün</span><br>
-              Görünürlüğü Platformu
-            </h1>
-            <p>
-              SEVRA; lojistik sektöründe yük, araç, firma ve ürün görünürlüğünü
-              tek çatı altında toplayan kurumsal dijital platformdur.
-            </p>
-
-            <div class="hero-actions">
-              <a class="hero-btn gold" href="platform-kayit-secimi.html">İlan Ver</a>
-              <a class="hero-btn outline" href="nasil-calisir.html">Platformu İncele</a>
-              <a class="hero-btn outline" href="urun-vitrini.html">Ürün Kataloğu</a>
-            </div>
-          </div>
-
-          <div class="hero-media">
-            <img id="heroImage" src="sevra-hero-final.png" alt="SEVRA hero görseli">
+          <img src="sevra-hero-final.png" alt="SEVRA lojistik, kargo, ürün ve firma görünürlüğü">
+          <div class="hero-buttons">
+            <a class="hero-btn gold" href="nakliye-ilani-ver.html">İlan Ver</a>
+            <a class="hero-btn dark" href="#platform">Platformu İncele</a>
+            <a class="hero-btn dark" href="urun-vitrini.html">Ürün Kataloğu</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="platform">
       <div class="container">
         <div class="cards">
-          <div class="card">
-            <h3>Kurumsal Görünürlük</h3>
-            <p>Firma vitrininden ürün kataloğuna kadar markanızı profesyonel bir görünümle öne çıkarın.</p>
-          </div>
-          <div class="card">
-            <h3>Dijital Yayın Alanı</h3>
-            <p>Yük, araç, ürün ve firma bilgileriniz tek merkezde daha düzenli, daha anlaşılır ve daha görünür olsun.</p>
-          </div>
-          <div class="card">
-            <h3>SEVRA Altyapısı</h3>
-            <p>Kurumsal dil, güçlü tasarım ve hızlı erişim mantığıyla lojistik sektörüne uygun modern bir vitrin deneyimi.</p>
-          </div>
+          <article class="card">
+            <h3>Lojistik İlan Alanı</h3>
+            <p>Yük, araç, kurye, kargo ve ambar görünürlüğü için sade ve kurumsal ilan alanı.</p>
+          </article>
+          <article class="card">
+            <h3>Firma ve Ürün Kataloğu</h3>
+            <p>Onaylı firmalar, tedarikçiler ve ürün grupları için görünürlük odaklı katalog yapısı.</p>
+          </article>
+          <article class="card">
+            <h3>Güvenli Platform Çizgisi</h3>
+            <p>SEVRA ödeme, tahsilat veya taşıma tarafı değildir; ilan ve görünürlük platformudur.</p>
+          </article>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">SEVRA © 2026 · Ana sayfa hero alanı sadeleştirildi. Alt kısımda yalnızca 3 buton bırakıldı.</div>
+    SEVRA © 2026 · Lojistik ilan, firma ve ürün görünürlüğü platformu
   </footer>
-
-  <script>
-    (function(){
-      const img = document.getElementById('heroImage');
-      const candidates = [
-        'sevra-hero-final.png',
-        'sevra-ana-hero-kapak.jpg',
-        'sevra-hero-kapak.png',
-        'sevra-afis.jpg'
-      ];
-      let i = 0;
-      img.onerror = function(){
-        i += 1;
-        if(i < candidates.length){ img.src = candidates[i]; }
-      };
-    })();
-  </script>
 </body>
 </html>
