@@ -87,8 +87,8 @@
     <div class="head-card">
       <div>
         <div class="kicker">Admin / Ürün Yönetimi V1</div>
-        <h1>Ürün kaydı oluştur, fotoğraf ekle, katalogda yayınla</h1>
-        <p>Bu ekran ürün kayıtlarını yönetmek, fotoğraf eklemek ve aktif ürünleri katalog sayfasında yayınlamak için kullanılır.</p>
+        <h1>Ürün kaydı oluştur, onaylı firmaya bağla, katalogda yayınla</h1>
+        <p>Bu ekran ürün kayıtlarını yönetmek, ürünleri onaylı firmalara bağlamak ve aktif ürünleri katalog sayfasında yayınlamak için kullanılır.</p>
       </div>
       <a class="btn btn-gold" href="urun-vitrini.html">Ürün Kataloğuna Git</a>
     </div>
@@ -106,8 +106,9 @@
         <div class="field"><label>Kategori</label><select id="category" required><option value="">Seçiniz</option><option>Araç Parçaları</option><option>Kasa Ekipmanları</option><option>Depo Ürünleri</option><option>Ambalaj / Koli</option><option>Stok Fazlası</option><option>Sanayi Ürünleri</option></select></div>
         <div class="field"><label>Durum</label><select id="status"><option value="active">Aktif</option><option value="pending">Beklemede</option><option value="passive">Pasif</option></select></div>
       </div>
+      <div class="field"><label>Onaylı Firma Seçimi</label><select id="companySelect"><option value="">Onaylı firma seçiniz</option></select></div>
       <div class="row">
-        <div class="field"><label>İlan Sahibi / Firma</label><input id="seller" required placeholder="Örn: Örnek Firma"></div>
+        <div class="field"><label>İlan Sahibi / Firma</label><input id="seller" required placeholder="Onaylı firma seçilince otomatik dolar"></div>
         <div class="field"><label>İl / İlçe</label><input id="location" placeholder="Örn: Bursa / Osmangazi"></div>
       </div>
       <div class="row">
@@ -149,6 +150,35 @@
   const refreshBtn = document.getElementById('refreshBtn');
 
   let imageData = '';
+
+  let approvedCompanies = [];
+
+  async function loadApprovedCompanies(){
+    const select = document.getElementById('companySelect');
+    if(!select) return;
+    try{
+      const q = query(collection(db, 'companies'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      approvedCompanies = snap.docs
+        .map(d => ({ id:d.id, ...d.data() }))
+        .filter(c => c.status === 'approved' && c.isDemo !== true && c.isTest !== true);
+
+      select.innerHTML = '<option value="">Onaylı firma seçiniz</option>' + approvedCompanies
+        .map(c => `<option value="${esc(c.id)}">${esc(c.companyName || 'Firma')}</option>`)
+        .join('');
+    }catch(err){
+      select.innerHTML = '<option value="">Onaylı firmalar okunamadı</option>';
+    }
+  }
+
+  document.getElementById('companySelect')?.addEventListener('change', function(){
+    const company = approvedCompanies.find(c => c.id === this.value);
+    if(!company) return;
+    document.getElementById('seller').value = company.companyName || '';
+    document.getElementById('location').value = [company.city, company.district].filter(Boolean).join(' / ');
+    document.getElementById('phone').value = company.phone || '';
+  });
+
   let products = [];
 
   function showStatus(msg, type='ok'){
@@ -201,6 +231,7 @@
       category: document.getElementById('category').value.trim(),
       status: document.getElementById('status').value.trim(),
       seller: document.getElementById('seller').value.trim(),
+      companyId: document.getElementById('companySelect') ? document.getElementById('companySelect').value : '',
       location: document.getElementById('location').value.trim(),
       phone: document.getElementById('phone').value.trim(),
       whatsapp: document.getElementById('whatsapp').value.trim(),
@@ -212,6 +243,7 @@
 
   function clearForm(){
     form.reset();
+    if(document.getElementById('companySelect')) document.getElementById('companySelect').value = '';
     editId.value = '';
     imageData = '';
     preview.innerHTML = '<span>Ürün görseli seçilmedi</span>';
@@ -236,7 +268,8 @@
         showStatus('Ürün kaydedildi ve katalogda yayınlanmaya hazırlandı.');
       }
       clearForm();
-      await loadProducts();
+      await loadApprovedCompanies();
+  loadProducts();
     }catch(err){
       showStatus('Kayıt hatası: ' + err.message, 'err');
     }
@@ -292,6 +325,7 @@
     document.getElementById('category').value = p.category || '';
     document.getElementById('status').value = p.status || 'active';
     document.getElementById('seller').value = p.seller || '';
+    if(document.getElementById('companySelect')) document.getElementById('companySelect').value = p.companyId || '';
     document.getElementById('location').value = p.location || '';
     document.getElementById('phone').value = p.phone || '';
     document.getElementById('whatsapp').value = p.whatsapp || '';
@@ -306,13 +340,15 @@
     if(!confirm('Bu ürünü silmek istiyor musun?')) return;
     try{
       await deleteDoc(doc(db, 'products', id));
-      await loadProducts();
+      await loadApprovedCompanies();
+  loadProducts();
     }catch(err){
       alert('Silme hatası: ' + err.message);
     }
   }
 
   refreshBtn.addEventListener('click', loadProducts);
+  loadApprovedCompanies();
   loadProducts();
 </script>
 
