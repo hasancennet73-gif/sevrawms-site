@@ -103,6 +103,11 @@
       }
 
       const c = { id:snap.id, ...snap.data() };
+      if(c.isTest === true || c.isTest === true){
+        root.innerHTML = '<div class="empty">Bu kayıt yayın kataloglarında gösterilmez.</div>';
+        return;
+      }
+
       if(c.status !== 'approved'){
         root.innerHTML = '<div class="empty">Bu firma kaydı yayın için onaylanmamış.</div>';
         return;
