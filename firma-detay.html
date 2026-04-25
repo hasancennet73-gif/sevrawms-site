@@ -61,13 +61,17 @@
   function mailLink(email){ return email ? `mailto:${encodeURIComponent(email)}` : 'index.html#iletisim'; }
   function phoneLink(phone){ const n = String(phone||'').replace(/\D/g,''); return n ? `tel:${n}` : 'index.html#iletisim'; }
 
-  async function loadProductsForCompany(companyName){
+  async function loadProductsForCompany(companyName, companyId){
     try{
       const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
       const snap = await getDocs(q);
       return snap.docs.map(d => ({ id:d.id, ...d.data() }))
         .filter(p => (p.status || 'active') === 'active')
-        .filter(p => String(p.seller || '').trim().toLowerCase() === String(companyName || '').trim().toLowerCase())
+        .filter(p => p.isDemo !== true && p.isTest !== true)
+        .filter(p => {
+          if(companyId && p.companyId === companyId) return true;
+          return String(p.seller || '').trim().toLowerCase() === String(companyName || '').trim().toLowerCase();
+        })
         .slice(0, 6);
     }catch(e){
       return [];
@@ -109,7 +113,7 @@
       }
 
       document.title = 'SEVRA | ' + (c.companyName || 'Firma Detayı');
-      const products = await loadProductsForCompany(c.companyName);
+      const products = await loadProductsForCompany(c.companyName, c.id);
 
       root.innerHTML = `
         <div class="card">
