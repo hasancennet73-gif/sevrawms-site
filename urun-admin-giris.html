@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Ürün Yönetimi Giriş</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --surface:#ffffff;
+      --text:#172033;
+      --muted:#637083;
+      --navy:#071326;
+      --blue:#0b5db8;
+      --gold:#f6a400;
+      --gold2:#ffd166;
+      --line:rgba(15,35,65,.12);
+      --shadow:0 24px 70px rgba(9,31,66,.16);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 12%,rgba(246,164,0,.18),transparent 26%),
+        radial-gradient(circle at 85% 20%,rgba(11,93,184,.16),transparent 28%),
+        linear-gradient(135deg,#071326 0%,#0b1930 42%,#eef4fb 42%,#f4f7fb 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .login-shell{
+      width:min(1040px,100%);
+      display:grid;
+      grid-template-columns:1fr 430px;
+      background:#ffffff;
+      border-radius:30px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.18);
+      min-height:580px;
+    }
+    .brand-panel{
+      background:
+        linear-gradient(135deg,rgba(7,19,38,.96),rgba(11,25,48,.92)),
+        radial-gradient(circle at 85% 25%,rgba(246,164,0,.22),transparent 30%);
+      color:#fff;
+      padding:44px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .brand-mark{
+      width:56px;
+      height:56px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      color:#071326;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:28px;
+      box-shadow:0 12px 28px rgba(246,164,0,.24);
+    }
+    .brand strong{
+      display:block;
+      font-size:34px;
+      line-height:1;
+    }
+    .brand span{
+      display:block;
+      color:rgba(255,255,255,.68);
+      font-size:13px;
+      margin-top:5px;
+    }
+    .brand-panel h1{
+      font-size:clamp(36px,4vw,58px);
+      line-height:1.02;
+      letter-spacing:-.055em;
+      margin:36px 0 14px;
+    }
+    .brand-panel h1 span{color:#f6a400}
+    .brand-panel p{
+      margin:0;
+      color:rgba(255,255,255,.74);
+      font-size:17px;
+      max-width:560px;
+    }
+    .safe{
+      margin-top:28px;
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.76);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .form-panel{
+      padding:38px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .form-panel h2{
+      margin:0 0 8px;
+      color:#0b1930;
+      font-size:30px;
+      letter-spacing:-.025em;
+    }
+    .form-panel p{
+      margin:0 0 22px;
+      color:#637083;
+    }
+    label{
+      display:block;
+      font-size:12px;
+      font-weight:900;
+      color:#637083;
+      text-transform:uppercase;
+      margin-bottom:7px;
+    }
+    input{
+      width:100%;
+      min-height:48px;
+      border-radius:13px;
+      border:1px solid var(--line);
+      background:#f7faff;
+      padding:0 13px;
+      outline:none;
+      font:inherit;
+      color:#172033;
+    }
+    .field{margin-bottom:14px}
+    .btn{
+      width:100%;
+      min-height:48px;
+      border:0;
+      border-radius:13px;
+      background:#0b5db8;
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      font-size:15px;
+      box-shadow:0 14px 30px rgba(11,93,184,.18);
+    }
+    .link-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+      font-size:13px;
+    }
+    .link-row a{
+      color:#0b5db8;
+      text-decoration:none;
+      font-weight:900;
+    }
+    .message{
+      display:none;
+      margin:14px 0;
+      padding:12px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:13px;
+    }
+    .message.err{
+      display:block;
+      background:#fff0f0;
+      color:#991b1b;
+      border:1px solid rgba(153,27,27,.18);
+    }
+    .message.ok{
+      display:block;
+      background:#eaf8ef;
+      color:#166534;
+      border:1px solid rgba(22,101,52,.18);
+    }
+    .hint{
+      margin-top:18px;
+      padding:14px;
+      border-radius:16px;
+      background:#fff4d8;
+      color:#5f4300;
+      font-size:13px;
+      line-height:1.45;
+    }
+    @media(max-width:900px){
+      .login-shell{grid-template-columns:1fr}
+      .brand-panel{padding:30px}
+      .form-panel{padding:30px}
+    }
+  </style>
+</head>
+<body>
+  <main class="login-shell">
+    <section class="brand-panel">
+      <div>
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <strong>SEVRA</strong>
+            <span>Ürün ve Firma Kataloğu</span>
+          </div>
+        </div>
+
+        <h1>Ürün Yönetimi<br><span>Admin Girişi</span></h1>
+        <p>Ürün kayıtlarını eklemek, fotoğraf yüklemek, düzenlemek ve katalogda yayınlamak için yetkili giriş ekranı.</p>
+      </div>
+
+      <div class="safe">
+        Bu giriş ekranı ürün yönetimi sayfasını ziyaretçilere karşı kapatır. Gerçek veri güvenliği için Firestore kuralları da ayrıca yönetilmelidir.
+      </div>
+    </section>
+
+    <section class="form-panel">
+      <h2>Yetkili giriş</h2>
+      <p>Ürün yönetimine devam etmek için yönetici bilgilerini gir.</p>
+
+      <form id="loginForm">
+        <div class="field">
+          <label>Kullanıcı adı</label>
+          <input id="username" autocomplete="username" placeholder="admin">
+        </div>
+
+        <div class="field">
+          <label>Şifre / PIN</label>
+          <input id="password" type="password" autocomplete="current-password" placeholder="Şifre veya PIN">
+        </div>
+
+        <div id="message" class="message"></div>
+        <button class="btn" type="submit">Ürün Yönetimine Gir</button>
+      </form>
+
+      <div class="link-row">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="urun-vitrini.html">Ürün Kataloğu</a>
+      </div>
+
+      <div class="hint">
+        Not: Bu ekran SEVRA ürün yönetimi için ayrı giriş kapısıdır. Mevcut yönetici giriş sayfalarını bozmaz.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ADMIN_USER = 'admin';
+    const ADMIN_PIN = 'a11571683';
+
+    const form = document.getElementById('loginForm');
+    const msg = document.getElementById('message');
+
+    function getRedirect(){
+      const p = new URLSearchParams(location.search);
+      const r = p.get('redirect') || 'urun-yonetimi.html';
+      if(r.includes('://')) return 'urun-yonetimi.html';
+      return r;
+    }
+
+    function show(text, type){
+      msg.textContent = text;
+      msg.className = 'message ' + type;
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+
+      if(user === ADMIN_USER && pass === ADMIN_PIN){
+        const expires = Date.now() + (8 * 60 * 60 * 1000);
+        localStorage.setItem('sevra_product_admin_ok', '1');
+        localStorage.setItem('sevra_product_admin_exp', String(expires));
+        show('Giriş başarılı, yönlendiriliyorsun...', 'ok');
+        setTimeout(() => { window.location.href = getRedirect(); }, 500);
+      }else{
+        show('Kullanıcı adı veya şifre hatalı.', 'err');
+      }
+    });
+  </script>
+</body>
+</html>
