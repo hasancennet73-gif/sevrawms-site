@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4XD6PKE0RD');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEVRA | Ürün Yönetimi</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <style>
+    :root{
+      --bg:#f4f7fb;--surface:#fff;--text:#172033;--muted:#637083;
+      --navy:#071326;--blue:#0b5db8;--gold:#f6a400;--gold2:#ffd166;
+      --line:rgba(15,35,65,.12);--shadow:0 14px 34px rgba(9,31,66,.09);--max:1360px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+    a{text-decoration:none;color:inherit}.container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 10px 28px rgba(12,35,64,.06)}
+    .topbar-inner{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:14px}.brand-mark{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#071326;font-size:26px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(246,164,0,.22)}
+    .brand-text strong{display:block;font-size:31px;color:#0b1930;line-height:1}.brand-text span{display:block;font-size:12px;color:#637083;margin-top:4px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;font-weight:800}
+    .nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08);color:#132238}.nav a.active,.nav a:hover{background:#edf5ff}.nav .primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
+    .page-head{padding:26px 0 18px}.head-card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:24px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-end}
+    .kicker{color:#a46b00;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    h1{margin:0;color:#0b1930;font-size:clamp(30px,3.5vw,48px);line-height:1.08;letter-spacing:-.035em}.head-card p{margin:8px 0 0;color:#637083;max-width:800px}
+    .layout{display:grid;grid-template-columns:450px 1fr;gap:18px;align-items:start;padding-bottom:36px}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+    .panel-head{padding:18px 20px;background:#0b1930;color:#fff}.panel-head strong{display:block;font-size:20px}.panel-head span{color:rgba(255,255,255,.70);font-size:13px}
+    .form{padding:18px;display:grid;gap:13px}.field label{display:block;font-size:12px;font-weight:900;color:#637083;text-transform:uppercase;margin-bottom:6px}
+    input,select,textarea{width:100%;border:1px solid var(--line);background:#f7faff;border-radius:13px;padding:12px;color:#172033;font:inherit;outline:none}
+    textarea{min-height:110px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .preview{border:1px dashed rgba(15,35,65,.22);border-radius:18px;background:#f7faff;min-height:180px;display:grid;place-items:center;overflow:hidden}
+    .preview img{width:100%;height:220px;object-fit:cover;display:block}.preview span{color:#637083;font-weight:800}
+    .btn{min-height:44px;padding:0 16px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;border:1px solid transparent;text-decoration:none;cursor:pointer;font-size:14px}
+    .btn-primary{background:#0b5db8;color:#fff;border-color:#0b5db8}.btn-gold{background:#f6a400;color:#071326;border-color:#f6a400}.btn-secondary{background:#fff;color:#132238;border-color:var(--line)}.btn-danger{background:#fff;color:#9b1c1c;border-color:rgba(155,28,28,.25)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}.status{padding:12px;border-radius:14px;background:#fff4d8;color:#6b4b00;font-weight:800;font-size:13px;display:none}
+    .status.ok{background:#eaf8ef;color:#166534}.status.err{background:#fff0f0;color:#991b1b}
+    .toolbar{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+    .list{display:grid;gap:12px;padding:16px}.item{border:1px solid var(--line);border-radius:18px;background:#fff;padding:12px;display:grid;grid-template-columns:96px 1fr;gap:13px;align-items:start}
+    .item-img{width:96px;height:86px;border-radius:14px;background:#0b1930;display:grid;place-items:center;color:#ffd166;font-size:28px;overflow:hidden}.item-img img{width:100%;height:100%;object-fit:cover}
+    .item h3{margin:0 0 5px;color:#0b1930;font-size:18px}.item p{margin:0;color:#637083;font-size:13px}.item-meta{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}
+    .tag{background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900}
+    .item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .safe{margin-top:12px;padding:13px;border-radius:16px;background:#fff4d8;color:#5f4300;border:1px solid rgba(246,164,0,.30);font-size:13px}
+    @media(max-width:1050px){.layout{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">S</div>
+      <div class="brand-text"><strong>SEVRA</strong><span>Ürün Yönetimi</span></div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="urun-vitrini.html">Ürün Vitrini</a>
+      <a class="active" href="urun-yonetimi.html">Ürün Yönetimi</a>
+      <a class="primary" href="index.html#iletisim">Vitrin Başvurusu</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="container">
+    <div class="head-card">
+      <div>
+        <div class="kicker">Admin / Ürün Yönetimi V1</div>
+        <h1>Ürün ekle, fotoğraf seç, vitrine otomatik düşür</h1>
+        <p>Bu ekran ürün ilanlarını Firebase Firestore koleksiyonuna kaydeder. Fotoğraf tarayıcıda küçültülüp ürüne bağlı olarak saklanır.</p>
+      </div>
+      <a class="btn btn-gold" href="urun-vitrini.html">Canlı Vitrine Git</a>
+    </div>
+  </div>
+</section>
+
+<main class="container layout">
+  <section class="panel">
+    <div class="panel-head"><strong>Ürün Formu</strong><span>Satış değil; ilan/firma görünürlüğü modeli</span></div>
+    <form class="form" id="productForm">
+      <input type="hidden" id="editId">
+      <div class="field"><label>Ürün Fotoğrafı</label><input id="imageFile" type="file" accept="image/*"><div class="preview" id="preview"><span>Fotoğraf seçilmedi</span></div></div>
+      <div class="field"><label>Ürün Adı</label><input id="name" required placeholder="Örn: Kamyon kasa kilidi"></div>
+      <div class="row">
+        <div class="field"><label>Kategori</label><select id="category" required><option value="">Seçiniz</option><option>Araç Parçaları</option><option>Kasa Ekipmanları</option><option>Depo Ürünleri</option><option>Ambalaj / Koli</option><option>Stok Fazlası</option><option>Sanayi Ürünleri</option></select></div>
+        <div class="field"><label>Durum</label><select id="status"><option value="active">Aktif</option><option value="pending">Beklemede</option><option value="passive">Pasif</option></select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>İlan Sahibi / Firma</label><input id="seller" required placeholder="Örn: Örnek Firma"></div>
+        <div class="field"><label>İl / İlçe</label><input id="location" placeholder="Örn: Bursa / Osmangazi"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Telefon</label><input id="phone" placeholder="05xx xxx xx xx"></div>
+        <div class="field"><label>WhatsApp</label><input id="whatsapp" placeholder="905xxxxxxxxx"></div>
+      </div>
+      <div class="field"><label>Kısa Açıklama</label><textarea id="description" required placeholder="Ürün açıklamasını yazın"></textarea></div>
+      <div class="safe">SEVRA ürün satıcısı değildir. Bu kayıt sadece ürün/firma görünürlüğü içindir.</div>
+      <div class="status" id="statusBox"></div>
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Ürünü Kaydet</button>
+        <button class="btn btn-secondary" type="button" id="clearBtn">Formu Temizle</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><strong>Kayıtlı Ürünler</strong><span>Aktif ürünler vitrin sayfasında görünür</span></div>
+    <div class="toolbar">
+      <strong id="countText">0 ürün</strong>
+      <button class="btn btn-secondary" id="refreshBtn" type="button">Yenile</button>
+    </div>
+    <div class="list" id="productList"><div class="safe">Ürünler yükleniyor...</div></div>
+  </section>
+</main>
+
+<script type="module">
+  import { db } from './firebase-config.js';
+  import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const form = document.getElementById('productForm');
+  const editId = document.getElementById('editId');
+  const imageFile = document.getElementById('imageFile');
+  const preview = document.getElementById('preview');
+  const statusBox = document.getElementById('statusBox');
+  const productList = document.getElementById('productList');
+  const countText = document.getElementById('countText');
+  const clearBtn = document.getElementById('clearBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
+
+  let imageData = '';
+  let products = [];
+
+  function showStatus(msg, type='ok'){
+    statusBox.textContent = msg;
+    statusBox.className = 'status ' + type;
+    statusBox.style.display = 'block';
+  }
+
+  function esc(v){
+    return String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+  }
+
+  function compressImage(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const maxW = 900;
+          const scale = Math.min(1, maxW / img.width);
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.78));
+        };
+        img.onerror = reject;
+        img.src = reader.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  imageFile.addEventListener('change', async () => {
+    const file = imageFile.files && imageFile.files[0];
+    if(!file) return;
+    try{
+      imageData = await compressImage(file);
+      preview.innerHTML = `<img src="${imageData}" alt="Ürün fotoğrafı">`;
+    }catch(err){
+      showStatus('Fotoğraf okunamadı: ' + err.message, 'err');
+    }
+  });
+
+  function getFormData(){
+    return {
+      name: document.getElementById('name').value.trim(),
+      category: document.getElementById('category').value.trim(),
+      status: document.getElementById('status').value.trim(),
+      seller: document.getElementById('seller').value.trim(),
+      location: document.getElementById('location').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      whatsapp: document.getElementById('whatsapp').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      imageData,
+      updatedAt: serverTimestamp()
+    };
+  }
+
+  function clearForm(){
+    form.reset();
+    editId.value = '';
+    imageData = '';
+    preview.innerHTML = '<span>Fotoğraf seçilmedi</span>';
+    statusBox.style.display = 'none';
+  }
+
+  clearBtn.addEventListener('click', clearForm);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = getFormData();
+    if(!data.name || !data.category || !data.seller || !data.description){
+      showStatus('Ürün adı, kategori, firma ve açıklama zorunlu.', 'err');
+      return;
+    }
+    try{
+      if(editId.value){
+        await updateDoc(doc(db, 'products', editId.value), data);
+        showStatus('Ürün güncellendi.');
+      }else{
+        await addDoc(collection(db, 'products'), { ...data, createdAt: serverTimestamp() });
+        showStatus('Ürün kaydedildi ve vitrine gönderildi.');
+      }
+      clearForm();
+      await loadProducts();
+    }catch(err){
+      showStatus('Kayıt hatası: ' + err.message, 'err');
+    }
+  });
+
+  async function loadProducts(){
+    try{
+      productList.innerHTML = '<div class="safe">Ürünler yükleniyor...</div>';
+      const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      products = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      countText.textContent = products.length + ' ürün';
+      renderList();
+    }catch(err){
+      productList.innerHTML = '<div class="safe">Ürünler okunamadı: '+ esc(err.message) +'</div>';
+    }
+  }
+
+  function renderList(){
+    if(!products.length){
+      productList.innerHTML = '<div class="safe">Henüz ürün yok. Soldaki formdan ilk ürünü ekleyin.</div>';
+      return;
+    }
+    productList.innerHTML = products.map(p => `
+      <article class="item">
+        <div class="item-img">${p.imageData ? `<img src="${p.imageData}" alt="">` : '📦'}</div>
+        <div>
+          <h3>${esc(p.name)}</h3>
+          <p>${esc(p.description || '')}</p>
+          <div class="item-meta">
+            <span class="tag">${esc(p.category || '-')}</span>
+            <span class="tag">${esc(p.status || '-')}</span>
+            <span class="tag">${esc(p.seller || '-')}</span>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-secondary" data-edit="${esc(p.id)}">Düzenle</button>
+            <button class="btn btn-danger" data-del="${esc(p.id)}">Sil</button>
+            <a class="btn btn-primary" href="urun-detay.html?id=${encodeURIComponent(p.id)}" target="_blank">Detay</a>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    productList.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => editProduct(btn.dataset.edit)));
+    productList.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', () => deleteProduct(btn.dataset.del)));
+  }
+
+  function editProduct(id){
+    const p = products.find(x => x.id === id);
+    if(!p) return;
+    editId.value = p.id;
+    document.getElementById('name').value = p.name || '';
+    document.getElementById('category').value = p.category || '';
+    document.getElementById('status').value = p.status || 'active';
+    document.getElementById('seller').value = p.seller || '';
+    document.getElementById('location').value = p.location || '';
+    document.getElementById('phone').value = p.phone || '';
+    document.getElementById('whatsapp').value = p.whatsapp || '';
+    document.getElementById('description').value = p.description || '';
+    imageData = p.imageData || '';
+    preview.innerHTML = imageData ? `<img src="${imageData}" alt="Ürün fotoğrafı">` : '<span>Fotoğraf seçilmedi</span>';
+    showStatus('Düzenleme modu açıldı.');
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  async function deleteProduct(id){
+    if(!confirm('Bu ürünü silmek istiyor musun?')) return;
+    try{
+      await deleteDoc(doc(db, 'products', id));
+      await loadProducts();
+    }catch(err){
+      alert('Silme hatası: ' + err.message);
+    }
+  }
+
+  refreshBtn.addEventListener('click', loadProducts);
+  loadProducts();
+</script>
+</body>
+</html>
