@@ -10,20 +10,19 @@
     gtag('config', 'G-4XD6PKE0RD');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA Ürün Kataloğu | Lojistik Ürün, Depo Ekipmanı ve Stok Fazlası İlanları</title>
-  <meta name="description" content="SEVRA Ürün Kataloğu; lojistik, depo, ambalaj, araç parçası, kasa ekipmanı ve stok fazlası ürünlerin firma görünürlüğü için yayınlandığı kurumsal ürün listeleme platformudur." />
+  <title>SEVRA | Ürün Kataloğu</title>
+  <meta name="description" content="SEVRA Ürün Kataloğu; ürün, ekipman ve stok fazlası ilanlarının kurumsal görünürlük amacıyla listelendiği dijital katalog alanıdır." />
   <meta name="robots" content="index, follow" />
   <style>
-    :root{--bg:#f4f7fb;--surface:#fff;--text:#172033;--muted:#637083;--navy:#071326;--blue:#0b5db8;--gold:#f6a400;--gold2:#ffd166;--line:rgba(15,35,65,.12);--shadow:0 14px 34px rgba(9,31,66,.09);--max:1360px}
+    :root{
+      --bg:#f4f7fb;--surface:#fff;--text:#172033;--muted:#667487;
+      --navy:#071326;--blue:#0b5db8;--gold:#f6a400;--gold2:#ffd166;
+      --line:rgba(15,35,65,.12);--shadow:0 14px 34px rgba(9,31,66,.09);--max:1320px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg);line-height:1.55}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
     a{text-decoration:none;color:inherit}
     .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
-
-    .top-note{background:#071326;color:rgba(255,255,255,.76);font-size:13px;border-bottom:1px solid rgba(255,255,255,.10)}
-    .top-note-inner{min-height:38px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .top-note strong{color:#ffd166}
-
     .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 10px 28px rgba(12,35,64,.06)}
     .topbar-inner{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:14px}
@@ -34,389 +33,399 @@
     .nav a{padding:9px 11px;border-radius:11px;background:#f7faff;border:1px solid rgba(15,35,65,.08);color:#132238}
     .nav a.active,.nav a:hover{background:#edf5ff}
     .nav .primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
-
-    .page-hero{padding:26px 0 18px}
-    .hero-box{
+    .hero{padding:28px 0 18px}
+    .hero-card{
       position:relative;
-      min-height:520px;
-      border-radius:30px;
+      min-height:430px;
+      border-radius:28px;
       overflow:hidden;
-      background:
-        linear-gradient(90deg,rgba(7,19,38,.96) 0%,rgba(7,19,38,.86) 38%,rgba(7,19,38,.36) 72%,rgba(7,19,38,.12) 100%),
-        url('sevra-urun-hero.png') center right / cover no-repeat;
-      border:1px solid rgba(15,35,65,.12);
       box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.18);
+      background:
+        linear-gradient(90deg, rgba(7,19,38,.42) 0%, rgba(7,19,38,.28) 34%, rgba(7,19,38,.08) 58%, rgba(7,19,38,.22) 100%),
+        url('sevra-urun-hero.png') center center / cover no-repeat,
+        linear-gradient(135deg,#0b1930,#102847);
       display:flex;
-      align-items:center;
+      align-items:stretch;
     }
-    .hero-box::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at 78% 20%,rgba(246,164,0,.16),transparent 28%);
-      pointer-events:none;
-    }
-    .hero-content{
-      position:relative;
-      z-index:2;
-      width:min(650px,100%);
-      padding:54px;
-      color:#fff;
-    }
-    .breadcrumb{color:#ffd166;font-size:13px;font-weight:900;margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em}
-    .hero-content h1{margin:0 0 14px;color:#fff;font-size:clamp(40px,5vw,72px);line-height:.98;letter-spacing:-.06em}
-    .hero-content p{margin:0;color:rgba(255,255,255,.78);font-size:18px;max-width:610px}
-    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-    .hero-metrics{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-    .metric{min-width:130px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:12px 14px;backdrop-filter:blur(8px)}
-    .metric small{display:block;color:rgba(255,255,255,.66);font-size:11px;font-weight:900;text-transform:uppercase;margin-bottom:4px}
-    .metric strong{display:block;color:#fff;font-size:23px;line-height:1}
-
-    .btn{min-height:44px;padding:0 16px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;border:1px solid transparent;text-decoration:none;cursor:pointer;font-size:14px;white-space:nowrap}
-    .btn-primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
-    .btn-gold{background:#f6a400;color:#071326;border-color:#f6a400}
-    .btn-secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.20)}
-    .btn-light{background:#fff;color:#132238;border-color:var(--line)}
-
-    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px}
-    .stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 10px 26px rgba(9,31,66,.06)}
-    .stat small{display:block;color:#637083;font-size:12px;font-weight:900;text-transform:uppercase;margin-bottom:6px}
-    .stat strong{display:block;color:#0b1930;font-size:24px;line-height:1.1}
-
-    .main-layout{display:grid;grid-template-columns:285px 1fr;gap:18px;align-items:start;padding-bottom:36px}
-    .sidebar{position:sticky;top:102px;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 26px rgba(9,31,66,.06);overflow:hidden}
-    .sidebar-head{padding:18px;background:#0b1930;color:#fff}
-    .sidebar-head strong{display:block;font-size:18px;margin-bottom:4px}
-    .sidebar-head span{color:rgba(255,255,255,.68);font-size:13px}
-    .cat-list{padding:12px;display:grid;gap:8px}
-    .cat{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px;border-radius:14px;background:#f7faff;border:1px solid rgba(15,35,65,.08);color:#132238;font-weight:800;font-size:14px}
-    .cat span{color:#8a5a00;background:#fff4d8;border:1px solid rgba(246,164,0,.24);border-radius:999px;padding:3px 8px;font-size:12px;font-weight:900}
-    .safe-mini{margin:12px;padding:14px;border-radius:16px;background:#fff4d8;color:#5f4300;border:1px solid rgba(246,164,0,.30);font-size:13px;line-height:1.45}
-
-    .content-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:14px}
-    .content-head h2{margin:0;color:#0b1930;font-size:30px;letter-spacing:-.025em}
-    .content-head p{margin:4px 0 0;color:#637083}
-    .sort-box{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{padding:9px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);color:#526174;font-size:13px;font-weight:900}
-    .chip.active{background:#0b5db8;color:#fff;border-color:#0b5db8}
-
-    .product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .product{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 12px 30px rgba(9,31,66,.07);display:flex;flex-direction:column;min-height:100%}
-    .product-img{height:190px;background:linear-gradient(135deg,#0b1930,#0b5db8);display:grid;place-items:center;color:#ffd166;font-size:48px;position:relative;overflow:hidden}
-    .product-img img{width:100%;height:100%;object-fit:cover;display:block}
-    .badge{position:absolute;left:12px;top:12px;background:#fff;color:#7a5100;border:1px solid rgba(246,164,0,.24);border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900}
-    .product-body{padding:17px;display:flex;flex-direction:column;gap:9px;flex:1}
-    .product small{color:#a46b00;font-weight:900;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
-    .product h3{margin:0;color:#0b1930;font-size:19px;line-height:1.18}
-    .product p{margin:0;color:#526174;font-size:14px}
-    .seller{display:flex;justify-content:space-between;gap:10px;align-items:center;padding-top:4px;color:#637083;font-size:13px}
-    .seller strong{color:#0b1930}
-    .product-actions{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;padding-top:8px}
-
-    .notice{margin-top:18px;background:#0b1930;color:#fff;border-radius:22px;padding:22px;box-shadow:0 16px 38px rgba(9,31,66,.16);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
-    .notice strong{display:block;font-size:22px;margin-bottom:4px}
-    .notice span{color:rgba(255,255,255,.76);max-width:880px;display:block}
-    .empty{padding:24px;background:#fff;border:1px dashed rgba(15,35,65,.22);border-radius:18px;color:#637083}
-    footer{text-align:center;padding:28px;color:#637083;border-top:1px solid var(--line);background:#fff}
-
-    @media(max-width:1100px){
-      .main-layout{grid-template-columns:1fr}
-      .sidebar{position:static}
-      .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .hero-box{min-height:auto}
-      .hero-content{padding:34px}
-    }
-    @media(max-width:640px){
-      .product-grid{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr}
-      .topbar-inner{align-items:flex-start}
-      .nav{width:100%}
-      .hero-content h1{font-size:38px}
-      .hero-content{padding:26px}
-      .metric{min-width:100%}
-    }
-  
-    .catalog-fill-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .catalog-fill-card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 12px 30px rgba(9,31,66,.07);display:flex;flex-direction:column;min-height:100%}
-    .catalog-fill-img{height:180px;background:linear-gradient(135deg,#0b1930,#0b5db8);display:grid;place-items:center;color:#ffd166;font-size:42px;position:relative;overflow:hidden}
-    .catalog-fill-body{padding:17px;display:flex;flex-direction:column;gap:8px;flex:1}
-    .catalog-fill-body small{color:#a46b00;font-weight:900;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
-    .catalog-fill-body h3{margin:0;color:#0b1930;font-size:19px;line-height:1.18}
-    .catalog-fill-body p{margin:0;color:#526174;font-size:14px}
-    .catalog-fill-note{margin:0 0 14px;padding:15px;border-radius:18px;background:#fff4d8;color:#5f4300;border:1px solid rgba(246,164,0,.30);font-size:14px}
-    @media(max-width:900px){.catalog-fill-grid{grid-template-columns:1fr}}
-
-  
-    /* URUN ILANI EKLE CTA */
-    .product-submit-bar{
-      margin:0 0 18px;
-      background:linear-gradient(135deg,#071326,#0b1930);
-      color:#fff;
-      border-radius:22px;
-      padding:20px;
+    .hero-inner{
+      width:100%;
       display:flex;
+      flex-direction:column;
       justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      flex-wrap:wrap;
-      box-shadow:0 16px 38px rgba(9,31,66,.14);
-      border:1px solid rgba(255,255,255,.10);
+      padding:34px;
+      gap:18px;
     }
-    .product-submit-bar strong{
-      display:block;
-      font-size:22px;
-      margin-bottom:4px;
+    .hero-copy{
+      max-width:610px;
       color:#fff;
+      text-shadow:0 3px 14px rgba(0,0,0,.26);
     }
-    .product-submit-bar span{
-      color:rgba(255,255,255,.76);
-      display:block;
-      max-width:820px;
+    .eyebrow{
+      color:#ffd166;
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
     }
-    .product-submit-actions{
+    h1{
+      margin:0 0 12px;
+      font-size:clamp(38px,5vw,70px);
+      line-height:0.96;
+      letter-spacing:-.05em;
+    }
+    .hero-copy p{
+      margin:0;
+      color:rgba(255,255,255,.92);
+      font-size:18px;
+      max-width:560px;
+    }
+    .hero-actions{
       display:flex;
-      gap:9px;
+      gap:10px;
       flex-wrap:wrap;
+      margin-top:18px;
     }
-    .product-submit-actions .btn{
-      white-space:normal;
-      text-align:center;
-    }
-
-  
-    /* KESIN FIX: URUN KARTLARI DAR SUTUN SORUNU */
-    .product-grid.fallback-mode{
-      display:grid !important;
-      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-      gap:18px !important;
-      align-items:stretch !important;
-    }
-    .product-grid.fallback-mode .catalog-fill-note{
-      grid-column:1 / -1 !important;
-    }
-    .product-grid.fallback-mode .catalog-fill-card{
-      width:100% !important;
-      min-width:0 !important;
-      max-width:none !important;
-      border-radius:22px !important;
-      overflow:hidden !important;
-    }
-    .product-grid.fallback-mode .catalog-fill-body{
-      min-width:0 !important;
-      padding:18px !important;
-    }
-    .product-grid.fallback-mode .catalog-fill-body h3{
-      font-size:21px !important;
-      line-height:1.18 !important;
-      word-break:normal !important;
-      overflow-wrap:anywhere !important;
-    }
-    .product-grid.fallback-mode .catalog-fill-body p{
-      font-size:15px !important;
-      line-height:1.5 !important;
-      overflow-wrap:anywhere !important;
-    }
-    .product-grid.fallback-mode .catalog-fill-body .product-actions{
-      margin-top:auto !important;
-      padding-top:14px !important;
-    }
-    .product-grid.fallback-mode .catalog-fill-body .btn{
-      width:100% !important;
-      justify-content:center !important;
-      white-space:normal !important;
-      text-align:center !important;
-      line-height:1.2 !important;
-      padding:10px 12px !important;
-      min-height:44px !important;
-    }
-    @media(max-width:760px){
-      .product-grid.fallback-mode{
-        grid-template-columns:1fr !important;
-      }
-      .product-grid.fallback-mode .catalog-fill-img{
-        height:135px !important;
-      }
-    }
-    @media(min-width:761px) and (max-width:1120px){
-      .product-grid.fallback-mode{
-        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-      }
-    }
-
-  
-    /* URUN SAYFASI ANA SAYFAYA DON BUTONU */
-    .page-return-actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .home-return-btn{
-      min-height:42px;
-      padding:0 14px;
-      border-radius:12px;
+    .btn{
+      min-height:46px;
+      padding:0 16px;
+      border-radius:13px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       font-weight:900;
-      font-size:14px;
+      border:1px solid transparent;
       text-decoration:none;
-      background:#071326;
+      font-size:15px;
+    }
+    .btn-primary{background:#f6a400;color:#111f33;border-color:#f6a400}
+    .btn-secondary{background:rgba(7,19,38,.44);color:#fff;border-color:rgba(255,255,255,.22);backdrop-filter:blur(6px)}
+    .btn-secondary:hover{background:rgba(7,19,38,.56)}
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-top:auto;
+      max-width:820px;
+    }
+    .hero-stat{
+      background:rgba(7,19,38,.40);
+      border:1px solid rgba(255,255,255,.16);
       color:#fff;
-      border:1px solid #071326;
-      box-shadow:0 10px 24px rgba(7,19,38,.12);
+      border-radius:18px;
+      padding:14px 16px;
+      backdrop-filter:blur(8px);
     }
-    .home-return-btn:hover{
-      background:#0b1930;
+    .hero-stat small{
+      display:block;
+      color:rgba(255,255,255,.76);
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      margin-bottom:4px;
+      letter-spacing:.04em;
     }
-    @media(max-width:760px){
-      .page-return-actions{
-        width:100%;
-        justify-content:flex-start;
-      }
-      .home-return-btn{
-        width:100%;
-      }
+    .hero-stat strong{
+      display:block;
+      font-size:24px;
+      line-height:1.1;
     }
-
+    .section{padding:6px 0 34px}
+    .toolbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .toolbar h2{margin:0;color:#0b1930;font-size:30px;letter-spacing:-.025em}
+    .toolbar p{margin:4px 0 0;color:#637083}
+    .search{display:flex;gap:8px;flex-wrap:wrap}
+    .search input,.search select{
+      min-height:44px;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:#fff;
+      padding:0 12px;
+      font:inherit;
+      outline:none;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:0 12px 30px rgba(9,31,66,.07);
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      min-height:100%;
+    }
+    .card h3{
+      margin:0 0 8px;
+      color:#0b1930;
+      font-size:21px;
+      line-height:1.14;
+    }
+    .card p{margin:0 0 10px;color:#637083;font-size:14px}
+    .tags{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 12px}
+    .tag{
+      background:#fff4d8;color:#7a5100;border:1px solid rgba(246,164,0,.24);
+      border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900
+    }
+    .meta{display:grid;gap:8px;margin-top:auto}
+    .meta-row{
+      display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);
+      padding-top:9px;color:#637083;font-size:13px
+    }
+    .meta-row strong{color:#0b1930;text-align:right}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .empty{
+      padding:24px;background:#fff;border:1px dashed rgba(15,35,65,.22);
+      border-radius:18px;color:#637083;grid-column:1/-1
+    }
+    footer{text-align:center;padding:28px;color:#637083;border-top:1px solid var(--line);background:#fff}
+    @media(max-width:1020px){
+      .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero-card{min-height:460px}
+    }
+    @media(max-width:720px){
+      .grid{grid-template-columns:1fr}
+      .hero-stats{grid-template-columns:1fr}
+      .hero-inner{padding:22px}
+      h1{font-size:40px}
+      .hero-copy p{font-size:16px}
+    }
   </style>
 </head>
 <body>
-<div class="top-note"><div class="container top-note-inner"><span>SEVRA Ürün Kataloğu · Firma ve ürün listeleme</span><strong>Kurumsal ürün ve firma listeleme modeli</strong></div></div>
-
-<header class="topbar">
-  <div class="container topbar-inner">
-    <a class="brand" href="index.html"><div class="brand-mark">S</div><div class="brand-text"><strong>SEVRA</strong><span>Lojistik İlan, Firma ve Ürün Görünürlüğü</span></div></a>
-    <nav class="nav">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="yuk-ilanlari.html">Yük İlanları</a>
-      <a href="nakliye-ilani-ver.html">İlan Ver</a>
-      <a class="active" href="urun-vitrini.html">Ürün Kataloğu</a>
-      <a href="firma-katalog.html">Firma Kataloğu</a>
-      <a href="firma-basvuru.html">Ürün İlanı Ekle</a><a class="primary" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a>
-    </nav>
-  </div>
-</header>
-
-<section class="page-hero">
-  <div class="container">
-    <div class="hero-box">
-      <div class="hero-content">
-        <div class="breadcrumb">SEVRA / Ürün Kataloğu</div>
-        <h1>SEVRA Ürün ve Tedarikçi Kataloğu</h1>
-        <p>Araç parçaları, kasa ekipmanları, depo ürünleri, ambalaj malzemeleri ve stok fazlası ürünler için kurumsal ürün ve firma listeleme alanı.</p>
-        <div class="hero-actions">
-          <a class="btn btn-gold" href="#urunler">Kataloğu İncele</a>
-          <a class="btn btn-secondary" href="firma-basvuru.html">Firma Başvurusu</a>
-          <a class="btn btn-gold" href="firma-basvuru.html">Ürün İlanı Ekle</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Lojistik, Firma ve Ürün Görünürlüğü</span>
         </div>
-        <div class="hero-metrics">
-          <div class="metric"><small>Yayınlanan Ürün</small><strong id="heroProductCount">0</strong></div>
-          <div class="metric"><small>Kategori</small><strong id="heroCategoryCount">0</strong></div>
-          <div class="metric"><small>Model</small><strong>Katalog</strong></div>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="yuk-ilanlari.html">Yük İlanları</a>
+        <a href="ilan-ver.html">İlan Ver</a>
+        <a class="active" href="urun-vitrini.html">Ürün Kataloğu</a>
+        <a href="firma-katalog.html">Firma Kataloğu</a>
+        <a href="urun-ilani-ekle.html">Ürün İlanı Ekle</a>
+        <a class="primary" href="urun-yonetimi.html">Ürün Yönetimi</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <div class="eyebrow">SEVRA / Ürün Kataloğu</div>
+            <h1>SEVRA Ürün Kataloğu</h1>
+            <p>Araç parçası, kasa ekipmanı, depo ürünleri, ambalaj malzemeleri ve stok fazlası ürünler için kurumsal görünürlük alanı.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#urunler">Kataloğu İncele</a>
+              <a class="btn btn-secondary" href="firma-katalog.html">Firma Kataloğu</a>
+              <a class="btn btn-secondary" href="urun-ilani-ekle.html">Ürün İlanı Ekle</a>
+            </div>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <small>Yayınlanan Ürün</small>
+              <strong id="statProducts">0</strong>
+            </div>
+            <div class="hero-stat">
+              <small>Kategori</small>
+              <strong id="statCategory">0</strong>
+            </div>
+            <div class="hero-stat">
+              <small>Model</small>
+              <strong>Katalog</strong>
+            </div>
+            <div class="hero-stat">
+              <small>Yayın Şekli</small>
+              <strong>Görünürlük</strong>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<main class="container">
-  <div class="stats">
-    <div class="stat"><small>Yayınlanan Ürün</small><strong id="statTotal">0</strong></div>
-    <div class="stat"><small>Kategori</small><strong id="statCat">0</strong></div>
-    <div class="stat"><small>Listeleme Modeli</small><strong>İlan</strong></div>
-    <div class="stat"><small>Platform Rolü</small><strong>Görünürlük</strong></div>
-  </div>
-
-  <div class="main-layout">
-    <aside class="sidebar">
-      <div class="sidebar-head"><strong>Kategoriler</strong><span>Lojistik sektörüne yakın ürün alanları</span></div>
-      <div class="cat-list" id="catList"><a class="cat" href="#urunler">Tüm Kategoriler <span>0</span></a></div>
-      <div class="safe-mini">SEVRA ürün satıcısı değildir. Ürün, ödeme, teslimat, garanti ve iade süreci ilan sahibi ile alıcı arasında yürütülür.</div>
-    </aside>
-
-    <section id="urunler">
-      <div class="content-head">
-        <div><h2>Yayınlanan ürünler</h2><p>Aktif ürün kayıtları kategori, firma ve ürün bilgileriyle bu sayfada listelenir.</p></div>
-        <div class="page-return-actions"><a class="home-return-btn" href="index.html">Ana Sayfaya Dön</a><span class="chip active">Aktif ürünler</span><a class="chip" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a></div>
+  <main class="container section" id="urunler">
+    <div class="toolbar">
+      <div>
+        <h2>Ürün kayıtları</h2>
+        <p>Yayınlanan ürün kayıtları burada listelenir.</p>
       </div>
-      <div class="product-grid" id="productGrid"><div class="empty">Ürün kayıtları yükleniyor...</div></div>
-      <div class="notice" id="guvenli-cizgi"><div><strong>SEVRA platform bilgilendirmesi</strong><span>SEVRA ürün satıcısı değildir, satış sözleşmesine taraf olmaz, fiyat/komisyon belirlemez, ödeme/tahsilat, teslimat, garanti ve iade süreçlerini yönetmez. Ürün ve firma bilgileri listeleme amacıyla yayınlanır; görüşme ve karar süreci tarafların kendi sorumluluğundadır.</span></div><a class="btn btn-gold" href="firma-basvuru.html">Firma Başvurusu</a></div>
-    </section>
-  </div>
-</main>
-
-<footer>SEVRA | Lojistik İlan, Firma ve Ürün Görünürlüğü Platformu<br>sevrawms.com.tr</footer>
-
-<script type="module">
-  import { db } from './firebase-config.js';
-  import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const grid = document.getElementById('productGrid');
-  const catList = document.getElementById('catList');
-  const statTotal = document.getElementById('statTotal');
-  const statCat = document.getElementById('statCat');
-  const heroProductCount = document.getElementById('heroProductCount');
-  const heroCategoryCount = document.getElementById('heroCategoryCount');
-
-  function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");}
-  function waLink(p){ const w=String(p.whatsapp||'').replace(/\D/g,''); return w ? `https://wa.me/${w}` : 'index.html#iletisim'; }
-
-  function card(p){
-    return `<article class="product"><div class="product-img">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}<span class="badge">${esc(p.category||'Ürün')}</span></div><div class="product-body"><small>${esc(p.category||'Ürün')}</small><h3>${esc(p.name||'Ürün')}</h3><p>${esc(p.description||'')}</p><div class="seller"><span>Firma</span><strong>${esc(p.seller||'-')}</strong></div><div class="product-actions"><a class="btn btn-primary" href="urun-detay.html?id=${encodeURIComponent(p.id)}">Ürün Detayı</a><a class="btn btn-light" href="${waLink(p)}" target="_blank" rel="noopener">Bilgi Al</a></div></div></article>`;
-  }
-
-  
-  function fallbackCatalogCards(){
-    return `
-      <div class="catalog-fill-note">
-        Ürün kataloğu gerçek kayıtlarla çalışır. Henüz aktif ürün kaydı yoksa, aşağıdaki alanlar platformda yayınlanabilecek ürün gruplarını gösterir.
+      <div class="search">
+        <input id="searchInput" placeholder="Ürün, firma veya şehir ara">
+        <select id="categoryFilter">
+          <option value="">Tüm kategoriler</option>
+        </select>
       </div>
-      <article class="catalog-fill-card"><div class="catalog-fill-img">⚙️</div><div class="catalog-fill-body"><small>Araç Parçaları</small><h3>Fren diski, rulman, filtre ve bakım parçaları</h3><p>Ticari araç, kamyon, dorse ve kasa ekipmanlarına yakın ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-      <article class="catalog-fill-card"><div class="catalog-fill-img">📦</div><div class="catalog-fill-body"><small>Ambalaj / Koli</small><h3>Koli, streç film, palet ve paketleme sarfları</h3><p>Depo, sevkiyat ve e-ticaret operasyonlarında kullanılan ürün alanları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-      <article class="catalog-fill-card"><div class="catalog-fill-img">🏭</div><div class="catalog-fill-body"><small>Depo Ürünleri</small><h3>Etiket, raf, ekipman ve operasyon malzemeleri</h3><p>Depo, barkod, paketleme ve yükleme süreçleri için ürün görünürlüğü.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-      <article class="catalog-fill-card"><div class="catalog-fill-img">🔧</div><div class="catalog-fill-body"><small>Kasa Ekipmanları</small><h3>Kilit, menteşe, bağlantı ve kasa aksesuarları</h3><p>Taşıma kasaları, araç üstü ekipmanlar ve saha kullanımına uygun parçalar.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-      <article class="catalog-fill-card"><div class="catalog-fill-img">🧰</div><div class="catalog-fill-body"><small>Sanayi Ürünleri</small><h3>Bakım, sarf ve yardımcı endüstriyel ürünler</h3><p>Atölye, depo ve lojistik operasyonlarında kullanılan yardımcı ürünler.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-      <article class="catalog-fill-card"><div class="catalog-fill-img">♻️</div><div class="catalog-fill-body"><small>Stok Fazlası</small><h3>Fazla stok ve görünürlük ihtiyacı olan ürünler</h3><p>Firmaların stok fazlası veya görünürlük vermek istediği ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
-    `;
-  }
+    </div>
 
-  function render(products){
-    const active = products.filter(p => (p.status||'active') === 'active' && p.is !== true && p.isTest !== true);
-    statTotal.textContent = active.length;
-    heroProductCount.textContent = active.length;
+    <div class="grid" id="grid">
+      <div class="empty">Ürünler yükleniyor...</div>
+    </div>
+  </main>
 
-    const cats = {};
-    active.forEach(p => cats[p.category||'Diğer'] = (cats[p.category||'Diğer']||0)+1);
-    statCat.textContent = Object.keys(cats).length;
-    heroCategoryCount.textContent = Object.keys(cats).length;
+  <footer>
+    SEVRA | Ürün Kataloğu<br>
+    sevrawms.com.tr
+  </footer>
 
-    catList.innerHTML = `<a class="cat" href="#urunler">Tüm Kategoriler <span>${active.length}</span></a>` + Object.entries(cats).map(([k,v]) => `<a class="cat" href="#urunler">${esc(k)} <span>${v}</span></a>`).join('');
+  <script type="module">
+    import { db } from './firebase-config.js';
+    import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    if(!active.length){
-      grid.className = 'product-grid fallback-mode';
-      grid.innerHTML = fallbackCatalogCards();
-      return;
+    const grid = document.getElementById('grid');
+    const statProducts = document.getElementById('statProducts');
+    const statCategory = document.getElementById('statCategory');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    let products = [];
+
+    function esc(v){
+      return String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
     }
 
-    grid.className = 'product-grid';
-
-    grid.innerHTML = active.map(card).join('');
-  }
-
-  async function load(){
-    try{
-      const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-      const snap = await getDocs(q);
-      render(snap.docs.map(d => ({id:d.id, ...d.data()})));
-    }catch(err){
-      grid.innerHTML = `<div class="empty">Ürünler okunamadı: ${esc(err.message)}<br>Firebase yetkilerini kontrol edin.</div>`;
-      render([]);
+    function normalize(item){
+      const category = item.category || item.kategori || item.productCategory || item.urunKategorisi || '';
+      const city = item.city || item.sehir || '';
+      const district = item.district || item.ilce || '';
+      const title = item.title || item.productName || item.urunAdi || item.name || 'Ürün';
+      const desc = item.description || item.aciklama || item.productDescription || 'Ürün açıklaması bulunmuyor.';
+      const company = item.companyName || item.firmaAdi || item.company || '-';
+      const phone = item.phone || item.telefon || '-';
+      const price = item.price || item.fiyat || item.unitPrice || '-';
+      const status = item.status || item.durum || '';
+      const image = item.imageUrl || item.photoUrl || item.gorsel || '';
+      return { ...item, title, desc, category, city, district, company, phone, price, status, image };
     }
-  }
-  load();
-</script>
+
+    function isPublished(item){
+      const s = String(item.status || '').toLowerCase();
+      if (item.isTest === true || item.isDemo === true) return false;
+      if (!s) return true;
+      return ['approved','published','active','yayinda','yayında','onayli','onaylı'].includes(s);
+    }
+
+    function card(p){
+      const title = esc(p.title);
+      const desc = esc(p.desc);
+      const category = esc(p.category || 'Kategori');
+      const location = esc((p.city || '-') + (p.district ? ' / ' + p.district : ''));
+      const company = esc(p.company || '-');
+      const phone = esc(p.phone || '-');
+      const price = esc(String(p.price || '-'));
+      const id = encodeURIComponent(p.id || '');
+      return `
+        <article class="card">
+          <h3>${title}</h3>
+          <p>${desc}</p>
+          <div class="tags">
+            <span class="tag">${category}</span>
+            <span class="tag">${location}</span>
+            <span class="tag">Yayında</span>
+          </div>
+          <div class="meta">
+            <div class="meta-row"><span>Firma</span><strong>${company}</strong></div>
+            <div class="meta-row"><span>Telefon</span><strong>${phone}</strong></div>
+            <div class="meta-row"><span>Fiyat</span><strong>${price}</strong></div>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="urun-detay.html?id=${id}">Ürün Detayı</a>
+            <a class="btn btn-secondary" href="urun-ilani-ekle.html">İlan Ver</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function fillCategoryFilter(){
+      const values = [...new Set(products.map(p => p.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr'));
+      categoryFilter.innerHTML = '<option value="">Tüm kategoriler</option>' + values.map(v => `<option>${esc(v)}</option>`).join('');
+    }
+
+    function render(){
+      const text = (searchInput.value || '').toLowerCase().trim();
+      const cat = categoryFilter.value;
+
+      const filtered = products.filter(p => {
+        const hay = `${p.title||''} ${p.company||''} ${p.city||''} ${p.district||''} ${p.category||''}`.toLowerCase();
+        return (!cat || p.category === cat) && (!text || hay.includes(text));
+      });
+
+      statProducts.textContent = String(products.length);
+      statCategory.textContent = String(new Set(products.map(p => p.category).filter(Boolean)).size);
+
+      if(!filtered.length){
+        grid.innerHTML = '<div class="empty">Bu filtreye uygun yayınlanan ürün kaydı bulunmuyor.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(card).join('');
+    }
+
+    async function loadProducts(){
+      const tryCollections = ['productListings','products','urunler','urun_ilanlari','product_catalog'];
+      for (const name of tryCollections){
+        try{
+          const q = query(collection(db, name), orderBy('createdAt', 'desc'));
+          const snap = await getDocs(q);
+          const list = snap.docs.map(d => normalize({ id:d.id, ...d.data() })).filter(isPublished);
+          if(list.length){
+            products = list;
+            return;
+          }
+        }catch(e){
+          // sessiz geç
+        }
+      }
+
+      for (const name of tryCollections){
+        try{
+          const snap = await getDocs(collection(db, name));
+          const list = snap.docs.map(d => normalize({ id:d.id, ...d.data() })).filter(isPublished);
+          if(list.length){
+            products = list;
+            return;
+          }
+        }catch(e){
+          // sessiz geç
+        }
+      }
+
+      products = [];
+    }
+
+    async function init(){
+      try{
+        await loadProducts();
+        fillCategoryFilter();
+        render();
+      }catch(err){
+        grid.innerHTML = '<div class="empty">Ürünler okunamadı: ' + esc(err.message) + '</div>';
+      }
+    }
+
+    searchInput.addEventListener('input', render);
+    categoryFilter.addEventListener('change', render);
+    init();
+  </script>
 </body>
 </html>
