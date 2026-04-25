@@ -137,7 +137,7 @@
       .metric{min-width:100%}
     }
   
-    .catalog-fill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+    .catalog-fill-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
     .catalog-fill-card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 12px 30px rgba(9,31,66,.07);display:flex;flex-direction:column;min-height:100%}
     .catalog-fill-img{height:180px;background:linear-gradient(135deg,#0b1930,#0b5db8);display:grid;place-items:center;color:#ffd166;font-size:42px;position:relative;overflow:hidden}
     .catalog-fill-body{padding:17px;display:flex;flex-direction:column;gap:8px;flex:1}
@@ -148,67 +148,40 @@
     @media(max-width:900px){.catalog-fill-grid{grid-template-columns:1fr}}
 
   
-    /* URUN KARTLARI MOBIL/TABLET DUZELTME */
-    .catalog-fill-grid{
-      display:grid !important;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr)) !important;
-      gap:18px !important;
-      align-items:stretch !important;
+    /* URUN ILANI EKLE CTA */
+    .product-submit-bar{
+      margin:0 0 18px;
+      background:linear-gradient(135deg,#071326,#0b1930);
+      color:#fff;
+      border-radius:22px;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      box-shadow:0 16px 38px rgba(9,31,66,.14);
+      border:1px solid rgba(255,255,255,.10);
     }
-    .catalog-fill-card{
-      min-width:0 !important;
-      width:100% !important;
-      border-radius:22px !important;
+    .product-submit-bar strong{
+      display:block;
+      font-size:22px;
+      margin-bottom:4px;
+      color:#fff;
     }
-    .catalog-fill-img{
-      height:150px !important;
+    .product-submit-bar span{
+      color:rgba(255,255,255,.76);
+      display:block;
+      max-width:820px;
     }
-    .catalog-fill-body{
-      padding:18px !important;
-      min-width:0 !important;
+    .product-submit-actions{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
     }
-    .catalog-fill-body h3{
-      font-size:21px !important;
-      line-height:1.18 !important;
-      overflow-wrap:anywhere !important;
-      word-break:normal !important;
-    }
-    .catalog-fill-body p{
-      font-size:15px !important;
-      line-height:1.5 !important;
-      overflow-wrap:anywhere !important;
-    }
-    .catalog-fill-body .product-actions{
-      margin-top:auto !important;
-      padding-top:14px !important;
-    }
-    .catalog-fill-body .btn{
-      width:100% !important;
-      justify-content:center !important;
-      white-space:normal !important;
-      text-align:center !important;
-      line-height:1.2 !important;
-      padding:10px 12px !important;
-      min-height:44px !important;
-    }
-    @media(max-width:760px){
-      .catalog-fill-grid{
-        grid-template-columns:1fr !important;
-      }
-      .catalog-fill-card{
-        max-width:100% !important;
-      }
-      .catalog-fill-img{
-        height:135px !important;
-      }
-      .catalog-fill-body h3{
-        font-size:22px !important;
-      }
-    }
-    @media(min-width:761px) and (max-width:1100px){
-      .catalog-fill-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-      }
+    .product-submit-actions .btn{
+      white-space:normal;
+      text-align:center;
     }
 
   </style>
@@ -225,7 +198,7 @@
       <a href="nakliye-ilani-ver.html">İlan Ver</a>
       <a class="active" href="urun-vitrini.html">Ürün Kataloğu</a>
       <a href="firma-katalog.html">Firma Kataloğu</a>
-      <a class="primary" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a>
+      <a href="firma-basvuru.html">Ürün İlanı Ekle</a><a class="primary" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a>
     </nav>
   </div>
 </header>
@@ -240,6 +213,7 @@
         <div class="hero-actions">
           <a class="btn btn-gold" href="#urunler">Kataloğu İncele</a>
           <a class="btn btn-secondary" href="firma-basvuru.html">Firma Başvurusu</a>
+          <a class="btn btn-gold" href="firma-basvuru.html">Ürün İlanı Ekle</a>
         </div>
         <div class="hero-metrics">
           <div class="metric"><small>Yayınlanan Ürün</small><strong id="heroProductCount">0</strong></div>
@@ -304,12 +278,12 @@
         Ürün kataloğu gerçek kayıtlarla çalışır. Henüz aktif ürün kaydı yoksa, aşağıdaki alanlar platformda yayınlanabilecek ürün gruplarını gösterir.
       </div>
       <div class="catalog-fill-grid">
-        <article class="catalog-fill-card"><div class="catalog-fill-img">⚙️</div><div class="catalog-fill-body"><small>Araç Parçaları</small><h3>Fren diski, rulman, filtre ve bakım parçaları</h3><p>Ticari araç, kamyon, dorse ve kasa ekipmanlarına yakın ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">📦</div><div class="catalog-fill-body"><small>Ambalaj / Koli</small><h3>Koli, streç film, palet ve paketleme sarfları</h3><p>Depo, sevkiyat ve e-ticaret operasyonlarında kullanılan ürün alanları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">🏭</div><div class="catalog-fill-body"><small>Depo Ürünleri</small><h3>Etiket, raf, ekipman ve operasyon malzemeleri</h3><p>Depo, barkod, paketleme ve yükleme süreçleri için ürün görünürlüğü.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">🔧</div><div class="catalog-fill-body"><small>Kasa Ekipmanları</small><h3>Kilit, menteşe, bağlantı ve kasa aksesuarları</h3><p>Taşıma kasaları, araç üstü ekipmanlar ve saha kullanımına uygun parçalar.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">🧰</div><div class="catalog-fill-body"><small>Sanayi Ürünleri</small><h3>Bakım, sarf ve yardımcı endüstriyel ürünler</h3><p>Atölye, depo ve lojistik operasyonlarında kullanılan yardımcı ürünler.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
-        <article class="catalog-fill-card"><div class="catalog-fill-img">♻️</div><div class="catalog-fill-body"><small>Stok Fazlası</small><h3>Fazla stok ve görünürlük ihtiyacı olan ürünler</h3><p>Firmaların stok fazlası veya görünürlük vermek istediği ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün Yayınlat</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">⚙️</div><div class="catalog-fill-body"><small>Araç Parçaları</small><h3>Fren diski, rulman, filtre ve bakım parçaları</h3><p>Ticari araç, kamyon, dorse ve kasa ekipmanlarına yakın ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">📦</div><div class="catalog-fill-body"><small>Ambalaj / Koli</small><h3>Koli, streç film, palet ve paketleme sarfları</h3><p>Depo, sevkiyat ve e-ticaret operasyonlarında kullanılan ürün alanları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">🏭</div><div class="catalog-fill-body"><small>Depo Ürünleri</small><h3>Etiket, raf, ekipman ve operasyon malzemeleri</h3><p>Depo, barkod, paketleme ve yükleme süreçleri için ürün görünürlüğü.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">🔧</div><div class="catalog-fill-body"><small>Kasa Ekipmanları</small><h3>Kilit, menteşe, bağlantı ve kasa aksesuarları</h3><p>Taşıma kasaları, araç üstü ekipmanlar ve saha kullanımına uygun parçalar.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">🧰</div><div class="catalog-fill-body"><small>Sanayi Ürünleri</small><h3>Bakım, sarf ve yardımcı endüstriyel ürünler</h3><p>Atölye, depo ve lojistik operasyonlarında kullanılan yardımcı ürünler.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
+        <article class="catalog-fill-card"><div class="catalog-fill-img">♻️</div><div class="catalog-fill-body"><small>Stok Fazlası</small><h3>Fazla stok ve görünürlük ihtiyacı olan ürünler</h3><p>Firmaların stok fazlası veya görünürlük vermek istediği ürün grupları.</p><div class="product-actions"><a class="btn btn-primary" href="firma-basvuru.html">Ürün İlanı Ekle</a></div></div></article>
       </div>
     `;
   }
