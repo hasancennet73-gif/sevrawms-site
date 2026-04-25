@@ -75,9 +75,9 @@
     </a>
     <nav class="nav">
       <a href="index.html">Ana Sayfa</a>
-      <a href="urun-vitrini.html">Ürün Vitrini</a>
+      <a href="urun-katalogi.html">Ürün Kataloğu</a>
       <a class="active" href="urun-yonetimi.html">Ürün Yönetimi</a>
-      <a class="primary" href="index.html#iletisim">Firma Başvurusu</a><a href="#" id="productAdminLogout">Ürün Admin Çıkış</a><a href="#" id="productAdminLogout">Ürün Admin Çıkış</a>
+      <a class="primary" href="firma-basvuru.html">Firma Başvurusu</a><a href="#" id="productAdminLogout">Ürün Admin Çıkış</a>
     </nav>
   </div>
 </header>
@@ -90,7 +90,7 @@
         <h1>Ürün kaydı oluştur, onaylı firmaya bağla, katalogda yayınla</h1>
         <p>Bu ekran ürün kayıtlarını yönetmek, ürünleri onaylı firmalara bağlamak ve aktif ürünleri katalog sayfasında yayınlamak için kullanılır.</p>
       </div>
-      <a class="btn btn-gold" href="urun-vitrini.html">Ürün Kataloğuna Git</a>
+      <a class="btn btn-gold" href="urun-katalogi.html">Ürün Kataloğuna Git</a>
     </div>
   </div>
 </section>
@@ -101,7 +101,7 @@
     <form class="form" id="productForm">
       <input type="hidden" id="editId">
       <div class="field"><label>Ürün Fotoğrafı</label><input id="imageFile" type="file" accept="image/*"><div class="preview" id="preview"><span>Ürün görseli seçilmedi</span></div></div>
-      <div class="field"><label>Ürün Adı</label><input id="name" required placeholder="Örn: Kamyon kasa kilidi"></div>
+      <div class="field"><label>Ürün Adı</label><input id="name" required placeholder="Ürün adı"></div>
       <div class="row">
         <div class="field"><label>Kategori</label><select id="category" required><option value="">Seçiniz</option><option>Araç Parçaları</option><option>Kasa Ekipmanları</option><option>Depo Ürünleri</option><option>Ambalaj / Koli</option><option>Stok Fazlası</option><option>Sanayi Ürünleri</option></select></div>
         <div class="field"><label>Durum</label><select id="status"><option value="active">Aktif</option><option value="pending">Beklemede</option><option value="passive">Pasif</option></select></div>
@@ -109,13 +109,13 @@
       <div class="field"><label>Onaylı Firma Seçimi</label><select id="companySelect"><option value="">Onaylı firma seçiniz</option></select></div>
       <div class="row">
         <div class="field"><label>İlan Sahibi / Firma</label><input id="seller" required placeholder="Onaylı firma seçilince otomatik dolar"></div>
-        <div class="field"><label>İl / İlçe</label><input id="location" placeholder="Örn: Bursa / Osmangazi"></div>
+        <div class="field"><label>İl / İlçe</label><input id="location" placeholder="İl / ilçe"></div>
       </div>
       <div class="row">
-        <div class="field"><label>Telefon</label><input id="phone" placeholder="05xx xxx xx xx"></div>
-        <div class="field"><label>WhatsApp</label><input id="whatsapp" placeholder="905xxxxxxxxx"></div>
+        <div class="field"><label>Telefon</label><input id="phone" placeholder="Telefon numarası"></div>
+        <div class="field"><label>WhatsApp</label><input id="whatsapp" placeholder="WhatsApp numarası"></div>
       </div>
-      <div class="field"><label>Kısa Açıklama</label><textarea id="description" required placeholder="Ürün açıklamasını yazın"></textarea></div>
+      <div class="field"><label>Kısa Açıklama</label><textarea id="description" required placeholder="Ürün açıklaması"></textarea></div>
       <div class="safe">SEVRA ürün satıcısı değildir. Bu kayıt sadece ürün/firma görünürlüğü içindir.</div>
       <div class="status" id="statusBox"></div>
       <div class="actions">
@@ -161,7 +161,7 @@
       const snap = await getDocs(q);
       approvedCompanies = snap.docs
         .map(d => ({ id:d.id, ...d.data() }))
-        .filter(c => c.status === 'approved' && c.isDemo !== true && c.isTest !== true);
+        .filter(c => c.status === 'approved' && c.is !== true && c.is !== true);
 
       select.innerHTML = '<option value="">Onaylı firma seçiniz</option>' + approvedCompanies
         .map(c => `<option value="${esc(c.id)}">${esc(c.companyName || 'Firma')}</option>`)
