@@ -577,14 +577,14 @@
 
       const productSnap = await getDocs(collection(db, 'products'));
       const products = productSnap.docs.map(d => ({ id:d.id, ...d.data() }))
-        .filter(p => p.is !== true && p.is !== true);
+        .filter(p => p.isTest !== true && p.isTest !== true);
       statProducts.textContent = products.length;
       statActiveProducts.textContent = products.filter(p => (p.status || 'active') === 'active').length;
       renderProductVisual(products);
 
       const companySnap = await getDocs(collection(db, 'companies'));
       const companies = companySnap.docs.map(d => ({ id:d.id, ...d.data() }))
-        .filter(c => c.is !== true && c.is !== true);
+        .filter(c => c.isTest !== true && c.isTest !== true);
       statCompanies.textContent = companies.length;
       statApprovedCompanies.textContent = companies.filter(c => c.status === 'approved').length;
 
