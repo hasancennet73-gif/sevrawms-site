@@ -2,223 +2,320 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XD6PKE0RD"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config','G-4XD6PKE0RD');
-  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEVRA | Lojistik İlan, Yük Bul, Araç Bul, Firma ve Ürün Kataloğu</title>
-  <meta name="description" content="SEVRA; lojistik ilan, yük bulma, araç bulma, firma kataloğu ve ürün görünürlüğü için kurumsal dijital platformdur. Nakliye, kurye, kargo, ambar, ürün ve firma listeleme alanlarını tek çatı altında toplar." />
-  <meta name="keywords" content="sevra, sevrawms, lojistik ilan, yük bul, araç bul, nakliye ilanı, kurye, kargo, ambar, firma kataloğu, ürün kataloğu, depo ekipmanı, stok fazlası" />
+  <title>SEVRA | Lojistik İlan ve Firma Görünürlüğü Platformu</title>
+  <meta name="description" content="SEVRA; yük, araç, firma ve ürün görünürlüğünü tek çatı altında toplayan kurumsal dijital platformdur." />
   <meta name="robots" content="index, follow" />
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/sevra-icon-192.png">
-  <meta name="theme-color" content="#f3f6fb">
-  <meta property="og:title" content="SEVRA | Lojistik İlan, Firma ve Ürün Görünürlüğü" />
-  <meta property="og:description" content="Yük, araç, firma ve ürün görünürlüğü için kurumsal dijital platform." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.sevrawms.com.tr/" />
-  <meta property="og:image" content="https://www.sevrawms.com.tr/sevra-ana-hero-kapak.jpg" />
   <style>
     :root{
-      --bg:#f3f6fb;--surface:#fff;--surface2:#eef4fb;--text:#172033;--muted:#59687d;
-      --navy:#071326;--navy2:#0b2447;--blue:#0b5db8;--gold:#f6a400;--gold2:#ffd166;
-      --line:rgba(15,35,65,.12);--shadow:0 20px 60px rgba(9,31,66,.13);--max:1420px;
+      --bg:#f4f7fb;
+      --surface:#ffffff;
+      --surface-2:#eef3fb;
+      --navy:#08182f;
+      --navy-2:#10284c;
+      --line:rgba(10,26,49,.10);
+      --text:#16263d;
+      --muted:#5d6d82;
+      --gold:#e0b24d;
+      --gold-2:#f2c95d;
+      --blue:#2e63bb;
+      --shadow:0 18px 44px rgba(9,31,66,.10);
+      --radius:24px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
-    a{text-decoration:none;color:inherit}.container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
-    .top-note{background:#071326;color:rgba(255,255,255,.78);font-size:13px;border-bottom:1px solid rgba(255,255,255,.10)}
-    .top-note-inner{min-height:36px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .top-note strong{color:var(--gold2)}
-    .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 10px 26px rgba(12,35,64,.06)}
-    .topbar-inner{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:13px}
-    .brand-mark{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#071326;font-weight:900;font-size:27px;display:grid;place-items:center;box-shadow:0 8px 20px rgba(246,164,0,.23)}
-    .brand strong{display:block;color:#0b1930;font-size:31px;letter-spacing:-.03em;line-height:1}
-    .brand span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-    .nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end;font-size:14px;font-weight:900}
-    .nav a{padding:9px 11px;border-radius:12px;background:#f7faff;border:1px solid rgba(15,35,65,.09);color:#132238;white-space:nowrap}
-    .nav a:hover{background:#edf5ff}.nav .primary{background:#0b5db8;color:#fff;border-color:#0b5db8}
-    .hero{padding:24px 0 20px}
-    .hero-card{min-height:560px;border-radius:30px;overflow:hidden;display:grid;grid-template-columns:1fr 1.15fr;background:#071326;border:1px solid rgba(15,35,65,.14);box-shadow:var(--shadow)}
-    .hero-copy{padding:56px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;background:linear-gradient(90deg,rgba(7,19,38,1),rgba(7,19,38,.92),rgba(7,19,38,.70));color:#fff}
-    .kicker{color:#ffd166;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.09em;margin-bottom:12px}
-    h1{margin:0;color:#fff;font-size:clamp(44px,5.5vw,78px);line-height:.98;letter-spacing:-.065em;text-shadow:0 8px 24px rgba(0,0,0,.24)}
-    h1 span{color:#f6a400}
-    .hero-copy p{margin:18px 0 0;color:rgba(255,255,255,.86);font-size:18px;max-width:620px}
-    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
-    .btn{min-height:46px;padding:0 16px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;border:1px solid transparent;text-decoration:none}
-    .btn-gold{background:#f6a400;color:#071326;border-color:#f6a400}.btn-secondary{background:rgba(255,255,255,.09);color:#fff;border-color:rgba(255,255,255,.20)}.btn-blue{background:#0b5db8;color:#fff;border-color:#0b5db8}
-    .hero-media{position:relative;min-height:560px;background:linear-gradient(135deg,#0b1930,#0b5db8);overflow:hidden}
-    .hero-media img{width:100%;height:100%;object-fit:cover;object-position:88% center;display:block;filter:saturate(1.05) contrast(1.05);transform:scale(1.04)}
-    .hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,19,38,.95) 0%,rgba(7,19,38,.78) 23%,rgba(7,19,38,.20) 56%,rgba(7,19,38,.08) 100%)}
-    .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.11);border-top:1px solid rgba(255,255,255,.12)}
-    .trust{padding:16px 18px;color:#fff;background:rgba(7,19,38,.70)}.trust strong{display:block;font-size:15px}.trust span{display:block;font-size:12px;color:rgba(255,255,255,.66)}
-    section{padding:42px 0}.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-    .section-head h2{margin:0;color:#0b1930;font-size:clamp(30px,3.2vw,46px);line-height:1.05;letter-spacing:-.04em}.section-head p{margin:8px 0 0;color:#637083;max-width:760px}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .card{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 34px rgba(9,31,66,.07);padding:22px;min-height:100%;display:flex;flex-direction:column}
-    .icon{width:58px;height:58px;border-radius:18px;background:#0b1930;color:#ffd166;display:grid;place-items:center;font-size:28px;margin-bottom:14px}
-    .card h3{margin:0;color:#0b1930;font-size:23px;line-height:1.15}.card p{margin:10px 0 18px;color:#59687d}.card .btn{margin-top:auto;width:max-content}
-    .band{background:#071326;color:#fff;border-radius:28px;padding:28px;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap;box-shadow:0 20px 60px rgba(7,19,38,.16)}
-    .band h2{margin:0 0 6px;color:#fff;font-size:32px;letter-spacing:-.03em}.band p{margin:0;color:rgba(255,255,255,.76);max-width:800px}
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px}.step b{width:36px;height:36px;border-radius:999px;background:#f6a400;color:#071326;display:grid;place-items:center;margin-bottom:12px}.step h3{margin:0 0 8px;color:#0b1930}.step p{margin:0;color:#59687d}
-    .notice{background:#fff4d8;border:1px solid rgba(246,164,0,.28);color:#5f4300;border-radius:22px;padding:18px;line-height:1.55}
-    .footer{background:#071326;color:rgba(255,255,255,.72);padding:32px 0;margin-top:34px}.footer strong{color:#fff}.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:22px}.footer a{display:block;margin:5px 0;color:rgba(255,255,255,.78)}
-    .whatsapp{position:fixed;right:18px;bottom:18px;z-index:60;background:#35b85a;color:#fff;border-radius:999px;padding:12px 16px;font-weight:900;box-shadow:0 14px 28px rgba(0,0,0,.18)}
-    @media(max-width:1100px){.hero-card{grid-template-columns:1fr}.hero-media{min-height:360px}.grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}.trust-row{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:680px){.topbar-inner{align-items:flex-start}.nav{width:100%;justify-content:flex-start}.hero-copy{padding:30px}.grid,.steps,.footer-grid{grid-template-columns:1fr}.trust-row{grid-template-columns:1fr}h1{font-size:42px}.hero-media{min-height:280px}}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1400px, calc(100% - 28px));margin:0 auto}
+
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      min-height:86px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 0;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:240px;
+    }
+    .brand-mark{
+      width:42px;height:42px;border-radius:12px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, var(--gold-2), var(--gold));
+      color:#14223a;
+      font-weight:900;
+      box-shadow:0 10px 18px rgba(224,178,77,.28);
+      flex:0 0 auto;
+    }
+    .brand-text strong{display:block;font-size:20px;line-height:1.05;color:#101d30}
+    .brand-text span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .nav a{
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      color:#24354c;
+      font-weight:700;
+      font-size:14px;
+      transition:.2s ease;
+    }
+    .nav a:hover{transform:translateY(-1px);box-shadow:0 8px 16px rgba(8,24,47,.07)}
+    .nav a.primary{
+      background:linear-gradient(135deg,#4c82df,#2e63bb);
+      border-color:#2e63bb;
+      color:#fff;
+    }
+
+    .hero-wrap{padding:28px 0 38px}
+    .hero{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:30px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      display:grid;
+      grid-template-columns: 1.02fr 1.18fr;
+      min-height:560px;
+    }
+    .hero-copy{
+      background:linear-gradient(135deg, #07162c 0%, #0a2042 55%, #0b2f66 100%);
+      color:#fff;
+      padding:54px 44px 46px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .eyebrow{
+      color:var(--gold-2);
+      font-weight:800;
+      letter-spacing:.08em;
+      font-size:13px;
+      text-transform:uppercase;
+      margin-bottom:20px;
+    }
+    .hero h1{
+      margin:0;
+      font-size:64px;
+      line-height:.98;
+      letter-spacing:-.03em;
+      font-weight:900;
+      max-width:620px;
+    }
+    .hero h1 .gold{color:var(--gold-2)}
+    .hero p{
+      margin:24px 0 0;
+      max-width:560px;
+      font-size:21px;
+      line-height:1.6;
+      color:rgba(255,255,255,.9);
+    }
+    .hero-actions{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:34px;
+    }
+    .hero-btn{
+      min-height:58px;
+      padding:0 26px;
+      border-radius:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:2px solid rgba(255,255,255,.14);
+      font-weight:800;
+      font-size:22px;
+      transition:.2s ease;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+    .hero-btn:hover{transform:translateY(-2px)}
+    .hero-btn.gold{
+      background:linear-gradient(135deg, var(--gold-2), var(--gold));
+      color:#132235;
+      border-color:rgba(224,178,77,.5);
+    }
+    .hero-btn.outline{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border-color:rgba(255,255,255,.2);
+    }
+    .hero-media{
+      position:relative;
+      background:#d7dce4;
+      min-height:420px;
+    }
+    .hero-media::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(90deg, rgba(7,22,44,.34) 0%, rgba(7,22,44,.08) 18%, rgba(0,0,0,0) 34%);
+      pointer-events:none;
+    }
+    .hero-media img{
+      width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+    }
+
+    .section{padding:0 0 60px}
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+    .card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:26px;
+      box-shadow:0 10px 24px rgba(9,31,66,.06);
+    }
+    .card h3{margin:0 0 10px;font-size:22px;color:#11233b}
+    .card p{margin:0;color:var(--muted);line-height:1.65;font-size:15px}
+
+    footer{
+      padding:26px 0 42px;
+      color:var(--muted);
+      font-size:14px;
+      text-align:center;
+    }
+
+    @media (max-width:1180px){
+      .hero{grid-template-columns:1fr}
+      .hero-copy{padding:44px 30px 36px}
+      .hero h1{font-size:52px}
+      .hero p{font-size:19px}
+      .hero-media{min-height:420px}
+      .cards{grid-template-columns:1fr}
+    }
+    @media (max-width:760px){
+      .topbar-inner{align-items:flex-start}
+      .nav{justify-content:flex-start}
+      .hero-wrap{padding-top:20px}
+      .hero-copy{padding:34px 22px 30px}
+      .hero h1{font-size:40px}
+      .hero p{font-size:17px}
+      .hero-btn{width:100%;font-size:20px}
+      .hero-actions{gap:12px}
+      .nav a{font-size:13px;padding:9px 12px}
+      .brand-text strong{font-size:18px}
+    }
   </style>
 </head>
 <body>
-  <div class="top-note">
-    <div class="container top-note-inner">
-      <span>Dijital ilan · üyelik · firma ve ürün görünürlüğü altyapısı</span>
-      <strong>Türkiye genelinde kurumsal görünürlük ağı</strong>
-    </div>
-  </div>
-
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="brand" href="index.html">
         <div class="brand-mark">S</div>
-        <div><strong>SEVRA</strong><span>Lojistik İlan ve Firma Görünürlüğü Platformu</span></div>
+        <div class="brand-text">
+          <strong>SEVRA</strong>
+          <span>Lojistik İlan ve Firma Görünürlüğü Platformu</span>
+        </div>
       </a>
+
       <nav class="nav">
         <a href="index.html">Ana Sayfa</a>
-        <a href="#platform">Platform Alanları</a>
-        <a href="#nasil">Nasıl Çalışır?</a>
-        <a href="#guvenli-cizgi">Neden Biz</a>
-        <a href="#seo">SEO Sayfaları</a>
+        <a href="platform-alanlari.html">Platform Alanları</a>
+        <a href="nasil-calisir.html">Nasıl Çalışır?</a>
+        <a href="neden-biz.html">Neden Biz</a>
         <a href="yuk-ilanlari.html">Yük İlanları</a>
-        <a href="nakliye-ilani-ver.html">İlan Ver</a>
         <a href="urun-vitrini.html">Ürün Kataloğu</a>
-        <a href="firma-katalog.html">Firma Kataloğu</a>
-        <a href="firma-basvuru.html">Firma Başvurusu</a>
-        <a href="yonetici-giris.html">Yönetim Merkezi</a>
-        <a class="primary" href="platform-kayit-secimi.html">Üyelik / İlan Paylaş</a>
+        <a href="firma-vitrini.html">Firma Kataloğu</a>
+        <a href="platform-kayit-secimi.html" class="primary">Üyelik / İlan Paylaş</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero" id="hero">
+    <section class="hero-wrap">
       <div class="container">
-        <div class="hero-card">
-          <div>
-            <div class="hero-copy">
-              <div class="kicker">İlan · Üyelik · Görünürlük</div>
-              <h1>Lojistik İlan,<br><span>Firma ve Ürün</span><br>Görünürlüğü Platformu</h1>
-              <p>SEVRA; lojistik sektöründe yük, araç, firma ve ürün görünürlüğünü tek çatı altında toplayan kurumsal dijital platformdur.</p>
-              <div class="hero-actions">
-                <a class="btn btn-gold" href="nakliye-ilani-ver.html">İlan Ver</a>
-                <a class="btn btn-secondary" href="#platform">Platformu İncele</a>
-                <a class="btn btn-secondary" href="urun-vitrini.html">Ürün Kataloğu</a>
-              </div>
-            </div>
-            <div class="trust-row">
-              <div class="trust"><strong>Güvenilir</strong><span>Doğrulanmış firma ve ilan yaklaşımı</span></div>
-              <div class="trust"><strong>Hızlı</strong><span>Kolay ilan ve üyelik akışı</span></div>
-              <div class="trust"><strong>Geniş Erişim</strong><span>Türkiye geneli görünürlük</span></div>
-              <div class="trust"><strong>7/24</strong><span>Dijital platform erişimi</span></div>
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow">İlan · Üyelik · Görünürlük</div>
+            <h1>
+              Lojistik İlan,<br>
+              <span class="gold">Firma ve Ürün</span><br>
+              Görünürlüğü Platformu
+            </h1>
+            <p>
+              SEVRA; lojistik sektöründe yük, araç, firma ve ürün görünürlüğünü
+              tek çatı altında toplayan kurumsal dijital platformdur.
+            </p>
+
+            <div class="hero-actions">
+              <a class="hero-btn gold" href="platform-kayit-secimi.html">İlan Ver</a>
+              <a class="hero-btn outline" href="nasil-calisir.html">Platformu İncele</a>
+              <a class="hero-btn outline" href="urun-vitrini.html">Ürün Kataloğu</a>
             </div>
           </div>
+
           <div class="hero-media">
-            <img src="sevra-ana-hero-kapak.jpg" onerror="this.onerror=null;this.src='sevra-hero-final.png';" alt="SEVRA lojistik, kargo, kurye, ürün ve firma görünürlüğü">
+            <img id="heroImage" src="sevra-hero-final.png" alt="SEVRA hero görseli">
           </div>
         </div>
       </div>
     </section>
 
-    <section id="platform">
+    <section class="section">
       <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Platform alanları</h2>
-            <p>SEVRA; lojistik ilan, firma kataloğu, ürün kataloğu ve dijital görünürlük alanlarını kurumsal bir yapı içinde toplar.</p>
+        <div class="cards">
+          <div class="card">
+            <h3>Kurumsal Görünürlük</h3>
+            <p>Firma vitrininden ürün kataloğuna kadar markanızı profesyonel bir görünümle öne çıkarın.</p>
           </div>
-        </div>
-        <div class="grid">
-          <article class="card"><div class="icon">🚛</div><h3>Yük İlanları</h3><p>Yük sahipleri ve sektördeki firmalar ilanlarını platformda görünür hale getirebilir.</p><a class="btn btn-blue" href="yuk-ilanlari.html">Yük İlanlarını Gör</a></article>
-          <article class="card"><div class="icon">📦</div><h3>Ürün Kataloğu</h3><p>Depo ekipmanı, ambalaj, araç parçası, kasa ekipmanı ve stok fazlası ürünler için görünürlük alanı.</p><a class="btn btn-blue" href="urun-vitrini.html">Ürün Kataloğu</a></article>
-          <article class="card"><div class="icon">🏢</div><h3>Firma Kataloğu</h3><p>Onaylı firmalar, tedarikçiler ve hizmet sağlayıcılar kurumsal şekilde listelenebilir.</p><a class="btn btn-blue" href="firma-katalog.html">Firma Kataloğu</a></article>
-          <article class="card"><div class="icon">📝</div><h3>İlan Ver</h3><p>Yük, araç, hizmet veya görünürlük ihtiyacını platforma eklemek için başvuru akışı.</p><a class="btn btn-blue" href="nakliye-ilani-ver.html">İlan Ver</a></article>
-          <article class="card"><div class="icon">✅</div><h3>Firma Başvurusu</h3><p>Firma ve tedarikçi kayıtları yayın öncesinde değerlendirme sürecinden geçirilir.</p><a class="btn btn-blue" href="firma-basvuru.html">Firma Başvurusu</a></article>
-          <article class="card"><div class="icon">📣</div><h3>Premium Görünürlük</h3><p>Firma, ürün ve hizmetlerin daha görünür olmasını sağlayan üyelik ve vitrin alanları.</p><a class="btn btn-blue" href="platform-kayit-secimi.html">Üyelik / İlan Paylaş</a></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="nasil">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Nasıl çalışır?</h2>
-            <p>SEVRA; ilan ve görünürlük süreçlerini sade, anlaşılır ve güvenli çizgide tutar.</p>
+          <div class="card">
+            <h3>Dijital Yayın Alanı</h3>
+            <p>Yük, araç, ürün ve firma bilgileriniz tek merkezde daha düzenli, daha anlaşılır ve daha görünür olsun.</p>
           </div>
-        </div>
-        <div class="steps">
-          <div class="step"><b>1</b><h3>Başvuru veya ilan girilir</h3><p>Firma, ürün veya ilan bilgisi ilgili form üzerinden alınır.</p></div>
-          <div class="step"><b>2</b><h3>Yönetim kontrol eder</h3><p>Uygun olmayan, eksik veya yanıltıcı kayıtlar yayınlanmaz.</p></div>
-          <div class="step"><b>3</b><h3>Platformda görünür olur</h3><p>Onaylanan kayıtlar ilgili katalog veya ilan alanında yayınlanır.</p></div>
-          <div class="step"><b>4</b><h3>Taraflar kendi görüşür</h3><p>Görüşme, anlaşma, ödeme ve teslimat süreçleri tarafların sorumluluğundadır.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="guvenli-cizgi">
-      <div class="container">
-        <div class="band">
-          <div>
-            <h2>SEVRA güvenli ilan ve görünürlük modelidir</h2>
-            <p>SEVRA; doğrudan taşıma işi yapan, ödeme alan, tahsilat yöneten veya taraflar adına sözleşme yapan bir firma değildir. Platform; ilan, görünürlük, firma tanıtımı ve ürün listeleme amacıyla çalışır.</p>
+          <div class="card">
+            <h3>SEVRA Altyapısı</h3>
+            <p>Kurumsal dil, güçlü tasarım ve hızlı erişim mantığıyla lojistik sektörüne uygun modern bir vitrin deneyimi.</p>
           </div>
-          <a class="btn btn-gold" href="firma-basvuru.html">Firma Başvurusu</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="seo">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>SEVRA hizmet ve bilgi sayfaları</h2>
-            <p>Google’da daha anlaşılır görünmek için temel hizmet başlıkları ayrı sayfalar halinde yayınlanır.</p>
-          </div>
-        </div>
-        <div class="grid">
-          <article class="card"><h3>Ambar Hizmeti</h3><p>Ambar ve parsiyel taşıma ihtiyaçları için görünürlük sayfası.</p><a class="btn btn-blue" href="ambar-hizmeti.html">Sayfaya Git</a></article>
-          <article class="card"><h3>Nakliye Platformu</h3><p>Nakliye ilanı, araç ve yük görünürlüğü için bilgilendirme sayfası.</p><a class="btn btn-blue" href="nakliye-platformu.html">Sayfaya Git</a></article>
-          <article class="card"><h3>Yük Bulma Sistemi</h3><p>Yük arayan araç sahipleri ve firmalar için platform bilgilendirmesi.</p><a class="btn btn-blue" href="yuk-bulma-sistemi.html">Sayfaya Git</a></article>
-          <article class="card"><h3>Araç Bulma Sistemi</h3><p>Yük sahiplerinin uygun araç ve firma görünürlüğüne ulaşmasını kolaylaştırır.</p><a class="btn btn-blue" href="arac-bulma-sistemi.html">Sayfaya Git</a></article>
-          <article class="card"><h3>Kurye Hizmeti</h3><p>Kurye, kargo ve şehir içi teslimat görünürlüğü için içerik sayfası.</p><a class="btn btn-blue" href="kurye-hizmeti.html">Sayfaya Git</a></article>
-          <article class="card"><h3>Kargo Taşıma</h3><p>Paket, koli, kargo ve lojistik süreçleri için görünürlük sayfası.</p><a class="btn btn-blue" href="kargo-tasima.html">Sayfaya Git</a></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="iletisim">
-      <div class="container">
-        <div class="notice">
-          <strong>Kurumsal iletişim notu:</strong> SEVRA, ilan ve görünürlük amaçlı dijital platformdur. Taraflar arasındaki görüşme, fiyat, ödeme, teslimat ve anlaşma süreçlerinden taraflar kendileri sorumludur.
         </div>
       </div>
     </section>
   </main>
 
-  <a class="whatsapp" href="platform-kayit-secimi.html">Üyelik / İlan Paylaş</a>
-
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div><strong>SEVRA</strong><p>Lojistik ilan, firma kataloğu ve ürün görünürlüğü platformu.</p></div>
-      <div><strong>Platform</strong><a href="yuk-ilanlari.html">Yük İlanları</a><a href="urun-vitrini.html">Ürün Kataloğu</a><a href="firma-katalog.html">Firma Kataloğu</a><a href="firma-basvuru.html">Firma Başvurusu</a></div>
-      <div><strong>Bilgi</strong><a href="nakliye-platformu.html">Nakliye Platformu</a><a href="ambar-hizmeti.html">Ambar Hizmeti</a><a href="yuk-bulma-sistemi.html">Yük Bulma Sistemi</a><a href="arac-bulma-sistemi.html">Araç Bulma Sistemi</a></div>
-    </div>
+  <footer>
+    <div class="container">SEVRA © 2026 · Ana sayfa hero alanı sadeleştirildi. Alt kısımda yalnızca 3 buton bırakıldı.</div>
   </footer>
+
+  <script>
+    (function(){
+      const img = document.getElementById('heroImage');
+      const candidates = [
+        'sevra-hero-final.png',
+        'sevra-ana-hero-kapak.jpg',
+        'sevra-hero-kapak.png',
+        'sevra-afis.jpg'
+      ];
+      let i = 0;
+      img.onerror = function(){
+        i += 1;
+        if(i < candidates.length){ img.src = candidates[i]; }
+      };
+    })();
+  </script>
 </body>
 </html>
