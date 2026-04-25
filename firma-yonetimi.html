@@ -19,14 +19,14 @@
 </head>
 <body>
 <header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><div><strong>SEVRA</strong><span>Firma Yönetimi</span></div></a><nav class="nav"><a href="firma-basvuru.html">Firma Başvurusu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a class="primary" href="firma-yonetimi.html">Firma Yönetimi</a></nav></div></header>
-<section class="head"><div class="container"><div class="head-card"><div><div class="kicker">Admin / Firma Değerlendirme</div><h1>Firma başvurularını değerlendirme paneli</h1><p>Başvurular inceleme kuyruğuna alınır. Yönetici değerlendirmesi tamamlanmadan firma kaydı yayın durumuna geçirilmez.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btn-secondary" id="refreshBtn">Yenile</button><button class="btn btn-warn" id="demoBtn">Demo Başvuru Oluştur</button></div></div></div></section>
+<section class="head"><div class="container"><div class="head-card"><div><div class="kicker">Admin / Firma Değerlendirme</div><h1>Firma başvurularını değerlendirme paneli</h1><p>Başvurular inceleme kuyruğuna alınır. Yönetici değerlendirmesi tamamlanmadan firma kaydı yayın durumuna geçirilmez.</p></div><button class="btn btn-secondary" id="refreshBtn">Yenile</button></div></div></section>
 <main class="container">
   <div class="toolbar"><button class="chip active" data-filter="all">Tümü</button><button class="chip" data-filter="pending">İncelemede</button><button class="chip" data-filter="approved">Onaylananlar</button><button class="chip" data-filter="rejected">Reddedilenler</button><button class="chip" data-filter="needs_info">Bilgi Talep Edildi</button></div>
   <div class="grid" id="list"><div class="empty">Başvurular yükleniyor...</div></div>
 </main>
 <script type="module">
   import { db } from './firebase-config.js';
-  import { collection, addDoc, getDocs, query, orderBy, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { collection, getDocs, query, orderBy, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   const list=document.getElementById('list'); let companies=[]; let current='all';
   function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");}
   async function load(){
@@ -70,42 +70,7 @@
   }
   document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));ch.classList.add('active');current=ch.dataset.filter;render();}));
   document.getElementById('refreshBtn').addEventListener('click',load);
-
-  async function createDemoApplication(){
-    try{
-      await addDoc(collection(db,'companies'), {
-        memberType:'company',
-        companyName:'SEVRA KATALOG DEMO FİRMA AŞ',
-        authorizedName:'Yetkili Kullanıcı',
-        taxNo:'0000000000',
-        tcNo:'',
-        taxOffice:'Demo Vergi Dairesi',
-        mersisNo:'DEMO-KAYIT',
-        phone:'05551234567',
-        email:'demo@sevrawms.com.tr',
-        city:'Bursa',
-        district:'Osmangazi',
-        activity:'Araç Parçaları',
-        description:'Bu kayıt firma onay/red akışını test etmek için yönetim panelinden oluşturulmuş demo başvurudur.',
-        kvkk:true,
-        terms:true,
-        status:'pending',
-        fraudScore:0,
-        taxNoValid:false,
-        tcNoValid:false,
-        verificationLevel:'demo_admin_test_record',
-        isDemo:true,
-        createdAt:serverTimestamp(),
-        updatedAt:serverTimestamp()
-      });
-      await load();
-    }catch(err){
-      alert('Demo başvuru oluşturulamadı: ' + err.message);
-    }
-  }
-  document.getElementById('demoBtn')?.addEventListener('click', createDemoApplication);
-
-  load();
+load();
 </script>
 </body>
 </html>
