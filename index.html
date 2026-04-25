@@ -1165,6 +1165,155 @@
       }
     }
 
+  
+    /* SEVRA ANA SAYFA - URUN/FIRMA BAGLANTI BLOKU */
+    .catalog-link-section{
+      padding:34px 0;
+      background:linear-gradient(180deg,#f4f7fb 0%,#eef4fb 100%);
+    }
+    .catalog-link-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .catalog-link-head .kicker{
+      color:#a46b00;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+    }
+    .catalog-link-head h2{
+      margin:0;
+      color:#0b1930;
+      font-size:clamp(30px,3.4vw,46px);
+      line-height:1.08;
+      letter-spacing:-.035em;
+    }
+    .catalog-link-head p{
+      margin:8px 0 0;
+      color:#637083;
+      max-width:780px;
+      font-size:16px;
+    }
+    .catalog-link-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+    .catalog-link-card{
+      position:relative;
+      overflow:hidden;
+      background:#fff;
+      border:1px solid rgba(15,35,65,.12);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 14px 34px rgba(9,31,66,.08);
+      min-height:240px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .catalog-link-card:before{
+      content:"";
+      position:absolute;
+      right:-50px;
+      top:-50px;
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      background:rgba(246,164,0,.12);
+    }
+    .catalog-link-icon{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:#0b1930;
+      color:#ffd166;
+      display:grid;
+      place-items:center;
+      font-size:26px;
+      margin-bottom:14px;
+      position:relative;
+      z-index:1;
+    }
+    .catalog-link-card h3{
+      margin:0 0 9px;
+      color:#0b1930;
+      font-size:24px;
+      line-height:1.12;
+      position:relative;
+      z-index:1;
+    }
+    .catalog-link-card p{
+      margin:0;
+      color:#526174;
+      position:relative;
+      z-index:1;
+    }
+    .catalog-link-actions{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      margin-top:18px;
+      position:relative;
+      z-index:1;
+    }
+    .catalog-link-btn{
+      min-height:42px;
+      padding:0 14px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:14px;
+      text-decoration:none;
+      border:1px solid rgba(15,35,65,.12);
+      background:#fff;
+      color:#132238;
+    }
+    .catalog-link-btn.primary{
+      background:#0b5db8;
+      color:#fff;
+      border-color:#0b5db8;
+    }
+    .catalog-link-btn.gold{
+      background:#f6a400;
+      color:#071326;
+      border-color:#f6a400;
+    }
+    .catalog-link-note{
+      margin-top:16px;
+      background:#0b1930;
+      color:#fff;
+      border-radius:22px;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+      align-items:center;
+      box-shadow:0 16px 38px rgba(9,31,66,.14);
+    }
+    .catalog-link-note strong{
+      display:block;
+      font-size:22px;
+      margin-bottom:4px;
+    }
+    .catalog-link-note span{
+      color:rgba(255,255,255,.76);
+      max-width:850px;
+      display:block;
+    }
+    @media(max-width:1050px){
+      .catalog-link-grid{grid-template-columns:1fr}
+    }
+
   </style>
 </head>
 
@@ -1199,6 +1348,7 @@
           <a href="#nasil-calisir">Nasıl Çalışır?</a>
           <a href="#neden-biz">Neden Biz</a>
           <a href="#seo-sayfalari">SEO Sayfaları</a>
+          <a href="firma-basvuru.html">Firma Başvurusu</a>
           <a href="#iletisim">İletişim</a>
           <a href="nakliye-ilani-ver.html">İlan Ver</a>
           <a href="yuk-bulma-sistemi.html">Yük Bul</a>
@@ -1836,6 +1986,65 @@
       </div>
     </section>
 
+
+
+  <section class="catalog-link-section" id="kataloglar">
+    <div class="container">
+      <div class="catalog-link-head">
+        <div>
+          <div class="kicker">SEVRA Katalog Alanları</div>
+          <h2>Ürün, firma ve başvuru alanları tek merkezde</h2>
+          <p>SEVRA; ürün kayıtları, onaylı firma kataloğu ve kurumsal başvuru sürecini ayrı ama bağlantılı sayfalarda toplar. Bu alan satış veya ödeme sistemi değil, kurumsal görünürlük ve listeleme altyapısıdır.</p>
+        </div>
+      </div>
+
+      <div class="catalog-link-grid">
+        <article class="catalog-link-card">
+          <div>
+            <div class="catalog-link-icon">📦</div>
+            <h3>Ürün Kataloğu</h3>
+            <p>Araç parçaları, kasa ekipmanları, depo ürünleri, ambalaj ve stok fazlası ürünlerin kurumsal listeleme alanı.</p>
+          </div>
+          <div class="catalog-link-actions">
+            <a class="catalog-link-btn primary" href="urun-vitrini.html">Ürün Kataloğunu Aç</a>
+            <a class="catalog-link-btn" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a>
+          </div>
+        </article>
+
+        <article class="catalog-link-card">
+          <div>
+            <div class="catalog-link-icon">🏢</div>
+            <h3>Firma Kataloğu</h3>
+            <p>Yönetici tarafından onaylanan firma ve tedarikçi kayıtlarının yayınlandığı kurumsal katalog alanı.</p>
+          </div>
+          <div class="catalog-link-actions">
+            <a class="catalog-link-btn primary" href="firma-katalog.html">Firma Kataloğunu Aç</a>
+            <a class="catalog-link-btn" href="firma-yonetimi.html">Firma Yönetimi</a>
+          </div>
+        </article>
+
+        <article class="catalog-link-card">
+          <div>
+            <div class="catalog-link-icon">✅</div>
+            <h3>Firma Başvurusu</h3>
+            <p>Vergi/kimlik bilgisi kontrolü, iletişim doğrulaması ve yönetici değerlendirmesiyle çalışan kurumsal başvuru ekranı.</p>
+          </div>
+          <div class="catalog-link-actions">
+            <a class="catalog-link-btn gold" href="firma-basvuru.html">Firma Başvurusu Yap</a>
+            <a class="catalog-link-btn" href="firma-katalog.html">Onaylı Firmalar</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="catalog-link-note">
+        <div>
+          <strong>Platform bilgilendirmesi</strong>
+          <span>SEVRA ürün satıcısı, taşıma işi yapan taraf, ödeme/tahsilat yöneticisi veya sözleşme tarafı değildir. Ürün ve firma bilgileri listeleme ve görünürlük amacıyla yayınlanır.</span>
+        </div>
+        <a class="catalog-link-btn gold" href="firma-basvuru.html">Kurumsal Başvuru</a>
+      </div>
+    </div>
+  </section>
 
 </body>
 </html>
