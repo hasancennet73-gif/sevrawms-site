@@ -244,6 +244,43 @@
       }
     }
 
+  
+    /* URUN SAYFASI ANA SAYFAYA DON BUTONU */
+    .page-return-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .home-return-btn{
+      min-height:42px;
+      padding:0 14px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:14px;
+      text-decoration:none;
+      background:#071326;
+      color:#fff;
+      border:1px solid #071326;
+      box-shadow:0 10px 24px rgba(7,19,38,.12);
+    }
+    .home-return-btn:hover{
+      background:#0b1930;
+    }
+    @media(max-width:760px){
+      .page-return-actions{
+        width:100%;
+        justify-content:flex-start;
+      }
+      .home-return-btn{
+        width:100%;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -303,7 +340,7 @@
     <section id="urunler">
       <div class="content-head">
         <div><h2>Yayınlanan ürünler</h2><p>Aktif ürün kayıtları kategori, firma ve ürün bilgileriyle bu sayfada listelenir.</p></div>
-        <div class="sort-box"><span class="chip active">Aktif ürünler</span><a class="chip" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a></div>
+        <div class="page-return-actions"><a class="home-return-btn" href="index.html">Ana Sayfaya Dön</a><span class="chip active">Aktif ürünler</span><a class="chip" href="urun-admin-giris.html?redirect=urun-yonetimi.html">Ürün Yönetimi</a></div>
       </div>
       <div class="product-grid" id="productGrid"><div class="empty">Ürün kayıtları yükleniyor...</div></div>
       <div class="notice" id="guvenli-cizgi"><div><strong>SEVRA platform bilgilendirmesi</strong><span>SEVRA ürün satıcısı değildir, satış sözleşmesine taraf olmaz, fiyat/komisyon belirlemez, ödeme/tahsilat, teslimat, garanti ve iade süreçlerini yönetmez. Ürün ve firma bilgileri listeleme amacıyla yayınlanır; görüşme ve karar süreci tarafların kendi sorumluluğundadır.</span></div><a class="btn btn-gold" href="firma-basvuru.html">Firma Başvurusu</a></div>
