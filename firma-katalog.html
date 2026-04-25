@@ -87,7 +87,7 @@
       <div class="hero-card">
         <div>
           <div class="breadcrumb">SEVRA / Firma Kataloğu</div>
-          <h1>Onaylı firma ve tedarikçi listeleme alanı</h1>
+          <h1>Onaylı firma ve tedarikçi kataloğu</h1>
           <p>SEVRA Firma Kataloğu; lojistik, araç parçası, depo ekipmanı, ambalaj, sanayi ürünü ve stok fazlası alanlarında faaliyet gösteren onaylı firmaları kurumsal biçimde listeler.</p>
         </div>
         <div class="hero-side">
@@ -219,7 +219,7 @@
       try{
         const q = query(collection(db, 'companies'), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
-        companies = snap.docs.map(d => ({ id:d.id, ...d.data() })).filter(c => c.status === 'approved');
+        companies = snap.docs.map(d => ({ id:d.id, ...d.data() })).filter(c => c.status === 'approved' && c.isTest !== true && c.isTest !== true);
         fillActivityFilter();
         render();
       }catch(err){
