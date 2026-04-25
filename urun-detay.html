@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><strong>SEVRA</strong></a><nav class="nav"><a href="urun-vitrini.html">Ürün Vitrini</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a href="index.html">Ana Sayfa</a></nav></div></header>
+<header class="topbar"><div class="container topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">S</div><strong>SEVRA</strong></a><nav class="nav"><a href="urun-vitrini.html">Ürün Kataloğu</a><a href="urun-yonetimi.html">Ürün Yönetimi</a><a href="index.html">Ana Sayfa</a></nav></div></header>
 <main class="container detail" id="root"><div class="empty">Ürün detayı yükleniyor...</div></main>
 <script type="module">
   import { db } from './firebase-config.js';
@@ -31,7 +31,7 @@
       if(!snap.exists()){root.innerHTML='<div class="empty">Ürün bulunamadı.</div>';return;}
       const p={id:snap.id,...snap.data()};
       document.title='SEVRA | '+(p.name||'Ürün Detayı');
-      root.innerHTML=`<div class="card"><div class="photo">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}</div><div class="info"><div class="kicker">${esc(p.category||'Ürün')}</div><h1>${esc(p.name||'Ürün')}</h1><p class="desc">${esc(p.description||'')}</p><div class="meta"><div class="row"><span>İlan sahibi</span><strong>${esc(p.seller||'-')}</strong></div><div class="row"><span>Konum</span><strong>${esc(p.location||'-')}</strong></div><div class="row"><span>Telefon</span><strong>${esc(p.phone||'-')}</strong></div><div class="row"><span>Durum</span><strong>${esc(p.status||'active')}</strong></div></div><div class="btns"><a class="btn btn-gold" href="${wa(p)}" target="_blank" rel="noopener">WhatsApp ile Bilgi Al</a><a class="btn btn-primary" href="urun-vitrini.html">Vitrine Dön</a></div><div class="notice">SEVRA ürün satıcısı değildir. Ödeme, teslimat, garanti, iade ve satış sözleşmesi ilan sahibi ile alıcı arasında yürütülür.</div></div></div>`;
+      root.innerHTML=`<div class="card"><div class="photo">${p.imageData?`<img src="${p.imageData}" alt="${esc(p.name)}">`:'📦'}</div><div class="info"><div class="kicker">${esc(p.category||'Ürün')}</div><h1>${esc(p.name||'Ürün')}</h1><p class="desc">${esc(p.description||'')}</p><div class="meta"><div class="row"><span>İlan sahibi</span><strong>${esc(p.seller||'-')}</strong></div><div class="row"><span>Konum</span><strong>${esc(p.location||'-')}</strong></div><div class="row"><span>Telefon</span><strong>${esc(p.phone||'-')}</strong></div><div class="row"><span>Durum</span><strong>${esc(p.status||'active')}</strong></div></div><div class="btns"><a class="btn btn-gold" href="${wa(p)}" target="_blank" rel="noopener">WhatsApp ile Bilgi Al</a><a class="btn btn-primary" href="urun-vitrini.html">Kataloğa Dön</a></div><div class="notice">SEVRA ürün satıcısı değildir. Ödeme, teslimat, garanti, iade ve satış sözleşmesi ilan sahibi ile alıcı arasında yürütülür.</div></div></div>`;
     }catch(err){root.innerHTML='<div class="empty">Detay okunamadı: '+esc(err.message)+'</div>'}
   }
   load();
