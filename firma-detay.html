@@ -103,11 +103,6 @@
       }
 
       const c = { id:snap.id, ...snap.data() };
-      if(c.isTest === true || c.isTest === true){
-        root.innerHTML = '<div class="empty">Bu kayıt yayın kataloglarında gösterilmez.</div>';
-        return;
-      }
-
       if(c.status !== 'approved'){
         root.innerHTML = '<div class="empty">Bu firma kaydı yayın için onaylanmamış.</div>';
         return;
@@ -132,7 +127,7 @@
 
           <section class="info">
             <h2 class="section-title">Firma bilgileri</h2>
-            <p class="desc">${esc(c.description || 'Firma açıklaması bulunmuyor.')}</p>
+            <p class="desc">${esc(c.description || 'Firma açıklaması henüz girilmemiş.')}</p>
 
             <div class="meta">
               <div class="box"><small>Yetkili</small><strong>${esc(c.authorizedName || '-')}</strong></div>
