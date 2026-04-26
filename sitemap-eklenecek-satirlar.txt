@@ -1,0 +1,11 @@
+SITEMAP.XML içine eklenecek URL:
+
+  <url>
+    <loc>https://www.sevrawms.com.tr/depo-sevkiyat-urunleri.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+Not:
+Bu satırı </urlset> kapanışından önce ekle.
