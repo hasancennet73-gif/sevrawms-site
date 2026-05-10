@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEVRA | Ürün Kataloğu - Araç Parçaları, Yağ ve Bakım Ürünleri</title>
+  <meta name="description" content="SEVRA ürün kataloğu: ticari araç fren diski, fren balatası, motor yağı, hava filtresi ve bakım ürünleri.">
+  <meta name="keywords" content="araç parçaları, fren diski, fren balatası, motor yağı, hava filtresi, ticari araç yedek parça, SEVRA ürün kataloğu">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.sevrawms.com.tr/urun-katalogu.html">
+  <link rel="stylesheet" href="sevra-urunler.css">
+</head>
+<body>
+<header class="sf-topbar">
+  <a class="sf-logo" href="index.html">SEVRA<small>NAKLİYE • KURYE • KARGO</small></a>
+  <nav class="sf-nav">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="urun-katalogu.html" class="active">Ürün Kataloğu</a>
+    <a href="yuk-ilanlari.html">Yük İlanları</a>
+    <a href="firma-katalogu.html">Firma Kataloğu</a>
+    <a href="platform-kayit-secimi.html">Üyelik / İlan Paylaş</a>
+  </nav>
+  <div class="sf-actions">
+    <a class="sf-icon" href="urun-katalogu.html">⌕</a>
+    <a class="sf-login" href="uye-login.html">Üye Girişi</a>
+  </div>
+</header>
+
+<main class="sf-page">
+  <section class="sf-title-row">
+    <div class="sf-title">
+      <h1>Ürün Kataloğu</h1>
+      <p>Araç parçaları, bakım ürünleri ve ticari saha ihtiyaçları.</p>
+    </div>
+    <div class="sf-tools">
+      <select id="categoryFilter" onchange="setCategory(this.value)">
+        <option>Tümü</option>
+        <option>Araç Parçaları</option>
+        <option>Yağ & Sıvılar</option>
+        <option>Bakım Ürünleri</option>
+        <option>Aksesuar</option>
+        <option>Diğer</option>
+      </select>
+      <input id="searchInput" oninput="renderCatalog()" placeholder="Ürün ara...">
+      <select id="sortFilter" onchange="renderCatalog()">
+        <option value="new">En Yeni</option>
+        <option value="az">A-Z</option>
+        <option value="stock">Stok Öncelikli</option>
+      </select>
+      <button class="sf-view">▦</button>
+    </div>
+  </section>
+
+  <section class="sf-layout">
+    <aside class="sf-side">
+      <div class="sf-box">
+        <h3>Kategoriler</h3>
+        <button class="cat active" data-cat="Tümü" onclick="setCategory('Tümü')"><span>⚙ Tümü</span><b data-count-cat="Tümü">4</b></button>
+        <button class="cat" data-cat="Araç Parçaları" onclick="setCategory('Araç Parçaları')"><span>🔩 Araç Parçaları</span><b data-count-cat="Araç Parçaları">2</b></button>
+        <button class="cat" data-cat="Yağ & Sıvılar" onclick="setCategory('Yağ & Sıvılar')"><span>🛢 Yağ & Sıvılar</span><b data-count-cat="Yağ & Sıvılar">1</b></button>
+        <button class="cat" data-cat="Bakım Ürünleri" onclick="setCategory('Bakım Ürünleri')"><span>🧰 Bakım Ürünleri</span><b data-count-cat="Bakım Ürünleri">1</b></button>
+        <button class="cat" data-cat="Aksesuar" onclick="setCategory('Aksesuar')"><span>🚚 Aksesuar</span><b data-count-cat="Aksesuar">0</b></button>
+        <button class="cat" data-cat="Diğer" onclick="setCategory('Diğer')"><span>🏷 Diğer</span><b data-count-cat="Diğer">0</b></button>
+      </div>
+      <div class="sf-box">
+        <h3>SEVRA Kalitesi</h3>
+        <p style="color:#667085;line-height:1.5;margin:0">Güvenilir ürünler, yüksek performans ve hızlı iletişim.</p>
+      </div>
+      <div class="sf-box sf-help">
+        <h3>Nasıl Çalışır?</h3>
+        <ol>
+          <li>Ürünleri inceleyin.</li>
+          <li>İletişim talebi gönderin.</li>
+          <li>Teklif ve tedarik sürecini başlatın.</li>
+        </ol>
+        <a href="platform-kayit-secimi.html">Detayları öğrenin →</a>
+      </div>
+    </aside>
+
+    <section>
+      <div id="productGrid" class="product-grid"></div>
+      <div class="sf-benefits">
+        <div class="benefit"><span class="bicon">🛡</span><div><strong>Güvenilir Tedarik</strong><small>Doğrulanmış tedarikçiler ve kaliteli ürünler.</small></div></div>
+        <div class="benefit"><span class="bicon">🚚</span><div><strong>Hızlı İletişim</strong><small>Tedarikçilerle hızlı ve güvenli iletişim.</small></div></div>
+        <div class="benefit"><span class="bicon">🏅</span><div><strong>Kalite Garantisi</strong><small>SEVRA güvencesiyle ürün görünürlüğü.</small></div></div>
+        <div class="benefit"><span class="bicon">🎧</span><div><strong>Destek</strong><small>Uzman ekibimizle her zaman yanınızdayız.</small></div></div>
+      </div>
+    </section>
+  </section>
+</main>
+
+<div class="modal-backdrop" id="productModal" onclick="if(event.target.id==='productModal')closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Ürün Detayı</h3>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="sevra-urunler.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ItemList","name":"SEVRA Ürün Kataloğu","itemListElement":[
+{"@type":"Product","name":"Ticari Araç Fren Diski","category":"Araç Parçaları"},
+{"@type":"Product","name":"Ticari Araç Fren Balatası","category":"Araç Parçaları"},
+{"@type":"Product","name":"Ticari Araç Motor Yağı 5W-30","category":"Yağ & Sıvılar"},
+{"@type":"Product","name":"Hava Filtresi","category":"Bakım Ürünleri"}]}
+</script>
+</body>
+</html>
