@@ -1,189 +1,222 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SEVRA | Ürün Vitrini</title>
-  <meta name="description" content="SEVRA ürün vitrini: ticari araç parçaları, fren diski, fren balatası, motor yağı ve bakım ürünleri." />
+  <meta name="description" content="SEVRA ürün vitrini: ticari araç parçaları, fren diski, fren balatası, motor yağı ve bakım ürünleri için kurumsal görünürlük alanı." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="SEVRA | Ürün Vitrini" />
+  <meta property="og:description" content="Araç parçası, bakım ürünü ve lojistik operasyon ürünleri için SEVRA ürün vitrini." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.sevrawms.com.tr/urun-vitrini.html" />
   <style>
     :root{
-      --navy:#071d36;
-      --navy2:#0b2c50;
-      --yellow:#f6c343;
-      --soft:#f5f7fb;
-      --text:#152033;
-      --muted:#667085;
-      --line:#e6eaf0;
+      --navy:#071b33;
+      --navy2:#0b2748;
+      --text:#0a1f3d;
+      --muted:#627084;
+      --line:#dfe7f1;
+      --soft:#f4f7fb;
+      --yellow:#ffc12f;
+      --yellow2:#f3a900;
+      --green:#149556;
       --white:#ffffff;
-      --green:#138a44;
-      --shadow:0 18px 45px rgba(7,29,54,.12);
-      --radius:22px;
+      --shadow:0 18px 45px rgba(7,27,51,.10);
+      --radius:24px;
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
-      background:linear-gradient(180deg,#f8fafc 0%,#eef3f9 100%);
+      background:linear-gradient(180deg,#ffffff 0%,#f4f7fb 100%);
     }
     a{text-decoration:none;color:inherit}
+    .container{width:min(1240px,calc(100% - 36px));margin:auto}
     .topbar{
-      background:var(--navy);
-      color:#fff;
-      padding:14px 22px;
-      font-size:14px;
-    }
-    .topbar-inner,.nav-inner,.wrap{max-width:1180px;margin:0 auto}
-    .topbar-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;opacity:.95}
-    .nav{
-      background:#fff;
-      border-bottom:1px solid var(--line);
       position:sticky;
       top:0;
-      z-index:50;
-      box-shadow:0 6px 20px rgba(0,0,0,.04);
+      z-index:30;
+      background:rgba(255,255,255,.96);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(12px);
     }
-    .nav-inner{
-      min-height:74px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      padding:0 22px;
+    .nav{height:86px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+    .brand{display:flex;align-items:center;gap:14px;font-weight:900;letter-spacing:.5px}
+    .logo{
+      width:54px;height:54px;border-radius:16px;
+      display:grid;place-items:center;
+      color:#071b33;background:linear-gradient(135deg,#ffd75a,#f5ad00);
+      font-size:28px;font-weight:950;box-shadow:0 12px 25px rgba(243,169,0,.26)
     }
-    .brand{display:flex;align-items:center;gap:12px;font-weight:900;color:var(--navy);letter-spacing:.4px}
-    .brand-mark{
-      width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--navy2));
-      color:var(--yellow);display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:var(--shadow)
+    .brand strong{display:block;font-size:26px;line-height:1}
+    .brand span{display:block;font-size:13px;color:var(--muted);margin-top:4px;font-weight:700}
+    .links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .links a{
+      padding:12px 14px;border-radius:13px;font-size:15px;font-weight:850;color:#1d2d44;
+      border:1px solid transparent;
     }
-    .menu{display:flex;gap:18px;align-items:center;font-size:14px;font-weight:700;color:#334155;flex-wrap:wrap;justify-content:flex-end}
-    .menu a:hover{color:var(--navy)}
+    .links a:hover,.links a.active{background:#eef5ff;border-color:#d7e4f4;color:#071b33}
     .hero{
+      padding:44px 0 24px;
       background:
-        radial-gradient(circle at 85% 15%, rgba(246,195,67,.28), transparent 28%),
-        linear-gradient(135deg,var(--navy) 0%,#0b345f 65%,#08233f 100%);
-      color:#fff;
-      padding:64px 22px 56px;
-      overflow:hidden;
+        radial-gradient(circle at 80% 0%,rgba(255,193,47,.20),transparent 34%),
+        linear-gradient(180deg,#f8fbff 0%,#ffffff 100%);
+      border-bottom:1px solid var(--line)
     }
-    .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:9px 13px;border-radius:999px;font-weight:800;font-size:13px;color:#ffe9a6}
-    h1{font-size:48px;line-height:1.05;margin:18px 0 16px;letter-spacing:-1.5px}
-    .hero p{font-size:17px;line-height:1.65;color:#dce7f4;max-width:680px;margin:0}
-    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#fff3ce;border:1px solid #ffe09a;color:#6d4a00;font-weight:900;font-size:13px}
+    h1{font-size:clamp(34px,4.5vw,60px);line-height:1.02;margin:18px 0 14px;letter-spacing:-1.8px;color:#061a31}
+    .lead{font-size:18px;line-height:1.65;color:#34455e;max-width:760px;margin:0}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      border:1px solid #d7dee8;background:#fff;color:var(--navy);
-      padding:12px 18px;border-radius:14px;font-weight:900;cursor:pointer;
-      transition:.18s ease;min-height:44px;
+      border:1px solid #d9e3ef;background:#fff;border-radius:14px;padding:13px 18px;
+      font-weight:900;color:#071b33;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px
     }
-    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(0,0,0,.08)}
-    .btn.primary{background:var(--yellow);border-color:var(--yellow);color:#12213a}
-    .hero-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:28px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.22);backdrop-filter:blur(8px)}
-    .hero-card img{width:100%;display:block;border-radius:20px;background:#fff;min-height:280px;object-fit:cover}
-    .wrap{padding:34px 22px 70px}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-42px;position:relative;z-index:2}
-    .stat{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
-    .stat strong{display:block;font-size:26px;color:var(--navy);margin-bottom:4px}.stat span{color:var(--muted);font-size:13px;font-weight:700}
-    .section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:34px 0 18px;flex-wrap:wrap}
-    .section-title h2{font-size:30px;margin:0;color:var(--navy);letter-spacing:-.8px}.section-title p{margin:8px 0 0;color:var(--muted);line-height:1.5}
-    .tools{background:#fff;border:1px solid var(--line);border-radius:24px;padding:16px;display:grid;grid-template-columns:1.2fr .7fr .6fr;gap:12px;box-shadow:0 10px 28px rgba(7,29,54,.06);margin-bottom:18px}
-    .tools input,.tools select{width:100%;border:1px solid #d9e1ea;border-radius:14px;padding:13px 14px;font-size:14px;outline:none;background:#fff}.tools input:focus,.tools select:focus{border-color:var(--yellow);box-shadow:0 0 0 4px rgba(246,195,67,.18)}
-    .cats{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 22px}.cat{border:1px solid #dbe3ef;background:#fff;border-radius:999px;padding:10px 13px;cursor:pointer;font-weight:900;color:#344054}.cat.active,.cat:hover{background:var(--navy);color:#fff;border-color:var(--navy)}.cat small{background:#eef2f7;color:#475467;border-radius:999px;padding:2px 7px;margin-left:6px}.cat.active small{background:rgba(255,255,255,.18);color:#fff}
-    .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.product-card{background:#fff;border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:0 16px 36px rgba(7,29,54,.08);display:flex;flex-direction:column;min-height:100%}.product-image{height:230px;background:linear-gradient(135deg,#eef4fb,#fff);display:grid;place-items:center;position:relative;border-bottom:1px solid var(--line);overflow:hidden}.product-image img{width:100%;height:100%;object-fit:cover}.badge{position:absolute;left:14px;top:14px;background:var(--yellow);color:#172033;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900}.bookmark{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:20px;box-shadow:0 8px 18px rgba(0,0,0,.08)}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-cat{font-size:12px;font-weight:900;color:#8a6400;background:#fff3cc;border:1px solid #ffe6a1;border-radius:999px;padding:6px 9px;display:inline-flex;width:max-content}.product-body h2{font-size:20px;line-height:1.25;margin:0;color:var(--navy)}.product-body p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}.product-meta{display:flex;flex-direction:column;gap:7px;color:#475467;font-size:13px;font-weight:700;margin-top:auto}.dot{width:8px;height:8px;background:var(--green);display:inline-block;border-radius:50%;margin-right:7px}.product-price{font-size:23px;font-weight:900;color:#0f2e4d;margin-top:4px}.product-buttons{display:flex;gap:10px;flex-wrap:wrap}.product-buttons .btn{flex:1;padding:11px 12px;font-size:13px}.admin-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);grid-column:1/-1}.modal{position:fixed;inset:0;background:rgba(7,18,32,.68);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}.modal-box{background:#fff;border-radius:28px;max-width:920px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 40px 100px rgba(0,0,0,.35)}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--line)}.modal-head h3{margin:0;color:var(--navy);font-size:24px}.close{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:24px;cursor:pointer}.modal-body{padding:22px}.modal-content{display:grid;grid-template-columns:360px 1fr;gap:22px}.modal-content img{width:100%;border-radius:20px;border:1px solid var(--line);background:#f8fafc}.detail-table{width:100%;border-collapse:collapse;margin:16px 0}.detail-table td{border-bottom:1px solid var(--line);padding:12px 8px}.detail-table td:first-child{font-weight:900;color:#334155;width:130px}.footer{background:var(--navy);color:#cbd5e1;padding:28px 22px}.footer-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.footer b{color:#fff}
-    @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.product-grid{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:38px}.modal-content{grid-template-columns:1fr}}
-    @media(max-width:560px){.product-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.menu{display:none}.hero{padding-top:42px}h1{font-size:32px}.product-image{height:210px}}
+    .btn.primary{background:linear-gradient(135deg,var(--yellow),var(--yellow2));border-color:transparent;color:#071b33;box-shadow:0 12px 25px rgba(243,169,0,.22)}
+    .hero-card{background:#071b33;border-radius:30px;padding:22px;box-shadow:var(--shadow);overflow:hidden;position:relative;min-height:260px;border:1px solid rgba(255,255,255,.12)}
+    .hero-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 18%,rgba(255,193,47,.28),transparent 30%);pointer-events:none}
+    .hero-visual{position:relative;height:238px;border-radius:24px;background:#0b2748;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(255,255,255,.13)}
+    .hero-visual svg{width:100%;height:100%;display:block}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+    .stat{padding:14px 16px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 10px 25px rgba(7,27,51,.04)}
+    .stat small{display:block;color:#6b7789;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+    .stat b{display:block;font-size:28px;margin-top:4px;color:#071b33}
+    .catalog{padding:30px 0 58px}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 26px;flex-wrap:wrap}
+    .cats{display:flex;gap:10px;flex-wrap:wrap}
+    .cat{
+      border:1px solid #d8e3ef;background:#fff;border-radius:999px;padding:11px 16px;font-weight:950;color:#172942;cursor:pointer;
+      box-shadow:0 10px 22px rgba(7,27,51,.04)
+    }
+    .cat.active{background:#071b33;color:#fff;border-color:#071b33}
+    .cat em{font-style:normal;margin-left:8px;background:rgba(255,193,47,.22);padding:3px 8px;border-radius:999px;color:inherit}
+    .filters{display:flex;gap:10px;flex-wrap:wrap}
+    .filters input,.filters select{height:48px;border:1px solid #d8e3ef;border-radius:14px;padding:0 14px;background:#fff;font-size:15px;color:#1d2d44;outline:none}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .product-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:100%}
+    .product-image{height:245px;background:#edf3fa;position:relative;border-bottom:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
+    .product-image img{width:100%;height:100%;object-fit:cover;display:block}
+    .badge{position:absolute;left:18px;top:16px;background:var(--yellow);color:#071b33;font-weight:950;border-radius:999px;padding:8px 12px;font-size:13px;box-shadow:0 8px 18px rgba(243,169,0,.22)}
+    .bookmark{position:absolute;right:18px;top:16px;width:42px;height:42px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 12px 25px rgba(7,27,51,.12)}
+    .product-body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1}
+    .product-cat{display:inline-flex;align-self:flex-start;background:#fff3cf;border:1px solid #ffe09a;color:#755300;font-weight:950;border-radius:999px;padding:8px 12px;font-size:13px}
+    .product-body h2{font-size:22px;line-height:1.2;margin:0;color:#061a31;letter-spacing:-.3px}
+    .product-body p{margin:0;color:#516176;line-height:1.55;font-size:15px;min-height:48px}
+    .product-meta{display:grid;gap:8px;color:#233853;font-size:14px;font-weight:800}
+    .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--green);margin-right:8px;vertical-align:middle}
+    .product-price{font-size:28px;font-weight:950;color:#071b33;letter-spacing:.2px;margin-top:auto}
+    .product-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+    .product-buttons .btn{width:100%;padding:13px 12px}
+    .empty{border:1px dashed #c9d6e5;background:#fff;border-radius:20px;padding:24px;color:#596b80}
+    .modal{position:fixed;inset:0;background:rgba(4,16,31,.62);z-index:90;display:none;align-items:center;justify-content:center;padding:18px}
+    .modal-box{width:min(820px,100%);background:#fff;border-radius:26px;box-shadow:0 25px 80px rgba(0,0,0,.28);overflow:hidden}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}
+    .modal-head h3{margin:0;font-size:24px;color:#071b33}.close{border:0;background:#f0f4f9;width:40px;height:40px;border-radius:50%;font-size:24px;cursor:pointer}
+    .modal-body{padding:22px}.modal-content{display:grid;grid-template-columns:310px 1fr;gap:22px;align-items:start}.modal-content img{width:100%;border-radius:20px;border:1px solid var(--line);background:#edf3fa}.detail-table{width:100%;border-collapse:collapse;margin:16px 0}.detail-table td{padding:10px;border-bottom:1px solid #e9eff6;color:#263a55}.detail-table td:first-child{font-weight:900;color:#071b33;width:120px}
+    footer{padding:28px 0;text-align:center;color:#627084;border-top:1px solid var(--line);background:#fff;font-weight:700}
+    @media (max-width: 980px){.hero-grid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width: 660px){.nav{height:auto;padding:16px 0;align-items:flex-start}.links{justify-content:flex-start}.grid{grid-template-columns:1fr}.toolbar{align-items:stretch}.filters,.filters input,.filters select{width:100%}.product-buttons{grid-template-columns:1fr}.modal-content{grid-template-columns:1fr}.hero{padding-top:28px}.stats{grid-template-columns:1fr}.brand strong{font-size:22px}}
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <span>SEVRA WMS • Dijital lojistik, ürün vitrini ve ticari operasyon platformu</span>
-      <span>info@sevrawms.com.tr</span>
-    </div>
-  </div>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="index.html"><span class="brand-mark">S</span><span>SEVRA</span></a>
-      <div class="menu">
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="SEVRA Ana Sayfa">
+        <div class="logo">S</div>
+        <div><strong>SEVRA</strong><span>Lojistik, Firma ve Ürün Görünürlüğü</span></div>
+      </a>
+      <nav class="links" aria-label="Ana menü">
         <a href="index.html">Ana Sayfa</a>
         <a href="yuk-ilanlari.html">Yük İlanları</a>
         <a href="nakliye-platformu.html">Nakliye Platformu</a>
-        <a href="urun-vitrini.html">Ürün Vitrini</a>
-        <a href="platform-kayit-secimi.html">Başvuru</a>
-      </div>
-    </div>
-  </nav>
-  <header class="hero">
-    <div class="hero-grid">
-      <div>
-        <span class="eyebrow">SEVRA Ürün Vitrini</span>
-        <h1>Ticari araç ve lojistik saha ürünleri için kurumsal vitrin.</h1>
-        <p>Fren diski, fren balatası, motor yağı, filtre ve bakım ürünleri gibi ticari araç ihtiyaçlarını SEVRA kurumsal vitrini üzerinden sergileyin.</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#urunler">Ürünleri İncele</a>
-          <a class="btn" href="mailto:info@sevrawms.com.tr?subject=SEVRA ürün vitrini bilgi talebi">Ürün Talebi Gönder</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <img src="assets/products/sevra-urun-hero.svg" alt="SEVRA ürün vitrini" />
-      </div>
+        <a href="urun-vitrini.html" class="active">Ürün Vitrini</a>
+        <a href="basvuru.html">Başvuru</a>
+      </nav>
     </div>
   </header>
-  <main class="wrap" id="urunler">
-    <section class="stats">
-      <div class="stat"><strong data-count-cat="Tümü">0</strong><span>Toplam ürün</span></div>
-      <div class="stat"><strong data-count-cat="Araç Parçaları">0</strong><span>Araç parçaları</span></div>
-      <div class="stat"><strong data-count-cat="Yağ & Sıvılar">0</strong><span>Yağ ve sıvılar</span></div>
-      <div class="stat"><strong data-count-cat="Bakım Ürünleri">0</strong><span>Bakım ürünleri</span></div>
-    </section>
-    <section>
-      <div class="section-title">
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
         <div>
-          <h2>Ürün Kataloğu</h2>
-          <p>SEVRA ürün vitrini için yayına hazır örnek ürün ilanları.</p>
+          <span class="eyebrow">SEVRA Ürün Vitrini</span>
+          <h1>Araç parçası ve operasyon ürünleri için kurumsal vitrin.</h1>
+          <p class="lead">Fren diski, fren balatası, motor yağı ve bakım ürünleri gibi ticari araç odaklı ürünler SEVRA görünürlük alanında düzenli, güven veren ve profesyonel kart yapısıyla listelenir.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#urunler">Ürünleri İncele</a>
+            <a class="btn" href="basvuru.html">Ürün İlanı İçin Başvur</a>
+          </div>
+          <div class="stats" aria-label="Ürün istatistikleri">
+            <div class="stat"><small>Yayınlanan Ürün</small><b data-count-cat="Tümü">0</b></div>
+            <div class="stat"><small>Araç Parçaları</small><b data-count-cat="Araç Parçaları">0</b></div>
+            <div class="stat"><small>Yağ & Sıvılar</small><b data-count-cat="Yağ & Sıvılar">0</b></div>
+            <div class="stat"><small>Bakım Ürünleri</small><b data-count-cat="Bakım Ürünleri">0</b></div>
+          </div>
+        </div>
+        <div class="hero-card" aria-hidden="true">
+          <div class="hero-visual">
+            <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img">
+              <defs>
+                <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f335d"/><stop offset="1" stop-color="#071b33"/></linearGradient>
+                <linearGradient id="y" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd65c"/><stop offset="1" stop-color="#f3a900"/></linearGradient>
+              </defs>
+              <rect width="900" height="520" fill="url(#g)"/>
+              <circle cx="760" cy="80" r="120" fill="#ffc12f" opacity=".18"/>
+              <rect x="75" y="300" width="500" height="70" rx="18" fill="#122f53" stroke="#284c78"/>
+              <rect x="120" y="230" width="330" height="100" rx="28" fill="#f4f7fb"/>
+              <rect x="430" y="260" width="170" height="70" rx="22" fill="#f4f7fb"/>
+              <circle cx="190" cy="375" r="52" fill="#071b33" stroke="#ffc12f" stroke-width="13"/>
+              <circle cx="490" cy="375" r="52" fill="#071b33" stroke="#ffc12f" stroke-width="13"/>
+              <rect x="655" y="150" width="110" height="250" rx="22" fill="url(#y)"/>
+              <rect x="690" y="120" width="40" height="48" rx="10" fill="#fff" opacity=".9"/>
+              <circle cx="325" cy="160" r="82" fill="#dfe7f1"/>
+              <circle cx="325" cy="160" r="45" fill="#071b33"/>
+              <circle cx="325" cy="160" r="16" fill="#ffc12f"/>
+              <path d="M150 110h98M150 140h75M150 170h118" stroke="#ffc12f" stroke-width="13" stroke-linecap="round" opacity=".88"/>
+              <text x="72" y="465" fill="#fff" font-family="Arial" font-size="34" font-weight="900">SEVRA ÜRÜN VİTRİNİ</text>
+            </svg>
+          </div>
         </div>
       </div>
-      <div class="tools">
-        <input id="searchInput" type="search" placeholder="Ürün adı, kategori veya etiket ara..." oninput="renderCatalog()" />
-        <select id="categoryFilter" onchange="setCategory(this.value)">
-          <option>Tümü</option>
-          <option>Araç Parçaları</option>
-          <option>Yağ & Sıvılar</option>
-          <option>Bakım Ürünleri</option>
-          <option>Aksesuar</option>
-          <option>Diğer</option>
-        </select>
-        <select id="sortFilter" onchange="renderCatalog()">
-          <option value="new">Varsayılan</option>
-          <option value="az">A-Z Sırala</option>
-          <option value="stock">Stoka Göre</option>
-        </select>
+    </section>
+
+    <section class="catalog" id="urunler">
+      <div class="container">
+        <div class="toolbar">
+          <div class="cats" aria-label="Kategori filtreleri">
+            <button class="cat active" data-cat="Tümü" onclick="setCategory('Tümü')">Tümü <em data-count-cat="Tümü">0</em></button>
+            <button class="cat" data-cat="Araç Parçaları" onclick="setCategory('Araç Parçaları')">Araç Parçaları <em data-count-cat="Araç Parçaları">0</em></button>
+            <button class="cat" data-cat="Yağ & Sıvılar" onclick="setCategory('Yağ & Sıvılar')">Yağ & Sıvılar <em data-count-cat="Yağ & Sıvılar">0</em></button>
+            <button class="cat" data-cat="Bakım Ürünleri" onclick="setCategory('Bakım Ürünleri')">Bakım Ürünleri <em data-count-cat="Bakım Ürünleri">0</em></button>
+          </div>
+          <div class="filters">
+            <input id="searchInput" type="search" placeholder="Ürün veya kategori ara" oninput="renderCatalog()" />
+            <select id="sortFilter" onchange="renderCatalog()" aria-label="Sıralama seçimi">
+              <option value="new">Varsayılan sıralama</option>
+              <option value="az">Ada göre A-Z</option>
+              <option value="stock">Stoka göre</option>
+            </select>
+          </div>
+        </div>
+        <div id="productGrid" class="grid" aria-live="polite"></div>
       </div>
-      <div class="cats">
-        <button class="cat active" data-cat="Tümü" onclick="setCategory('Tümü')">Tümü <small data-count-cat="Tümü">0</small></button>
-        <button class="cat" data-cat="Araç Parçaları" onclick="setCategory('Araç Parçaları')">Araç Parçaları <small data-count-cat="Araç Parçaları">0</small></button>
-        <button class="cat" data-cat="Yağ & Sıvılar" onclick="setCategory('Yağ & Sıvılar')">Yağ & Sıvılar <small data-count-cat="Yağ & Sıvılar">0</small></button>
-        <button class="cat" data-cat="Bakım Ürünleri" onclick="setCategory('Bakım Ürünleri')">Bakım Ürünleri <small data-count-cat="Bakım Ürünleri">0</small></button>
-      </div>
-      <div id="productGrid" class="product-grid"></div>
     </section>
   </main>
-  <div id="productModal" class="modal" onclick="if(event.target.id==='productModal')closeModal()">
+
+  <div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-box">
       <div class="modal-head">
         <h3 id="modalTitle">Ürün Detayı</h3>
-        <button class="close" onclick="closeModal()">×</button>
+        <button class="close" type="button" onclick="closeModal()" aria-label="Kapat">×</button>
       </div>
       <div id="modalBody" class="modal-body"></div>
     </div>
   </div>
-  <footer class="footer">
-    <div class="footer-inner">
-      <span><b>SEVRA</b> • Dijital lojistik ve ürün vitrini platformu</span>
-      <span>© SEVRA WMS</span>
-    </div>
-  </footer>
-  <script src="sevra-urunler.js?v=3"></script>
+
+  <footer>SEVRA | Ürün Vitrini<br/>sevrawms.com.tr</footer>
+  <script src="sevra-urunler.js?v=20260510-3"></script>
 </body>
 </html>
