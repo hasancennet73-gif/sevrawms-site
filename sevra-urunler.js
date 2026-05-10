@@ -48,25 +48,27 @@ function getProducts(){
 }
 function saveCustomProducts(list){ localStorage.setItem("sevra_products", JSON.stringify(list)); }
 function moneyClean(v){ return String(v||"").trim(); }
+function safeText(v){ return String(v ?? "").replace(/[<>&]/g, s => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[s])); }
 function productCard(p){
-  return `<article class="product-card" data-category="${p.category}">
+  const id = safeText(p.id);
+  return `<article class="product-card" data-category="${safeText(p.category)}">
     <div class="product-image">
-      <img src="${p.image}" alt="${p.name}" loading="lazy">
+      <img src="${safeText(p.image)}" alt="${safeText(p.name)}" loading="lazy" onerror="this.src='assets/products/sevra-urun-hero.svg'">
       <span class="badge">Yeni</span>
       <span class="bookmark">♡</span>
     </div>
     <div class="product-body">
-      <span class="product-cat">${p.category}</span>
-      <h2>${p.name}</h2>
-      <p>${p.short || p.desc || ""}</p>
+      <span class="product-cat">${safeText(p.category)}</span>
+      <h2>${safeText(p.name)}</h2>
+      <p>${safeText(p.short || p.desc || "")}</p>
       <div class="product-meta">
-        <span><i class="dot"></i>${p.status || "Stokta"}${p.stock ? " ("+p.stock+")" : ""}</span>
-        <span>🛡 ${p.feature || "SEVRA Kalitesi"}</span>
+        <span><i class="dot"></i>${safeText(p.status || "Stokta")}${p.stock ? " ("+safeText(p.stock)+")" : ""}</span>
+        <span>🛡 ${safeText(p.feature || "SEVRA Kalitesi")}</span>
       </div>
-      <div class="product-price">${p.price || "Fiyat sorunuz"}</div>
+      <div class="product-price">${safeText(p.price || "Fiyat sorunuz")}</div>
       <div class="product-buttons">
-        <button class="btn" onclick="openProduct('${p.id}')">Detayları Gör</button>
-        <a class="btn primary" href="mailto:info@sevrawms.com.tr?subject=${encodeURIComponent(p.name + ' ürün talebi')}">İletişime Geç</a>
+        <button class="btn" onclick="openProduct('${id}')">Detayları Gör</button>
+        <a class="btn primary" href="mailto:info@sevrawms.com.tr?subject=${encodeURIComponent((p.name || 'Ürün') + ' ürün talebi')}">İletişime Geç</a>
       </div>
     </div>
   </article>`;
@@ -82,8 +84,8 @@ function renderCatalog(){
     const okcat = cat === "Tümü" || p.category === cat;
     return hit && okcat;
   });
-  if(sort === "az") list = list.sort((a,b)=>a.name.localeCompare(b.name,"tr"));
-  if(sort === "stock") list = list.sort((a,b)=>(b.stock||0)-(a.stock||0));
+  if(sort === "az") list = list.sort((a,b)=>String(a.name).localeCompare(String(b.name),"tr"));
+  if(sort === "stock") list = list.sort((a,b)=>(Number(b.stock)||0)-(Number(a.stock)||0));
   grid.innerHTML = list.map(productCard).join("") || `<div class="admin-card"><b>Sonuç bulunamadı.</b><p>Arama veya kategori seçimini değiştirin.</p></div>`;
   updateCounts();
 }
@@ -106,25 +108,28 @@ function openProduct(id){
   if(!p) return;
   document.getElementById("modalTitle").textContent = p.name;
   document.getElementById("modalBody").innerHTML = `<div class="modal-content">
-    <img src="${p.image}" alt="${p.name}">
+    <img src="${safeText(p.image)}" alt="${safeText(p.name)}" onerror="this.src='assets/products/sevra-urun-hero.svg'">
     <div>
-      <span class="product-cat">${p.category}</span>
-      <p>${p.desc || p.short || ""}</p>
+      <span class="product-cat">${safeText(p.category)}</span>
+      <p>${safeText(p.desc || p.short || "")}</p>
       <table class="detail-table">
-        <tr><td>Durum</td><td>${p.status || "Stokta"}</td></tr>
-        <tr><td>Stok</td><td>${p.stock || 0}</td></tr>
-        <tr><td>Fiyat</td><td>${p.price || "Fiyat sorunuz"}</td></tr>
-        <tr><td>Etiketler</td><td>${(p.tags||[]).join(", ")}</td></tr>
+        <tr><td>Durum</td><td>${safeText(p.status || "Stokta")}</td></tr>
+        <tr><td>Stok</td><td>${safeText(p.stock || 0)}</td></tr>
+        <tr><td>Fiyat</td><td>${safeText(p.price || "Fiyat sorunuz")}</td></tr>
+        <tr><td>Etiketler</td><td>${safeText((p.tags||[]).join(", "))}</td></tr>
       </table>
       <div class="product-buttons">
-        <a class="btn primary" href="mailto:info@sevrawms.com.tr?subject=${encodeURIComponent(p.name + ' ürün talebi')}">İletişime Geç</a>
+        <a class="btn primary" href="mailto:info@sevrawms.com.tr?subject=${encodeURIComponent((p.name || 'Ürün') + ' ürün talebi')}">İletişime Geç</a>
         <button class="btn" onclick="closeModal()">Kapat</button>
       </div>
     </div>
   </div>`;
   document.getElementById("productModal").style.display = "flex";
 }
-function closeModal(){ document.getElementById("productModal").style.display = "none"; }
+function closeModal(){
+  const m = document.getElementById("productModal");
+  if(m) m.style.display = "none";
+}
 function buildCategoryOptions(selected){
   const cats = ["Araç Parçaları","Yağ & Sıvılar","Bakım Ürünleri","Aksesuar","Diğer"];
   return cats.map(c=>`<option ${selected===c?"selected":""}>${c}</option>`).join("");
@@ -132,36 +137,39 @@ function buildCategoryOptions(selected){
 function renderAdmin(){
   const form = document.getElementById("productForm");
   if(!form) return;
-  document.getElementById("productCategory").innerHTML = buildCategoryOptions("Araç Parçaları");
+  const category = document.getElementById("productCategory");
+  if(category) category.innerHTML = buildCategoryOptions("Araç Parçaları");
   renderPreview();
   renderSavedList();
   form.addEventListener("input", renderPreview);
   const file = document.getElementById("productImageFile");
-  file.addEventListener("change", function(){
-    const f = file.files && file.files[0];
-    if(!f) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      document.getElementById("imageData").value = reader.result;
-      renderPreview();
-    };
-    reader.readAsDataURL(f);
-  });
+  if(file){
+    file.addEventListener("change", function(){
+      const f = file.files && file.files[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.getElementById("imageData").value = reader.result;
+        renderPreview();
+      };
+      reader.readAsDataURL(f);
+    });
+  }
 }
 function formProduct(){
-  const name = document.getElementById("productName").value.trim() || "Yeni Ürün";
+  const name = document.getElementById("productName")?.value.trim() || "Yeni Ürün";
   return {
     id: "urun-" + Date.now(),
     name,
-    category: document.getElementById("productCategory").value,
-    price: moneyClean(document.getElementById("productPrice").value) || "Fiyat sorunuz",
-    stock: Number(document.getElementById("productStock").value || 0),
-    status: document.getElementById("productStatus").checked ? "Stokta" : "Stok Yok",
-    feature: document.getElementById("productFeature").value.trim() || "SEVRA Kalitesi",
-    image: document.getElementById("imageData").value || "assets/products/fren-diski.svg",
-    short: document.getElementById("productShort").value.trim(),
-    desc: document.getElementById("productDesc").value.trim(),
-    tags: document.getElementById("productTags").value.split(",").map(x=>x.trim()).filter(Boolean)
+    category: document.getElementById("productCategory")?.value || "Araç Parçaları",
+    price: moneyClean(document.getElementById("productPrice")?.value) || "Fiyat sorunuz",
+    stock: Number(document.getElementById("productStock")?.value || 0),
+    status: document.getElementById("productStatus")?.checked ? "Stokta" : "Stok Yok",
+    feature: document.getElementById("productFeature")?.value.trim() || "SEVRA Kalitesi",
+    image: document.getElementById("imageData")?.value || "assets/products/fren-diski.svg",
+    short: document.getElementById("productShort")?.value.trim() || "",
+    desc: document.getElementById("productDesc")?.value.trim() || "",
+    tags: (document.getElementById("productTags")?.value || "").split(",").map(x=>x.trim()).filter(Boolean)
   };
 }
 function renderPreview(){
@@ -173,20 +181,22 @@ function saveProduct(){
   const custom = JSON.parse(localStorage.getItem("sevra_products") || "[]");
   custom.unshift(formProduct());
   saveCustomProducts(custom);
-  document.getElementById("productForm").reset();
-  document.getElementById("imageData").value = "";
-  document.getElementById("productCategory").innerHTML = buildCategoryOptions("Araç Parçaları");
+  document.getElementById("productForm")?.reset();
+  const imageData = document.getElementById("imageData");
+  if(imageData) imageData.value = "";
+  const category = document.getElementById("productCategory");
+  if(category) category.innerHTML = buildCategoryOptions("Araç Parçaları");
   renderPreview();
   renderSavedList();
-  alert("Ürün bu tarayıcıya kaydedildi. Canlı sitede herkesin görmesi için bu ürün daha sonra Firebase/backend yapısına bağlanacak.");
+  alert("Ürün bu tarayıcıya kaydedildi. Canlı sitede herkesin görmesi için daha sonra Firebase/backend bağlantısı gerekir.");
 }
 function renderSavedList(){
   const box = document.getElementById("savedProducts");
   if(!box) return;
   const custom = JSON.parse(localStorage.getItem("sevra_products") || "[]");
   box.innerHTML = custom.map((p,i)=>`<div class="product-row">
-    <img src="${p.image}" alt="${p.name}">
-    <div><div class="row-title">${p.name}</div><div class="row-sub">${p.category} • ${p.price} • ${p.status}</div></div>
+    <img src="${safeText(p.image)}" alt="${safeText(p.name)}">
+    <div><div class="row-title">${safeText(p.name)}</div><div class="row-sub">${safeText(p.category)} • ${safeText(p.price)} • ${safeText(p.status)}</div></div>
     <button class="delete-btn" onclick="deleteProduct(${i})">Sil</button>
   </div>`).join("") || `<div class="notice">Henüz sonradan eklenmiş ürün yok. Ana katalogda 4 başlangıç ürünü yayına hazırdır.</div>`;
 }
